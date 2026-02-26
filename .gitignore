@@ -1,0 +1,40 @@
+# WordPress-specific
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/cache/
+*.log
+.htaccess
+
+# macOS
+**/.DS_Store
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+**/Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+*.sql
+
+# Node / Dependencies
+node_modules/
+vendor/
