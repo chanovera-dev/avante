@@ -17,7 +17,7 @@ get_header(); ?>
 <main id="main" class="site-main" role="main">
     <section class="block">
         <div class="content">
-            <h1 class="main-title"><?= esc_html__('Index', 'stories'); ?></h1>
+            <h1 class="main-title"><?= esc_html__('Index', 'avante'); ?></h1>
         </div>
     </section>
 </main><!-- .site-main -->
