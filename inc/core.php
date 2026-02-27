@@ -67,6 +67,7 @@ function avante_override_theme_json_colors($theme_json)
     $color_ids = array(
         'base',
         'contrast',
+        'line',
         'primary',
         'secondary',
         'tertiary',
@@ -74,6 +75,7 @@ function avante_override_theme_json_colors($theme_json)
         'button',
         'footer-background',
         'focus',
+        'bullet',
         'bullet-active'
     );
 
@@ -87,8 +89,12 @@ function avante_override_theme_json_colors($theme_json)
 
     $new_palette = array();
     foreach ($color_ids as $id) {
-        $color_value = get_option('avante_color_' . $id, $default_colors[$id] ?? '#000000');
+        $default_val = $default_colors[$id] ?? '#000000';
+        $color_value = get_option('avante_color_' . $id, $default_val);
         
+        if (empty($color_value)) {
+            $color_value = $default_val;
+        }
         $new_palette[] = array(
             'slug' => $id,
             'color' => $color_value,

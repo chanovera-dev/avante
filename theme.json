@@ -14,22 +14,7 @@
 					"slug": "base"
 				},
 				{
-					"color": "#FFFFFF80",
-					"name": "Base Alpha 50",
-					"slug": "base-alpha-50"
-				},
-				{
-					"color": "#000000",
-					"name": "Base Night",
-					"slug": "base-night"
-				},
-				{
-					"color": "#00000080",
-					"name": "Base Alpha 50 Night",
-					"slug": "base-alpha-50-night"
-				},
-				{
-					"color": "#404954",
+					"color": "#655731",
 					"name": "Contrast",
 					"slug": "contrast"
 				},
@@ -39,89 +24,39 @@
 					"slug": "contrast-alpha-50"
 				},
 				{
-					"color": "#207c4f",
-					"name": "Primary Strong",
-					"slug": "primary-strong"
-				},
-				{
-					"color": "#9dbab9",
+					"color": "#feda7c",
 					"name": "Primary",
 					"slug": "primary"
 				},
 				{
-					"color": "#778f8f80",
-					"name": "Primary Dark Alpha 50",
-					"slug": "primary-dark-alpha-50"
-				},
-				{
-					"color": "#9dbab980",
+					"color": "#feda7c80",
 					"name": "Primary Alpha 50",
 					"slug": "primary-alpha-50"
 				},
 				{
-					"color": "#222727",
-					"name": "Primary Night",
-					"slug": "primary-night"
-				},
-				{
-					"color": "#22272780",
-					"name": "Primary Alpha 50 Night",
-					"slug": "primary-alpha-50-night"
-				},
-				{
-					"color": "#d2d6d2",
+					"color": "#fff4d7",
 					"name": "Secondary",
 					"slug": "secondary"
 				},
 				{
-					"color": "#d2d6d280",
+					"color": "#fff4d780",
 					"name": "Secondary Alpha 50",
 					"slug": "secondary-alpha-50"
 				},
 				{
-					"color": "#eaeeea",
+					"color": "#fff8e7",
 					"name": "Tertiary",
 					"slug": "tertiary"
 				},
 				{
-					"color": "#eaeeea80",
-					"name": "Tertiary Alpha 50",
-					"slug": "tertiary-alpha-50"
-				},
-				{
-					"color": "#3f403f",
-					"name": "Secondary Night",
-					"slug": "secondary-night"
-				},
-				{
-					"color": "#3f403f80",
-					"name": "Secondary Alpha 50 Night",
-					"slug": "secondary-alpha-50-night"
-				},
-				{
-					"color": "#131513",
-					"name": "Tertiary Night",
-					"slug": "tertiary-night"
-				},
-				{
-					"color": "#13151380",
-					"name": "Tertiary Alpha 50 Night",
-					"slug": "tertiary-alpha-50-night"
-				},
-				{
-					"color": "#B2D6B5",
-					"name": "Bullet",
-					"slug": "bullet"
-				},
-				{
-					"color": "#233325",
-					"name": "Bullet Night",
-					"slug": "bullet-night"
-				},
-				{
-					"color": "#87AB89",
+					"color": "#cbae63",
 					"name": "Bullet Active",
 					"slug": "bullet-active"
+				},
+				{
+					"color": "color-mix(in srgb, currentColor 60%, transparent)",
+					"name": "Line",
+					"slug": "line"
 				},
 				{
 					"color": "#FFEE58",
@@ -159,44 +94,24 @@
 					"slug": "accent-7"
 				},
 				{
-					"color": "#f5f7f5",
+					"color": "#fffbf0",
 					"name": "Background",
 					"slug": "background"
 				},
 				{
-					"color": "#030403",
-					"name": "Background Night",
-					"slug": "background-night"
-				},
-				{
-					"color": "#F4442E",
+					"color": "#F90093",
 					"name": "Focus",
 					"slug": "focus"
 				},
 				{
-					"color": "#F4442E80",
+					"color": "#F9009380",
 					"name": "Focus Alpha 50",
 					"slug": "focus-alpha-50"
 				},
 				{
-					"color": "#99BD9B",
+					"color": "#AF3E4D",
 					"name": "Button",
 					"slug": "button"
-				},
-				{
-					"color": "#314233",
-					"name": "Button Night",
-					"slug": "button-night"
-				},
-				{
-					"color": "#092327",
-					"name": "Footer Background",
-					"slug": "footer-background"
-				},
-				{
-					"color": "#030f11",
-					"name": "Footer Background Night",
-					"slug": "footer-background-night"
 				}
 			]
 		},

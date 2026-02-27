@@ -1,14 +1,14 @@
-:is(.home, .blog, .search, .archive, .single-property) {
+.home {
     & .site-main {
         & .block.breadcrumbs--wrapper {
-            background-color: light-dark(var(--wp--preset--color--bullet), var(--wp--preset--color--bullet-night));
+            background-color: var(--wp--preset--color--bullet);
         }
     }
 }
 
 .site-main {
     & .block.breadcrumbs--wrapper {
-        background-color: light-dark(var(--wp--preset--color--tertiary), var(--wp--preset--color--tertiary-night));
+        background-color: var(--wp--preset--color--tertiary);
 
         & .content {
             padding: .5455rem 0;
@@ -31,7 +31,7 @@
                     }
 
                     &:hover {
-                        color: var(--wp--preset--color--focus);
+                        color: var(--wp--preset--color--button);
                     }
 
                     &:focus-visible {

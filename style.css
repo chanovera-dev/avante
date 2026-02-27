@@ -13,3 +13,77 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: avante
 Tags:
 */
+
+#main-footer {
+    background-color: var(--wp--preset--color--footer-background);
+    color: var(--wp--preset--color--base);
+
+    & ul {
+        padding-left: 0;
+        list-style: none;
+
+        & li {
+            & a {
+                transition: color .3s ease;
+
+                &::before {
+                    transition: background-color .3s ease;
+                }
+
+                &:hover {
+                    color: var(--wp--preset--color--primary);
+
+                    &::before {
+                        background-color: var(--wp--preset--color--primary);
+                    }
+                }
+
+                &:focus-visible {
+                    outline: none;
+                    color: var(--wp--preset--color--focus);
+                }
+            }
+        }
+    }
+
+    & .title-section {
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    & .block.middle-footer {
+        & .content {
+            padding: 4rem 0;
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            & .about {
+                max-width: 400px;
+
+                &>*:not(:last-child) {
+                    margin-bottom: 1rem;
+                }
+
+                & .site-bio {
+                    font-size: var(--wp--preset--font-size--small);
+                }
+            }
+
+            & .other-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 3rem;
+            }
+        }
+    }
+
+    & .block.end-footer {
+        & .content {
+            text-align: center;
+            padding: 1rem 0;
+            border-top: 1px dashed #ffffff21;
+        }
+    }
+}

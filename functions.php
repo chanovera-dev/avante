@@ -38,6 +38,7 @@ if (!defined('AVANTE_VERSION')) {
  */
 $inc_files = array(
     'core' => 'inc/core.php',
+    'options-page' => 'inc/options-page.php',
 );
 
 foreach ($inc_files as $key => $relative_path) {
