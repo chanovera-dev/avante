@@ -15,7 +15,7 @@ body {
     }
 }
 
-.detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
+/* .cpt:not(:has(.breadcrumbs--wrapper)), */
 .post:not(:has(.breadcrumbs--wrapper)) {
     position: relative;
     opacity: 0;
@@ -261,19 +261,6 @@ body {
             &:hover .post--tags::-webkit-scrollbar-thumb {
                 background-color: rgba(0, 0, 0, .3);
             }
-
-            /* &::after {
-                position: absolute;
-                content: '';
-                bottom: 0;
-                right: 0;
-                width: 20%;
-                height: 100%;
-                background: linear-gradient(to left,
-                        light-dark(var(--wp--preset--color--background), var(--wp--preset--color--background-night)) 0%,
-                        transparent 100%);
-                z-index: 1;
-            } */
         }
     }
 }
