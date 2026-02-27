@@ -178,6 +178,11 @@ function avante_register_settings()
         'sanitize_callback' => 'esc_url_raw',
     ));
 
+    register_setting('avante_options_group', 'avante_footer_logo', array(
+        'type' => 'string',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
     // Color Settings
     $themes = avante_get_color_themes();
     $default_colors = $themes['default']['colors'];
@@ -225,6 +230,14 @@ function avante_register_settings()
         'avante_home_featured_image',
         __('Imagen destacada Home (URL)', 'avante'),
         'avante_home_featured_image_render',
+        'avante-options',
+        'avante_site_data_section'
+    );
+
+    add_settings_field(
+        'avante_footer_logo',
+        __('Logo del Pie de Página (Imagen)', 'avante'),
+        'avante_footer_logo_render',
         'avante-options',
         'avante_site_data_section'
     );
@@ -352,16 +365,37 @@ function avante_home_featured_image_render()
 {
     $value = get_option('avante_home_featured_image');
     ?>
-    <div class="avante-media-uploader">
+    <div class="avante-media-uploader" data-target="avante_home_featured_image">
         <input type="text" name="avante_home_featured_image" id="avante_home_featured_image" value="<?php echo esc_attr($value); ?>" class="large-text" style="display: none;">
         <div class="avante-media-preview" style="margin-bottom: 10px;">
             <?php if ($value) : ?>
                 <img src="<?php echo esc_url($value); ?>" style="max-width: 200px; height: auto; border: 1px solid #ccc; display: block;">
             <?php endif; ?>
         </div>
-        <button type="button" class="button avante-upload-button" id="avante_upload_btn"><?php _e('Seleccionar imagen', 'avante'); ?></button>
-        <button type="button" class="button avante-remove-button" id="avante_remove_btn" style="<?php echo $value ? '' : 'display:none;'; ?>"><?php _e('Quitar imagen', 'avante'); ?></button>
+        <button type="button" class="button avante-upload-button"><?php _e('Seleccionar imagen', 'avante'); ?></button>
+        <button type="button" class="button avante-remove-button" style="<?php echo $value ? '' : 'display:none;'; ?>"><?php _e('Quitar imagen', 'avante'); ?></button>
         <p class="description"><?php _e('Selecciona una imagen de la biblioteca de medios.', 'avante'); ?></p>
+    </div>
+    <?php
+}
+
+/**
+ * Render the footer logo field.
+ */
+function avante_footer_logo_render()
+{
+    $value = get_option('avante_footer_logo');
+    ?>
+    <div class="avante-media-uploader" data-target="avante_footer_logo">
+        <input type="text" name="avante_footer_logo" id="avante_footer_logo" value="<?php echo esc_attr($value); ?>" class="large-text" style="display: none;">
+        <div class="avante-media-preview" style="margin-bottom: 10px;">
+            <?php if ($value) : ?>
+                <img src="<?php echo esc_url($value); ?>" style="max-width: 200px; height: auto; border: 1px solid #ccc; display: block;">
+            <?php endif; ?>
+        </div>
+        <button type="button" class="button avante-upload-button"><?php _e('Seleccionar imagen', 'avante'); ?></button>
+        <button type="button" class="button avante-remove-button" style="<?php echo $value ? '' : 'display:none;'; ?>"><?php _e('Quitar imagen', 'avante'); ?></button>
+        <p class="description"><?php _e('Selecciona un logo para el pie de página.', 'avante'); ?></p>
     </div>
     <?php
 }
@@ -473,32 +507,39 @@ function avante_render_options_page()
 
         // --- Lógica del Media Uploader ---
         jQuery(document).ready(function($) {
-            var mediaUploader;
-            $('#avante_upload_btn').click(function(e) {
+            $('.avante-upload-button').click(function(e) {
                 e.preventDefault();
-                if (mediaUploader) {
-                    mediaUploader.open();
-                    return;
-                }
-                mediaUploader = wp.media({
+                var button = $(this);
+                var wrapper = button.closest('.avante-media-uploader');
+                var targetId = wrapper.data('target');
+                var input = $('#' + targetId);
+                var preview = wrapper.find('.avante-media-preview');
+                var removeBtn = wrapper.find('.avante-remove-button');
+
+                var mediaUploader = wp.media({
                     title: '<?php _e("Seleccionar Imagen", "avante"); ?>',
                     button: { text: '<?php _e("Usar esta imagen", "avante"); ?>' },
                     multiple: false
                 });
+
                 mediaUploader.on('select', function() {
                     var attachment = mediaUploader.state().get('selection').first().toJSON();
-                    $('#avante_home_featured_image').val(attachment.url);
-                    $('.avante-media-preview').html('<img src="' + attachment.url + '" style="max-width: 200px; height: auto; border: 1px solid #ccc; display: block;">');
-                    $('#avante_remove_btn').show();
+                    input.val(attachment.url);
+                    preview.html('<img src="' + attachment.url + '" style="max-width: 200px; height: auto; border: 1px solid #ccc; display: block;">');
+                    removeBtn.show();
                 });
+
                 mediaUploader.open();
             });
 
-            $('#avante_remove_btn').click(function(e) {
+            $('.avante-remove-button').click(function(e) {
                 e.preventDefault();
-                $('#avante_home_featured_image').val('');
-                $('.avante-media-preview').empty();
-                $(this).hide();
+                var button = $(this);
+                var wrapper = button.closest('.avante-media-uploader');
+                var targetId = wrapper.data('target');
+                $('#' + targetId).val('');
+                wrapper.find('.avante-media-preview').empty();
+                button.hide();
             });
         });
     </script>
