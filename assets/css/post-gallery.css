@@ -6,11 +6,11 @@
     & .post-gallery-wrapper {
         position: relative;
         overflow: hidden;
-        background-color: light-dark(var(--wp--preset--color--tertiary), var(--wp--preset--color--tertiary-night));
+        background-color: var(--wp--preset--color--tertiary);
         opacity: 0;
         transform: translateY(60px);
         animation: post-gallery-entrance .3s ease forwards;
-        box-shadow: inset 0 0 7px light-dark(var(--wp--preset--color--primary-alpha-50), var(--wp--preset--color--primary-alpha-50-night));
+        box-shadow: inset 0 0 7px var(--wp--preset--color--primary-alpha-50);
 
         & .total-images {
             position: absolute;
@@ -21,7 +21,7 @@
             gap: .5rem;
             padding: .5rem .8rem;
             z-index: 1;
-            background-color: light-dark(var(--wp--preset--color--secondary-alpha-50), var(--wp--preset--color--secondary-alpha-50-night));
+            background-color: var(--wp--preset--color--primary-alpha-50);
             backdrop-filter: blur(.5rem);
 
             &:hover {
@@ -93,7 +93,7 @@
 
                     &:not(.active):hover {
                         & img {
-                            border-color: light-dark(var(--wp--preset--color--main), var(--wp--preset--color--main));
+                            border-color: var(--wp--preset--color--main);
                             box-shadow: 0 0 0 1px var(--wp--preset--color--main),
                                 0 0 0 .2rem var(--main-light);
                             opacity: .75;

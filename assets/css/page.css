@@ -10,7 +10,7 @@
             position: relative;
             overflow: hidden;
             text-align: center;
-            background-color: light-dark(var(--wp--preset--color--tertiary), var(--wp--preset--color--tertiary-night));
+            background-color: var(--wp--preset--color--tertiary);
 
             & .content {
                 padding: .5rem 0 3rem;
