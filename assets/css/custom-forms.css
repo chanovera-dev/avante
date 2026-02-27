@@ -141,8 +141,8 @@ textarea {
     }
 
     &.go-contact {
-        background-color: var(--wp--preset--color--green);
-        border-color: var(--wp--preset--color--green);
+        background-color: #008000;
+        border-color: #008000;
         color: var(--wp--preset--color--base);
         box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px, rgba(0, 0, 0, 0.15) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -2px 0px inset;
         font-size: var(--wp--preset--font-size--small);
@@ -163,7 +163,7 @@ textarea {
         &:hover {
             background-color: transparent;
             border-color: transparent;
-            color: var(--wp--preset--color--primary-strong);
+            color: var(--wp--preset--color--contrast);
         }
     }
 
@@ -219,7 +219,7 @@ input[type="checkbox"]:checked+label:before {
     top: 5px;
     width: 1em;
     height: 1em;
-    border: 1px solid light-dark(#0000002c, #ffffff47);
+    border: 1px solid #0000002c;
     transition: all 0.275s;
 }
 
@@ -232,7 +232,7 @@ input[type="checkbox"]:checked+label:after {
     position: absolute;
     top: 0.48em;
     left: 0.2em;
-    background-color: light-dark(var(--wp--preset--color--primary-strong), var(--wp--preset--color--primary-strong));
+    background-color: var(--wp--preset--color--primary);
     transition: all 0.2s;
 }
 

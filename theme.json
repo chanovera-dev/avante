@@ -9,24 +9,9 @@
 			"defaultPalette": false,
 			"palette": [
 				{
-					"color": "#FFFFFF",
-					"name": "Base",
-					"slug": "base"
-				},
-				{
-					"color": "#655731",
-					"name": "Contrast",
-					"slug": "contrast"
-				},
-				{
 					"color": "color-mix(in srgb, currentColor 50%, transparent)",
 					"name": "Contrast Alpha 50",
 					"slug": "contrast-alpha-50"
-				},
-				{
-					"color": "#feda7c",
-					"name": "Primary",
-					"slug": "primary"
 				},
 				{
 					"color": "#feda7c80",
@@ -34,24 +19,9 @@
 					"slug": "primary-alpha-50"
 				},
 				{
-					"color": "#fff4d7",
-					"name": "Secondary",
-					"slug": "secondary"
-				},
-				{
 					"color": "#fff4d780",
 					"name": "Secondary Alpha 50",
 					"slug": "secondary-alpha-50"
-				},
-				{
-					"color": "#fff8e7",
-					"name": "Tertiary",
-					"slug": "tertiary"
-				},
-				{
-					"color": "#cbae63",
-					"name": "Bullet Active",
-					"slug": "bullet-active"
 				},
 				{
 					"color": "color-mix(in srgb, currentColor 60%, transparent)",
@@ -94,24 +64,9 @@
 					"slug": "accent-7"
 				},
 				{
-					"color": "#fffbf0",
-					"name": "Background",
-					"slug": "background"
-				},
-				{
-					"color": "#F90093",
-					"name": "Focus",
-					"slug": "focus"
-				},
-				{
 					"color": "#F9009380",
 					"name": "Focus Alpha 50",
 					"slug": "focus-alpha-50"
-				},
-				{
-					"color": "#AF3E4D",
-					"name": "Button",
-					"slug": "button"
 				}
 			]
 		},

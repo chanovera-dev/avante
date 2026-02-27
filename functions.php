@@ -39,6 +39,8 @@ if (!defined('AVANTE_VERSION')) {
 $inc_files = array(
     'core' => 'inc/core.php',
     'options-page' => 'inc/options-page.php',
+    'sync-properties' => 'inc/easybroker-sync.php',
+    'real-estate-tools' => 'inc/real-estate-tools.php',
 );
 
 foreach ($inc_files as $key => $relative_path) {

@@ -1,5 +1,5 @@
 section.block.posts--body.container--related-posts {
-    background-color: light-dark(var(--wp--preset--color--tertiary), var(--wp--preset--color--tertiary-night));
+    background-color: var(--wp--preset--color--tertiary);
     padding: 3rem 0;
     display: grid;
     gap: 2rem;
@@ -19,7 +19,7 @@ section.block.posts--body.container--related-posts {
                     & .post-body {
                         & .post-body__footer {
                             &::after {
-                                background: linear-gradient(to left, light-dark(var(--wp--preset--color--tertiary), var(--wp--preset--color--tertiary-night)) 0%, transparent 100%);
+                                background: linear-gradient(to left, var(--wp--preset--color--tertiary) 0%, transparent 100%);
                             }
                         }
                     }

@@ -6,9 +6,9 @@
  * It queries posts that share the same categories or tags as the current post
  * and presents them in a carousel/slideshow format.
  *
- * @package Stories V2.1
+ * @package avante V2.1
  * @subpackage Templates
- * @since Stories 2.0.0
+ * @since avante 2.0.0
  */
 ?>
 <section class="block posts--body container--related-posts">
@@ -40,7 +40,7 @@
     if ($related_posts->have_posts()):
         ?>
         <div class="content related-posts--title">
-            <h2 class="title-section"><?php echo esc_html_e('Contenido relacionado', 'stories'); ?></h2>
+            <h2 class="title-section"><?php echo esc_html_e('Contenido relacionado', 'avante'); ?></h2>
         </div>
         <div class="content slideshow-wrapper">
             <div class="related-posts--list slideshow">
@@ -62,11 +62,11 @@
             </div>
             <div class="navigation">
                 <button id="related-products--backward-button" class="slide-prev btn-pagination small-pagination">
-                    <?= stories_get_icon('backward'); ?>
+                    <?= avante_get_icon('backward'); ?>
                 </button>
                 <div class="related-bullets"></div>
                 <button id="related-products--forward-button" class="slide-next btn-pagination small-pagination">
-                    <?= stories_get_icon('forward'); ?>
+                    <?= avante_get_icon('forward'); ?>
                 </button>
             </div>
         </div>
