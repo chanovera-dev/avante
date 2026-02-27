@@ -166,3 +166,56 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Sync Overlay and Animation */
+.avante-sync-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.avante-sync-overlay.active {
+    display: flex;
+}
+
+.avante-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid var(--avante-admin-bg);
+    border-top: 5px solid var(--avante-primary);
+    border-radius: 50%;
+    animation: avante-spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes avante-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.avante-sync-overlay p {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--avante-text);
+    margin: 0;
+}
+
+.avante-sync-overlay .sync-subtext {
+    font-size: 14px;
+    color: var(--avante-text-muted);
+    margin-top: 8px;
+}

@@ -1486,6 +1486,28 @@ function avante_get_eb_api_keys() {
 }
 
 /**
+ * AJAX Handler for Property Synchronization
+ */
+add_action('wp_ajax_avante_sync_properties', function() {
+    check_ajax_referer('avante_eb_sync_nonce', 'security');
+    
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('No tienes permisos suficientes.');
+    }
+
+    if (!function_exists('eb_sync_properties')) {
+        wp_send_json_error('Función de sincronización no encontrada.');
+    }
+
+    // Capture the output of eb_sync_properties() which echoes notices
+    ob_start();
+    eb_sync_properties();
+    $output = ob_get_clean();
+
+    wp_send_json_success($output);
+});
+
+/**
  * Register Property-related sub-menu pages.
  */
 function avante_register_property_admin_pages() {
@@ -1579,6 +1601,19 @@ function avante_property_settings_render() {
         echo '<div class="notice notice-success is-dismissible"><p>' . __('Configuración guardada correctamente.', 'avante') . '</p></div>';
     }
 
+    // Handle manual synchronization
+    if (isset($_POST['avante_sync_now']) && check_admin_referer('avante_eb_sync_nonce')) {
+        if (!current_user_can('manage_options')) {
+            wp_die(__('No tienes permisos suficientes para realizar esta acción.', 'avante'));
+        }
+
+        echo '<div class="notice notice-info is-dismissible"><p>' . __('Sincronizando propiedades con EasyBroker...', 'avante') . '</p></div>';
+        
+        if (function_exists('eb_sync_properties')) {
+            eb_sync_properties();
+        }
+    }
+
     $keys = avante_get_eb_api_keys();
     // Ensure at least one empty field if no keys exist
     if (empty($keys)) $keys = [''];
@@ -1611,7 +1646,32 @@ function avante_property_settings_render() {
                     <?php submit_button(__('Guardar Configuración', 'avante'), 'primary', 'avante_save_settings'); ?>
                 </form>
             </div>
+            <div class="avante-card full-height">
+                <h3><?php _e('Sincronización Manual', 'avante'); ?></h3>
+                <p><?php _e('Utiliza este botón para forzar una sincronización inmediata de tus propiedades con EasyBroker. Este proceso puede tardar unos minutos dependiendo de la cantidad de propiedades.', 'avante'); ?></p>
+                
+                <form id="eb-sync-form" method="post" action="">
+                    <?php wp_nonce_field('avante_eb_sync_nonce', 'avante_eb_sync_nonce_field'); ?>
+                    <button type="button" id="start-sync-button" class="button button-secondary">
+                        <span class="dashicons dashicons-update" style="margin-top: 4px;"></span> <?php _e('Sincronizar ahora', 'avante'); ?>
+                    </button>
+                    <div id="sync-results" style="margin-top: 20px;"></div>
+                </form>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.03); border-radius: 8px; font-size: 0.9em;">
+                    <p style="margin-top: 0;"><strong><?php _e('Sincronización Automática:', 'avante'); ?></strong></p>
+                    <p style="margin-bottom: 0;"><?php _e('El sitio realiza una sincronización automática cada 24 horas para mantener tu catálogo actualizado.', 'avante'); ?></p>
+                </div>
+            </div>
         </div>
+
+        <!-- Sync Overlay -->
+        <div id="avante-sync-overlay" class="avante-sync-overlay">
+            <div class="avante-spinner"></div>
+            <p><?php _e('Sincronizando con EasyBroker', 'avante'); ?></p>
+            <p class="sync-subtext"><?php _e('Por favor, no cierre esta ventana. Esto puede tardar unos minutos.', 'avante'); ?></p>
+        </div>
+    </div>
     </div>
 
     <script>
@@ -1642,6 +1702,41 @@ function avante_property_settings_render() {
                 }
             }
         });
+
+        // Sync Logic
+        const syncButton = document.getElementById('start-sync-button');
+        const overlay = document.getElementById('avante-sync-overlay');
+        const resultsContainer = document.getElementById('sync-results');
+
+        if (syncButton) {
+            syncButton.addEventListener('click', function() {
+                overlay.classList.add('active');
+                resultsContainer.innerHTML = '';
+
+                const data = new FormData();
+                data.append('action', 'avante_sync_properties');
+                data.append('security', document.getElementById('avante_eb_sync_nonce_field').value);
+
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    body: data
+                })
+                .then(response => response.json())
+                .then(response => {
+                    overlay.classList.remove('active');
+                    if (response.success) {
+                        resultsContainer.innerHTML = response.data;
+                    } else {
+                        resultsContainer.innerHTML = `<div class="notice notice-error"><p>${response.data}</p></div>`;
+                    }
+                })
+                .catch(error => {
+                    overlay.classList.remove('active');
+                    resultsContainer.innerHTML = `<div class="notice notice-error"><p>Error en la conexión con el servidor.</p></div>`;
+                    console.error('Error:', error);
+                });
+            });
+        }
     });
     </script>
     <?php
@@ -1770,7 +1865,7 @@ function avante_property_dashboard_render() {
                 <div class="card-content">
                     <h3><?php _e('Sincronización', 'avante'); ?></h3>
                     <span class="card-value"><?php echo esc_html($last_sync); ?></span>
-                    <a href="<?php echo admin_url('edit.php?post_type=property&page=eb-sync'); ?>" class="button button-small"><?php _e('Sincronizar ahora', 'avante'); ?></a>
+                    <a href="<?php echo admin_url('edit.php?post_type=property&page=property-settings'); ?>" class="button button-small"><?php _e('Gestionar', 'avante'); ?></a>
                 </div>
             </div>
 

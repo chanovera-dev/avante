@@ -275,65 +275,9 @@ function eb_set_featured_image($post_id, $image_url) {
 }
 
 /**
- * Registers a custom admin submenu page for EasyBroker property synchronization.
- *
- * This function adds a "Sync" submenu item under the "Properties" post type menu 
- * (`edit.php?post_type=property`) in the WordPress admin dashboard. 
- * When accessed, it loads the callback function `eb_admin_sync_page`, 
- * which should handle the synchronization logic between EasyBroker and WordPress.
- *
- * Key details:
- * - The submenu is only visible to users with the `manage_options` capability (typically Administrators).
- * - The page slug is `eb-sync`, which can be used for direct URL access or conditional logic.
- * - The page title and menu label are both set to "Sincronizar".
- *
- * Example usage:
- *   - URL in admin: /wp-admin/edit.php?post_type=property&page=eb-sync
- *   - Access limited to users with sufficient permissions.
- *
- * Hook: `admin_menu`
+ * Synchronization logic is managed centrally.
+ * The manual trigger UI has been moved to the Property Settings page.
  */
-add_action('admin_menu', function() {
-    add_submenu_page(
-        'edit.php?post_type=property',
-        'Sincronizar',
-        'Sincronizar',
-        'manage_options',
-        'eb-sync',
-        'eb_admin_sync_page'
-    );
-});
-
-/**
- * Renders the EasyBroker synchronization admin page and handles manual sync actions.
- *
- * This function defines the contents and behavior of the "Sincronizar Propiedades" 
- * admin page created under the "Properties" post type menu. It provides a simple 
- * user interface that allows administrators to manually trigger the synchronization 
- * process between EasyBroker and the WordPress site.
- *
- * Behavior details:
- * - When the form is submitted (via the "Iniciar sincronización" button),
- *   it calls the `eb_sync_properties()` function to perform the data sync.
- * - Displays an admin notice indicating that synchronization is in progress.
- * - Wraps the entire UI in standard WordPress admin markup for consistent styling.
- *
- * Intended for: Administrators or users with the `manage_options` capability.
- * Hooked by: The submenu page registered via the `admin_menu` action.
- *
- * Related function: `eb_sync_properties()`
- */
-function eb_admin_sync_page() {
-    if (isset($_POST['eb_sync_now'])) {
-        echo '<div class="updated"><p>Sincronizando propiedades...</p></div>';
-        eb_sync_properties();
-    }
-
-    echo '<div class="wrap"><h1>Sincronizar Propiedades</h1>';
-    echo '<form method="post">';
-    submit_button('Iniciar sincronización', 'primary', 'eb_sync_now');
-    echo '</form></div>';
-}
 
 /**
  * Registers and manages the daily automatic synchronization event with EasyBroker.

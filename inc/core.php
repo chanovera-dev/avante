@@ -640,6 +640,9 @@ function wp_breadcrumbs()
                     case 'video':
                         $format_label = __('Video', 'avante');
                         break;
+                    case 'audio':
+                        $format_label = __('Audio', 'avante');
+                        break;
                     case 'quote':
                         $format_label = __('Cita', 'avante');
                         break;
