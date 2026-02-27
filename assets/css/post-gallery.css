@@ -21,10 +21,11 @@
             gap: .5rem;
             padding: .5rem .8rem;
             z-index: 1;
-            background-color: var(--wp--preset--color--primary-alpha-50);
+            background-color: #ffffff80;
             backdrop-filter: blur(.5rem);
 
             &:hover {
+                background-color: #ffffffc2;
                 cursor: inherit;
             }
         }
