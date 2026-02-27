@@ -570,13 +570,39 @@ function wp_breadcrumbs()
     } elseif (is_year()) {
         echo $current . ' ' . get_the_time('Y');
     } elseif (is_single() && !is_attachment()) {
-        if (get_post_type() != 'post') {
+
+        // PROPIEDADES
+        if (get_post_type() === 'property') {
+            $post_type = get_post_type_object('property');
+            $slug      = $post_type->rewrite['slug'] ?? 'propiedades';
+            $label     = $post_type->labels->name;
+            
+            echo '<a href="' . $homeLink . '/' . $slug . '/">' . $label . '</a>' . $separator;
+            
+            $operation = get_post_meta(get_the_ID(), 'eb_operation', true);
+            $type      = get_post_meta(get_the_ID(), 'eb_property_type', true);
+            
+            if ($operation) {
+                $op_label = ($operation === 'sale') ? 'En venta' : (($operation === 'rental') ? 'En renta' : ucfirst($operation));
+                echo '<span>' . esc_html($op_label) . '</span>' . $separator;
+            }
+            
+            if ($type) {
+                $type_label = function_exists('translate_property_type') ? translate_property_type($type) : ucfirst($type);
+                echo '<span>' . esc_html($type_label) . '</span>' . $separator;
+            }
+            
+            if ($showCurrent == 1) {
+                echo '<span class="current">' . get_the_title() . '</span>';
+            }
+
+        } elseif (get_post_type() != 'post') {
             $post_type = get_post_type_object(get_post_type());
             $slug = $post_type->rewrite;
             $label = (get_post_type() === 'nsfw') ? esc_html__('Contenido NSFW', 'avante') : $post_type->labels->singular_name;
             echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $label . '</a>' . $separator;
             if ($showCurrent == 1)
-                echo $current . ' ';
+                echo '<span class="current">' . get_the_title() . '</span>';
         } else {
             $categories = get_the_category();
             if ($categories) {
@@ -627,7 +653,8 @@ function wp_breadcrumbs()
                 }
             }
 
-            echo $current . ' ';
+            if ($showCurrent == 1)
+                echo $separator . '<span class="current">' . get_the_title() . '</span>';
         }
     } elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
         // Aquí podrías manejar archivos de CPT si quisieras

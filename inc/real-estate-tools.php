@@ -329,6 +329,22 @@ function get_property_land_range() {
 // }
 // add_action('init', 'eb_register_post_type');
 
+/**
+ * Global override for the "property" post type slug.
+ * This ensures the slug is "propiedades" regardless of whether the CPT
+ * is registered by a plugin or the theme.
+ */
+add_filter('register_post_type_args', function($args, $post_type) {
+    if ($post_type === 'property') {
+        $args['rewrite']['slug'] = 'propiedades';
+        
+        // También forzamos el nombre en las etiquetas
+        $args['labels']['name']          = 'Propiedades';
+        $args['labels']['singular_name'] = 'Propiedad';
+    }
+    return $args;
+}, 10, 2);
+
 /****************************************************************************************************************
  * A J A X   P R O P E R T I E S
  ****************************************************************************************************************/
@@ -1503,7 +1519,7 @@ function avante_property_dashboard_assets($hook) {
         return;
     }
 
-    wp_enqueue_style('avante-admin-dashboard', get_template_directory_uri() . '/assets/css/admin-dashboard.css', [], avante_VERSION);
+    wp_enqueue_style('avante-admin-dashboard', get_template_directory_uri() . '/assets/css/admin-dashboard.css', [], AVANTE_VERSION);
 }
 // Remove any previous versions of this hook to avoid duplicates
 remove_action('admin_enqueue_scripts', 'avante_property_dashboard_assets');
