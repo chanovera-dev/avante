@@ -4,57 +4,40 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package avante
- * @since 1.0.0
+ * @package Avante
+ * @since Avante 1.0.0
  */
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
-    <div class="post-body">
-        <header class="post-body__header">
-            <div class="category post--tags">
-                <?php
-                $categories = get_the_category();
-                if (!empty($categories)) {
-                    foreach ($categories as $category) {
-                        // Escapar el nombre y generar link seguro
-                        $cat_name = esc_html($category->name);
-                        $cat_link = esc_url(get_category_link($category->term_id));
-                        $cat_icon = avante_get_icon('category');
-
-                        echo "<a href='{$cat_link}' class='post-tag small glass-backdrop'>{$cat_icon}{$cat_name}</a> ";
-                    }
-                }
-                ?>
-            </div>
+    <div class="post_body">
+        <?php
+        if (has_post_thumbnail()) {
+            echo get_the_post_thumbnail(null, 'loop-thumbnail', ['class' => 'post-thumbnail', 'alt' => get_the_title(), 'loading' => 'lazy']);
+        }
+        ?>
+        <div class="post_body__overlay"></div>
+        <div class="post_body__backdrop"></div>
+        <div class="post_body__header">
             <?php
-            if (has_post_thumbnail()) {
-                echo get_the_post_thumbnail(null, 'loop-thumbnail', ['alt' => get_the_title(), 'loading' => 'lazy']);
-            }
+            $post_id = get_the_ID();
+            $likes_count = avante_get_likes_count($post_id);
+            $has_liked = avante_user_has_liked($post_id);
             ?>
-        </header>
-        <div class="post-body__content">
-            <a class="post--permalink" href="<?php the_permalink(); ?>">
-                <?php the_title('<h2 class="post--title">', '</h2>'); ?>
-            </a>
-            <div class="post--excerpt">
-                <?= get_the_excerpt(); ?>
-            </div>
+            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
+                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
+                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
+            </button>
+        </div>
+        <div class="post_body__content">
+            <?php get_template_part('templates/single/tags'); ?>
             <div class="post--date" style="display: flex; align-items: center; gap: 0.5rem;">
                 <?= avante_get_icon('date'); ?>
                 <p><?= get_the_date('F j, Y'); ?></p>
             </div>
+            <a href="<?= get_the_permalink(); ?>" class="post_body__permalink">
+                <?php the_title('<h2 class="post--title">', '</h2>'); ?>
+            </a>
+            <?php get_template_part('templates/single/author'); ?>
         </div>
-        <footer class="post-body__footer">
-            <div class="tags post--tags">
-                <?php
-                $tags = get_the_tags();
-                if ($tags) {
-                    foreach ($tags as $tag) {
-                        echo '<a class="post-tag small" href="' . esc_url(get_tag_link($tag->term_id)) . '">' . avante_get_icon('tag') . esc_html($tag->name) . '</a>';
-                    }
-                }
-                ?>
-            </div>
-        </footer>
     </div>
 </article>

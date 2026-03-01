@@ -41,6 +41,7 @@ $inc_files = array(
     'options-page' => 'inc/options-page.php',
     'sync-properties' => 'inc/easybroker-sync.php',
     'real-estate-tools' => 'inc/real-estate-tools.php',
+    'likes' => 'inc/likes.php',
 );
 
 foreach ($inc_files as $key => $relative_path) {

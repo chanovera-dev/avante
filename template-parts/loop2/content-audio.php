@@ -4,33 +4,27 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Avante
- * @since Avante 1.0.0
+ * @package avante
+ * @since 2.1.1
  */
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
-    <div class="post_body">
-        <?php
-        if (has_post_thumbnail()) {
-            echo get_the_post_thumbnail(null, 'loop-thumbnail', ['class' => 'post-thumbnail', 'alt' => get_the_title(), 'loading' => 'lazy']);
-        }
-        ?>
-        <div class="post_body__overlay"></div>
-        <div class="post_body__backdrop"></div>
-        <div class="post_body__header">
-            <?php
-            $post_id = get_the_ID();
-            $likes_count = avante_get_likes_count($post_id);
-            $has_liked = avante_user_has_liked($post_id);
-            echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . '</a>';
-            ?>
-            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
-                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
-                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
-            </button>
-        </div>
-        <div class="post_body__content">
-            <?php the_title('<h2 class="post--title">', '</h2>'); ?>
+    <div class="post-body">
+        <header class="post-body__header" style="aspect-ratio: 1 / 1.13949; display: grid; grid-template-rows: 1fr 54px;">
+            <div class="category post--tags">
+                <?= '<a href="' . esc_url(get_post_format_link('audio')) . '" class="post-tag small glass-backdrop">' . avante_get_icon('audio') . esc_html(__('Audio', 'avante')) . '</a>'; ?>
+            </div>
+            
+            <?php if (has_post_thumbnail()) : ?>
+                <?= get_the_post_thumbnail(null, 'loop-thumbnail', ['class' => 'post-thumbnail audio-thumbnail', 'alt' => get_the_title(), 'loading' => 'lazy']); ?>
+            <?php endif; ?>
+
+            <?php $post_title = get_the_title(); ?>
+            <a class="post--permalink btn-pagination small-pagination glass-backdrop" href="<?php the_permalink(); ?>"
+                aria-label="Ver el audio de <?= esc_attr($post_title); ?>">
+                <?= avante_get_icon('permalink'); ?>
+            </a>
+
             <div class="post-audio-wrapper">
                 <?php
                 // =========================================
@@ -73,22 +67,27 @@
                 }
                 ?>
             </div>
+        </header>
+        <div class="post-body__content">
+            <a class="post--permalink" href="<?php the_permalink(); ?>">
+                <?php the_title('<h2 class="post--title">', '</h2>'); ?>
+            </a>
+            <div class="post--date" style="display: flex; align-items: center; gap: 0.5rem;">
+                <?= avante_get_icon('date'); ?>
+                <p><?= get_the_date('F j, Y'); ?></p>
+            </div>
         </div>
-    </div>
-    <?php
-    $tags = get_the_tags();
-    if ($tags) {
-        ?>
-        <div class="post_footer">
+        <footer class="post-body__footer">
             <div class="tags post--tags">
                 <?php
-                foreach ($tags as $tag) {
-                    echo '<a class="post-tag small" href="' . esc_url(get_tag_link($tag->term_id)) . '">' . avante_get_icon('tag') . esc_html($tag->name) . '</a>';
+                $tags = get_the_tags();
+                if ($tags) {
+                    foreach ($tags as $tag) {
+                        echo '<a class="post-tag small" href="' . esc_url(get_tag_link($tag->term_id)) . '">' . avante_get_icon('tag') . esc_html($tag->name) . '</a>';
+                    }
                 }
                 ?>
             </div>
-        </div>
-    <?php
-    }
-    ?>
+        </footer>
+    </div>
 </article>
