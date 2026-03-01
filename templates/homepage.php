@@ -1,0 +1,156 @@
+<?php
+/**
+ * Template Name: Homepage Custom Filter
+ * Template Post Type: page
+ * 
+ * Plantilla de inicio con filtros AJAX por categoría y toggle NSFW.
+ */
+
+get_header(); 
+
+// Obtener todas las categorías ordenadas
+$categories = get_categories([
+    'orderby' => 'name',
+    'order'   => 'ASC',
+    'hide_empty' => true
+]);
+?>
+
+<main id="main" class="site-main homepage-wrapper" role="main">
+    <!-- SECCIÓN DE FILTROS -->
+    <section class="block filters-section">
+        <div class="content">
+            <div class="home-filters-control">
+                
+                <!-- 1. Filtro Categorías -->
+                <div class="categories-filter-wrapper">
+                    <ul class="cat-filters-list">
+                        <li>
+                            <button type="button" class="cat-filter-btn active" data-cat-id="0">
+                                <?php esc_html_e('Todos', 'avante'); ?>
+                            </button>
+                        </li>
+                        <?php foreach($categories as $cat): ?>
+                            <li>
+                                <button type="button" class="cat-filter-btn" data-cat-id="<?php echo esc_attr($cat->term_id); ?>">
+                                    <?php echo esc_html($cat->name); ?>
+                                </button>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+
+                <!-- 2. Toggle NSFW -->
+                <div class="nsfw-filter-wrapper">
+                    <div class="nsfw-toggle-wrapper">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="nsfw-toggle-input">
+                            <span class="slider"></span>
+                        </label>
+                        <label for="nsfw-toggle-input" class="nsfw-toggle-label">
+                            <?php esc_html_e('NSFW', 'avante'); ?>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- GRID DE RESULTADOS -->
+    <section class="block posts--body">
+        <div class="content">
+            <div id="ajax-posts-container">
+                <?php
+                // 1. Mostrar artículo destacado desde opciones si existe
+                $f_img_url = get_option('avante_home_featured_image');
+
+                if (!empty($f_img_url)) : 
+                    // Calcular Aspect Ratio con la misma lógica del loop
+                    $ratio = 1; // Default cuadrado
+                    $width = 300;
+                    $height = 300;
+
+                    $f_img_id = attachment_url_to_postid($f_img_url);
+
+                    if ($f_img_id) {
+                        $img_data = wp_get_attachment_image_src($f_img_id, 'medium_large');
+                        if ($img_data) {
+                            $width = $img_data[1];
+                            $height = $img_data[2];
+                            // Evitar división por cero
+                            if ($height > 0) {
+                                $ratio = $width / $height;
+                            }
+                        }
+                    }
+                    ?>
+                    <div class="ajax-item-wrapper featured-home-item" 
+                        style="flex-grow: <?php echo esc_attr($ratio * 100); ?>; flex-basis: calc( var(--row-height, 250px) * <?php echo esc_attr($ratio); ?> );" 
+                        data-ratio="<?php echo esc_attr($ratio); ?>"
+                        data-year="<?php echo date('Y'); ?>">
+                        
+                        <article class="justified-post" style="padding-bottom: <?php echo esc_attr((1 / $ratio) * 100); ?>%;">
+                            <?php if ($f_img_id) : ?>
+                                <?php echo wp_get_attachment_image($f_img_id, 'medium_large', false, [
+                                    'class' => 'post-thumbnail'
+                                ]); ?>
+                            <?php else : ?>
+                                <img src="<?php echo esc_url($f_img_url); ?>" class="post-thumbnail" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                            <?php endif; ?>
+                        </article>
+                    </div>
+                <?php endif; ?>
+
+                <?php
+                // Query Inicial (Solo Posts normales, Status publish)
+                // Reproducimos el estado inicial "Todos + No NSFW"
+                $initial_args = [
+                    'post_type'      => 'post',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => 24, // Forzamos 12 posts
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                    'tax_query'      => [
+                        [
+                            'taxonomy' => 'post_format',
+                            'field'    => 'slug',
+                            'terms'    => ['post-format-image', 'post-format-gallery'],
+                            'operator' => 'IN'
+                        ]
+                    ]
+                ];
+                $initial_query = new WP_Query($initial_args);
+
+                if ($initial_query->have_posts()) :
+                    while ($initial_query->have_posts()) :
+                        $initial_query->the_post();
+                        // Importante: El wrapper ahora está dentro del template part
+                        get_template_part('template-parts/loop/content', 'ajax');
+                    endwhile;
+                else :
+                    echo '<div class="no-results">' . esc_html__('No hay contenido para mostrar.', 'avante') . '</div>';
+                endif;
+                
+                // Guardar max_pages para pasarlo al botón inicial
+                $max_pages = $initial_query->max_num_pages;
+                wp_reset_postdata();
+                ?>
+            </div>
+
+            <!-- Botón de Paginación -->
+            <div class="pagination-wrapper" style="text-align: center; margin-top: 2rem;">
+                <button id="load-more-btn" class="btn" 
+                    data-page="1" 
+                    data-max-pages="<?php echo esc_attr($max_pages); ?>"
+                    style="<?php echo ($max_pages <= 1) ? 'display: none;' : ''; ?>">
+                    <span class="btn-text"><?php esc_html_e('Cargar más', 'avante'); ?></span>
+                    <span class="btn-loader spinner" style="display: none;"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<?php get_footer(); ?>

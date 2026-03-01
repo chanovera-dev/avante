@@ -15,7 +15,7 @@ body {
     }
 }
 
-/* .cpt:not(:has(.breadcrumbs--wrapper)), */
+.nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)) {
     position: relative;
     opacity: 0;
@@ -399,6 +399,7 @@ body {
     }
 }
 
+.nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)) {
     min-height: 400px;
     padding: 0;

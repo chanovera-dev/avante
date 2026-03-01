@@ -1255,6 +1255,8 @@ add_action('pre_get_posts', 'avante_nsfw_archive_query');
  */
 function avante_enqueue_home_assets() {
     if (is_page_template('templates/homepage.php')) {
+        $a = avante_get_assets();
+
         // CSS propio para la home
         wp_enqueue_style(
             'avante-home-ajax', 
@@ -1282,6 +1284,12 @@ function avante_enqueue_home_assets() {
             time(), 
             true
         );
+
+        // Lógica de Likes
+        avante_enqueue_script('likes-script', $a['js']['likes-script']);
+        wp_localize_script('likes-script', 'avante_likes_obj', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+        ]);
 
         wp_localize_script('avante-home-ajax', 'avante_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
