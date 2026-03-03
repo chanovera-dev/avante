@@ -1,0 +1,203 @@
+/*
+ * =========================================================================
+ * ROUNDED
+ * =========================================================================
+ */
+
+.nsfw:not(:has(.breadcrumbs--wrapper)),
+.post:not(:has(.breadcrumbs--wrapper)),
+.property {
+    border-radius: 1.7rem;
+
+    &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-audio, .format-property):has(.post_body) {
+        & .post_body {
+            border-radius: 1.7rem;
+
+            &:is(.format-audio) {
+                & .post_body {
+                    border-radius: 1.7rem;
+                }
+            }
+
+            & .post__backdrop {
+                border-radius: 1.7rem;
+            }
+
+            & .post__overlay {
+                border-bottom-left-radius: 1.7rem;
+                border-bottom-right-radius: 1.7rem;
+            }
+
+            &::before,
+            &::after {
+                border-radius: 1.7rem;
+            }
+
+            & .post__header {
+                & .format-post-tag {
+                    top: 1rem !important;
+                    border-radius: .5rem;
+                }
+            }
+
+            & .post__content {
+                border-radius: 1rem;
+
+                & .property__metadata {
+                    &:has(.container) {
+                        &:has(.container .btn) {
+                            & .container {
+                                .btn {
+                                    border-radius: .5rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            & .gallery-wrapper {
+                & .gallery {
+                    & .slide {
+                        border-radius: 1.7rem;
+
+                        & .loop-thumbnail {
+                            border-radius: 1.7rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        & .wp-post-image {
+            border-radius: 1.7rem;
+        }
+    }
+
+    &>.post_footer {
+        border-radius: .5rem;
+
+        & .post--tags {
+            & .post-tag {
+                border-radius: .3rem;
+            }
+        }
+    }
+}
+
+& .pagination.navigation {
+    & .nav-links {
+        & .page-numbers {
+            border-radius: .5rem;
+        }
+    }
+}
+
+/*
+ * =========================================================================
+ * ROUNDED chromium
+ * =========================================================================
+ */
+
+.nsfw:not(:has(.breadcrumbs--wrapper)),
+.post:not(:has(.breadcrumbs--wrapper)),
+.property {
+    border-radius: 3rem;
+    corner-shape: squircle;
+
+    &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-audio, .format-property):has(.post_body) {
+        & .post_body {
+            border-radius: 3rem;
+            corner-shape: squircle;
+
+            &:is(.format-audio) {
+                & .post_body {
+                    border-radius: 3rem;
+                    corner-shape: squircle;
+                }
+            }
+
+            & .post__backdrop {
+                border-radius: 3rem;
+                corner-shape: squircle;
+            }
+
+            & .post__overlay {
+                border-bottom-left-radius: 3rem;
+                border-bottom-right-radius: 3rem;
+                corner-shape: squircle;
+            }
+
+            &::before,
+            &::after {
+                border-radius: 3rem;
+                corner-shape: squircle;
+            }
+
+            & .post__header {
+                & .format-post-tag {
+                    border-radius: 1rem;
+                    corner-shape: squircle;
+                }
+            }
+
+            & .post__content {
+                border-radius: 2rem;
+                corner-shape: squircle;
+
+                & .property__metadata {
+                    &:has(.container) {
+                        &:has(.container .btn) {
+                            & .container {
+                                .btn {
+                                    border-radius: 1rem;
+                                    corner-shape: squircle;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            & .gallery-wrapper {
+                & .gallery {
+                    & .slide {
+                        border-radius: 3rem;
+                        corner-shape: squircle;
+
+                        & .loop-thumbnail {
+                            border-radius: 3rem;
+                            corner-shape: squircle;
+                        }
+                    }
+                }
+            }
+        }
+
+        & .wp-post-image {
+            border-radius: 3rem;
+            corner-shape: squircle;
+        }
+    }
+
+    &>.post_footer {
+        border-radius: 1rem;
+        corner-shape: squircle;
+
+        & .post--tags {
+            & .post-tag {
+                border-radius: .6rem;
+                corner-shape: squircle;
+            }
+        }
+    }
+
+    & .pagination.navigation {
+        & .nav-links {
+            & .page-numbers {
+                border-radius: 1rem;
+                corner-shape: squircle;
+            }
+        }
+    }
+}

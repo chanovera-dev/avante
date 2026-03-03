@@ -204,6 +204,7 @@ function avante_get_assets()
             'wp-root' => "$assets_path/css/wp-root.css",
             'custom-forms' => "$assets_path/css/custom-forms.css",
             'shapes' => "$assets_path/css/shapes.css",
+            'rounded-shapes' => "$assets_path/css/rounded-shapes.css",
             'wp-logged-in' => "$assets_path/css/wp-logged-in.css",
             'normalize' => "$assets_path/css/normalize.css",
 
@@ -257,6 +258,11 @@ function footer_components()
     avante_enqueue_style('wp-root', $a['css']['wp-root']);
     avante_enqueue_style('custom-forms', $a['css']['custom-forms']);
     avante_enqueue_style('shapes', $a['css']['shapes']);
+    
+    if (get_option('avante_rounded')) {
+        avante_enqueue_style('rounded-shapes', $a['css']['rounded-shapes']);
+    }
+
     avante_enqueue_style('normalize', $a['css']['normalize']);
     avante_enqueue_script('global-script', $a['js']['global-script']);
 

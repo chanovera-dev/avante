@@ -183,6 +183,12 @@ function avante_register_settings()
         'sanitize_callback' => 'esc_url_raw',
     ));
 
+    register_setting('avante_options_group', 'avante_rounded', array(
+        'type' => 'boolean',
+        'sanitize_callback' => 'rest_sanitize_boolean',
+        'default' => false,
+    ));
+
     // Color Settings
     $themes = avante_get_color_themes();
     $default_colors = $themes['default']['colors'];
@@ -238,6 +244,14 @@ function avante_register_settings()
         'avante_footer_logo',
         __('Logo del Pie de Página (Imagen)', 'avante'),
         'avante_footer_logo_render',
+        'avante-options',
+        'avante_site_data_section'
+    );
+
+    add_settings_field(
+        'avante_rounded',
+        __('Activar Formas Redondeadas', 'avante'),
+        'avante_rounded_render',
         'avante-options',
         'avante_site_data_section'
     );
@@ -397,6 +411,19 @@ function avante_footer_logo_render()
         <button type="button" class="button avante-remove-button" style="<?php echo $value ? '' : 'display:none;'; ?>"><?php _e('Quitar imagen', 'avante'); ?></button>
         <p class="description"><?php _e('Selecciona un logo para el pie de página.', 'avante'); ?></p>
     </div>
+    <?php
+}
+
+/**
+ * Render the rounded checkbox field.
+ */
+function avante_rounded_render()
+{
+    $value = get_option('avante_rounded');
+    ?>
+    <input type="checkbox" name="avante_rounded" id="avante_rounded" value="1" <?php checked(1, $value); ?>>
+    <label for="avante_rounded"><?php _e('Activar las curvas en las formas del sitio.', 'avante'); ?></label>
+    <p class="description"><?php _e('Si se activa, se cargará el estilo "rounded-shapes" para suavizar los bordes de los elementos.', 'avante'); ?></p>
     <?php
 }
 

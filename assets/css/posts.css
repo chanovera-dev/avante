@@ -1,5 +1,7 @@
 .site-main {
     & .block.posts--body {
+        border-top: 1px solid var(--wp--preset--color--base);
+
         & .content {
             padding: 3rem 0;
             position: relative;
