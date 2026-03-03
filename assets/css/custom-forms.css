@@ -94,7 +94,7 @@ textarea {
     padding: .5rem 1rem;
     background-color: var(--wp--preset--color--button);
     border: 1px solid var(--wp--preset--color--button);
-    color: var(--wp--preset--color--contrast);
+    color: var(--wp--preset--color--base);
     transition: all .3s ease;
     background-image: linear-gradient(-60deg, transparent, transparent 40%, #ffffff44 40%, #ffffff44 60%, transparent 60%, transparent 100%);
     background-size: 200% 100%;
