@@ -11,6 +11,7 @@
                 align-items: center;
                 flex-wrap: wrap;
                 width: 100%;
+                font-size: var(--wp--preset--font-size--small);
 
                 & .go-home {
                     display: inline-flex;
@@ -38,7 +39,7 @@
                 }
 
                 & :is(h1.page-title, h3.property-title) {
-                    font-size: var(--wp--preset--font-size--medium);
+                    font-size: var(--wp--preset--font-size--small);
                     font-weight: 400;
                 }
 

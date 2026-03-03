@@ -80,7 +80,7 @@
                     </div>
                 </button>
                 <?php if (has_nav_menu('primary')) : ?>
-                    <button id="menu-mobile__button" class="menu-mobile__button btn-pagination small-pagination" onclick="toggleMenuMobile()" aria-label="Open menu">
+                    <button id="menu-mobile__button" class="menu-mobile__button" onclick="toggleMenuMobile()" aria-label="Open mobile menu">
                         <span class="bar"></span>
                     </button>
                 <?php endif; ?>

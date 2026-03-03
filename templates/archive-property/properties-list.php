@@ -25,7 +25,8 @@
         if ( $query->have_posts() ) {
             while ( $query->have_posts() ) {
                 $query->the_post();
-                get_template_part('template-parts/loop/content', 'property');
+                $loop_design = get_option('avante_loop_design', 'loop');
+                get_template_part('template-parts/' . $loop_design . '/content', 'property');
             }
 
             // Output pagination — IMPORTANT: use $paged here

@@ -205,6 +205,7 @@ function avante_get_assets()
             'custom-forms' => "$assets_path/css/custom-forms.css",
             'shapes' => "$assets_path/css/shapes.css",
             'rounded-shapes' => "$assets_path/css/rounded-shapes.css",
+            'archive-design' => "$assets_path/css/archive.css",
             'wp-logged-in' => "$assets_path/css/wp-logged-in.css",
             'normalize' => "$assets_path/css/normalize.css",
 
@@ -258,6 +259,7 @@ function footer_components()
     avante_enqueue_style('wp-root', $a['css']['wp-root']);
     avante_enqueue_style('custom-forms', $a['css']['custom-forms']);
     avante_enqueue_style('shapes', $a['css']['shapes']);
+    avante_enqueue_style('archive-design', $a['css']['archive-design']);
     
     if (get_option('avante_rounded')) {
         avante_enqueue_style('rounded-shapes', $a['css']['rounded-shapes']);
@@ -1371,7 +1373,8 @@ function avante_filter_posts_handler() {
             
             // Usamos tu partial existente.
             // El wrapper se genera DENTRO del template part para calcular aspect-ratio
-            get_template_part('template-parts/loop/content', 'ajax');
+            $loop_design = get_option('avante_loop_design', 'loop');
+            get_template_part('template-parts/' . $loop_design . '/content', 'ajax');
         }
         $html = ob_get_clean();
 

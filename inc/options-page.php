@@ -189,6 +189,12 @@ function avante_register_settings()
         'default' => false,
     ));
 
+    register_setting('avante_options_group', 'avante_loop_design', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' => 'loop',
+    ));
+
     // Color Settings
     $themes = avante_get_color_themes();
     $default_colors = $themes['default']['colors'];
@@ -252,6 +258,14 @@ function avante_register_settings()
         'avante_rounded',
         __('Activar Formas Redondeadas', 'avante'),
         'avante_rounded_render',
+        'avante-options',
+        'avante_site_data_section'
+    );
+
+    add_settings_field(
+        'avante_loop_design',
+        __('Diseño del Loop (Posts)', 'avante'),
+        'avante_loop_design_render',
         'avante-options',
         'avante_site_data_section'
     );
@@ -425,6 +439,37 @@ function avante_rounded_render()
     <label for="avante_rounded"><?php _e('Activar las curvas en las formas del sitio.', 'avante'); ?></label>
     <p class="description"><?php _e('Si se activa, se cargará el estilo "rounded-shapes" para suavizar los bordes de los elementos.', 'avante'); ?></p>
     <?php
+}
+
+/**
+ * Render the loop design dropdown field.
+ */
+function avante_loop_design_render()
+{
+    $value = get_option('avante_loop_design', 'loop');
+    $template_parts_dir = get_template_directory() . '/template-parts/';
+    
+    // Scan for directories starting with 'loop'
+    $loops = array();
+    if (is_dir($template_parts_dir)) {
+        $dirs = scandir($template_parts_dir);
+        foreach ($dirs as $dir) {
+            if ($dir !== '.' && $dir !== '..' && is_dir($template_parts_dir . $dir) && strpos($dir, 'loop') === 0) {
+                $loops[] = $dir;
+            }
+        }
+    }
+
+    if (empty($loops)) {
+        $loops = array('loop'); // Fallback
+    }
+
+    echo '<select name="avante_loop_design" id="avante_loop_design">';
+    foreach ($loops as $loop) {
+        echo '<option value="' . esc_attr($loop) . '" ' . selected($value, $loop, false) . '>' . esc_html($loop) . '</option>';
+    }
+    echo '</select>';
+    echo '<p class="description">' . __('Selecciona el diseño para el listado de posts (carpetas loop, loop2, etc. en template-parts).', 'avante') . '</p>';
 }
 
 /**

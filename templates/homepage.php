@@ -126,7 +126,8 @@ $categories = get_categories([
                     while ($initial_query->have_posts()) :
                         $initial_query->the_post();
                         // Importante: El wrapper ahora está dentro del template part
-                        get_template_part('template-parts/loop/content', 'ajax');
+                        $loop_design = get_option('avante_loop_design', 'loop');
+                        get_template_part('template-parts/' . $loop_design . '/content', 'ajax');
                     endwhile;
                 else :
                     echo '<div class="no-results">' . esc_html__('No hay contenido para mostrar.', 'avante') . '</div>';
