@@ -4,6 +4,34 @@
  * =========================================================================
  */
 
+/* HEADER */
+#main-header {
+    & .block {
+        & .content {
+            & .avante-navigation {
+                & .avante-custom-searchform {
+                    & .section {
+                        & .buttons-container {
+                            & #searchsubmit {
+                                border-radius: .3rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            & .search-mobile__button {
+                border-radius: .4rem;
+
+                &::before {
+                    border-radius: .4rem;
+                }
+            }
+        }
+    }
+}
+
+/* POSTS */
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
 .property {
@@ -93,12 +121,50 @@
     }
 }
 
+/* FORMS */
+input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
+textarea,
+select {
+    border-radius: .4rem;
+}
+
 /*
  * =========================================================================
  * ROUNDED chromium
  * =========================================================================
  */
 
+/* HEADER */
+#main-header {
+    & .block {
+        & .content {
+            & .avante-navigation {
+                & .avante-custom-searchform {
+                    & .section {
+                        & .buttons-container {
+                            & #searchsubmit {
+                                border-radius: .6rem;
+                                corner-shape: squircle;
+                            }
+                        }
+                    }
+                }
+            }
+
+            & .search-mobile__button {
+                border-radius: .8rem;
+                corner-shape: squircle;
+
+                &::before {
+                    border-radius: .8rem;
+                    corner-shape: squircle;
+                }
+            }
+        }
+    }
+}
+
+/* POSTS */
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
 .property {
@@ -200,4 +266,12 @@
             }
         }
     }
+}
+
+/* FORMS */
+input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
+textarea,
+select {
+    border-radius: .8rem;
+    corner-shape: squircle;
 }

@@ -77,7 +77,7 @@
         ?>
         <div class="post_footer">
         <div class="format-type">
-            <?php echo '<a href="' . esc_url(get_post_format_link('quote')) . '" class="format-post-tag">' . avante_get_icon('quote') . '</a>'; ?>
+            <?php echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . '</a>'; ?>
         </div>
         <div class="post--tags__wrapper">
             <div class="post--tags">

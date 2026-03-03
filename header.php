@@ -2,7 +2,7 @@
 /**
  * The header for our theme
  *
- * This is the template that displays all of the <head> section and everything up until <header id="main-header">
+ * This is the template that displays all of the <head> section and everything up until <div id="content">
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
@@ -25,4 +25,65 @@
     <?php if (function_exists('wp_body_open')) {
         wp_body_open();
     } ?>
-    <header id="main-header" role="banner" aria-label="<?php echo esc_attr__('Main header', 'avante'); ?>"></header>
+    <header id="main-header" role="banner" aria-label="<?php echo esc_attr__('Main header', 'avante'); ?>">
+        <div class="glass-backdrop"></div>
+        <div class="block">
+            <div class="content">
+                <div class="site-brand">
+                    <?php
+                    if (!has_custom_logo()) {
+                        /* Safe site title output */
+                        printf('<a href="%s" aria-label="%s">%s</a>', esc_url(home_url('/')), esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
+                    } else {
+                        the_custom_logo();
+                    }
+                    ?>
+                </div>
+                <div class="avante-navigation">
+                        <?php
+                        $menu_html = wp_nav_menu( array(
+                            'theme_location'  => 'primary',
+                            'container'       => 'nav',
+                            'container_class' => 'main-navigation',
+                            'echo'            => false,
+                            'fallback_cb'     => false,
+                        ) );
+
+                        if ( $menu_html ) {
+                            // insertar el backdrop justo después de la apertura del <nav ...>
+                            $backdrop = '<div class="glass-backdrop glass-bright" aria-hidden="true"></div>';
+                            $menu_html = preg_replace(
+                                '/(<nav\b[^>]*class=["\\\'][^"\\\']*main-navigation[^"\\\']*["\\\'][^>]*>)/i',
+                                '$1' . $backdrop,
+                                $menu_html,
+                                1
+                            );
+                            echo $menu_html;
+                        }
+                    ?>
+                    <form role="search" method="get" class="avante-custom-searchform" id="avante-custom-searchform" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                        <div class="section">
+                            <label class="screen-reader-text" for="s"><?php esc_html__('Buscar', 'avante'); ?></label>
+                            <input class="wp-block-search__input" type="text" value="" name="s" id="s" placeholder="<?php esc_html_e('Buscar', 'avante'); ?>">
+                            <div class="buttons-container">
+                                <button type="submit" id="searchsubmit" value="Search" aria-label="Activate the search">
+                                    <?= avante_get_icon('search'); ?>
+                                </button>
+                                <div class="close-mobile-searchform" onclick="closeMobileCustomSearchform()" aria-label="Close mobile search"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <button id="search-mobile__button" class="search-mobile__button" onclick="toggleCustomSearchform()" aria-label="Open search">
+                    <div class="icon--wrapper">
+                        <div class="bar"></div>
+                    </div>
+                </button>
+                <?php if (has_nav_menu('primary')) : ?>
+                    <button id="menu-mobile__button" class="menu-mobile__button btn-pagination small-pagination" onclick="toggleMenuMobile()" aria-label="Open menu">
+                        <span class="bar"></span>
+                    </button>
+                <?php endif; ?>
+            </div>
+        </div>
+    </header>

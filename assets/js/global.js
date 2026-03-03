@@ -100,12 +100,14 @@ document.addEventListener('keydown', function (event) {
 
 function toggleCustomSearchform() {
     const button = document.querySelector('.search-mobile__button')
-    const searchform = document.querySelector('#custom-searchform')
+    const nav = document.querySelector('.main-navigation')
+    const searchform = document.querySelector('.avante-custom-searchform')
 
     if (!button || !searchform) return
 
     const isActive = button.classList.toggle('active')
     searchform.classList.toggle('show')
+    nav.classList.toggle('hide')
 
     if (isActive) {
         setTimeout(() => {
@@ -118,7 +120,7 @@ function toggleCustomSearchform() {
 
 function closeCustomSearchform() {
     const button = document.querySelector('.search-mobile__button')
-    const searchform = document.querySelector('#custom-searchform')
+    const searchform = document.querySelector('.avante-custom-searchform')
 
     if (button) button.classList.remove('active')
     if (searchform) searchform.classList.remove('show')
