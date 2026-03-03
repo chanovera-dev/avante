@@ -1,8 +1,8 @@
 section.block.posts--body.container--related-posts {
     background-color: var(--wp--preset--color--tertiary);
     padding: 3rem 0;
+    padding-bottom: 1rem;
     display: grid;
-    gap: 2rem;
 
     & .content {
         &.related-posts--title {
@@ -13,18 +13,7 @@ section.block.posts--body.container--related-posts {
 
         &.slideshow-wrapper {
             width: var(--max-width--content);
-
-            & .slideshow {
-                & .post:not(:has(header.block.entry-header)) {
-                    & .post-body {
-                        & .post-body__footer {
-                            &::after {
-                                background: linear-gradient(to left, var(--wp--preset--color--tertiary) 0%, transparent 100%);
-                            }
-                        }
-                    }
-                }
-            }
+            padding: 2rem 0;
         }
     }
 }

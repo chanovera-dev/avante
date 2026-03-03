@@ -10,10 +10,10 @@
             position: relative;
             overflow: hidden;
             text-align: center;
-            background-color: var(--wp--preset--color--tertiary);
+            background-color: var(--wp--preset--color--background);
 
             & .content {
-                padding: .5rem 0 3rem;
+                padding-top: .5rem;
 
                 & .post--tags {
                     flex-wrap: wrap;
