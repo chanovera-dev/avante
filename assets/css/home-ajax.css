@@ -192,14 +192,14 @@ input:checked+.slider:before {
     overflow: hidden;
     box-shadow: var(--post-shadow);
     transition: box-shadow .3s ease;
-    /* opacity: 0;
+    opacity: 0;
     transform: translateY(60px);
     transition: opacity .3s ease, transform .3s ease;
 
     &.animate-in {
         opacity: 1;
         transform: translateY(0);
-    } */
+    }
 
     &:hover {
         box-shadow: var(--post-shadow-hover);

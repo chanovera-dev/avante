@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const html = await res.text();
             results.innerHTML = html;
 
+            // Re-lanzar animaciones de entrada
+            if (typeof animateIn === 'function') {
+                animateIn('.property');
+            }
+
             // update currentPage from the requested page
             currentPage = parseInt(paged) || 1;
 

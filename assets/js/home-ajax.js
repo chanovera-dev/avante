@@ -101,6 +101,11 @@ jQuery(document).ready(function ($) {
                         $container.html(res.data.html);
                     }
 
+                    // Re-lanzar animaciones de entrada
+                    if (typeof animateIn === 'function') {
+                        animateIn('.ajax-item-wrapper');
+                    }
+
                     // Actualizar etiquetas de año
                     setTimeout(updateYearLabels, 150); // Pequeño delay para asegurar que el grid se asentó
 

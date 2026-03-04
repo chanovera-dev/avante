@@ -1,3 +1,3 @@
 document.addEventListener('DOMContentLoaded', () => {
-    animateIn('.post, .nsfw, .detras-del-espejo');
+    animateIn('.post, .nsfw, .detras-del-espejo, .ajax-item-wrapper');
 });

@@ -230,7 +230,7 @@ function avante_register_settings()
 
     add_settings_field(
         'avante_header_height',
-        __('Altura del Cabezal (px)', 'avante'),
+        __('Alto del logo (px)', 'avante'),
         'avante_header_height_render',
         'avante-options',
         'avante_site_data_section'
@@ -238,7 +238,7 @@ function avante_register_settings()
 
     add_settings_field(
         'avante_footer_title',
-        __('Título Sección Pie de Página', 'avante'),
+        __('Título del footer', 'avante'),
         'avante_footer_title_render',
         'avante-options',
         'avante_site_data_section'
@@ -262,7 +262,7 @@ function avante_register_settings()
 
     add_settings_field(
         'avante_footer_logo',
-        __('Logo del Pie de Página (Imagen)', 'avante'),
+        __('Logo del footer (esto sustituye el título del footer)', 'avante'),
         'avante_footer_logo_render',
         'avante-options',
         'avante_site_data_section'

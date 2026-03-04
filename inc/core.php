@@ -1116,11 +1116,11 @@ function avante_has_related_posts($post_id = null)
 function posts_styles()
 {
     // Skip if we're on the homepage template (it has its own scripts)
-    if (is_page_template('templates/homepage.php')) {
-        return;
-    }
+    // if (is_page_template('templates/homepage.php')) {
+    //     return;
+    // }
 
-    if (is_home() || is_archive() || is_search() || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo')) {
+    if (is_home() || is_archive() || is_search() || is_page_template('templates/homepage.php') || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo')) {
         $a = avante_get_assets();
 
         avante_enqueue_style('breadcrumbs', $a['css']['breadcrumbs']);
