@@ -60,6 +60,7 @@
 /* POSTS */
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
+.detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
 .property {
     &:has(.post_body) {
         border-radius: 1.7rem;
@@ -223,6 +224,7 @@ select {
 /* POSTS */
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
+.detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
 .property {
     &:has(.post_body) {
         border-radius: 3rem;

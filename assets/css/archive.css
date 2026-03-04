@@ -388,6 +388,7 @@
 
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
+.detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
 .property {
     &:has(.post_body) {
         &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-audio, .format-property):has(.post_body) {
@@ -1108,6 +1109,20 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        &:not(:has(.wp-post-image)) {
+            &:has(.post_body) {
+                &:is(.format-standard):has(.post_body) {
+                    & .post_body {
+                        min-height: 210px;
+
+                        & .post__content {
+                            opacity: 1 !important;
+                        }
+                    }
+                }
+            }
         }
 
         &:has(.gallery-wrapper) {

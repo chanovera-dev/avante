@@ -526,6 +526,16 @@ function wp_breadcrumbs()
         }
     }
 
+    // 2.1 ARCHIVO CPT detras-del-espejo
+    elseif (is_post_type_archive('detras-del-espejo')) {
+        if ($paged === 1) {
+            echo '<span>' . esc_html__('Últimos artículos de', 'avante') . '</span>';
+            echo '<h1 class="page-title">' . esc_html__('"Detrás del espejo"', 'avante') . '</h1>';
+        } else {
+            echo '<span>' . esc_html__('Página ', 'avante') . $paged . esc_html__(' de ', 'avante') . '</span>' . '<h1 class="page-title">' . esc_html__('todo el contenido de "Detrás del espejo"', 'avante') . '</h1>';
+        }
+    }
+
     // 3. CATEGORÍA
     elseif (is_category()) {
         if ($paged === 1) {
@@ -618,6 +628,15 @@ function wp_breadcrumbs()
             echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $label . '</a>' . $separator;
             if ($showCurrent == 1)
                 echo '<span class="current">' . get_the_title() . '</span>';
+
+        } elseif (get_post_type() === 'detras-del-espejo') {
+            $post_type = get_post_type_object('detras-del-espejo');
+            $slug = $post_type->rewrite;
+            $label = (get_post_type() === 'detras-del-espejo') ? esc_html__('Detrás del espejo', 'avante') : $post_type->labels->singular_name;
+            echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $label . '</a>' . $separator;
+            if ($showCurrent == 1)
+                echo '<span class="current">' . get_the_title() . '</span>';
+
         } else {
             $categories = get_the_category();
             if ($categories) {
@@ -1075,7 +1094,7 @@ function posts_styles()
         return;
     }
 
-    if (is_home() || is_archive() || is_search() || is_post_type_archive('nsfw')) {
+    if (is_home() || is_archive() || is_search() || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo')) {
         $a = avante_get_assets();
 
         avante_enqueue_style('breadcrumbs', $a['css']['breadcrumbs']);
@@ -1220,7 +1239,7 @@ add_action( 'wp_enqueue_scripts', 'properties_templates' );
 
 /*
  * =========================================================================
- * CUSTOM POST TYPE ARCHIVE
+ * CUSTOM POST TYPE ARCHIVE 'NSFW' Y 'DETRÁS DEL ESPEJO'
  * =========================================================================
  */
 
@@ -1251,6 +1270,34 @@ function avante_nsfw_archive_query($query)
     }
 }
 add_action('pre_get_posts', 'avante_nsfw_archive_query');
+
+/**
+ * Filter to ensure the 'detras-del-espejo' custom post type has an archive enabled.
+ * This makes archive-detras-del-espejo.php work automatically.
+ */
+add_filter('register_post_type_args', function ($args, $post_type) {
+    if ($post_type === 'detras-del-espejo') {
+        $args['has_archive'] = 'detras-del-espejo'; // Enable archive at /detras-del-espejo/
+        $args['rewrite'] = array('slug' => 'detras-del-espejo');
+    }
+    return $args;
+}, 10, 2);
+
+/**
+ * Configure the main query for the 'detras-del-espejo' archive.
+ * This ensures pagination works correctly and filters the main loop.
+ */
+function avante_detras_del_espejo_archive_query($query)
+{
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('detras-del-espejo')) {
+        $query->set('post_type', 'detras-del-espejo');
+        $query->set('post_status', 'publish');
+        // El número de posts por página se toma de Ajustes > Lectura por defecto,
+        // pero puedes forzarlo aquí si lo deseas:
+        // $query->set('posts_per_page', 10);
+    }
+}
+add_action('pre_get_posts', 'avante_detras_del_espejo_archive_query');
 
 /*
  * =========================================================================
