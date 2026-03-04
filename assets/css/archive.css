@@ -1,5 +1,6 @@
 .nsfw:not(:has(.breadcrumbs--wrapper)),
-.post:not(:has(.breadcrumbs--wrapper)) {
+.post:not(:has(.breadcrumbs--wrapper)),
+.detras-del-espejo:not(:has(.breadcrumbs--wrapper)) {
     position: relative;
     opacity: 0;
     transform: translateY(4rem);
@@ -398,8 +399,6 @@
             box-shadow: var(--post-shadow);
             padding: 0;
             transition: box-shadow .3s ease;
-
-
 
             &:hover {
                 box-shadow: var(--post-shadow-hover);
@@ -1111,7 +1110,7 @@
             object-fit: cover;
         }
 
-        &:not(:has(.wp-post-image)) {
+        &:not(:has(.wp-post-image, .gallery-wrapper)) {
             &:has(.post_body) {
                 &:is(.format-standard):has(.post_body) {
                     & .post_body {

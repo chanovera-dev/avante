@@ -772,6 +772,7 @@ Tags:
                 align-items: center;
 
                 & .avante-navigation {
+                    max-height: 62.44px;
                     display: flex;
                     align-items: center;
 

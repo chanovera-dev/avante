@@ -279,7 +279,7 @@ select {
 
                     & .post--tags {
                         & .post-tag {
-                            border-radius: .8rem;
+                            border-radius: .6rem;
                             corner-shape: squircle;
                         }
                     }
