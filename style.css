@@ -861,7 +861,6 @@ Tags:
                                     list-style: none;
                                     position: absolute;
                                     top: 63px;
-                                    transform: translateX(-.625rem);
                                     width: max-content;
                                     background-color: var(--wp--preset--color--base);
                                     box-shadow: var(--post-shadow);

@@ -41,7 +41,8 @@
                         &>ul {
                             & li {
                                 &.menu-item-has-children .sub-menu {
-                                    border-radius: .5rem;
+                                    border-bottom-left-radius: .5rem;
+                                    border-bottom-right-radius: .5rem;
 
                                     & li a {
                                         border-radius: .25rem;
@@ -201,7 +202,8 @@ select {
                         &>ul {
                             & li {
                                 &.menu-item-has-children .sub-menu {
-                                    border-radius: 1rem;
+                                    border-bottom-left-radius: 1rem;
+                                    border-bottom-right-radius: 1rem;
                                     corner-shape: squircle;
 
                                     & li a {
