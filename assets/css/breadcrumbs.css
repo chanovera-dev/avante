@@ -4,7 +4,7 @@
         border-bottom: 1px solid var(--wp--preset--color--line);
 
         & .content {
-            padding: 1rem 0;
+            padding: .5rem 0;
 
             & .breadcrumbs {
                 display: inline-flex;

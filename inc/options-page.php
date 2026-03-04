@@ -162,6 +162,12 @@ function avante_register_settings()
         'sanitize_callback' => 'sanitize_text_field',
     ));
 
+    register_setting('avante_options_group', 'avante_header_height', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' => '30',
+    ));
+
     register_setting('avante_options_group', 'avante_bio', array(
         'type' => 'string',
         'sanitize_callback' => 'wp_kses_post',
@@ -218,6 +224,14 @@ function avante_register_settings()
         'avante_ga_id',
         __('Google Analytics ID', 'avante'),
         'avante_ga_id_render',
+        'avante-options',
+        'avante_site_data_section'
+    );
+
+    add_settings_field(
+        'avante_header_height',
+        __('Altura del Cabezal (px)', 'avante'),
+        'avante_header_height_render',
         'avante-options',
         'avante_site_data_section'
     );
@@ -384,6 +398,19 @@ function avante_ga_id_render()
 
     echo '<input type="text" name="avante_ga_id" value="' . esc_attr($value) . '" class="regular-text" placeholder="G-XXXXXXXXXX">';
     echo '<p class="description">' . __('Ingresa tu ID de Google Analytics (ej. G-XXXXXXXXXX).', 'avante') . '</p>';
+}
+
+/**
+ * Render the Header Height field.
+ */
+function avante_header_height_render()
+{
+    $default = '30';
+    $value = get_option('avante_header_height', $default);
+
+    echo '<input type="text" name="avante_header_height" value="' . esc_attr($value) . '" class="small-text" placeholder="63.44">';
+    echo '<span> px</span>';
+    echo '<p class="description">' . __('Ajusta la altura del cabezal principal.', 'avante') . '</p>';
 }
 
 /**

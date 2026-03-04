@@ -28,7 +28,7 @@ Tags:
             & .site-brand {
                 & .custom-logo {
                     width: auto;
-                    height: 62.44px;
+                    height: var(--header-height);
                 }
             }
 

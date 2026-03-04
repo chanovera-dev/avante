@@ -3,7 +3,7 @@
         border-top: 1px solid var(--wp--preset--color--base);
 
         & .content {
-            padding: 3rem 0;
+            padding: 2rem 0;
             position: relative;
             z-index: 1;
 

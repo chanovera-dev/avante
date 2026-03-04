@@ -425,6 +425,32 @@ function theme_custom_icons()
 add_action('wp_head', 'theme_custom_icons');
 
 /**
+ * Output custom CSS variables derived from theme options.
+ */
+function avante_custom_css_variables()
+{
+    $header_height = get_option('avante_header_height', '63.44');
+    
+    // Add px if missing and numeric
+    if (!empty($header_height) && is_numeric($header_height)) {
+        $header_height .= 'px';
+    }
+
+    if (empty($header_height)) {
+        $header_height = '63.44px';
+    }
+    
+    ?>
+    <style>
+        :root {
+            --header-height: <?php echo esc_attr($header_height); ?>;
+        }
+    </style>
+    <?php
+}
+add_action('wp_head', 'avante_custom_css_variables');
+
+/**
  * Adds Google Tag Manager scripts to the head.
  *
  * @since 1.0.0

@@ -1,7 +1,7 @@
 & .pagination.navigation {
     grid-column: 1 / -1;
     margin-inline: auto;
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     align-items: center;
     position: relative;
