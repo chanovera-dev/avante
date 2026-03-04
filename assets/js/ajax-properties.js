@@ -34,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Re-lanzar animaciones de entrada
             if (typeof animateIn === 'function') {
-                animateIn('.property');
+                setTimeout(() => {
+                    animateIn('.post');
+                }, 300);
             }
 
             // update currentPage from the requested page

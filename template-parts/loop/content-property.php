@@ -14,7 +14,7 @@ $price     = $property_data['price'];
 $location  = $property_data['location'];
 $gallery   = $property_data['gallery'];
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(['post', 'animate-in', 'format-property']); ?> data-id="<?= get_the_ID(); ?>">
+<article id="post-<?php the_ID(); ?>" <?php post_class(['post', 'format-property']); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post_body">
         <div class="post__overlay"></div>
         <div class="post__header">

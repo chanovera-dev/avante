@@ -1,6 +1,7 @@
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
-.detras-del-espejo:not(:has(.breadcrumbs--wrapper)) {
+.detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
+.property {
     position: relative;
     opacity: 0;
     transform: translateY(4rem);

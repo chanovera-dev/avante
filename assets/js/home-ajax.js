@@ -103,7 +103,9 @@ jQuery(document).ready(function ($) {
 
                     // Re-lanzar animaciones de entrada
                     if (typeof animateIn === 'function') {
-                        animateIn('.ajax-item-wrapper');
+                        setTimeout(() => {
+                            animateIn('.ajax-item-wrapper');
+                        }, 300);
                     }
 
                     // Actualizar etiquetas de año
