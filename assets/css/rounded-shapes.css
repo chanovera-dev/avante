@@ -99,6 +99,13 @@
                 & .post__content {
                     border-radius: 1rem;
 
+                    & .post--tags {
+                        & .post-tag {
+                            border-radius: .8rem;
+                            corner-shape: squircle;
+                        }
+                    }
+
                     & .property__metadata {
                         &:has(.container) {
                             &:has(.container .btn) {
@@ -269,6 +276,13 @@ select {
                 & .post__content {
                     border-radius: 2rem;
                     corner-shape: squircle;
+
+                    & .post--tags {
+                        & .post-tag {
+                            border-radius: .8rem;
+                            corner-shape: squircle;
+                        }
+                    }
 
                     & .property__metadata {
                         &:has(.container) {
