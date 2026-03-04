@@ -1115,9 +1115,16 @@
             &:has(.post_body) {
                 &:is(.format-standard):has(.post_body) {
                     & .post_body {
-                        min-height: 210px;
+                        min-height: fit-content;
+                        display: grid;
+
+                        & .post__header {
+                            position: relative;
+                        }
 
                         & .post__content {
+                            position: relative;
+                            align-self: end;
                             opacity: 1 !important;
                         }
                     }
