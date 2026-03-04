@@ -130,8 +130,8 @@ function avante_get_color_themes()
 function avante_add_options_page()
 {
     add_menu_page(
-        __('Datos del tema', 'avante'), // Page title
-        __('Datos del tema', 'avante'), // Menu title
+        __('Avante theme', 'avante'), // Page title
+        __('Avante theme', 'avante'), // Menu title
         'manage_options',                // Capability
         'avante-options',                  // Menu slug
         'avante_render_options_page',      // Callback function

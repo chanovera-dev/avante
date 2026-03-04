@@ -31,6 +31,31 @@
     }
 }
 
+/* HEADER DESKTOP */
+@media (width > 1200px) {
+    #main-header {
+        & .block {
+            & .content {
+                & .avante-navigation {
+                    & .main-navigation {
+                        &>ul {
+                            & li {
+                                &.menu-item-has-children .sub-menu {
+                                    border-radius: .5rem;
+
+                                    & li a {
+                                        border-radius: .25rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 /* POSTS */
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
@@ -160,6 +185,33 @@ select {
                 &::before {
                     border-radius: .8rem;
                     corner-shape: squircle;
+                }
+            }
+        }
+    }
+}
+
+/* HEADER DESKTOP */
+@media (width > 1200px) {
+    #main-header {
+        & .block {
+            & .content {
+                & .avante-navigation {
+                    & .main-navigation {
+                        &>ul {
+                            & li {
+                                &.menu-item-has-children .sub-menu {
+                                    border-radius: 1rem;
+                                    corner-shape: squircle;
+
+                                    & li a {
+                                        border-radius: .5rem;
+                                        corner-shape: squircle;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

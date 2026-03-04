@@ -15,6 +15,8 @@ Tags:
 */
 
 #main-header {
+    z-index: 99;
+
     & .block {
         border-bottom: 1px solid var(--wp--preset--color--line);
         background-color: var(--wp--preset--color--tertiary);
@@ -26,7 +28,7 @@ Tags:
             & .site-brand {
                 & .custom-logo {
                     width: auto;
-                    height: 70px;
+                    height: 30px;
                 }
             }
 
@@ -788,12 +790,161 @@ Tags:
                             transform: scale(.8);
                         }
 
-                        & ul {
+                        &>ul {
                             padding-left: 0;
                             list-style: none;
                             display: flex;
                             align-items: center;
-                            gap: 2rem;
+
+                            & li {
+                                position: relative;
+
+                                &.current-menu-item {
+                                    &::before {
+                                        content: '';
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 50%;
+                                        transform: translateX(-50%);
+                                        width: 1rem;
+                                        height: 3px;
+                                        background-color: var(--wp--preset--color--primary);
+                                    }
+                                }
+
+                                &:has(.wrapper-for-title) {
+                                    & .wrapper-for-title {
+                                        display: flex;
+                                        align-items: center;
+                                        gap: .5rem;
+                                        padding: 1rem;
+                                        padding-right: .5rem;
+                                        transition: background-color .3s ease;
+
+                                        &:hover {
+                                            background-color: var(--wp--preset--color--base);
+
+                                            & .button-for-submenu {
+                                                transform: rotate(180deg);
+                                            }
+                                        }
+
+                                        & .button-for-submenu {
+                                            width: 1rem;
+                                            height: 1rem;
+                                            background-color: transparent;
+                                            display: grid;
+                                            place-content: center;
+                                            border: none;
+                                            transition: transform .3s ease-in-out;
+                                        }
+
+
+                                    }
+                                }
+
+                                &>a {
+                                    padding: 1rem;
+                                    display: flex;
+                                    align-items: center;
+                                    transition: background-color .3s ease;
+
+                                    &:hover {
+                                        background-color: var(--wp--preset--color--base);
+                                    }
+                                }
+
+
+                                /* MENÚ ABIERTO - EFECTO SUAVE */
+                                &.menu-item-has-children .sub-menu {
+                                    padding: .625rem;
+                                    list-style: none;
+                                    position: absolute;
+                                    top: 63px;
+                                    transform: translateX(-.625rem);
+                                    width: max-content;
+                                    background-color: var(--wp--preset--color--base);
+                                    box-shadow: var(--post-shadow);
+                                    z-index: 100;
+                                    transition: 0.4s padding, 0.4s background-color, 0.4s box-shadow;
+
+                                    /* ANIMACIÓN DE LOS ÍTEMS DEL SUBMENÚ */
+                                    & li {
+                                        height: 30px;
+                                        padding: 0;
+                                        background: transparent;
+                                        white-space: nowrap;
+                                        transition: 0.4s height cubic-bezier(0.4, 0, 0.2, 1),
+                                            0.4s padding cubic-bezier(0.4, 0, 0.2, 1),
+                                            0.4s margin cubic-bezier(0.4, 0, 0.2, 1),
+                                            0.1s 0.1s color,
+                                            0.2s background-color;
+
+                                        &:hover {
+
+                                            /* HOVER DE ÍTEMS */
+                                            &>a {
+                                                background-color: var(--wp--preset--color--tertiary);
+                                            }
+                                        }
+
+                                        & :is(a, .button-for-submenu) {
+                                            padding: 0 1rem;
+                                            height: 30px;
+                                            font-size: 14px;
+                                            font-weight: 500;
+                                            width: 100%;
+                                            gap: 1.25rem;
+                                            justify-content: space-between;
+                                            transition: 0.3s 0.1s color, 0.3s background-color ease;
+                                        }
+
+                                        & a {
+                                            transition: background-color .3s ease, color .3s ease;
+                                        }
+                                    }
+                                }
+
+                                /* MENÚ CERRADO */
+                                &.menu-item-has-children:not(:hover)>.sub-menu {
+                                    padding: 0 .625rem;
+                                    box-shadow: 0 1px 15px rgba(0, 0, 0, 0);
+                                    overflow-y: hidden;
+                                    z-index: 99;
+
+                                    /* ESTADO CERRADO DE ÍTEMS INTERIORES */
+                                    &>* {
+                                        visibility: hidden;
+                                        height: 0;
+                                        padding-top: 0;
+                                        padding-bottom: 0;
+                                        margin: 0;
+                                        color: transparent;
+                                        transition: 0.4s 0.1s height,
+                                            0.4s 0.1s padding,
+                                            0.4s 0.1s margin,
+                                            0.1s color,
+                                            0.6s visibility;
+                                    }
+
+                                    & li {
+                                        & a {
+                                            color: transparent;
+                                            transition: color .2s ease;
+                                        }
+                                    }
+                                }
+
+                                /* EFECTO VISUAL EN PADRE ACTIVO (solo en navegadores modernos) */
+                                &.menu-item-has-children:hover> :is(a, .button-for-submenu),
+                                &.menu-item-has-children:has(.sub-menu:hover)>.wrapper-for-title {
+                                    background-color: var(--wp--preset--color--base);
+
+                                    & .button-for-submenu {
+                                        transform: rotate(180deg);
+                                    }
+                                }
+                            }
                         }
                     }
 
