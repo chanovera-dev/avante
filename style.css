@@ -16,6 +16,7 @@ Tags:
 
 #main-header {
     z-index: 99;
+    height: 63.44px;
 
     & .block {
         border-bottom: 1px solid var(--wp--preset--color--line);
@@ -24,11 +25,10 @@ Tags:
         & .content {
             gap: .25rem;
 
-
             & .site-brand {
                 & .custom-logo {
                     width: auto;
-                    height: 30px;
+                    height: 62.44px;
                 }
             }
 
@@ -258,7 +258,7 @@ Tags:
     }
 }
 
-@media (width < 1200px) {
+@media (width < 1199px) {
     #main-header {
         z-index: 99;
 
@@ -268,6 +268,7 @@ Tags:
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                height: 62.44px;
 
                 & .main-navigation {
                     position: absolute;
