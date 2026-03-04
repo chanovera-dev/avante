@@ -1,62 +1,70 @@
-jQuery(document).ready(function ($) {
-    const $container = $('#ajax-posts-container');
-    const $loadMoreBtn = $('#load-more-btn');
-    const $btnText = $loadMoreBtn.find('.btn-text');
-    const $btnLoader = $loadMoreBtn.find('.btn-loader');
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('ajax-posts-container');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (!container || !loadMoreBtn) return;
+
+    const btnText = loadMoreBtn.querySelector('.btn-text');
+    const btnLoader = loadMoreBtn.querySelector('.btn-loader');
 
     // Estado inicial
     let selectedCats = []; // Array Selección Múltiple
     let showNsfw = false;
     let isLoading = false;
 
-    // Recuperar página inicial del botón (si existe)
-    let currentPage = parseInt($loadMoreBtn.data('page')) || 1;
+    // Recuperar página inicial del botón (si existe desde data-page)
+    let currentPage = parseInt(loadMoreBtn.dataset.page) || 1;
 
     // --- 1. Evento: Cambio de Categoría (Selección Múltiple) ---
-    $('.cat-filter-btn').on('click', function (e) {
-        e.preventDefault();
+    document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
 
-        const catId = $(this).data('cat-id');
-        const isAll = (catId === 0);
+            const catId = parseInt(btn.dataset.catId);
+            const isAll = (catId === 0);
 
-        if (isAll) {
-            // Si click en "Todos": Limpiar array y activar solo "Todos"
-            selectedCats = [];
-            $('.cat-filter-btn').removeClass('active');
-            $('.cat-filter-btn[data-cat-id="0"]').addClass('active');
-        } else {
-            // Si click en categoría específica
-            $('.cat-filter-btn[data-cat-id="0"]').removeClass('active');
-
-            const index = selectedCats.indexOf(catId);
-            if (index > -1) {
-                // Quitar
-                selectedCats.splice(index, 1);
-                $(this).removeClass('active');
+            if (isAll) {
+                // Si click en "Todos": Limpiar array y activar solo "Todos"
+                selectedCats = [];
+                document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.cat-filter-btn[data-cat-id="0"]').classList.add('active');
             } else {
-                // Añadir
-                selectedCats.push(catId);
-                $(this).addClass('active');
+                // Si click en categoría específica
+                const allBtn = document.querySelector('.cat-filter-btn[data-cat-id="0"]');
+                if (allBtn) allBtn.classList.remove('active');
+
+                const index = selectedCats.indexOf(catId);
+                if (index > -1) {
+                    // Quitar
+                    selectedCats.splice(index, 1);
+                    btn.classList.remove('active');
+                } else {
+                    // Añadir
+                    selectedCats.push(catId);
+                    btn.classList.add('active');
+                }
+
+                if (selectedCats.length === 0) {
+                    if (allBtn) allBtn.classList.add('active');
+                }
             }
 
-            if (selectedCats.length === 0) {
-                $('.cat-filter-btn[data-cat-id="0"]').addClass('active');
-            }
-        }
-
-        currentPage = 1;
-        loadPosts(false);
+            currentPage = 1;
+            loadPosts(false);
+        });
     });
 
     // --- 2. Evento: Toggle NSFW ---
-    $('#nsfw-toggle-input').on('change', function () {
-        showNsfw = $(this).is(':checked');
-        currentPage = 1;
-        loadPosts(false);
-    });
+    const nsfwToggle = document.getElementById('nsfw-toggle-input');
+    if (nsfwToggle) {
+        nsfwToggle.addEventListener('change', () => {
+            showNsfw = nsfwToggle.checked;
+            currentPage = 1;
+            loadPosts(false);
+        });
+    }
 
     // --- 3. Evento: Botón Cargar Más ---
-    $loadMoreBtn.on('click', function (e) {
+    loadMoreBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (!isLoading) {
             currentPage++;
@@ -65,124 +73,130 @@ jQuery(document).ready(function ($) {
     });
 
     /**
-     * Función principal de carga AJAX
+     * Función principal de carga AJAX usando Fetch API
      * @param {boolean} isAppend - true para paginación, false para filtros
      */
-    function loadPosts(isAppend) {
+    async function loadPosts(isAppend) {
         if (isLoading) return;
         isLoading = true;
 
         if (isAppend) {
             // UI Carga Paginación
-            $loadMoreBtn.prop('disabled', true);
-            $btnText.hide();
-            $btnLoader.show();
+            loadMoreBtn.disabled = true;
+            if (btnText) btnText.style.display = 'none';
+            if (btnLoader) btnLoader.style.display = 'block';
         } else {
             // UI Carga Filtro Global
-            $container.css('opacity', '0.5');
-            $loadMoreBtn.hide(); // Ocultar paginación mientras filtramos
+            container.style.opacity = '0.5';
+            loadMoreBtn.style.display = 'none'; // Ocultar paginación mientras filtramos
         }
 
-        $.ajax({
-            url: avante_ajax.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'avante_filter_posts',
-                nonce: avante_ajax.nonce,
-                categories: selectedCats, // Enviamos el array
-                nsfw: showNsfw,
-                paged: currentPage
-            },
-            success: function (res) {
-                if (res.success) {
-                    if (isAppend) {
-                        $container.append(res.data.html);
-                    } else {
-                        $container.html(res.data.html);
-                    }
+        const formData = new URLSearchParams();
+        formData.append('action', 'avante_filter_posts');
+        formData.append('nonce', avante_ajax.nonce);
+        formData.append('nsfw', showNsfw);
+        formData.append('paged', currentPage);
+        // WordPress espera un array en formato categories[]
+        selectedCats.forEach(cat => formData.append('categories[]', cat));
 
-                    // Re-lanzar animaciones de entrada
-                    if (typeof animateIn === 'function') {
-                        setTimeout(() => {
-                            animateIn('.ajax-item-wrapper');
-                        }, 300);
-                    }
+        try {
+            const response = await fetch(avante_ajax.ajax_url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            });
 
-                    // Actualizar etiquetas de año
-                    setTimeout(updateYearLabels, 150); // Pequeño delay para asegurar que el grid se asentó
+            const res = await response.json();
 
-                    // Gestión del Botón Ver Más
-                    const maxPages = parseInt(res.data.max_pages);
-                    $loadMoreBtn.data('page', currentPage);
-
-                    if (currentPage < maxPages) {
-                        $loadMoreBtn.show().prop('disabled', false);
-                        $btnText.show();
-                        $btnLoader.hide();
-                    } else {
-                        $loadMoreBtn.hide();
-                    }
-
+            if (res.success) {
+                if (isAppend) {
+                    container.insertAdjacentHTML('beforeend', res.data.html);
                 } else {
-                    if (!isAppend) {
-                        $container.html('<div class="no-results">' + res.data.message + '</div>');
-                        $loadMoreBtn.hide();
-                    } else {
-                        $loadMoreBtn.hide();
-                    }
+                    container.innerHTML = res.data.html;
                 }
-            },
-            error: function () {
-                if (!isAppend) {
-                    $container.html('<div class="no-results">Error de conexión. Inténtalo de nuevo.</div>');
+
+                // Re-lanzar animaciones de entrada con el retardo de 0.3s acordado
+                if (typeof animateIn === 'function') {
+                    setTimeout(() => {
+                        animateIn('.ajax-item-wrapper');
+                    }, 300);
                 }
-            },
-            complete: function () {
-                isLoading = false;
-                if (!isAppend) {
-                    $container.css('opacity', '1');
+
+                // Actualizar etiquetas de año
+                setTimeout(updateYearLabels, 150);
+
+                // Gestión del Botón Ver Más
+                const maxPages = parseInt(res.data.max_pages);
+                loadMoreBtn.dataset.page = currentPage;
+
+                if (currentPage < maxPages) {
+                    loadMoreBtn.style.display = 'flex'; // o block según tu CSS
+                    loadMoreBtn.disabled = false;
+                    if (btnText) btnText.style.display = 'inline';
+                    if (btnLoader) btnLoader.style.display = 'none';
                 } else {
-                    $loadMoreBtn.prop('disabled', false);
-                    $btnText.show();
-                    $btnLoader.hide();
+                    loadMoreBtn.style.display = 'none';
                 }
+
+            } else {
+                if (!isAppend) {
+                    container.innerHTML = `<div class="no-results">${res.data.message}</div>`;
+                }
+                loadMoreBtn.style.display = 'none';
             }
-        });
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+            if (!isAppend) {
+                container.innerHTML = '<div class="no-results">Error de conexión. Inténtalo de nuevo.</div>';
+            }
+        } finally {
+            isLoading = false;
+            container.style.opacity = '1';
+            if (isAppend) {
+                loadMoreBtn.disabled = false;
+                if (btnText) btnText.style.display = 'inline';
+                if (btnLoader) btnLoader.style.display = 'none';
+            }
+        }
     }
 
     /**
-     * Genera etiquetas flotantes para los años
+     * Genera etiquetas flotantes para los años (Vanilla JS)
      */
     function updateYearLabels() {
-        // Eliminar etiquetas existentes que no sean del loader o after
-        $container.find('.year-float-label').remove();
+        // Eliminar etiquetas existentes
+        container.querySelectorAll('.year-float-label').forEach(el => el.remove());
 
         let lastYear = null;
         let lastTop = -1;
-        const $items = $container.find('.ajax-item-wrapper');
+        const items = container.querySelectorAll('.ajax-item-wrapper');
 
-        $items.each(function () {
-            const currentYear = $(this).data('year');
-            const pos = $(this).position();
+        items.each = Array.prototype.forEach; // Helper para compatibilidad si fuera necesario
+
+        items.forEach(item => {
+            const currentYear = item.dataset.year;
+            // Get position relative to container
+            const rect = item.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const relativeTop = rect.top - containerRect.top + container.scrollTop;
 
             if (currentYear && currentYear !== lastYear) {
-                // Es el primer item de este año
-                let top = pos.top;
+                let top = relativeTop;
 
-                // Evitar que etiquetas de distintos años se pisen si empiezan en la misma fila
+                // Evitar que etiquetas de distintos años se pisen
                 if (Math.abs(top - lastTop) < 20) {
                     top += 40;
                 }
 
-                const $label = $('<div class="year-float-label">— ' + currentYear + '</div>');
+                const label = document.createElement('div');
+                label.className = 'year-float-label';
+                label.textContent = '— ' + currentYear;
+                label.style.top = top + 'px';
+                label.style.opacity = '1';
 
-                // Posicionar relativo al item
-                $label.css({
-                    'top': top + 'px',
-                    'opacity': 1
-                });
-
-                $container.append($label);
+                container.appendChild(label);
                 lastYear = currentYear;
                 lastTop = top;
             }
@@ -190,11 +204,11 @@ jQuery(document).ready(function ($) {
     }
 
     // Inicializar etiquetas al cargar
-    updateYearLabels();
+    setTimeout(updateYearLabels, 200);
 
     // Actualizar al redimensionar la ventana
     let resizeTimer;
-    $(window).on('resize', function () {
+    window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(updateYearLabels, 250);
     });

@@ -222,12 +222,16 @@ function avante_get_assets()
             'error404' => "$assets_path/css/error404.css",
             'homepage' => "$assets_path/css/homepage.css",
 
+            // home ajax
+            'home-ajax-styles' => "$assets_path/css/home-ajax.css",
+
             // real estate
             'single-property' => "$assets_path/css/single-property.css",
         ],
         'js' => [
             // All pages
             'global-script' => "$assets_path/js/global.js",
+            'likes-script' => "$assets_path/js/likes.js",
 
             // someone pages
             'loop-gallery' => "$assets_path/js/loop-gallery.js",
@@ -238,13 +242,15 @@ function avante_get_assets()
             'post-scripts' => "$assets_path/js/post.js",
             'homepage-script' => "$assets_path/js/homepage.js",
 
+            // home ajax
+            'home-ajax-script' => "$assets_path/js/home-ajax.js",
+
             // real estate
             'filters'                 => "$assets_path/js/filters.js",
             'filter-listeners'        => "$assets_path/js/filter-listeners.js",
             'reset-properties-filter' => "$assets_path/js/reset-properties-filter.js",
             'ajax-properties'         => "$assets_path/js/ajax-properties.js",
             'ajax-search'             => "$assets_path/js/ajax-search-properties.js",
-            'likes-script'            => "$assets_path/js/likes.js",
         ]
     ];
 }
@@ -273,6 +279,7 @@ function footer_components()
     ]);
 
     avante_enqueue_script('likes-script', $a['js']['likes-script']);
+
 
     if (is_user_logged_in()) {
         avante_enqueue_style('wp-logged-in', $a['css']['wp-logged-in']);
@@ -1338,41 +1345,16 @@ function avante_enqueue_home_assets() {
     if (is_page_template('templates/homepage.php')) {
         $a = avante_get_assets();
 
-        // CSS propio para la home
-        wp_enqueue_style(
-            'avante-home-ajax', 
-            get_template_directory_uri() . '/assets/css/home-ajax.css', 
-            ['global'], // Dependencia base
-            time() // Cache busting durante desarrollo
-        );
-
-        // JS Galería (Necesario para que funcione en AJAX)
-        $assets = avante_get_assets(); // Obtener rutas desde tu helper si existe variable, o usar path directo
-        // Asumo que 'loop-gallery' está registrado o lo encolamos directo
-        wp_enqueue_script(
-            'loop-gallery', 
-            get_template_directory_uri() . '/assets/js/loop-gallery.js', 
-            ['jquery'], 
-            time(), 
-            true
-        );
-
-        // JS para la lógica
-        wp_enqueue_script(
-            'avante-home-ajax', 
-            get_template_directory_uri() . '/assets/js/home-ajax.js', 
-            ['jquery'], 
-            time(), 
-            true
-        );
-
-        // Lógica de Likes
+        avante_enqueue_style( 'home-ajax-styles', $a['css']['home-ajax-styles'] );
+        avante_enqueue_script( 'home-ajax-script', $a['js']['home-ajax-script'] );
+        avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'] );
         avante_enqueue_script('likes-script', $a['js']['likes-script']);
+        
         wp_localize_script('likes-script', 'avante_likes_obj', [
             'ajax_url' => admin_url('admin-ajax.php'),
         ]);
 
-        wp_localize_script('avante-home-ajax', 'avante_ajax', [
+        wp_localize_script('home-ajax-script', 'avante_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('avante_home_nonce')
         ]);

@@ -57,7 +57,7 @@ if (has_post_thumbnail()) {
                     
                     <div class="gallery-navigation" style="display: flex; align-items: center; position: absolute; bottom: 10px; left: 10px; z-index: 10; width: calc(100% - 20px);">
                         <button class="gallery-prev btn-pagination small-pagination glass-backdrop" aria-label="Anterior"><?= avante_get_icon('backward'); ?></button>
-                        <div class="bullets" style="flex-grow: 1; display: flex; justify-content: center;"></div>
+                        <div class="loop-gallery-bullets" style="flex-grow: 1; display: flex; justify-content: center;"></div>
                         <button class="gallery-next btn-pagination small-pagination glass-backdrop" aria-label="Siguiente"><?= avante_get_icon('forward'); ?></button>
                     </div>
                 </div>

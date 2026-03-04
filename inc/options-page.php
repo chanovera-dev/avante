@@ -138,6 +138,24 @@ function avante_add_options_page()
         'dashicons-admin-generic',       // Icon
         60                               // Position
     );
+
+    add_submenu_page(
+        'avante-options',
+        __('Información', 'avante'),
+        __('Información', 'avante'),
+        'manage_options',
+        'avante-options',
+        'avante_render_options_page'
+    );
+
+    add_submenu_page(
+        'avante-options',
+        __('Ajustes', 'avante'),
+        __('Ajustes', 'avante'),
+        'manage_options',
+        'avante-settings',
+        'avante_render_settings_page'
+    );
 }
 add_action('admin_menu', 'avante_add_options_page');
 
@@ -145,10 +163,11 @@ add_action('admin_menu', 'avante_add_options_page');
  * Enqueue Media Uploader scripts for the options page.
  */
 function avante_options_media_scripts($hook) {
-    if ('toplevel_page_avante-options' !== $hook) {
+    if ('toplevel_page_avante-options' !== $hook && 'avante-theme_page_avante-settings' !== $hook) {
         return;
     }
     wp_enqueue_media();
+    wp_enqueue_style('avante-admin-options', get_template_directory_uri() . '/assets/css/admin-options.css', [], time());
 }
 add_action('admin_enqueue_scripts', 'avante_options_media_scripts');
 
@@ -214,90 +233,124 @@ function avante_register_settings()
     }
 
     add_settings_section(
-        'avante_site_data_section',
-        __('Datos del Sitio', 'avante'),
-        'avante_section_callback',
+        'avante_readme_section',
+        __('', 'avante'),
+        'avante_readme_section_callback',
         'avante-options'
+    );
+
+    add_settings_section(
+        'avante_head_section',
+        __('HEAD', 'avante'),
+        '__return_empty_string',
+        'avante-settings'
+    );
+
+    add_settings_section(
+        'avante_header_section',
+        __('HEADER', 'avante'),
+        '__return_empty_string',
+        'avante-settings'
+    );
+
+    add_settings_section(
+        'avante_footer_section',
+        __('FOOTER', 'avante'),
+        '__return_empty_string',
+        'avante-settings'
+    );
+
+    add_settings_section(
+        'avante_homepage_ajax_section',
+        __('HOMEPAGE AJAX', 'avante'),
+        '__return_empty_string',
+        'avante-settings'
+    );
+
+    add_settings_section(
+        'avante_archive_design_section',
+        __('DISEÑO DE ARCHIVO', 'avante'),
+        '__return_empty_string',
+        'avante-settings'
+    );
+
+    add_settings_section(
+        'avante_colors_themes_section',
+        __('TEMAS DE COLOR', 'avante'),
+        '__return_empty_string',
+        'avante-settings'
     );
 
     add_settings_field(
         'avante_ga_id',
         __('Google Analytics ID', 'avante'),
         'avante_ga_id_render',
-        'avante-options',
-        'avante_site_data_section'
+        'avante-settings',
+        'avante_head_section'
     );
 
     add_settings_field(
         'avante_header_height',
         __('Alto del logo (px)', 'avante'),
         'avante_header_height_render',
-        'avante-options',
-        'avante_site_data_section'
+        'avante-settings',
+        'avante_header_section'
     );
 
     add_settings_field(
         'avante_footer_title',
         __('Título del footer', 'avante'),
         'avante_footer_title_render',
-        'avante-options',
-        'avante_site_data_section'
+        'avante-settings',
+        'avante_footer_section'
     );
 
     add_settings_field(
         'avante_bio',
         __('Biografía Corta', 'avante'),
         'avante_bio_render',
-        'avante-options',
-        'avante_site_data_section'
+        'avante-settings',
+        'avante_footer_section'
     );
 
     add_settings_field(
         'avante_home_featured_image',
         __('Imagen destacada Home (URL)', 'avante'),
         'avante_home_featured_image_render',
-        'avante-options',
-        'avante_site_data_section'
+        'avante-settings',
+        'avante_homepage_ajax_section'
     );
 
     add_settings_field(
         'avante_footer_logo',
         __('Logo del footer (esto sustituye el título del footer)', 'avante'),
         'avante_footer_logo_render',
-        'avante-options',
-        'avante_site_data_section'
+        'avante-settings',
+        'avante_footer_section'
     );
 
     add_settings_field(
         'avante_rounded',
         __('Activar Formas Redondeadas', 'avante'),
         'avante_rounded_render',
-        'avante-options',
-        'avante_site_data_section'
+        'avante-settings',
+        'avante_archive_design_section'
     );
 
     add_settings_field(
         'avante_loop_design',
         __('Diseño del Loop (Posts)', 'avante'),
         'avante_loop_design_render',
-        'avante-options',
-        'avante_site_data_section'
-    );
-
-    // Color Section
-    add_settings_section(
-        'avante_colors_section',
-        __('Colores del Tema', 'avante'),
-        'avante_colors_section_callback',
-        'avante-options'
+        'avante-settings',
+        'avante_archive_design_section'
     );
 
     add_settings_field(
         'avante_theme_preset',
         __('Preajustes de Tema', 'avante'),
         'avante_theme_preset_render',
-        'avante-options',
-        'avante_colors_section'
+        'avante-settings',
+        'avante_colors_themes_section'
     );
 
     $color_labels = array(
@@ -320,8 +373,8 @@ function avante_register_settings()
             'avante_color_' . $color_id,
             $label,
             'avante_color_render',
-            'avante-options',
-            'avante_colors_section',
+            'avante-settings',
+            'avante_colors_themes_section',
             array('id' => $color_id)
         );
     }
@@ -351,7 +404,55 @@ function avante_sanitize_color($color)
  */
 function avante_section_callback()
 {
-    echo '<p>' . __('Define la información básica de tu sitio web.', 'avante') . '</p>';
+    echo '<p>' . __('Ajustes generales del tema Avante.', 'avante') . '</p>';
+}
+
+/**
+ * README Section callback to display README.md content.
+ */
+function avante_readme_section_callback()
+{
+    $readme_path = get_template_directory() . '/README.md';
+    if (!file_exists($readme_path)) {
+        echo '<p>' . __('El archivo README.md no fue encontrado.', 'avante') . '</p>';
+        return;
+    }
+
+    $content = file_get_contents($readme_path);
+    
+    // Basic Markdown to HTML converter
+    $content = esc_html($content);
+    
+    // Headers
+    $content = preg_replace('/^# (.*)$/m', '<h1>$1</h1>', $content);
+    $content = preg_replace('/^## (.*)$/m', '<h2>$1</h2>', $content);
+    $content = preg_replace('/^### (.*)$/m', '<h3>$1</h3>', $content);
+    
+    // Bold
+    $content = preg_replace('/\*\*(.*?)\*\*/', '<strong>$1</strong>', $content);
+    
+    // Code blocks
+    $content = preg_replace('/```(.*?)```/s', '<pre><code>$1</code></pre>', $content);
+    
+    // Lists
+    $content = preg_replace('/^- (.*)$/m', '<li>$1</li>', $content);
+    $content = preg_replace('/(<li>.*<\/li>)+/s', '<ul>$0</ul>', $content);
+
+    // Links (simple [text](url))
+    $content = preg_replace('/\[(.*?)\]\((.*?)\)/', '<a href="$2" target="_blank">$1</a>', $content);
+
+    // Parrafos (cada línea que no empieza con etiqueta HTML)
+    $lines = explode("\n", $content);
+    foreach ($lines as &$line) {
+        if (!empty($line) && !preg_match('/^<.*?>/', $line)) {
+            $line = '<p>' . $line . '</p>';
+        }
+    }
+    $content = implode("\n", $lines);
+
+    echo '<div class="avante-readme-content">';
+    echo $content;
+    echo '</div>';
 }
 
 /**
@@ -410,7 +511,7 @@ function avante_header_height_render()
 
     echo '<input type="text" name="avante_header_height" value="' . esc_attr($value) . '" class="small-text" placeholder="63.44">';
     echo '<span> px</span>';
-    echo '<p class="description">' . __('Ajusta la altura del cabezal principal.', 'avante') . '</p>';
+    echo '<p class="description">' . __('Ajusta la altura del logo principal.', 'avante') . '</p>';
 }
 
 /**
@@ -499,13 +600,6 @@ function avante_loop_design_render()
     echo '<p class="description">' . __('Selecciona el diseño para el listado de posts (carpetas loop, loop2, etc. en template-parts).', 'avante') . '</p>';
 }
 
-/**
- * Colors section callback.
- */
-function avante_colors_section_callback()
-{
-    echo '<p>' . __('Selecciona un preajuste o personaliza cada color individualmente.', 'avante') . '</p>';
-}
 
 /**
  * Render Theme Preset selector.
@@ -544,39 +638,41 @@ function avante_color_render($args)
 }
 
 /**
- * Render the options page HTML.
+ * Render the settings page HTML.
  */
-function avante_render_options_page()
+function avante_render_settings_page()
 {
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        <h1><?php echo esc_html(__('Ajustes del Tema', 'avante')); ?></h1>
         <form action="options.php" method="post">
             <?php
             settings_fields('avante_options_group');
-            do_settings_sections('avante-options');
-            submit_button(__('Guardar Cambios', 'avante'));
+            do_settings_sections('avante-settings');
+            submit_button(__('Guardar Ajustes', 'avante'));
             ?>
         </form>
     </div>
     <script>
-        document.getElementById('avante_theme_selector').addEventListener('change', function() {
-            var selected = this.options[this.selectedIndex];
-            if (!selected.value) return;
+        // Lógica de Preajustes de Tema
+        if (document.getElementById('avante_theme_selector')) {
+            document.getElementById('avante_theme_selector').addEventListener('change', function() {
+                var selected = this.options[this.selectedIndex];
+                if (!selected.value) return;
 
-            var colors = JSON.parse(selected.getAttribute('data-colors'));
-            for (var id in colors) {
-                var input = document.getElementById('avante_color_' + id);
-                if (input) {
-                    input.value = colors[id];
-                    // Tambien actualizar el label de texto si existe
-                    var code = input.nextElementSibling;
-                    if (code && code.tagName === 'CODE') {
-                        code.textContent = colors[id];
+                var colors = JSON.parse(selected.getAttribute('data-colors'));
+                for (var id in colors) {
+                    var input = document.getElementById('avante_color_' + id);
+                    if (input) {
+                        input.value = colors[id];
+                        var code = input.nextElementSibling;
+                        if (code && code.tagName === 'CODE') {
+                            code.textContent = colors[id];
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
         // Lógica para los botones de resetear
         document.querySelectorAll('.avante-reset-color').forEach(function(button) {
@@ -642,5 +738,20 @@ function avante_render_options_page()
             });
         });
     </script>
+    <?php
+}
+
+/**
+ * Render the options page HTML (README / Información).
+ */
+function avante_render_options_page()
+{
+    ?>
+    <div class="wrap">
+        
+        <?php
+        do_settings_sections('avante-options');
+        ?>
+    </div>
     <?php
 }

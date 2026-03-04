@@ -349,13 +349,6 @@ add_filter('register_post_type_args', function($args, $post_type) {
  * A J A X   P R O P E R T I E S
  ****************************************************************************************************************/
 
-function enqueue_property_filter_script() {
-    wp_enqueue_script('property-filter', get_template_directory_uri() . '/assets/js/ajax-properties.js', ['jquery'], null, true);
-    wp_localize_script('property-filter', 'ajaxurlObj', [
-        'ajax_url' => admin_url('admin-ajax.php')
-    ]);
-}
-add_action('wp_enqueue_scripts', 'enqueue_property_filter_script');
 
 /**
  * AJAX property filter handler.

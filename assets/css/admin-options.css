@@ -1,0 +1,112 @@
+.avante-readme-content {
+    background: #fff;
+    padding: 1rem 2.5rem;
+    border-radius: 1rem;
+    border: 1px solid #e1e4e8;
+    max-width: 900px;
+    margin: 2rem .5rem;
+    box-shadow: #40495420 0px 54px 55px, #4049540f 0px -12px 30px, #4049540f 0px 4px 6px, #40495416 0px 12px 13px, #4049540b 0px -3px 5px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.avante-readme-content h1 {
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.75rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    font-size: 2.2rem;
+}
+
+.avante-readme-content h2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+.avante-readme-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #444;
+}
+
+.avante-readme-content pre {
+    background: #f6f8fa;
+    padding: 1.25rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    border-left: 5px solid #9dbab9;
+    margin: 1.5rem 0;
+}
+
+.avante-readme-content code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+    background: rgba(175, 184, 193, 0.2);
+    border-radius: 6px;
+}
+
+.avante-readme-content pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    display: grid;
+
+    & p {
+        margin: 0;
+    }
+}
+
+.avante-readme-content ul,
+.avante-readme-content ol {
+    padding-left: 0;
+    margin: 1.25rem 0;
+}
+
+.avante-readme-content li {
+    margin-top: 1rem;
+    margin-bottom: 0.65rem;
+}
+
+.avante-readme-content p {
+    line-height: 1.9;
+    color: #444;
+    margin: 0;
+}
+
+.avante-readme-content a {
+    color: #0077be;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.avante-readme-content a:hover {
+    border-bottom-color: #0077be;
+}
+
+.avante-readme-content strong {
+    color: #222;
+    font-weight: 600;
+}
+
+/* Specific section for Ajustes page if needed */
+.wp-admin.avante-theme_page_avante-settings .wrap h2 {
+    border-top: 1px solid #ccd0d4;
+    padding-top: 2rem;
+    margin-top: 3rem;
+    clear: both;
+}
+
+.wp-admin.avante-theme_page_avante-settings .wrap h2:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 1rem;
+}
+
+.wp-admin.avante-theme_page_avante-settings .form-table {
+    margin-bottom: 2rem;
+}
