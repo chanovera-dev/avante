@@ -130,16 +130,309 @@
         }
 
         &:has(.properties--filter) {
-            gap: 1.5rem;
-
             & .properties--filter {
                 & .property-filter-form {
-                    display: grid;
-                    gap: 1.5rem;
+                    & .filter-buttons {
+                        padding: 1rem;
+                        border: 1px solid var(--wp--preset--color--line);
+                        border-top: none;
+                        display: flex;
+                        align-items: center;
+                        background-color: var(--wp--preset--color--base);
+                        box-shadow: var(--post-shadow);
+                        margin-bottom: 1rem;
+
+                        & .title-section {
+                            font-size: var(--wp--preset--font-size--medium);
+                            flex: 1;
+                        }
+
+                        & .btn-reset-filters {
+                            font-size: var(--wp--preset--font-size--small);
+                            color: var(--wp--preset--color--focus);
+                            background-color: transparent;
+                            border: none;
+
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    & ul {
+                        padding: 0;
+                        list-style: none;
+                    }
+
+                    & .filter-navigation {
+                        border: 1px solid var(--wp--preset--color--line);
+                        border-top: none;
+                        background-color: var(--wp--preset--color--base);
+                        box-shadow: var(--post-shadow);
+
+                        &:has(li.menu-item-has-children.filter.rooms) {
+                            border-top: 1px solid var(--wp--preset--color--line);
+                        }
+
+                        &:has(.menu-item-has-children.state) {
+                            margin-bottom: 1rem;
+                        }
+
+                        & li.menu-item-has-children {
+                            & .btn-filter.button-for-submenu {
+                                display: flex;
+                                align-items: center;
+                                gap: .5rem;
+                                width: 100%;
+                                background-color: transparent;
+                                border: none;
+                                font-size: var(--wp--preset--font-size--medium);
+                                line-height: 1;
+                                padding: 1rem;
+
+                                & svg:first-child {
+                                    position: relative;
+                                    bottom: .1rem;
+                                }
+
+                                & .bi-chevron-down {
+                                    margin-left: auto;
+                                    transition: transform .3s ease;
+                                }
+
+                                &.rotate {
+                                    padding-bottom: 1rem;
+
+                                    & .bi-chevron-down {
+                                        transform: rotate(180deg);
+                                    }
+                                }
+                            }
+
+                            & .sub-menu {
+                                max-height: 10000px;
+                                overflow: hidden;
+
+                                &.close {
+                                    max-height: 0;
+                                }
+
+                                & li.menu-item-has-children {
+                                    font-size: var(--wp--preset--font-size--small);
+
+                                    & .wrapper-for-title {
+                                        display: flex;
+                                        padding: .5rem 1rem;
+
+                                        .checkbox-filter-properties {
+                                            position: relative;
+
+                                            & input[type="checkbox"]:not(:checked)+label,
+                                            & input[type="checkbox"]:checked+label {
+                                                padding-left: 1.7em;
+                                            }
+                                        }
+
+                                        & .button-for-submenu {
+                                            margin-left: auto;
+                                            padding: 0;
+                                            background-color: transparent;
+                                            border: none;
+                                            width: 1rem;
+                                            height: 1rem;
+                                            transition: transform .3s ease, color .3s ease;
+
+                                            &:hover {
+                                                cursor: pointer;
+                                            }
+
+                                            &.rotate {
+                                                transform: rotate(45deg);
+                                                color: var(--wp--preset--color--focus);
+                                            }
+                                        }
+                                    }
+
+                                    & .sub-menu {
+                                        padding: 0 2rem;
+                                        transition: padding .3s ease;
+
+                                        &.open {
+                                            padding: .25rem 2rem;
+
+                                            & li {
+                                                max-height: 30px;
+                                            }
+                                        }
+
+                                        & li {
+                                            font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                                            max-height: 0;
+                                            overflow: hidden;
+                                            transition: max-height .3s ease;
+
+                                            & p.checkbox-filter-properties {
+                                                position: relative;
+                                                line-height: 2;
+
+                                                & input[type="checkbox"]:not(:checked)+label,
+                                                & input[type="checkbox"]:checked+label {
+                                                    padding-left: 1.7em;
+
+                                                    &::before {
+                                                        top: .2rem;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &:has(li.menu-item-has-children.filter.rooms) {
+                            &>li:not(:last-child) {
+                                border-bottom: 1px solid var(--wp--preset--color--line);
+                            }
+                        }
+
+                        & li.menu-item-has-children.filter.rooms,
+                        & li.menu-item-has-children.filter.price {
+
+                            & .sub-menu {
+                                padding: 1rem;
+                                padding-top: .5rem;
+                                display: grid;
+                                gap: 1rem;
+                                grid-template-columns: 1fr 1fr;
+
+                                &>label {
+                                    grid-column: 1 / -1;
+                                }
+
+                                &.close {
+                                    padding: 0 1rem;
+                                }
+
+                                & li {
+                                    & .number-input-wrapper {
+                                        position: relative;
+
+                                        & button {
+                                            display: grid;
+                                            place-content: center;
+                                            position: absolute;
+                                            z-index: 1;
+                                            top: 3px;
+                                            width: 2rem;
+                                            height: calc(100% - 6px);
+                                            border: none;
+                                            background-color: var(--wp--preset--color--tertiary);
+                                            transition: transform .3s ease;
+                                        }
+
+                                        & button:nth-child(1) {
+                                            left: 3px;
+                                        }
+
+                                        & input[type=number] {
+                                            position: relative;
+                                            z-index: 0;
+                                            text-align: center;
+                                            font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                                            padding: 0 2.5rem;
+
+                                            &::placeholder {
+                                                font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                                            }
+                                        }
+
+                                        & button:nth-child(3) {
+                                            right: 3px;
+                                        }
+                                    }
+                                }
+
+                                & .price-range {
+                                    grid-column: 1 / -1;
+                                    display: grid;
+                                    ;
+                                }
+                            }
+                        }
+
+                        & li.menu-item-has-children.filter.size {
+                            & .sub-menu {
+                                & li {
+                                    & .sub-menu {
+                                        padding: 1rem;
+                                        padding-top: .5rem;
+                                        display: grid;
+                                        gap: 1rem;
+                                        grid-template-columns: 1fr 1fr;
+
+                                        &>label {
+                                            grid-column: 1 / -1;
+                                        }
+
+                                        &.close {
+                                            padding: 0 1rem;
+                                        }
+
+                                        & li {
+                                            & .number-input-wrapper {
+                                                position: relative;
+
+                                                & button {
+                                                    display: grid;
+                                                    place-content: center;
+                                                    position: absolute;
+                                                    z-index: 1;
+                                                    top: 3px;
+                                                    width: 2rem;
+                                                    height: calc(100% - 6px);
+                                                    border: none;
+                                                    background-color: var(--wp--preset--color--tertiary);
+                                                    transition: transform .3s ease;
+                                                }
+
+                                                & button:nth-child(1) {
+                                                    left: 3px;
+                                                }
+
+                                                & input[type=number] {
+                                                    position: relative;
+                                                    z-index: 0;
+                                                    text-align: center;
+                                                    font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                                                    padding: 0 2.5rem;
+
+                                                    &::placeholder {
+                                                        font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                                                    }
+                                                }
+
+                                                & button:nth-child(3) {
+                                                    right: 3px;
+                                                }
+                                            }
+                                        }
+
+                                        & .construction-range,
+                                        & .land-range {
+                                            grid-column: 1 / -1;
+                                            display: grid;
+                                            ;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     & .menu-flex {
                         position: relative;
-                        height: 46px;
+                        height: 40px;
                         gap: .2rem;
                         border: none;
                         overflow: hidden;
@@ -214,243 +507,15 @@
 
                                 & [type="checkbox"]:checked+label:after {
                                     background-color: var(--wp--preset--color--base);
-                                    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px, rgba(0, 0, 0, 0.15) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -2px 0px inset;
+                                    box-shadow: #6557311a 0px 2px 4px, #65573113 0px 7px 13px -3px, #65573126 0px -2px 0px inset;
                                 }
                             }
                         }
                     }
 
-                    & .filter-navigation.menu {
-                        display: grid;
-                        gap: 1rem;
-
-                        &>.menu-item-has-children {
-                            &>.button-for-submenu {
-                                width: 100%;
-                                color: var(--wp--preset--color--contrast);
-
-                                & svg {
-                                    transition: transform .3s ease-in-out;
-                                }
-
-                                &.rotate {
-                                    & svg {
-                                        transform: rotate(180deg);
-                                    }
-                                }
-                            }
-
-                            &>.sub-menu {
-                                /* margin-top: 1rem; */
-                                padding: 10px;
-                                /* border: 1px solid light-dark(var(--wp--preset--color--accent-6), var(--wp--preset--color--accent-6)); */
-                                border: none;
-                                background-color: var(--wp--preset--color--tertiary);
-                                max-height: 10000px;
-                                overflow: hidden;
-
-                                &.close {
-                                    max-height: 0;
-                                    padding: 0 10px;
-                                    border-color: transparent;
-                                }
-
-                                &>.menu-item-has-children {
-                                    & .wrapper-for-title {
-                                        width: 100%;
-                                        padding: 0;
-                                        padding-right: 7px;
-
-                                        & .checkbox-filter-properties {
-                                            &:hover {
-                                                background-color: transparent;
-                                            }
-                                        }
-
-                                        & .button-for-submenu {
-                                            display: grid;
-                                            width: 13px;
-                                            height: 13px;
-                                            place-content: center;
-                                            background-color: transparent;
-                                            border: none;
-                                            transition: transform .3s ease-in-out;
-
-                                            &.rotate {
-                                                transform: rotate(45deg);
-                                            }
-                                        }
-                                    }
-
-                                    &>.sub-menu {
-                                        padding-left: 1rem;
-                                    }
-                                }
-                            }
-
-                            &.state {
-                                &>.sub-menu {
-                                    & li {
-                                        & .sub-menu {
-                                            padding: 0;
-                                            padding-left: 1rem;
-                                            max-height: 0;
-                                            overflow: hidden;
-
-                                            &.open {
-                                                padding: 10px 0;
-                                                padding-left: 1rem;
-                                                max-height: 10000px;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            &:is(.price, .size) {
-                                & .sub-menu {
-                                    & li {
-                                        display: grid;
-                                        grid-template-columns: 1fr 1fr;
-                                        gap: 0 .5rem;
-
-                                        & label {
-                                            grid-column: 1 / -1;
-                                        }
-
-                                        &:not(:last-child) {
-                                            margin-bottom: 1rem;
-                                        }
-
-                                        & :is(.price-range, .construction-range, .land-range) {
-                                            margin-top: 1rem;
-                                            display: grid;
-                                            grid-column: 1 / -1;
-                                        }
-                                    }
-                                }
-                            }
-
-                            &.rooms {
-                                & .backdrop {
-                                    display: none;
-                                }
-
-                                & .sub-menu {
-                                    display: grid !important;
-                                    grid-template-columns: 1fr 1fr;
-                                    gap: 0 .5rem;
-                                }
-                            }
-                        }
-                    }
-
-                    & .filter-buttons {
-                        display: grid;
-                        grid-template-columns: auto 1fr;
-                        gap: 2.5rem;
-
-                        & .btn.primary {
-                            justify-content: center;
-                        }
-                    }
-                }
-
-                & ul {
-                    padding-left: 0;
-                    list-style: none;
-                    font-size: var(--wp--preset--font-size--small);
-
-                    & li {
-                        & p.checkbox-filter-properties {
-                            position: relative;
-                            display: flex;
-                            align-items: center;
-                            height: 27px;
-                            padding: 0 10px;
-                            transition: background-color .2s ease-in-out;
-
-                            &:hover {
-                                background-color: var(--wp--preset--color--primary-alpha-50);
-                            }
-                        }
-
-                        & .number-input-wrapper {
-                            position: relative;
-
-                            & input[type=number] {
-                                padding: 0 2.5rem !important;
-                                text-align: center;
-                                font-size: var(--wp--preset--font-size--small) !important;
-
-                                &::placeholder {
-                                    font-size: var(--wp--preset--font-size--small) !important;
-                                }
-                            }
-
-                            button {
-                                display: grid;
-                                place-content: center;
-                                position: absolute;
-                                top: 3px;
-                                width: 2rem;
-                                height: calc(100% - 6px);
-                                border: none;
-                                background-color: var(--wp--preset--color--tertiary);
-                                transition: transform.3s ease;
-
-                                &:active {
-                                    transform: translateY(2px);
-                                }
-
-                                &:focus-visible {
-                                    outline: none;
-                                    box-shadow: 0 0 0 .2rem #ff44007e;
-                                }
-                            }
-
-                            button:nth-child(1) {
-                                left: 3px;
-                            }
-
-                            button:nth-child(3) {
-                                right: 3px;
-                            }
-                        }
-
-                        & .sub-menu {
-                            & li {
-                                & p.checkbox-filter-properties {
-
-                                    & input[type="checkbox"]:not(:checked)+label:after,
-                                    & input[type="checkbox"]:checked+label:after {
-                                        top: 0.48em;
-                                    }
-                                }
-
-                                & .sub-menu {
-                                    & li {
-                                        & p.checkbox-filter-properties {
-
-                                            & input[type="checkbox"]:not(:checked)+label:after,
-                                            & input[type="checkbox"]:checked+label:after {
-                                                top: 0.55em;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                input[type=number] {
-                    height: 36px !important;
-                    background-color: var(--wp--preset--color--base) !important;
-                    font-size: var(--wp--preset--font-size--small) !important;
-
-                    &::placeholder {
-                        font-size: var(--wp--preset--font-size--small) !important;
+                    &>.filter {
+                        margin-top: .5rem;
+                        margin-bottom: 1.5rem;
                     }
                 }
             }
