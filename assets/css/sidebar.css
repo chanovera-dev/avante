@@ -148,6 +148,7 @@
                         }
 
                         & .btn-reset-filters {
+                            font-family: var(--wp--preset--font-family--manrope);
                             font-size: var(--wp--preset--font-size--small);
                             color: var(--wp--preset--color--focus);
                             background-color: transparent;
@@ -186,6 +187,7 @@
                                 width: 100%;
                                 background-color: transparent;
                                 border: none;
+                                font-family: var(--wp--preset--font-family--manrope);
                                 font-size: var(--wp--preset--font-size--medium);
                                 line-height: 1;
                                 padding: 1rem;
@@ -449,6 +451,17 @@
                             overflow-x: scroll;
                             padding-right: 1rem;
                             mask-image: linear-gradient(to right, black 80%, transparent 100%);
+
+                            &::-webkit-scrollbar {
+                                height: .375rem;
+                                background: transparent;
+                            }
+
+                            &::-webkit-scrollbar-thumb {
+                                background-color: transparent;
+                                transition: background-color .3s ease;
+                            }
+
 
                             & .filter-property {
                                 position: relative;
