@@ -64,7 +64,9 @@
                             font-weight: 500;
                             cursor: pointer;
                             transition: all 0.2s ease;
+                            font-family: var(--wp--preset--font-family--manrope);
                             color: var(--wp--preset--color--contrast);
+                            font-size: var(--wp--preset--font-size--small);
 
                             &:hover {
                                 border-color: var(--wp--preset--color--line);
