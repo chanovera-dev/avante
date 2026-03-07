@@ -85,7 +85,8 @@ function avante_override_theme_json_colors($theme_json)
     }
 
     $themes = avante_get_color_themes();
-    $default_colors = $themes['default']['colors'];
+    $active_preset = get_option('avante_theme_preset', 'default');
+    $default_colors = $themes[$active_preset]['colors'] ?? $themes['default']['colors'];
 
     $new_palette = array();
     foreach ($color_ids as $id) {
@@ -129,11 +130,35 @@ function avante_override_theme_json_colors($theme_json)
         );
     }
 
+    // Shadows
+    $shadow_presets = array();
+    foreach (['post-shadow-light', 'post-shadow', 'post-shadow-hover'] as $id) {
+        $default_val = $default_colors[$id] ?? '';
+        $shadow_value = get_option('avante_color_' . $id, $default_val);
+
+        // If it's a single hex color like #000000, it's likely a relic from the previous color-input bug
+        // or a manual error. Shadows should typically be complex strings.
+        if (empty($shadow_value) || (strlen($shadow_value) <= 7 && strpos($shadow_value, '#') === 0) || $shadow_value === '#000000') {
+            $shadow_value = $default_val;
+        }
+
+        if (!empty($shadow_value)) {
+            $shadow_presets[] = array(
+                'slug'   => $id,
+                'shadow' => $shadow_value,
+                'name'   => ucfirst(str_replace('-', ' ', $id))
+            );
+        }
+    }
+
     $new_data = array(
         'version' => 3,
         'settings' => array(
             'color' => array(
                 'palette' => $new_palette
+            ),
+            'shadow' => array(
+                'presets' => $shadow_presets
             )
         )
     );

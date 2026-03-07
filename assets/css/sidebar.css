@@ -133,7 +133,7 @@
             & .properties--filter {
                 & .property-filter-form {
                     background-color: var(--wp--preset--color--base);
-                    box-shadow: var(--post-shadow);
+                    box-shadow: var(--wp--preset--shadow--post-shadow);
                     border: 1px solid var(--wp--preset--color--line);
 
                     &>.block-filter:not(:last-child) {

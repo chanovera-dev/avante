@@ -3,12 +3,7 @@
 
     /* sizes */
     --heigh-wp-adminbar: 2.875rem;
-
     --max-width--content: min(100% - 1.25rem, 90rem);
-
-    /* shadows */
-    --post-shadow: #65573120 0px 54px 55px, #6557310f 0px -12px 30px, #6557310f 0px 4px 6px, #65573116 0px 12px 13px, #6557310b 0px -3px 5px;
-    --post-shadow-hover: #65573140 0px 54px 55px, #6557311f 0px -12px 30px, #6557311f 0px 4px 6px, #6557312b 0px 12px 13px, #65573117 0px -3px 5px;
 }
 
 @media (width >=783px) {

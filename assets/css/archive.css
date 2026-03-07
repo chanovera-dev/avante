@@ -397,12 +397,12 @@
             position: relative;
             max-width: 100%;
             overflow: hidden;
-            box-shadow: var(--post-shadow);
+            box-shadow: var(--wp--preset--shadow--post-shadow);
             padding: 0;
             transition: box-shadow .3s ease;
 
             &:hover {
-                box-shadow: var(--post-shadow-hover);
+                box-shadow: var(--wp--preset--shadow--post-shadow-hover);
 
                 & .post_body {
                     & .post__backdrop {
@@ -514,7 +514,7 @@
                         align-items: center;
                         gap: .5rem;
                         line-height: 1;
-                        box-shadow: var(--post-shadow-hover);
+                        box-shadow: var(--wp--preset--shadow--post-shadow-hover);
                         opacity: 0;
                         transition: opacity .3s ease;
 
@@ -1073,12 +1073,12 @@
 
             &:hover {
                 & .post_body {
-                    box-shadow: var(--post-shadow-hover);
+                    box-shadow: var(--wp--preset--shadow--post-shadow-hover);
                 }
             }
 
             & .post_body {
-                box-shadow: var(--post-shadow);
+                box-shadow: var(--wp--preset--shadow--post-shadow);
                 transition: box-shadow .3s ease;
 
                 & .post__content {
@@ -1101,7 +1101,7 @@
 
         &:is(.format-video) {
             &:hover {
-                box-shadow: var(--post-shadow-hover);
+                box-shadow: var(--wp--preset--shadow--post-shadow-hover);
 
                 & .post_body {
                     &::before {
@@ -1229,7 +1229,7 @@
             grid-template-columns: 3rem 1fr auto;
             align-items: center;
             background-color: var(--wp--preset--color--base);
-            box-shadow: rgba(0, 0, 0, .07) 0 -2px 0 inset, rgba(0, 0, 0, 0.07) 0px 54px 55px, rgba(0, 0, 0, 0.03) 0px -12px 30px, rgba(0, 0, 0, 0.03) 0px 4px 6px, rgba(0, 0, 0, 0.03) 0px 12px 13px, rgba(0, 0, 0, 0.03) 0px -3px 5px;
+            box-shadow: var(--wp--preset--shadow--post-shadow-light);
 
             & .format-type {
                 position: relative;

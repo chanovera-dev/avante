@@ -34,6 +34,9 @@ function avante_get_color_themes()
                 'focus' => '#F4442E',
                 'bullet' => '#B2D6B6',
                 'bullet-active' => '#87AB89',
+                'post-shadow-light' => '#40495412 0 -2px 0 inset, #40495412 0px 54px 55px, #40495408 0px -12px 30px, #40495408 0px 4px 6px, #40495408 0px 12px 13px, #40495408 0px -3px 5px',
+                'post-shadow' => '#40495420 0px 54px 55px, #4049540f 0px -12px 30px, #4049540f 0px 4px 6px, #40495416 0px 12px 13px, #4049540b 0px -3px 5px',
+                'post-shadow-hover' => '#40495440 0px 54px 55px, #4049541f 0px -12px 30px, #4049541f 0px 4px 6px, #4049542b 0px 12px 13px, #40495417 0px -3px 5px',
             ),
         ),
         'zuky' => array(
@@ -51,6 +54,9 @@ function avante_get_color_themes()
                 'focus' => '#F90093',
                 'bullet' => '#feda7c',
                 'bullet-active' => '#cbae63',
+                'post-shadow-light' => '#65573112 0 -2px 0 inset, #65573112 0px 54px 55px, #65573108 0px -12px 30px, #65573108 0px 4px 6px, #65573108 0px 12px 13px, #65573108 0px -3px 5px',
+                'post-shadow' => '#65573120 0px 54px 55px, #6557310f 0px -12px 30px, #6557310f 0px 4px 6px, #65573116 0px 12px 13px, #6557310b 0px -3px 5px',
+                'post-shadow-hover' => '#65573140 0px 54px 55px, #6557311f 0px -12px 30px, #6557311f 0px 4px 6px, #6557312b 0px 12px 13px, #65573117 0px -3px 5px',
             ),
         ),
         'dark' => array(
@@ -68,6 +74,9 @@ function avante_get_color_themes()
                 'focus' => '#F90093',
                 'bullet' => '#B2D6B6',
                 'bullet-active' => '#cbae63',
+                'post-shadow-light' => '#00000012 0 -2px 0 inset, #00000012 0px 54px 55px, #00000008 0px -12px 30px, #00000008 0px 4px 6px, #00000008 0px 12px 13px, #00000008 0px -3px 5px',
+                'post-shadow' => '#ffffff20 0px 54px 55px, #ffffff0f 0px -12px 30px, #ffffff0f 0px 4px 6px, #ffffff16 0px 12px 13px, #ffffff0b 0px -3px 5px',
+                'post-shadow-hover' => '#ffffff40 0px 54px 55px, #ffffff1f 0px -12px 30px, #ffffff1f 0px 4px 6px, #ffffff2b 0px 12px 13px, #ffffff17 0px -3px 5px',
             ),
         ),
         'ocean' => array(
@@ -85,6 +94,9 @@ function avante_get_color_themes()
                 'focus' => '#00bcd4',
                 'bullet' => '#B2D6B6',
                 'bullet-active' => '#0077be',
+                'post-shadow-light' => '#00336612 0 -2px 0 inset, #00336612 0px 54px 55px, #00336608 0px -12px 30px, #00336608 0px 4px 6px, #00336608 0px 12px 13px, #00336608 0px -3px 5px',
+                'post-shadow' => '#00336620 0px 54px 55px, #0033660f 0px -12px 30px, #0033660f 0px 4px 6px, #00336616 0px 12px 13px, #0033660b 0px -3px 5px',
+                'post-shadow-hover' => '#00336640 0px 54px 55px, #0033661f 0px -12px 30px, #0033661f 0px 4px 6px, #0033662b 0px 12px 13px, #00336617 0px -3px 5px',
             ),
         ),
         'sakura' => array(
@@ -102,6 +114,9 @@ function avante_get_color_themes()
                 'focus' => '#ff69b4',
                 'bullet' => '#B2D6B6',
                 'bullet-active' => '#ffb7c5',
+                'post-shadow-light' => '#5d3b3e12 0 -2px 0 inset, #5d3b3e12 0px 54px 55px, #5d3b3e08 0px -12px 30px, #5d3b3e08 0px 4px 6px, #5d3b3e08 0px 12px 13px, #5d3b3e08 0px -3px 5px',
+                'post-shadow' => '#5d3b3e20 0px 54px 55px, #5d3b3e0f 0px -12px 30px, #5d3b3e0f 0px 4px 6px, #5d3b3e16 0px 12px 13px, #5d3b3e0b 0px -3px 5px',
+                'post-shadow-hover' => '#5d3b3e40 0px 54px 55px, #5d3b3e1f 0px -12px 30px, #5d3b3e1f 0px 4px 6px, #5d3b3e2b 0px 12px 13px, #5d3b3e17 0px -3px 5px',
             ),
         ),
         'forest' => array(
@@ -119,6 +134,9 @@ function avante_get_color_themes()
                 'focus' => '#4caf50',
                 'bullet' => '#B2D6B6',
                 'bullet-active' => '#8bc34a',
+                'post-shadow-light' => '#1b5e2012 0 -2px 0 inset, #1b5e2012 0px 54px 55px, #1b5e2008 0px -12px 30px, #1b5e2008 0px 4px 6px, #1b5e2008 0px 12px 13px, #1b5e2008 0px -3px 5px',
+                'post-shadow' => '#1b5e2020 0px 54px 55px, #1b5e200f 0px -12px 30px, #1b5e200f 0px 4px 6px, #1b5e2016 0px 12px 13px, #1b5e200b 0px -3px 5px',
+                'post-shadow-hover' => '#1b5e2040 0px 54px 55px, #1b5e201f 0px -12px 30px, #1b5e201f 0px 4px 6px, #1b5e202b 0px 12px 13px, #1b5e2017 0px -3px 5px',
             ),
         ),
     );
@@ -176,6 +194,12 @@ add_action('admin_enqueue_scripts', 'avante_options_media_scripts');
  */
 function avante_register_settings()
 {
+    register_setting('avante_options_group', 'avante_theme_preset', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' => 'default',
+    ));
+
     register_setting('avante_options_group', 'avante_ga_id', array(
         'type' => 'string',
         'sanitize_callback' => 'sanitize_text_field',
@@ -366,6 +390,9 @@ function avante_register_settings()
         'focus' => __('Color de Enfoque (Focus)', 'avante'),
         'bullet' => __('Indicador (Bullet)', 'avante'),
         'bullet-active' => __('Indicador Activo (Bullet)', 'avante'),
+        'post-shadow-light' => __('Sombra de Post [light]', 'avante'),
+        'post-shadow' => __('Sombra de Post', 'avante'),
+        'post-shadow-hover' => __('Sombra de Post [hover]', 'avante'),
     );
 
     foreach ($color_labels as $color_id => $label) {
@@ -386,8 +413,8 @@ add_action('admin_init', 'avante_register_settings');
  */
 function avante_sanitize_color($color)
 {
-    // Support color-mix
-    if (strpos($color, 'color-mix') !== false) {
+    // Support color-mix or complex shadow strings (containing spaces)
+    if (strpos($color, 'color-mix') !== false || strpos($color, ' ') !== false) {
         return wp_kses_post($color);
     }
 
@@ -607,10 +634,12 @@ function avante_loop_design_render()
 function avante_theme_preset_render()
 {
     $themes = avante_get_color_themes();
-    echo '<select id="avante_theme_selector">';
+    $active = get_option('avante_theme_preset', 'default');
+    echo '<select name="avante_theme_preset" id="avante_theme_selector">';
     echo '<option value="">' . __('Seleccionar preajuste...', 'avante') . '</option>';
     foreach ($themes as $id => $theme) {
-        echo '<option value="' . esc_attr($id) . '" data-colors="' . esc_attr(json_encode($theme['colors'])) . '">' . esc_html($theme['name']) . '</option>';
+        $selected = selected($active, $id, false);
+        echo '<option value="' . esc_attr($id) . '" data-colors="' . esc_attr(json_encode($theme['colors'])) . '" ' . $selected . '>' . esc_html($theme['name']) . '</option>';
     }
     echo '</select>';
     echo '<p class="description">' . __('Al seleccionar uno, se actualizarán los selectores de abajo.', 'avante') . '</p>';
@@ -623,7 +652,8 @@ function avante_color_render($args)
 {
     $id = $args['id'];
     $themes = avante_get_color_themes();
-    $default = $themes['default']['colors'][$id] ?? '#000000';
+    $active_preset = get_option('avante_theme_preset', 'default');
+    $default = $themes[$active_preset]['colors'][$id] ?? ($themes['default']['colors'][$id] ?? '#000000');
     $value = get_option('avante_color_' . $id);
     
     if (empty($value)) {
@@ -631,7 +661,11 @@ function avante_color_render($args)
     }
 
     echo '<div class="avante-color-picker-wrapper" style="display:flex; align-items:center; gap:10px;">';
-    echo '<input type="color" name="avante_color_' . $id . '" id="avante_color_' . $id . '" value="' . esc_attr($value) . '">';
+    if (strpos($id, 'shadow') !== false) {
+        echo '<input type="text" name="avante_color_' . $id . '" id="avante_color_' . $id . '" value="' . esc_attr($value) . '" class="regular-text">';
+    } else {
+        echo '<input type="color" name="avante_color_' . $id . '" id="avante_color_' . $id . '" value="' . esc_attr($value) . '">';
+    }
     echo ' <code>' . esc_html($value) . '</code>';
     echo '<button type="button" class="button avante-reset-color" data-id="' . esc_attr($id) . '" data-default="' . esc_attr($default) . '">' . __('Resetear', 'avante') . '</button>';
     echo '</div>';

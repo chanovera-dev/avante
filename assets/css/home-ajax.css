@@ -192,7 +192,7 @@ input:checked+.slider:before {
     position: relative;
     max-width: 100%;
     overflow: hidden;
-    box-shadow: var(--post-shadow);
+    box-shadow: var(--wp--preset--shadow--post-shadow);
     transition: box-shadow .3s ease;
     opacity: 0;
     transform: translateY(60px);
@@ -204,7 +204,7 @@ input:checked+.slider:before {
     }
 
     &:hover {
-        box-shadow: var(--post-shadow-hover);
+        box-shadow: var(--wp--preset--shadow--post-shadow-hover);
 
         & article {
             & .post__backdrop {
@@ -344,7 +344,7 @@ input:checked+.slider:before {
                 align-items: center;
                 gap: .5rem;
                 line-height: 1;
-                box-shadow: var(--post-shadow-hover);
+                box-shadow: var(--wp--preset--shadow--post-shadow-hover);
                 opacity: 0;
                 transition: opacity .3s ease;
 
