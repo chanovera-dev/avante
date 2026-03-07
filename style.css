@@ -865,7 +865,7 @@ Tags:
                                     top: 63px;
                                     width: max-content;
                                     background-color: var(--wp--preset--color--base);
-                                    box-shadow: var(--post-shadow);
+                                    box-shadow: var(--wp--preset--shadow--post-shadow);
                                     z-index: 100;
                                     transition: 0.4s padding, 0.4s background-color, 0.4s box-shadow;
 
