@@ -1,7 +1,7 @@
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
 .detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
-.property {
+.property:not(:has(.breadcrumbs--wrapper)) {
     position: relative;
     opacity: 0;
     transform: translateY(4rem);
@@ -391,7 +391,7 @@
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
 .detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
-.property {
+.property:not(:has(.breadcrumbs--wrapper)) {
     &:has(.post_body) {
         &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-audio, .format-property):has(.post_body) {
             position: relative;
@@ -1351,11 +1351,17 @@
                             position: relative;
                         }
 
-                        & .post__content {
+                        & :is(.post__content, .post--content) {
                             position: relative;
                             align-self: end;
                             opacity: 1 !important;
+                            width: 100%;
+                            top: 0;
+                            left: 0;
+                            background-color: transparent;
                         }
+
+                        & .post
                     }
                 }
             }
