@@ -10,6 +10,7 @@
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post_body">
+        <div class="post__backdrop"></div>
         <div class="post__overlay"></div>
         <div class="post__header">
             <?php
