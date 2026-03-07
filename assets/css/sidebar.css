@@ -132,15 +132,18 @@
         &:has(.properties--filter) {
             & .properties--filter {
                 & .property-filter-form {
+                    background-color: var(--wp--preset--color--base);
+                    box-shadow: var(--post-shadow);
+                    border: 1px solid var(--wp--preset--color--line);
+
+                    &>.block-filter:not(:last-child) {
+                        border-bottom: 1px solid var(--wp--preset--color--line);
+                    }
+
                     & .filter-buttons {
                         padding: 1rem;
-                        border: 1px solid var(--wp--preset--color--line);
-                        border-top: none;
                         display: flex;
                         align-items: center;
-                        background-color: var(--wp--preset--color--base);
-                        box-shadow: var(--post-shadow);
-                        margin-bottom: 1rem;
 
                         & .title-section {
                             font-size: var(--wp--preset--font-size--medium);
@@ -166,17 +169,8 @@
                     }
 
                     & .filter-navigation {
-                        border: 1px solid var(--wp--preset--color--line);
-                        border-top: none;
-                        background-color: var(--wp--preset--color--base);
-                        box-shadow: var(--post-shadow);
-
-                        &:has(li.menu-item-has-children.filter.rooms) {
-                            border-top: 1px solid var(--wp--preset--color--line);
-                        }
-
-                        &:has(.menu-item-has-children.state) {
-                            margin-bottom: 1rem;
+                        &>li:not(:last-child) {
+                            border-bottom: 1px solid var(--wp--preset--color--line);
                         }
 
                         & li.menu-item-has-children {
@@ -208,6 +202,10 @@
                                     & .bi-chevron-down {
                                         transform: rotate(180deg);
                                     }
+                                }
+
+                                &:hover {
+                                    cursor: pointer;
                                 }
                             }
 
@@ -289,12 +287,6 @@
                                         }
                                     }
                                 }
-                            }
-                        }
-
-                        &:has(li.menu-item-has-children.filter.rooms) {
-                            &>li:not(:last-child) {
-                                border-bottom: 1px solid var(--wp--preset--color--line);
                             }
                         }
 
@@ -432,6 +424,10 @@
                         }
                     }
 
+                    & .operation.type.search {
+                        padding: 1rem;
+                    }
+
                     & .menu-flex {
                         position: relative;
                         height: 40px;
@@ -540,11 +536,19 @@
     .site-main {
         & .block {
             & .content:has(aside) {
-                gap: 3rem !important;
+                gap: 2rem !important;
                 grid-template-columns: 1fr clamp(306.67px, 280px + 2.6vw, 317.5px);
 
                 &:has(.properties--filter) {
                     grid-template-columns: clamp(306.67px, 280px + 2.6vw, 317.5px) 1fr;
+
+                    & .properties--filter {
+                        & .property-filter-form {
+                            & .operation.type.search {
+                                display: none;
+                            }
+                        }
+                    }
                 }
             }
         }

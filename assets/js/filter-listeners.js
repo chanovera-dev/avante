@@ -211,4 +211,45 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 500); // 500ms debounce for search
         });
     }
+
+    // Synchronization for breadcrumb filters
+    const syncElements = document.querySelectorAll('[data-sync]');
+    syncElements.forEach(elem => {
+        const targetId = elem.getAttribute('data-sync');
+        const targetElem = document.getElementById(targetId);
+
+        if (!targetElem) return;
+
+        // Checkboxes (Operation / Type)
+        if (elem.type === 'checkbox') {
+            elem.addEventListener('change', function () {
+                targetElem.checked = this.checked;
+                targetElem.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+
+            targetElem.addEventListener('change', function () {
+                elem.checked = this.checked;
+            });
+
+            elem.checked = targetElem.checked;
+        }
+
+        // Text input (Search)
+        if (elem.type === 'text') {
+            let syncTimeout;
+            elem.addEventListener('input', function () {
+                targetElem.value = this.value;
+                clearTimeout(syncTimeout);
+                syncTimeout = setTimeout(() => {
+                    targetElem.dispatchEvent(new Event('change', { bubbles: true }));
+                }, 500);
+            });
+
+            targetElem.addEventListener('input', function () {
+                elem.value = this.value;
+            });
+
+            elem.value = targetElem.value;
+        }
+    });
 });

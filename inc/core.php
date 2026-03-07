@@ -549,6 +549,131 @@ function wp_breadcrumbs()
         echo $current . 'Minientradas más recientes';
     }
 
+    // 2. ARCHIVO CPT PROPIEDADES
+    elseif (is_post_type_archive('property') || is_page_template('archive-property.php')) {
+        $post_type = get_post_type_object('property');
+        $label     = $post_type->labels->name;
+        
+        if ($paged === 1) {
+            echo '<h1 class="page-title">' . esc_html($label) . '</h1>';
+        } else {
+            echo '<span>' . esc_html__('Página ', 'avante') . $paged . esc_html__(' de ', 'avante') . '</span>' . '<h1 class="page-title">' . esc_html($label) . '</h1>';
+        }
+
+        ?><div class="breadcrumbs-filters">
+        <!-- Operation -->
+        <?php 
+        $operation_types = get_query_var('operation_types', []); 
+        if (empty($operation_types) && function_exists('get_existing_operation_types')) {
+            $operation_types = get_existing_operation_types();
+        }
+        ?>
+        <?php if (!empty($operation_types)) : ?>
+            <fieldset class="menu-flex">
+                <legend class="screen-reader-text" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"><?php esc_html_e('Tipo de Operación', 'avante'); ?></legend>
+                <div class="menu-flex--operation">
+                    <?php if (in_array('sale', $operation_types)) : ?>
+                        <div class="filter-property"><input type="checkbox" id="bc-op-sale" data-sync="op-sale"><label for="bc-op-sale"><?= avante_get_icon('sale'); esc_html_e('Venta', 'avante'); ?></label></div>
+                    <?php endif; ?>
+                    <?php if (in_array('rental', $operation_types)) : ?>
+                        <div class="filter-property"><input type="checkbox" id="bc-op-rent" data-sync="op-rent"><label for="bc-op-rent"><?= avante_get_icon('rent'); esc_html_e('Renta', 'avante'); ?></label></div>
+                    <?php endif; ?>
+                </div>
+            </fieldset>
+        <?php endif; ?>
+
+        <!-- Type -->
+        <?php 
+        $existing_types = get_query_var('property_types', []); 
+        if (empty($existing_types) && function_exists('get_existing_property_types')) {
+            $existing_types = get_existing_property_types();
+        }
+        ?>
+        <?php if (!empty($existing_types)) : ?>
+            <fieldset class="menu-flex">
+                <legend class="screen-reader-text" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;"><?php esc_html_e('Tipo de Propiedad', 'avante'); ?></legend>
+                <div class="menu-flex--type">
+                <?php if (in_array('house', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-casa" data-sync="type-casa"><label for="bc-type-casa"><?= avante_get_icon('home'); esc_html_e('Casa', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('bedroom', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-bedroom" data-sync="type-bedroom"><label for="bc-type-bedroom"><?= avante_get_icon('bedroom'); esc_html_e('Habitación', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('house_with_land_use', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-house-with-land-use" data-sync="type-house-with-land-use"><label for="bc-type-house-with-land-use"><?= avante_get_icon('home'); esc_html_e('Casa c/uso de suelo', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('apartment', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-apartment" data-sync="type-apartment"><label for="bc-type-apartment"><?= avante_get_icon('construction'); esc_html_e('Departamento', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('house_in_condo', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-house-in-condo" data-sync="type-house-in-condo"><label for="bc-type-house-in-condo"><?= avante_get_icon('home'); esc_html_e('Condominio', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('land', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-land" data-sync="type-land"><label for="bc-type-land"><?= avante_get_icon('garden'); esc_html_e('Terreno', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('lot', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-lot" data-sync="type-lot"><label for="bc-type-lot"><?= avante_get_icon('garden'); esc_html_e('Lote', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('commercial', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-commercial" data-sync="type-commercial"><label for="bc-type-commercial"><?= avante_get_icon('store'); esc_html_e('Local comercial', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('office', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-office" data-sync="type-office"><label for="bc-type-office"><?= avante_get_icon('home'); esc_html_e('Oficina', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('doctor_office', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-doctor-office" data-sync="type-doctor-office"><label for="bc-type-doctor-office"><?= avante_get_icon('home'); esc_html_e('Consultorio', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('warehouse', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-warehouse" data-sync="type-warehouse"><label for="bc-type-warehouse"><?= avante_get_icon('warehouse'); esc_html_e('Bodega', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('industrial_warehouse', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-industrial-warehouse" data-sync="type-industrial-warehouse"><label for="bc-type-industrial-warehouse"><?= avante_get_icon('warehouse'); esc_html_e('Nave', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('building', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-building" data-sync="type-building"><label for="bc-type-building"><?= avante_get_icon('construction'); esc_html_e('Edificio', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('penthouse', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-penthouse" data-sync="type-penthouse"><label for="bc-type-penthouse"><?= avante_get_icon('construction'); esc_html_e('PH', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('loft', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-loft" data-sync="type-loft"><label for="bc-type-loft"><?= avante_get_icon('construction'); esc_html_e('Loft', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('villa', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-villa" data-sync="type-villa"><label for="bc-type-villa"><?= avante_get_icon('home'); esc_html_e('Villa', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('ranch', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-ranch" data-sync="type-ranch"><label for="bc-type-ranch"><?= avante_get_icon('garden'); esc_html_e('Rancho', 'avante'); ?></label></div>
+                <?php endif; ?>
+
+                <?php if (in_array('other', $existing_types)) : ?>
+                    <div class="filter-property"><input type="checkbox" id="bc-type-other" data-sync="type-other"><label for="bc-type-other"><?= avante_get_icon('home'); esc_html_e('Otro', 'avante'); ?></label></div>
+                <?php endif; ?>
+            </div>
+        </fieldset>
+        <?php endif; ?>
+        <!-- Search -->
+        <div class="filter">
+            <input type="text" id="bc-filter-search" data-sync="filter-search" aria-label="<?php esc_attr_e('Palabras clave', 'avante'); ?>" placeholder="<?php esc_html_e('Ciudad, estado, tipo, etc...', 'avante'); ?>">
+        </div>
+        </div><?php
+    }
+
     // 2. ARCHIVO CPT NSFW
     elseif (is_post_type_archive('nsfw')) {
         if ($paged === 1) {
@@ -789,6 +914,8 @@ function avante_get_icon($type)
         'lot' => '<svg width="20" height="20" fill="currentcolor" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><path d="M6.667,10.333l6.333,0c0.92,0 1.667,0.746 1.667,1.667l0,2c0,0.92 -0.746,1.667 -1.667,1.667l-10,0c-0.92,0 -1.667,-0.746 -1.667,-1.667l0,-10c0,-0.92 0.746,-1.667 1.667,-1.667l2,0c0.92,0 1.667,0.746 1.667,1.667l0,6.333Zm-0.724,4l-2.276,0c-0.184,0 -0.333,-0.149 -0.333,-0.333c0,-0.184 0.149,-0.333 0.333,-0.333l2.333,0l0,-1.333l-1.667,0c-0.184,0 -0.333,-0.149 -0.333,-0.333c0,-0.184 0.149,-0.333 0.333,-0.333l1.667,0l0,-1.333l-2.333,0c-0.184,0 -0.333,-0.149 -0.333,-0.333c0,-0.184 0.149,-0.333 0.333,-0.333l2.333,0l0,-1.333l-1.667,0c-0.184,0 -0.333,-0.149 -0.333,-0.333c0,-0.184 0.149,-0.333 0.333,-0.333l1.667,0l0,-1.333l-2.333,0c-0.184,0 -0.333,-0.149 -0.333,-0.333c0,-0.184 0.149,-0.333 0.333,-0.333l2.333,0l0,-1.333l-1.667,0c-0.184,0 -0.333,-0.149 -0.333,-0.333c0,-0.184 0.149,-0.333 0.333,-0.333l1.61,0c-0.137,-0.388 -0.508,-0.667 -0.943,-0.667l-2,0c-0.552,0 -1,0.448 -1,1l0,10c0,0.552 0.448,1 1,1l2,0c0.435,0 0.806,-0.278 0.943,-0.667Zm0.724,-3.333l0,3c0,0.375 -0.124,0.721 -0.333,1l6.667,0c0.552,0 1,-0.448 1,-1l0,-2c0,-0.552 -0.448,-1 -1,-1l-6.333,0Zm4.667,0.667l1.333,0c0.368,0 0.667,0.298 0.667,0.667l0,1.333c0,0.368 -0.298,0.667 -0.667,0.667l-1.333,0c-0.368,0 -0.667,-0.298 -0.667,-0.667l0,-1.333c0,-0.368 0.298,-0.667 0.667,-0.667Zm0,0.667l0,1.333l1.333,0l0,-1.333l-1.333,0Z" style="fill-rule:nonzero;"/></svg>',
         'parking' => '<svg width="20" height="20" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;"><path d="M14.678,10.331c-0.229,-0.304 -1.08,-0.513 -1.44,-1.061c-0.36,-0.547 -0.655,-1.732 -1.571,-2.187c-0.916,-0.455 -2.668,-0.583 -3.668,-0.583c-1,0 -2.75,0.125 -3.668,0.582c-0.918,0.457 -1.211,1.641 -1.571,2.188c-0.36,0.546 -1.211,0.758 -1.44,1.062c-0.229,0.304 -0.39,2.226 -0.292,3.169c0.098,0.943 0.281,1.5 0.281,1.5l2.688,0c0.44,0 0.583,-0.165 1.483,-0.25c0.987,-0.094 1.956,-0.125 2.519,-0.125c0.562,0 1.562,0.031 2.549,0.125c0.9,0.085 1.048,0.25 1.483,0.25l2.656,0c0,0 0.183,-0.557 0.281,-1.5c0.098,-0.943 -0.064,-2.865 -0.292,-3.169Zm-2.178,4.669l1.75,0l0,0.5l-1.75,0l0,-0.5Zm-10.75,0l1.75,0l0,0.5l-1.75,0l0,-0.5Z" style="fill:none;fill-rule:nonzero;stroke:currentColor;stroke-width:.8px;"/><path d="M11.39,12.661c-0.185,-0.213 -0.787,-0.392 -1.583,-0.511c-0.797,-0.119 -1.088,-0.15 -1.8,-0.15c-0.713,0 -1.037,0.051 -1.8,0.15c-0.764,0.099 -1.337,0.275 -1.583,0.511c-0.369,0.357 0.172,0.759 0.596,0.807c0.411,0.047 1.233,0.03 2.791,0.03c1.557,0 2.38,0.017 2.791,-0.03c0.424,-0.052 0.926,-0.425 0.589,-0.807Zm2.097,-2.066c-0.004,-0.051 -0.046,-0.092 -0.097,-0.094c-0.369,-0.013 -0.744,0.013 -1.408,0.209c-0.339,0.099 -0.658,0.258 -0.94,0.471c-0.071,0.056 -0.046,0.206 0.043,0.222c0.548,0.064 1.099,0.097 1.651,0.097c0.331,0 0.672,-0.094 0.736,-0.389c0.032,-0.17 0.038,-0.344 0.015,-0.516Zm-10.973,-0c0.004,-0.051 0.046,-0.092 0.097,-0.094c0.369,-0.013 0.744,0.013 1.408,0.209c0.339,0.099 0.658,0.258 0.94,0.471c0.071,0.056 0.046,0.206 -0.043,0.222c-0.548,0.064 -1.099,0.097 -1.651,0.097c-0.331,0 -0.672,-0.094 -0.736,-0.389c-0.032,-0.17 -0.038,-0.344 -0.015,-0.516Z" style="fill-rule:nonzero;"/><path d="M13.5,9l0.5,0m-12,0l0.5,0m-0.062,0.594c0,0 1.448,-0.375 5.562,-0.375c4.114,0 5.562,0.375 5.562,0.375" style="fill:none;fill-rule:nonzero;stroke:currentColor;stroke-width:.8px;"/></svg>',
         'price' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-coin" viewBox="0 0 16 16"><path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"/><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12"/></svg>',
+        'size' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"/></svg>',
+        'filter' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-left" viewBox="0 0 16 16"><path d="M2 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/></svg>',
     ];
 
     return $icons[$type] ?? '';

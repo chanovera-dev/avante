@@ -11,55 +11,53 @@
 <aside class="properties--filter">
     <!-- Filters -->
     <form class="property-filter-form" id="property-filters">
-
-        <div class="filter-buttons">
+        <div class="block-filter filter-buttons">
+            <?= avante_get_icon('filter'); ?>
             <h2 class="title-section">Filtros</h2>
             <button class="btn-reset-filters" type="button" id="reset-filters"><?php esc_html_e('Limpiar', 'avante'); ?></button>
         </div>
 
-        <ul class="filter-navigation menu">
-            <!-- Location -->
-            <?php $locations = get_query_var('locations', []); ?>
-            <?php if (!empty($locations)) : ?>
-                <li class="menu-item-has-children filter state">
-                    <button class="btn-filter button-for-submenu" type="button" aria-expanded="false" aria-label="<?php esc_attr_e('Abrir submenú para ubicación', 'avante'); ?>">
-                        <?= avante_get_icon('location'); ?>
-                        <?php esc_html_e('Ubicación', 'avante'); ?>
-                        <?= avante_get_icon('chevron-down'); ?>
-                    </button>
-                    <ul class="sub-menu">
-                        
-                        <?php foreach ($locations as $state => $cities): 
-                            $state_id = 'state-' . sanitize_title($state);
-                        ?>
-                            <li class="menu-item-has-children">
-                                <div class="wrapper-for-title">
-                                    <p class="checkbox-filter-properties"><input type="checkbox" id="<?php echo esc_attr($state_id); ?>" name="state[]" value="<?php echo esc_attr($state); ?>"><label for="<?php echo esc_attr($state_id); ?>"><?php echo esc_html($state); ?></label></p>
-                                    <button class="button-for-submenu" type="button" aria-expanded="false" aria-label="<?php printf(esc_attr__('Abrir submenú para %s', 'avante'), $state); ?>">
-                                        <?= avante_get_icon('plus-circle'); ?>
-                                    </button>
-                                </div>
-                                <ul class="sub-menu">
-                                    
-                                    <?php foreach ($cities as $city): 
-                                        $city_id = 'city-' . sanitize_title($city);
-                                    ?>
-                                        <li><p class="checkbox-filter-properties"><input type="checkbox" id="<?php echo esc_attr($city_id); ?>" name="city[]" value="<?php echo esc_attr($city); ?>"><label for="<?php echo esc_attr($city_id); ?>"><?php echo esc_html($city); ?></label></p></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </li>
-            <?php endif; ?>
+        <div class="block-filter location">
+            <ul class="filter-navigation menu">
+                <!-- Location -->
+                <?php $locations = get_query_var('locations', []); ?>
+                <?php if (!empty($locations)) : ?>
+                    <li class="menu-item-has-children filter state">
+                        <button class="btn-filter button-for-submenu" type="button" aria-expanded="false" aria-label="<?php esc_attr_e('Abrir submenú para ubicación', 'avante'); ?>">
+                            <?= avante_get_icon('location'); ?>
+                            <?php esc_html_e('Ubicación', 'avante'); ?>
+                            <?= avante_get_icon('chevron-down'); ?>
+                        </button>
+                        <ul class="sub-menu">
+                            
+                            <?php foreach ($locations as $state => $cities): 
+                                $state_id = 'state-' . sanitize_title($state);
+                            ?>
+                                <li class="menu-item-has-children">
+                                    <div class="wrapper-for-title">
+                                        <p class="checkbox-filter-properties"><input type="checkbox" id="<?php echo esc_attr($state_id); ?>" name="state[]" value="<?php echo esc_attr($state); ?>"><label for="<?php echo esc_attr($state_id); ?>"><?php echo esc_html($state); ?></label></p>
+                                        <button class="button-for-submenu" type="button" aria-expanded="false" aria-label="<?php printf(esc_attr__('Abrir submenú para %s', 'avante'), $state); ?>">
+                                            <?= avante_get_icon('plus-circle'); ?>
+                                        </button>
+                                    </div>
+                                    <ul class="sub-menu">
+                                        
+                                        <?php foreach ($cities as $city): 
+                                            $city_id = 'city-' . sanitize_title($city);
+                                        ?>
+                                            <li><p class="checkbox-filter-properties"><input type="checkbox" id="<?php echo esc_attr($city_id); ?>" name="city[]" value="<?php echo esc_attr($city); ?>"><label for="<?php echo esc_attr($city_id); ?>"><?php echo esc_html($city); ?></label></p></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
 
-            
-
-            
-            
-        </ul>
-
-        <!-- Operation -->
+        <div class="block-filter operation type search">
+            <!-- Operation -->
             <?php $operation_types = get_query_var('operation_types', []); ?>
             <?php if (!empty($operation_types)) : ?>
                 <fieldset class="menu-flex">
@@ -156,12 +154,14 @@
             </fieldset>
             <?php endif; ?>
 
-        <!-- Search -->
-        <div class="filter">
-            <input type="text" id="filter-search" name="search" aria-label="<?php esc_attr_e('Palabras clave', 'avante'); ?>" placeholder="<?php esc_html_e('Ciudad, estado, tipo, etc...', 'avante'); ?>">
+            <!-- Search -->
+            <div class="filter">
+                <input type="text" id="filter-search" name="search" aria-label="<?php esc_attr_e('Palabras clave', 'avante'); ?>" placeholder="<?php esc_html_e('Ciudad, estado, tipo, etc...', 'avante'); ?>">
+            </div>
         </div>
 
-        <ul class="filter-navigation menu">
+        <div class="block-filter rooms">
+            <ul class="filter-navigation menu">
             <!-- Rooms -->
             <li class="menu-item-has-children filter rooms">
                 <button class="btn-filter button-for-submenu" type="button" aria-expanded="false" aria-label="<?php esc_attr_e('Abrir submenú para habitaciones', 'avante'); ?>">
@@ -219,6 +219,7 @@
             <!-- Size (Construction + Land) -->
             <li class="menu-item-has-children filter size">
                 <button class="btn-filter button-for-submenu" type="button" aria-expanded="false" aria-label="<?php esc_attr_e('Abrir submenú para medidas', 'avante'); ?>">
+                    <?= avante_get_icon('size'); ?>
                     <?php esc_html_e('Medidas (m²)', 'avante'); ?>
                     <?= avante_get_icon('chevron-down'); ?>
                 </button>
@@ -268,5 +269,6 @@
                 </ul>
             </li>
         </ul>
+        </div>
     </form>
 </aside>

@@ -67,7 +67,126 @@
 .page-template-archive-property {
     & .site-main {
         & .block.breadcrumbs--wrapper {
-            background-color: var(--wp--preset--color--base);
+            /* background-color: var(--wp--preset--color--base); */
+
+            & .content {
+                padding: .5rem 0;
+
+                & .breadcrumbs {
+                    position: relative;
+
+                    & .breadcrumbs-filters {
+                        margin-left: auto;
+                        display: flex;
+                        align-items: center;
+                        gap: .25rem;
+                        position: absolute;
+                        top: 55%;
+                        right: 0;
+                        transform: translateY(-50%);
+
+                        & .menu-flex {
+                            padding: 0;
+                            border: none;
+                            height: 30px;
+
+                            & :is(.menu-flex--operation, .menu-flex--type) {
+                                display: flex;
+                                align-items: center;
+                                gap: .25rem;
+
+                                & .filter-property {
+                                    position: relative;
+
+                                    &:hover {
+
+                                        & [type="checkbox"]:not(:checked)+label,
+                                        & [type="checkbox"]:checked+label {
+                                            color: var(--wp--preset--color--contrast);
+                                        }
+                                    }
+
+                                    & [type="checkbox"]:not(:checked)+label,
+                                    & [type="checkbox"]:checked+label {
+                                        padding: .2rem;
+                                        height: 100%;
+                                        z-index: 0;
+                                        color: #00000078;
+                                        font-size: var(--wp--preset--font-size--small);
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        gap: .5rem;
+                                        transition: color .3s ease;
+
+                                        & svg {
+                                            position: relative;
+                                            bottom: .2rem;
+                                        }
+                                    }
+
+                                    & [type="checkbox"]:not(:checked)+label,
+                                    & [type="checkbox"]:checked+label {
+                                        padding: 0 .5rem;
+                                        height: 30px;
+                                        text-wrap: nowrap;
+                                    }
+
+                                    & [type="checkbox"]:checked+label {
+                                        color: var(--wp--preset--color--contrast);
+                                    }
+
+                                    & [type="checkbox"]:not(:checked)+label:before,
+                                    & [type="checkbox"]:checked+label:before {
+                                        content: none;
+                                    }
+
+                                    & [type="checkbox"]:not(:checked)+label:after,
+                                    & [type="checkbox"]:checked+label:after {
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: 100%;
+                                        z-index: -1;
+                                    }
+
+                                    & [type="checkbox"]:checked+label:after {
+                                        background-color: var(--wp--preset--color--base);
+                                        border: 1px solid var(--wp--preset--color--line);
+                                    }
+                                }
+                            }
+
+                            & .menu-flex--type {
+                                max-width: clamp(306.67px, 280px + 2.6vw, 317.5px);
+                                overflow-x: scroll;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                scrollbar-gutter: stable;
+                                mask-image: linear-gradient(to right, black 80%, transparent 100%);
+
+                                &::-webkit-scrollbar {
+                                    height: .375rem;
+                                    background: transparent;
+                                }
+
+                                &::-webkit-scrollbar-thumb {
+                                    background-color: transparent;
+                                    transition: background-color .3s ease;
+                                }
+                            }
+                        }
+
+                        & .filter {
+                            margin-left: 1rem;
+
+                            & input {
+                                height: 27px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
