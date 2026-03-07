@@ -1037,7 +1037,7 @@
         &:is(.format-gallery) {
             & .post_body {
                 & .post--content {
-                    bottom: 3rem !important;
+                    bottom: 4rem !important;
                 }
             }
         }
