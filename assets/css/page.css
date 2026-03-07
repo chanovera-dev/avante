@@ -88,6 +88,7 @@
             & .is-layout-constrained {
                 & .wp-post-image {
                     width: 100%;
+                    max-width: 600px;
                     height: auto;
                     object-fit: cover;
                 }

@@ -133,7 +133,7 @@
             & .properties--filter {
                 & .property-filter-form {
                     background-color: var(--wp--preset--color--base);
-                    box-shadow: var(--wp--preset--shadow--post-shadow);
+                    box-shadow: var(--wp--preset--shadow--post-shadow-light);
                     border: 1px solid var(--wp--preset--color--line);
 
                     &>.block-filter:not(:last-child) {
@@ -536,7 +536,7 @@
     .site-main {
         & .block {
             & .content:has(aside) {
-                gap: 2rem !important;
+                gap: 4rem !important;
                 grid-template-columns: 1fr clamp(306.67px, 280px + 2.6vw, 317.5px);
 
                 &:has(.properties--filter) {

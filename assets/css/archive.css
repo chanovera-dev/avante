@@ -814,6 +814,7 @@
                     z-index: 3;
                     background-color: #ffffff80;
                     backdrop-filter: blur(.5rem);
+                    box-shadow: var(--wp--preset--shadow--post-shadow-light);
 
                     & .post--tags {
                         flex-wrap: wrap;
@@ -1167,6 +1168,7 @@
                     padding-top: 1rem !important;
                     width: calc(100% - 2rem) !important;
                     transform: translate(1rem, -1rem) !important;
+                    box-shadow: var(--wp--preset--shadow--post-shadow-light);
                     transition: opacity .3s ease, transform .3s ease !important;
 
                     & :is(.location, .post__permalink, .property__metadata) {
@@ -1359,6 +1361,7 @@
                             top: 0;
                             left: 0;
                             background-color: transparent;
+                            box-shadow: none;
                         }
                     }
                 }
