@@ -28,10 +28,8 @@ while ( have_posts() ) : the_post();
 ?>
 
 <main id="main" class="site-main" role="main">
-
-    <?php wp_breadcrumbs(); ?>
-
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+        <?php wp_breadcrumbs(); ?>
         <header class="block property--heading">
             <div class="content">
                 <div class="property-data--wrapper">

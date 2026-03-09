@@ -290,7 +290,6 @@ function footer_components()
     avante_enqueue_style('wp-root', $a['css']['wp-root']);
     avante_enqueue_style('custom-forms', $a['css']['custom-forms']);
     avante_enqueue_style('shapes', $a['css']['shapes']);
-    avante_enqueue_style('archive-design', $a['css']['archive-design']);
     
     if (get_option('avante_rounded')) {
         avante_enqueue_style('rounded-shapes', $a['css']['rounded-shapes']);
@@ -1285,6 +1284,7 @@ function posts_styles()
 
         avante_enqueue_style('breadcrumbs', $a['css']['breadcrumbs']);
         avante_enqueue_style('posts-styles', $a['css']['posts-styles']);
+        avante_enqueue_style('archive-design', $a['css']['archive-design']);
         avante_enqueue_style('pagination', $a['css']['pagination']);
         avante_enqueue_script('animate-in', $a['js']['animate-in']);
         avante_enqueue_script('posts-scripts', $a['js']['posts-scripts']);
@@ -1312,6 +1312,7 @@ function page_template()
 
         avante_enqueue_style('page', $a['css']['page']);
         avante_enqueue_style('breadcrumbs', $a['css']['breadcrumbs']);
+        avante_enqueue_style('archive-design', $a['css']['archive-design']);
 
         if (is_page() && is_active_sidebar('sidebar-3')) {
             avante_enqueue_style('sidebar', $a['css']['sidebar']);
@@ -1413,6 +1414,7 @@ function properties_templates() {
         avante_enqueue_style( 'post-gallery-styles', $a['css']['post-gallery-styles'] );
         avante_enqueue_style( 'single-property', $a['css']['single-property'] );
         avante_enqueue_style( 'related-styles', $a['css']['related-styles'] );
+        avante_enqueue_style('archive-design', $a['css']['archive-design']);
             
         avante_enqueue_script( 'post-scripts', $a['js']['post-scripts'] );
         avante_enqueue_script( 'animate-in', $a['js']['animate-in'] );

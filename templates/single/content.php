@@ -9,7 +9,10 @@
  */
 
 if (has_post_thumbnail()) {
+    echo '<div class="featured-picture--wrapper">';
+    echo '<div class="featured-picture__overlay"></div>';
     echo get_the_post_thumbnail(null, 'full', ['alt' => get_the_title(), 'loading' => 'lazy']);
+    echo '</div>';
 }
 
 the_content();

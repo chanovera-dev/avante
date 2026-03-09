@@ -1,7 +1,7 @@
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
 .detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
-.property {
+.property:not(:has(.breadcrumbs--wrapper)) {
     position: relative;
     opacity: 0;
     transform: translateY(4rem);
@@ -391,7 +391,7 @@
 .nsfw:not(:has(.breadcrumbs--wrapper)),
 .post:not(:has(.breadcrumbs--wrapper)),
 .detras-del-espejo:not(:has(.breadcrumbs--wrapper)),
-.property {
+.property:not(:has(.breadcrumbs--wrapper)) {
     &:has(.post_body) {
         &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-audio, .format-property):has(.post_body) {
             position: relative;

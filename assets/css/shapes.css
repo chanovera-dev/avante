@@ -30,7 +30,6 @@ body {
     place-content: center;
     width: 4rem;
     height: 4rem;
-    background-color: var(--wp--preset--color--tertiary);
     border: none;
     cursor: pointer;
     transition: all .3s ease;
@@ -128,35 +127,6 @@ body {
         &:focus-visible {
             outline: none;
             background-color: var(--wp--preset--color--focus);
-        }
-    }
-}
-
-.stories-block-search__inside-wrapper {
-    position: relative;
-
-    & .stories-block-search__button {
-        position: absolute;
-        top: .125rem;
-        right: .125rem;
-        height: 2.625rem;
-        width: 2.625rem;
-        padding: 0;
-        display: grid;
-        place-content: center;
-        background-color: transparent;
-        border: none;
-        color: inherit;
-        transition: background-color .3s ease;
-
-        &:hover {
-            background-color: light-dark(var(--wp--preset--color--tertiary), var(--wp--preset--color--tertiary-night));
-        }
-
-        &:focus-visible {
-            outline: none;
-            background-color: var(--wp--preset--color--focus);
-            color: var(--wp--preset--color--base);
         }
     }
 }

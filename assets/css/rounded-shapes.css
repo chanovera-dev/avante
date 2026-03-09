@@ -157,6 +157,29 @@
     }
 }
 
+/* POST */
+.post-tag {
+    border-radius: .3rem;
+}
+
+.featured-picture--wrapper {
+    border-radius: 1.7rem;
+
+    &::before,
+    &::after {
+        border-radius: 1.7rem;
+    }
+
+    & .featured-picture__overlay {
+        border-bottom-left-radius: 1.7rem;
+        border-bottom-right-radius: 1.7rem;
+    }
+
+    & .wp-post-image {
+        border-radius: 1.7rem;
+    }
+}
+
 /* FORMS */
 input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
 textarea,
@@ -352,6 +375,34 @@ select {
             border-radius: 1rem;
             corner-shape: squircle;
         }
+    }
+}
+
+/* POST */
+.post-tag {
+    border-radius: .6rem;
+    corner-shape: squircle;
+}
+
+.featured-picture--wrapper {
+    border-radius: 3rem;
+    corner-shape: squircle;
+
+    &::before,
+    &::after {
+        border-radius: 3rem;
+        corner-shape: squircle;
+    }
+
+    & .featured-picture__overlay {
+        border-bottom-left-radius: 3rem;
+        border-bottom-right-radius: 3rem;
+        corner-shape: squircle;
+    }
+
+    & .wp-post-image {
+        border-radius: 3rem;
+        corner-shape: squircle;
     }
 }
 
