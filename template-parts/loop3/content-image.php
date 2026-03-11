@@ -10,6 +10,7 @@
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post_body">
+        <div class="post__backdrop"></div>
         <div class="post__overlay"></div>
         <div class="post__header">
             <?php
@@ -23,7 +24,7 @@
                 <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
             </button>
         </div>
-        <div class="post--content">
+        <div class="post__content">
             <?php get_template_part('templates/single/tags'); ?>
             <div class="post--date" style="display: flex; align-items: center; gap: 0.5rem;">
                 <?= avante_get_icon('date'); ?>
