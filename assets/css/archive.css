@@ -570,6 +570,7 @@
 
                         & .like-count {
                             min-width: 1ch;
+                            font-family: var(--wp--preset--font-family--manrope);
                         }
                     }
                 }
@@ -1329,6 +1330,7 @@
 
                 & .like-count {
                     min-width: 1ch;
+                    font-family: var(--wp--preset--font-family--manrope);
                 }
             }
         }
