@@ -325,6 +325,8 @@ Tags:
                                         border-radius: 50%;
                                         border: none;
                                         cursor: pointer;
+                                        fill: currentColor;
+                                        color: currentColor;
                                         transition: background-color .3s ease, transform .6s ease;
 
                                         &:hover {
@@ -837,6 +839,8 @@ Tags:
                                             background-color: transparent;
                                             display: grid;
                                             place-content: center;
+                                            fill: currentColor;
+                                            color: currentColor;
                                             border: none;
                                             transition: transform .3s ease-in-out;
                                         }
