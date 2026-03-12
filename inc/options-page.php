@@ -185,6 +185,7 @@ function avante_options_media_scripts($hook) {
         return;
     }
     wp_enqueue_media();
+    wp_enqueue_style('avante-main-style', get_template_directory_uri() . '/style.css', [], time());
     wp_enqueue_style('avante-admin-options', get_template_directory_uri() . '/assets/css/admin-options.css', [], time());
 }
 add_action('admin_enqueue_scripts', 'avante_options_media_scripts');
@@ -242,6 +243,27 @@ function avante_register_settings()
         'type' => 'string',
         'sanitize_callback' => 'sanitize_text_field',
         'default' => 'loop',
+    ));
+
+    // Site Identity Settings (Synced with core)
+    register_setting('avante_options_group', 'blogname', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    register_setting('avante_options_group', 'blogdescription', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    register_setting('avante_options_group', 'site_icon', array(
+        'type' => 'integer',
+        'sanitize_callback' => 'absint',
+    ));
+
+    register_setting('avante_options_group', 'avante_custom_logo', array(
+        'type' => 'integer',
+        'sanitize_callback' => 'absint',
     ));
 
     // Color Settings
@@ -314,6 +336,46 @@ function avante_register_settings()
     );
 
     add_settings_field(
+        'avante_header_preview',
+        __('Vista Previa del Header', 'avante'),
+        'avante_header_preview_render',
+        'avante-settings',
+        'avante_header_section'
+    );
+
+    add_settings_field(
+        'blogname',
+        __('Título del sitio', 'avante'),
+        'avante_site_title_render',
+        'avante-settings',
+        'avante_header_section'
+    );
+
+    add_settings_field(
+        'blogdescription',
+        __('Descripción corta', 'avante'),
+        'avante_site_tagline_render',
+        'avante-settings',
+        'avante_header_section'
+    );
+
+    add_settings_field(
+        'avante_custom_logo',
+        __('Logotipo', 'avante'),
+        'avante_site_logo_render',
+        'avante-settings',
+        'avante_header_section'
+    );
+
+    add_settings_field(
+        'site_icon',
+        __('Icono del sitio (Favicon)', 'avante'),
+        'avante_site_icon_render',
+        'avante-settings',
+        'avante_header_section'
+    );
+
+    add_settings_field(
         'avante_header_height',
         __('Alto del logo (px)', 'avante'),
         'avante_header_height_render',
@@ -325,6 +387,14 @@ function avante_register_settings()
         'avante_footer_title',
         __('Título del footer', 'avante'),
         'avante_footer_title_render',
+        'avante-settings',
+        'avante_footer_section'
+    );
+
+    add_settings_field(
+        'avante_footer_logo',
+        __('Logo del footer (esto sustituye el título del footer)', 'avante'),
+        'avante_footer_logo_render',
         'avante-settings',
         'avante_footer_section'
     );
@@ -343,14 +413,6 @@ function avante_register_settings()
         'avante_home_featured_image_render',
         'avante-settings',
         'avante_homepage_ajax_section'
-    );
-
-    add_settings_field(
-        'avante_footer_logo',
-        __('Logo del footer (esto sustituye el título del footer)', 'avante'),
-        'avante_footer_logo_render',
-        'avante-settings',
-        'avante_footer_section'
     );
 
     add_settings_field(
@@ -512,6 +574,82 @@ function avante_bio_render()
 }
 
 /**
+ * Render the Site Title field.
+ */
+function avante_site_title_render()
+{
+    $value = get_option('blogname');
+    echo '<input type="text" name="blogname" value="' . esc_attr($value) . '" class="regular-text">';
+}
+
+/**
+ * Render the Site Tagline field.
+ */
+function avante_site_tagline_render()
+{
+    $value = get_option('blogdescription');
+    echo '<input type="text" name="blogdescription" value="' . esc_attr($value) . '" class="regular-text">';
+}
+
+/**
+ * Render the Site Logo field (Synched with custom_logo theme_mod).
+ */
+function avante_site_logo_render()
+{
+    $logo_id = get_theme_mod('custom_logo');
+    $logo_url = $logo_id ? wp_get_attachment_image_url($logo_id, 'full') : '';
+    ?>
+    <div class="avante-media-uploader" data-target="avante_custom_logo" data-type="id">
+        <input type="hidden" name="avante_custom_logo" id="avante_custom_logo" value="<?php echo esc_attr($logo_id); ?>">
+        <div class="avante-media-preview" style="margin-bottom: 10px;">
+            <?php if ($logo_url) : ?>
+                <img src="<?php echo esc_url($logo_url); ?>" style="max-width: 200px; height: auto; display: block;">
+            <?php endif; ?>
+        </div>
+        <button type="button" class="button avante-upload-button"><?php _e('Seleccionar Logotipo', 'avante'); ?></button>
+        <button type="button" class="button avante-remove-button" style="<?php echo $logo_id ? '' : 'display:none;'; ?>"><?php _e('Quitar Logotipo', 'avante'); ?></button>
+    </div>
+    <?php
+}
+
+/**
+ * Render the Site Icon field (Favicon).
+ */
+function avante_site_icon_render()
+{
+    $icon_id = get_option('site_icon');
+    $icon_url = $icon_id ? wp_get_attachment_image_url($icon_id, 'full') : '';
+    ?>
+    <div class="avante-media-uploader" data-target="site_icon" data-type="id">
+        <input type="hidden" name="site_icon" id="site_icon" value="<?php echo esc_attr($icon_id); ?>">
+        <div class="avante-media-preview" style="margin-bottom: 10px;">
+            <?php if ($icon_url) : ?>
+                <img src="<?php echo esc_url($icon_url); ?>" style="max-width: 64px; height: auto; border: 1px solid #ccc; display: block;">
+            <?php endif; ?>
+        </div>
+        <button type="button" class="button avante-upload-button"><?php _e('Seleccionar Icono', 'avante'); ?></button>
+        <button type="button" class="button avante-remove-button" style="<?php echo $icon_id ? '' : 'display:none;'; ?>"><?php _e('Quitar Icono', 'avante'); ?></button>
+    </div>
+    <?php
+}
+
+/**
+ * Sync avante_custom_logo option with custom_logo theme_mod.
+ */
+function avante_sync_custom_logo($old_value, $value)
+{
+    if (empty($value)) {
+        remove_theme_mod('custom_logo');
+    } else {
+        set_theme_mod('custom_logo', $value);
+    }
+}
+add_action('update_option_avante_custom_logo', 'avante_sync_custom_logo', 10, 2);
+add_action('add_option_avante_custom_logo', function($option, $value) {
+    avante_sync_custom_logo('', $value);
+}, 10, 2);
+
+/**
  * Render the GA ID field.
  */
 function avante_ga_id_render()
@@ -529,6 +667,68 @@ function avante_ga_id_render()
 }
 
 /**
+ * Render the Header Preview.
+ */
+function avante_header_preview_render()
+{
+    ?>
+    <div class="avante-header-preview-container">
+        <div id="avante-header-preview" class="avante-header-mockup-wrapper">
+            <header id="main-header" class="preview-header" role="banner" aria-label="<?php echo esc_attr__('Main header', 'avante'); ?>">
+                <div class="glass-backdrop"></div>
+                <div class="block">
+                    <div class="content">
+                        <div class="site-brand">
+                            <?php
+                            if (!has_custom_logo()) {
+                                printf('<a href="#" aria-label="%s">%s</a>', esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
+                            } else {
+                                the_custom_logo();
+                            }
+                            ?>
+                        </div>
+                        <div class="avante-navigation">
+                            <?php
+                            $menu_html = wp_nav_menu( array(
+                                'theme_location'  => 'primary',
+                                'container'       => 'nav',
+                                'container_class' => 'main-navigation',
+                                'echo'            => false,
+                                'fallback_cb'     => false,
+                            ) );
+
+                            if ( $menu_html ) {
+                                $backdrop = '<div class="glass-backdrop glass-bright" aria-hidden="true"></div>';
+                                $menu_html = preg_replace(
+                                    '/(<nav\b[^>]*class=["\\\'][^"\\\']*main-navigation[^"\\\']*["\\\'][^>]*>)/i',
+                                    '$1' . $backdrop,
+                                    $menu_html,
+                                    1
+                                );
+                                echo $menu_html;
+                            }
+                            ?>
+                        </div>
+                        <button type="button" id="search-mobile__button" class="search-mobile__button" aria-label="Open search">
+                            <div class="icon--wrapper">
+                                <div class="bar"></div>
+                            </div>
+                        </button>
+                        <?php if (has_nav_menu('primary')) : ?>
+                            <button type="button" id="menu-mobile__button" class="menu-mobile__button" aria-label="Open mobile menu">
+                                <span class="bar"></span>
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <p class="description"><?php _e('Clon del header', 'avante'); ?></p>
+    </div>
+    <?php
+}
+
+/**
  * Render the Header Height field.
  */
 function avante_header_height_render()
@@ -536,7 +736,7 @@ function avante_header_height_render()
     $default = '30';
     $value = get_option('avante_header_height', $default);
 
-    echo '<input type="text" name="avante_header_height" value="' . esc_attr($value) . '" class="small-text" placeholder="63.44">';
+    echo '<input type="number" name="avante_header_height" id="avante_header_height_input" value="' . esc_attr($value) . '" class="small-text" placeholder="30" min="10" max="200">';
     echo '<span> px</span>';
     echo '<p class="description">' . __('Ajusta la altura del logo principal.', 'avante') . '</p>';
 }
@@ -552,7 +752,7 @@ function avante_home_featured_image_render()
         <input type="text" name="avante_home_featured_image" id="avante_home_featured_image" value="<?php echo esc_attr($value); ?>" class="large-text" style="display: none;">
         <div class="avante-media-preview" style="margin-bottom: 10px;">
             <?php if ($value) : ?>
-                <img src="<?php echo esc_url($value); ?>" style="max-width: 200px; height: auto; border: 1px solid #ccc; display: block;">
+                <img src="<?php echo esc_url($value); ?>" style="max-width: 200px; height: auto; display: block;">
             <?php endif; ?>
         </div>
         <button type="button" class="button avante-upload-button"><?php _e('Seleccionar imagen', 'avante'); ?></button>
@@ -573,7 +773,7 @@ function avante_footer_logo_render()
         <input type="text" name="avante_footer_logo" id="avante_footer_logo" value="<?php echo esc_attr($value); ?>" class="large-text" style="display: none;">
         <div class="avante-media-preview" style="margin-bottom: 10px;">
             <?php if ($value) : ?>
-                <img src="<?php echo esc_url($value); ?>" style="max-width: 200px; height: auto; border: 1px solid #ccc; display: block;">
+                <img src="<?php echo esc_url($value); ?>" style="max-width: 200px; height: auto; display: block;">
             <?php endif; ?>
         </div>
         <button type="button" class="button avante-upload-button"><?php _e('Seleccionar imagen', 'avante'); ?></button>
@@ -660,13 +860,18 @@ function avante_color_render($args)
         $value = $default;
     }
 
-    echo '<div class="avante-color-picker-wrapper" style="display:flex; align-items:center; gap:10px;">';
-    if (strpos($id, 'shadow') !== false) {
-        echo '<input type="text" name="avante_color_' . $id . '" id="avante_color_' . $id . '" value="' . esc_attr($value) . '" class="regular-text">';
+    $is_shadow = (strpos($id, 'shadow') !== false);
+
+    echo '<div class="avante-color-picker-wrapper ' . ($is_shadow ? 'is-shadow' : '') . '" style="display:flex; align-items:center; gap:10px;">';
+    
+    if ($is_shadow) {
+        echo '<div class="avante-shadow-preview-box" id="preview_avante_color_' . $id . '" style="box-shadow: ' . esc_attr($value) . '; margin-right: 1rem;"></div>';
+        echo '<input type="text" name="avante_color_' . $id . '" id="avante_color_' . $id . '" value="' . esc_attr($value) . '" class="regular-text avante-shadow-input" style="flex:1;">';
     } else {
         echo '<input type="color" name="avante_color_' . $id . '" id="avante_color_' . $id . '" value="' . esc_attr($value) . '">';
+        echo ' <code>' . esc_html($value) . '</code>';
     }
-    echo ' <code>' . esc_html($value) . '</code>';
+    
     echo '<button type="button" class="button avante-reset-color" data-id="' . esc_attr($id) . '" data-default="' . esc_attr($default) . '">' . __('Resetear', 'avante') . '</button>';
     echo '</div>';
 }
@@ -676,85 +881,273 @@ function avante_color_render($args)
  */
 function avante_render_settings_page()
 {
+    $sections = array(
+        'avante_head_section' => array('title' => __('HEAD', 'avante'), 'icon' => 'dashicons-editor-code'),
+        'avante_header_section' => array('title' => __('HEADER', 'avante'), 'icon' => 'dashicons-welcome-widgets-menus'),
+        'avante_footer_section' => array('title' => __('FOOTER', 'avante'), 'icon' => 'dashicons-editor-insertmore'),
+        'avante_homepage_ajax_section' => array('title' => __('HOMEPAGE AJAX', 'avante'), 'icon' => 'dashicons-admin-home'),
+        'avante_archive_design_section' => array('title' => __('DISEÑO DE ARCHIVO', 'avante'), 'icon' => 'dashicons-layout'),
+        'avante_colors_themes_section' => array('title' => __('TEMAS DE COLOR', 'avante'), 'icon' => 'dashicons-admin-appearance'),
+    );
     ?>
-    <div class="wrap">
-        <h1><?php echo esc_html(__('Ajustes del Tema', 'avante')); ?></h1>
-        <form action="options.php" method="post">
-            <?php
-            settings_fields('avante_options_group');
-            do_settings_sections('avante-settings');
-            submit_button(__('Guardar Ajustes', 'avante'));
-            ?>
-        </form>
-    </div>
-    <script>
-        // Lógica de Preajustes de Tema
-        if (document.getElementById('avante_theme_selector')) {
-            document.getElementById('avante_theme_selector').addEventListener('change', function() {
-                var selected = this.options[this.selectedIndex];
-                if (!selected.value) return;
+    <div class="avante-settings-wrapper">
+        <aside class="avante-sidebar">
+            <div class="avante-logo">
+                AVANTE <span>Theme</span>
+            </div>
+            <nav class="avante-nav">
+                <ul id="avante-tabs">
+                    <?php 
+                    $first = true;
+                    foreach ($sections as $id => $data) : ?>
+                        <li class="avante-nav-item <?php echo $first ? 'active' : ''; ?>" data-target="<?php echo esc_attr($id); ?>">
+                            <span class="dashicons <?php echo esc_attr($data['icon']); ?>"></span>
+                            <span><?php echo esc_html($data['title']); ?></span>
+                        </li>
+                    <?php 
+                    $first = false;
+                    endforeach; ?>
+                </ul>
+            </nav>
+        </aside>
 
-                var colors = JSON.parse(selected.getAttribute('data-colors'));
-                for (var id in colors) {
-                    var input = document.getElementById('avante_color_' + id);
-                    if (input) {
-                        input.value = colors[id];
-                        var code = input.nextElementSibling;
-                        if (code && code.tagName === 'CODE') {
-                            code.textContent = colors[id];
+        <main class="avante-content">
+            <header class="avante-header">
+                <h1><?php echo esc_html(__('Ajustes del Tema', 'avante')); ?></h1>
+            </header>
+
+            <form action="options.php" method="post">
+                <?php
+                settings_fields('avante_options_group');
+                
+                global $wp_settings_fields;
+
+                foreach ($sections as $id => $data) : ?>
+                    <section id="<?php echo esc_attr($id); ?>" class="avante-section <?php echo $id === array_key_first($sections) ? 'active' : ''; ?>">
+                        <div class="avante-card">
+                            <h2 class="avante-card-title"><?php echo esc_html($data['title']); ?></h2>
+                            <div class="avante-fields-container grid">
+                                <?php 
+                                if (isset($wp_settings_fields['avante-settings'][$id])) {
+                                    foreach ($wp_settings_fields['avante-settings'][$id] as $field) {
+                                        $row_class = 'avante-field-row';
+                                        
+                                        // Añadir clase si es una Sombra
+                                        if (strpos($field['title'], 'Sombra') !== false) {
+                                            $row_class .= ' field-is-shadow';
+                                        }
+
+                                        // Añadir clase basada en el ID del campo
+                                        if (isset($field['id'])) {
+                                            $row_class .= ' field-' . str_replace('_', '-', $field['id']);
+                                        }
+
+                                        echo '<div class="' . esc_attr($row_class) . '">';
+                                            echo '<div class="avante-field-label">';
+                                                echo '<label>' . $field['title'] . '</label>';
+                                            echo '</div>';
+                                            echo '<div class="avante-field-control">';
+                                                call_user_func($field['callback'], $field['args']);
+                                            echo '</div>';
+                                        echo '</div>';
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </section>
+                <?php endforeach; ?>
+
+                <div class="avante-submit-wrapper">
+                    <?php submit_button(__('Guardar Ajustes', 'avante')); ?>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching logic
+            const tabs = document.querySelectorAll('.avante-nav-item');
+            const sections = document.querySelectorAll('.avante-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Update active section
+                    sections.forEach(s => {
+                        if (s.id === target) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Theme Preset Logic
+            const themeSelector = document.getElementById('avante_theme_selector');
+            if (themeSelector) {
+                themeSelector.addEventListener('change', function() {
+                    const selected = this.options[this.selectedIndex];
+                    if (!selected.value) return;
+
+                    const colors = JSON.parse(selected.getAttribute('data-colors'));
+                    for (const id in colors) {
+                        const input = document.getElementById('avante_color_' + id);
+                        if (input) {
+                            input.value = colors[id];
+                            const code = input.nextElementSibling;
+                            if (code && code.tagName === 'CODE') {
+                                code.textContent = colors[id];
+                            }
                         }
                     }
-                }
-            });
-        }
+                    updateHeaderPreview();
+                    updateShadowPreviews();
+                });
+            }
 
-        // Lógica para los botones de resetear
-        document.querySelectorAll('.avante-reset-color').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var id = this.getAttribute('data-id');
-                var defaultValue = this.getAttribute('data-default');
-                var input = document.getElementById('avante_color_' + id);
-                if (input) {
-                    input.value = defaultValue;
-                    var code = input.nextElementSibling;
-                    if (code && code.tagName === 'CODE') {
-                        code.textContent = defaultValue;
+            function updateShadowPreviews() {
+                document.querySelectorAll('.avante-shadow-input').forEach(input => {
+                    const preview = document.getElementById('preview_' + input.id);
+                    if (preview) {
+                        preview.style.boxShadow = input.value;
                     }
-                }
+                });
+            }
+
+            // Reset color functionality
+            document.querySelectorAll('.avante-reset-color').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const defaultValue = this.getAttribute('data-default');
+                    const input = document.getElementById('avante_color_' + id);
+                    if (input) {
+                        input.value = defaultValue;
+                        const code = input.nextElementSibling;
+                        if (code && code.tagName === 'CODE') {
+                            code.textContent = defaultValue;
+                        }
+                        updateShadowPreviews();
+                    }
+                });
             });
+
+            // Update shadow preview on manual input
+            document.querySelectorAll('.avante-shadow-input').forEach(input => {
+                input.addEventListener('input', updateShadowPreviews);
+            });
+
+            // Update hex display on color picker change
+            document.querySelectorAll('input[type="color"]').forEach(function(picker) {
+                picker.addEventListener('input', function() {
+                    const code = this.nextElementSibling;
+                    if (code && code.tagName === 'CODE') {
+                        code.textContent = this.value;
+                    }
+                    updateHeaderPreview();
+                });
+            });
+
+            // Header Preview Real-time Logic
+            const headerHeightInput = document.getElementById('avante_header_height_input');
+            const previewHeader = document.querySelector('.preview-header');
+            
+            function updateHeaderPreview() {
+                if (!previewHeader) return;
+
+                const logoInput = previewHeader.querySelector('.custom-logo');
+                const siteName = previewHeader.querySelector('.site-brand a:not(.custom-logo-link)');
+
+                // Update Logo Height
+                if (headerHeightInput && logoInput) {
+                    logoInput.style.height = (headerHeightInput.value || 30) + 'px';
+                    logoInput.style.width = 'auto';
+                }
+
+                // Get Current Colors
+                const bgColor = document.getElementById('avante_color_tertiary')?.value || '#f5f7f5';
+                const textColor = document.getElementById('avante_color_contrast')?.value || '#404954';
+                const borderColor = document.getElementById('avante_color_line')?.value || '#e1e4e8';
+                
+                // Aplicar a los bloques reales del header
+                const block = previewHeader.querySelector('.block');
+                if (block) {
+                    block.style.backgroundColor = bgColor;
+                    block.style.borderBottomColor = borderColor;
+                }
+                
+                // Update Menu Links
+                previewHeader.querySelectorAll('a').forEach(a => {
+                    a.style.color = textColor;
+                });
+
+                // Site name color if no logo
+                if (siteName) siteName.style.color = textColor;
+
+                // Search icon/button color
+                const searchBtn = previewHeader.querySelector('#searchsubmit');
+                if (searchBtn) {
+                    searchBtn.style.color = textColor;
+                    const searchSvg = searchBtn.querySelector('svg');
+                    if (searchSvg) searchSvg.style.fill = textColor;
+                }
+                
+                // Mobile buttons color
+                previewHeader.querySelectorAll('.search-mobile__button, .menu-mobile__button').forEach(btn => {
+                    const bars = btn.querySelectorAll('.bar, span.bar');
+                    bars.forEach(bar => bar.style.backgroundColor = textColor);
+                    
+                    const iconWrapper = btn.querySelector('.icon--wrapper');
+                    if (iconWrapper) {
+                        // Handle pseudo-elements if needed via JS or keep it simple
+                        iconWrapper.style.setProperty('--pseudo-color', textColor);
+                    }
+                });
+            }
+
+            if (headerHeightInput) {
+                headerHeightInput.addEventListener('input', updateHeaderPreview);
+            }
+            
+            // Initial update
+            updateHeaderPreview();
         });
 
-        // Actualizar el texto del hex cuando cambia el color picker manualmente
-        document.querySelectorAll('input[type="color"]').forEach(function(picker) {
-            picker.addEventListener('input', function() {
-                var code = this.nextElementSibling;
-                if (code && code.tagName === 'CODE') {
-                    code.textContent = this.value;
-                }
-            });
-        });
-
-        // --- Lógica del Media Uploader ---
+        // Media Uploader
         jQuery(document).ready(function($) {
             $('.avante-upload-button').click(function(e) {
                 e.preventDefault();
-                var button = $(this);
-                var wrapper = button.closest('.avante-media-uploader');
-                var targetId = wrapper.data('target');
-                var input = $('#' + targetId);
-                var preview = wrapper.find('.avante-media-preview');
-                var removeBtn = wrapper.find('.avante-remove-button');
+                const button = $(this);
+                const wrapper = button.closest('.avante-media-uploader');
+                const targetId = wrapper.data('target');
+                const input = $('#' + targetId);
+                const preview = wrapper.find('.avante-media-preview');
+                const removeBtn = wrapper.find('.avante-remove-button');
 
-                var mediaUploader = wp.media({
+                const mediaUploader = wp.media({
                     title: '<?php _e("Seleccionar Imagen", "avante"); ?>',
                     button: { text: '<?php _e("Usar esta imagen", "avante"); ?>' },
                     multiple: false
                 });
 
                 mediaUploader.on('select', function() {
-                    var attachment = mediaUploader.state().get('selection').first().toJSON();
-                    input.val(attachment.url);
-                    preview.html('<img src="' + attachment.url + '" style="max-width: 200px; height: auto; border: 1px solid #ccc; display: block;">');
+                    const attachment = mediaUploader.state().get('selection').first().toJSON();
+                    const type = wrapper.data('type') || 'url';
+                    
+                    if (type === 'id') {
+                        input.val(attachment.id);
+                    } else {
+                        input.val(attachment.url);
+                    }
+                    
+                    preview.html('<img src="' + attachment.url + '" style="max-width: 200px; height: auto; display: block;">');
                     removeBtn.show();
                 });
 
@@ -763,12 +1156,17 @@ function avante_render_settings_page()
 
             $('.avante-remove-button').click(function(e) {
                 e.preventDefault();
-                var button = $(this);
-                var wrapper = button.closest('.avante-media-uploader');
-                var targetId = wrapper.data('target');
+                const button = $(this);
+                const wrapper = button.closest('.avante-media-uploader');
+                const targetId = wrapper.data('target');
                 $('#' + targetId).val('');
                 wrapper.find('.avante-media-preview').empty();
                 button.hide();
+                
+                // Trigger preview update if it exists
+                if (typeof updateHeaderPreview === 'function') {
+                    updateHeaderPreview();
+                }
             });
         });
     </script>
@@ -781,11 +1179,30 @@ function avante_render_settings_page()
 function avante_render_options_page()
 {
     ?>
-    <div class="wrap">
-        
-        <?php
-        do_settings_sections('avante-options');
-        ?>
+    <div class="avante-settings-wrapper">
+        <aside class="avante-sidebar">
+            <div class="avante-logo">
+                AVANTE <span>Theme</span>
+            </div>
+            <nav class="avante-nav">
+                <ul>
+                    <li class="avante-nav-item active">
+                        <span class="dashicons dashicons-info"></span>
+                        <span><?php _e('Información', 'avante'); ?></span>
+                    </li>
+                    <li class="avante-nav-item" onclick="location.href='<?php echo admin_url('admin.php?page=avante-settings'); ?>'">
+                        <span class="dashicons dashicons-admin-generic"></span>
+                        <span><?php _e('Ajustes', 'avante'); ?></span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="avante-content">
+            <header class="avante-header">
+                <h1><?php echo esc_html(__('Información del Tema', 'avante')); ?></h1>
+            </header>
+            <?php do_settings_sections('avante-options'); ?>
+        </main>
     </div>
     <?php
 }
