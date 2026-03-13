@@ -736,7 +736,7 @@ function avante_header_height_render()
     $default = '30';
     $value = get_option('avante_header_height', $default);
 
-    echo '<input type="number" name="avante_header_height" id="avante_header_height_input" value="' . esc_attr($value) . '" class="small-text" placeholder="30" min="10" max="200">';
+    echo '<input type="number" name="avante_header_height" id="avante_header_height_input" value="' . esc_attr($value) . '" class="small-text" placeholder="30" min="10" max="200" step="any">';
     echo '<span> px</span>';
     echo '<p class="description">' . __('Ajusta la altura del logo principal.', 'avante') . '</p>';
 }
@@ -916,7 +916,7 @@ function avante_render_settings_page()
                 <h1><?php echo esc_html(__('Ajustes del Tema', 'avante')); ?></h1>
             </header>
 
-            <form action="options.php" method="post">
+            <form action="options.php" method="post" novalidate>
                 <?php
                 settings_fields('avante_options_group');
                 
