@@ -185,7 +185,6 @@ function avante_options_media_scripts($hook) {
         return;
     }
     wp_enqueue_media();
-    wp_enqueue_style('avante-main-style', get_template_directory_uri() . '/style.css', [], time());
     wp_enqueue_style('avante-admin-options', get_template_directory_uri() . '/assets/css/admin-options.css', [], time());
 }
 add_action('admin_enqueue_scripts', 'avante_options_media_scripts');
@@ -242,7 +241,7 @@ function avante_register_settings()
     register_setting('avante_options_group', 'avante_loop_design', array(
         'type' => 'string',
         'sanitize_callback' => 'sanitize_text_field',
-        'default' => 'loop',
+        'default' => 'loop00',
     ));
 
     // Site Identity Settings (Synced with core)
@@ -336,14 +335,6 @@ function avante_register_settings()
     );
 
     add_settings_field(
-        'avante_header_preview',
-        __('Vista Previa del Header', 'avante'),
-        'avante_header_preview_render',
-        'avante-settings',
-        'avante_header_section'
-    );
-
-    add_settings_field(
         'blogname',
         __('Título del sitio', 'avante'),
         'avante_site_title_render',
@@ -360,6 +351,14 @@ function avante_register_settings()
     );
 
     add_settings_field(
+        'site_icon',
+        __('Icono del sitio (Favicon)', 'avante'),
+        'avante_site_icon_render',
+        'avante-settings',
+        'avante_header_section'
+    );
+
+    add_settings_field(
         'avante_custom_logo',
         __('Logotipo', 'avante'),
         'avante_site_logo_render',
@@ -368,9 +367,9 @@ function avante_register_settings()
     );
 
     add_settings_field(
-        'site_icon',
-        __('Icono del sitio (Favicon)', 'avante'),
-        'avante_site_icon_render',
+        'avante_header_preview',
+        __('Vista Previa del Header', 'avante'),
+        'avante_header_preview_render',
         'avante-settings',
         'avante_header_section'
     );
@@ -673,57 +672,18 @@ function avante_header_preview_render()
 {
     ?>
     <div class="avante-header-preview-container">
-        <div id="avante-header-preview" class="avante-header-mockup-wrapper">
-            <header id="main-header" class="preview-header" role="banner" aria-label="<?php echo esc_attr__('Main header', 'avante'); ?>">
-                <div class="glass-backdrop"></div>
-                <div class="block">
-                    <div class="content">
-                        <div class="site-brand">
-                            <?php
-                            if (!has_custom_logo()) {
-                                printf('<a href="#" aria-label="%s">%s</a>', esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
-                            } else {
-                                the_custom_logo();
-                            }
-                            ?>
-                        </div>
-                        <div class="avante-navigation">
-                            <?php
-                            $menu_html = wp_nav_menu( array(
-                                'theme_location'  => 'primary',
-                                'container'       => 'nav',
-                                'container_class' => 'main-navigation',
-                                'echo'            => false,
-                                'fallback_cb'     => false,
-                            ) );
-
-                            if ( $menu_html ) {
-                                $backdrop = '<div class="glass-backdrop glass-bright" aria-hidden="true"></div>';
-                                $menu_html = preg_replace(
-                                    '/(<nav\b[^>]*class=["\\\'][^"\\\']*main-navigation[^"\\\']*["\\\'][^>]*>)/i',
-                                    '$1' . $backdrop,
-                                    $menu_html,
-                                    1
-                                );
-                                echo $menu_html;
-                            }
-                            ?>
-                        </div>
-                        <button type="button" id="search-mobile__button" class="search-mobile__button" aria-label="Open search">
-                            <div class="icon--wrapper">
-                                <div class="bar"></div>
-                            </div>
-                        </button>
-                        <?php if (has_nav_menu('primary')) : ?>
-                            <button type="button" id="menu-mobile__button" class="menu-mobile__button" aria-label="Open mobile menu">
-                                <span class="bar"></span>
-                            </button>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </header>
+        <div id="avante-header-preview" class="avante-header-mockup-wrapper preview-header">
+            <div class="site-brand">
+                <?php
+                if (!has_custom_logo()) {
+                    printf('<a href="#" aria-label="%s">%s</a>', esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
+                } else {
+                    the_custom_logo();
+                }
+                ?>
+            </div>
         </div>
-        <p class="description"><?php _e('Clon del header', 'avante'); ?></p>
+        <p class="description"><?php _e('Vista previa del alto del logotipo', 'avante'); ?></p>
     </div>
     <?php
 }
@@ -790,8 +750,13 @@ function avante_rounded_render()
 {
     $value = get_option('avante_rounded');
     ?>
-    <input type="checkbox" name="avante_rounded" id="avante_rounded" value="1" <?php checked(1, $value); ?>>
-    <label for="avante_rounded"><?php _e('Activar las curvas en las formas del sitio.', 'avante'); ?></label>
+    <div class="avante-toggle-wrapper">
+        <label class="avante-toggle">
+            <input type="checkbox" name="avante_rounded" id="avante_rounded" value="1" <?php checked(1, $value); ?>>
+            <span class="slider"></span>
+        </label>
+        <span class="avante-toggle-label"><?php _e('Activar las curvas en las formas del sitio.', 'avante'); ?></span>
+    </div>
     <p class="description"><?php _e('Si se activa, se cargará el estilo "rounded-shapes" para suavizar los bordes de los elementos.', 'avante'); ?></p>
     <?php
 }
@@ -801,7 +766,7 @@ function avante_rounded_render()
  */
 function avante_loop_design_render()
 {
-    $value = get_option('avante_loop_design', 'loop');
+    $value = get_option('avante_loop_design', 'loop00');
     $template_parts_dir = get_template_directory() . '/template-parts/';
     
     // Scan for directories starting with 'loop'
@@ -816,7 +781,7 @@ function avante_loop_design_render()
     }
 
     if (empty($loops)) {
-        $loops = array('loop'); // Fallback
+        $loops = array('loop00'); // Fallback
     }
 
     echo '<select name="avante_loop_design" id="avante_loop_design">';
@@ -1062,26 +1027,34 @@ function avante_render_settings_page()
             function updateHeaderPreview() {
                 if (!previewHeader) return;
 
-                const logoInput = previewHeader.querySelector('.custom-logo');
+                const logoImg = previewHeader.querySelector('.custom-logo');
                 const siteName = previewHeader.querySelector('.site-brand a:not(.custom-logo-link)');
+                const brandContainer = previewHeader.querySelector('.site-brand');
+
+                const heightVal = headerHeightInput ? (headerHeightInput.value || 30) : 30;
 
                 // Update Logo Height
-                if (headerHeightInput && logoInput) {
-                    logoInput.style.height = (headerHeightInput.value || 30) + 'px';
-                    logoInput.style.width = 'auto';
+                if (logoImg) {
+                    logoImg.style.height = heightVal + 'px';
+                    logoImg.style.width = 'auto';
+                }
+
+                // Update Brand Container Height (to show the actual spacing impact)
+                if (brandContainer) {
+                    brandContainer.style.height = heightVal + 'px';
+                    brandContainer.style.display = 'flex';
+                    brandContainer.style.alignItems = 'center';
+                    brandContainer.style.justifyContent = 'center';
+                }
+
+                // Update Site Name Text Size if no logo image
+                if (siteName && !logoImg) {
+                    siteName.style.fontSize = Math.max(1, heightVal * 0.6) + 'px';
+                    siteName.style.lineHeight = '1';
                 }
 
                 // Get Current Colors
-                const bgColor = document.getElementById('avante_color_tertiary')?.value || '#f5f7f5';
                 const textColor = document.getElementById('avante_color_contrast')?.value || '#404954';
-                const borderColor = document.getElementById('avante_color_line')?.value || '#e1e4e8';
-                
-                // Aplicar a los bloques reales del header
-                const block = previewHeader.querySelector('.block');
-                if (block) {
-                    block.style.backgroundColor = bgColor;
-                    block.style.borderBottomColor = borderColor;
-                }
                 
                 // Update Menu Links
                 previewHeader.querySelectorAll('a').forEach(a => {
@@ -1090,26 +1063,6 @@ function avante_render_settings_page()
 
                 // Site name color if no logo
                 if (siteName) siteName.style.color = textColor;
-
-                // Search icon/button color
-                const searchBtn = previewHeader.querySelector('#searchsubmit');
-                if (searchBtn) {
-                    searchBtn.style.color = textColor;
-                    const searchSvg = searchBtn.querySelector('svg');
-                    if (searchSvg) searchSvg.style.fill = textColor;
-                }
-                
-                // Mobile buttons color
-                previewHeader.querySelectorAll('.search-mobile__button, .menu-mobile__button').forEach(btn => {
-                    const bars = btn.querySelectorAll('.bar, span.bar');
-                    bars.forEach(bar => bar.style.backgroundColor = textColor);
-                    
-                    const iconWrapper = btn.querySelector('.icon--wrapper');
-                    if (iconWrapper) {
-                        // Handle pseudo-elements if needed via JS or keep it simple
-                        iconWrapper.style.setProperty('--pseudo-color', textColor);
-                    }
-                });
             }
 
             if (headerHeightInput) {

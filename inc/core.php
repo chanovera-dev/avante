@@ -222,6 +222,7 @@ function avante_enqueue_script($handle, $path)
 function avante_get_assets()
 {
     $assets_path = '/assets';
+    $loop_design = get_option('avante_loop_design', 'loop00');
 
     return [
         'css' => [
@@ -230,7 +231,7 @@ function avante_get_assets()
             'custom-forms' => "$assets_path/css/custom-forms.css",
             'shapes' => "$assets_path/css/shapes.css",
             'rounded-shapes' => "$assets_path/css/rounded-shapes.css",
-            'archive-design' => "$assets_path/css/archive.css",
+            'archive-design' => "$assets_path/css/{$loop_design}-archive.css",
             'wp-logged-in' => "$assets_path/css/wp-logged-in.css",
             'normalize' => "$assets_path/css/normalize.css",
 
