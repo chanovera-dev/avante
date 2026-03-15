@@ -7,20 +7,36 @@
  * @package Avante
  * @since Avante 1.0.0
  */
+$tags = get_the_tags();
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
+<article id="post-<?php the_ID(); ?>" <?php post_class('glass-post'); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post_body">
-        <div class="post__backdrop"></div>
-        <div class="post__overlay"></div>
-        <div class="post__header">
-            <?php
-            $post_id = get_the_ID();
-            $likes_count = avante_get_likes_count($post_id);
-            $has_liked = avante_user_has_liked($post_id);
-            echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . esc_html(__('Audio', 'avante')) . '</a>';
+        <?php
+        if (!$tags) {
             ?>
-        </div>
-        <div class="post__content">
+            <div class="post__header">
+                <?php
+                $post_id = get_the_ID();
+                $likes_count = avante_get_likes_count($post_id);
+                $has_liked = avante_user_has_liked($post_id);
+                echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . esc_html(__('Audio', 'avante')) . '</a>';
+                ?>
+                <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
+                    <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
+                    <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
+                </button>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="post__content glass-border-bright">
+            <?php
+            if (has_post_thumbnail()) {
+                echo get_the_post_thumbnail(null, 'loop-thumbnail', ['alt' => get_the_title(), 'loading' => 'lazy']);
+            }
+            ?>
+            <div class="post__backdrop"></div>
+            <div class="post__overlay"></div>
             <?php the_title('<h2 class="post--title">', '</h2>'); ?>
             <div class="post-audio-wrapper">
                 <?php
@@ -66,37 +82,32 @@
             </div>
         </div>
         <?php
-        if (has_post_thumbnail()) {
-            echo get_the_post_thumbnail(null, 'loop-thumbnail', ['alt' => get_the_title(), 'loading' => 'lazy']);
+        
+        if ($tags) {
+            ?>
+            <div class="post_footer">
+            <div class="format-type">
+                <?php echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . esc_html__('Audio', 'avante') . '</a>'; ?>
+            </div>
+            <div class="post--tags__wrapper">
+                <div class="post--tags">
+                    <?php
+                    $tags = get_the_tags();
+                    if ($tags) {
+                        foreach ($tags as $tag) {
+                            echo '<a href="' . esc_url(get_tag_link($tag->term_id)) . '" class="post-tag small">' . avante_get_icon('tag') . esc_html($tag->name) . '</a>';
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
+                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
+                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
+            </button>
+        </div>
+        <?php
         }
         ?>
     </div>
-    <?php
-    $tags = get_the_tags();
-    if ($tags) {
-        ?>
-        <div class="post_footer">
-        <div class="format-type">
-            <?php echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . '</a>'; ?>
-        </div>
-        <div class="post--tags__wrapper">
-            <div class="post--tags">
-                <?php
-                $tags = get_the_tags();
-                if ($tags) {
-                    foreach ($tags as $tag) {
-                        echo '<a href="' . esc_url(get_tag_link($tag->term_id)) . '" class="post-tag small">' . avante_get_icon('tag') . esc_html($tag->name) . '</a>';
-                    }
-                }
-                ?>
-            </div>
-        </div>
-        <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
-            <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
-            <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
-        </button>
-    </div>
-    <?php
-    }
-    ?>
 </article>

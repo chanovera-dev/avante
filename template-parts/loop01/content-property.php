@@ -14,8 +14,8 @@ $price     = $property_data['price'];
 $location  = $property_data['location'];
 $gallery   = $property_data['gallery'];
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(['post', 'format-property']); ?> data-id="<?= get_the_ID(); ?>">
-    <div class="post_body">
+<article id="post-<?php the_ID(); ?>" <?php post_class(['post', 'glass-post', 'format-property']); ?> data-id="<?= get_the_ID(); ?>">
+    <div class="post_body glass-border-bright">
         <div class="post__overlay"></div>
         <div class="post__header">
             <?php
@@ -34,7 +34,7 @@ $gallery   = $property_data['gallery'];
                 <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
             </button>
         </div>
-        <div class="post__content">
+        <div class="post--content">
             <a href="<?= get_the_permalink(); ?>" class="post__permalink">
                 <?php the_title('<h2 class="post__title">', '</h2>'); ?>
             </a>

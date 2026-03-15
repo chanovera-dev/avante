@@ -131,6 +131,18 @@ body {
     }
 }
 
+.loop-gallery-bullets {
+    background: #ffffff80;
+    backdrop-filter: blur(.5rem);
+    height: 3rem;
+    margin-inline: auto;
+    max-width: 170px;
+
+    &:not(:has(.bullet)) {
+        max-width: 90px;
+    }
+}
+
 .social {
     & .menu {
         display: flex;
@@ -172,8 +184,8 @@ body {
 }
 
 .glass-backdrop {
-    background-color: light-dark(var(--wp--preset--color--base-alpha-50), var(--wp--preset--color--base-alpha-50-night));
-    backdrop-filter: blur(1rem);
+    background-color: #ffffff80;
+    backdrop-filter: blur(.5rem);
 }
 
 @keyframes animate-in--post {

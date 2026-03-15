@@ -11,8 +11,8 @@ $a = avante_get_assets();
 require_once get_template_directory() . '/templates/helpers/extract-gallery-images.php';
 avante_enqueue_script('loop-gallery', $a['js']['loop-gallery']);
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
-    <div class="post_body">
+<article id="post-<?php the_ID(); ?>" <?php post_class('glass-post'); ?> data-id="<?= get_the_ID(); ?>">
+    <div class="post_body glass-border-bright">
         <div class="post__overlay"></div>
         <div class="post__header">
             <?php

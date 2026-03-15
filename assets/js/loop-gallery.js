@@ -14,7 +14,6 @@ function initGallery(wrapper) {
     wrapper.style.height = "100%"
     wrapper.style.overflow = "hidden"
     wrapper.style.display = "grid"
-    wrapper.style.gridTemplateRows = "1fr auto"
     gallery.style.display = "flex"
     gallery.style.height = "100%"
 

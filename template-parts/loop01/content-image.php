@@ -8,8 +8,8 @@
  * @since Avante 1.0.0
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
-    <div class="post_body">
+<article id="post-<?php the_ID(); ?>" <?php post_class('glass-post'); ?> data-id="<?= get_the_ID(); ?>">
+    <div class="post_body glass-border-bright">
         <div class="post__backdrop"></div>
         <div class="post__overlay"></div>
         <div class="post__header">
