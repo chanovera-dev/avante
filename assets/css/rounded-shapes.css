@@ -352,4 +352,54 @@ select {
         border-bottom-right-radius: 3rem;
         corner-shape: squircle;
     }
+
+    /* POST */
+    & .post-tag {
+        border-radius: .6rem;
+        corner-shape: squircle;
+    }
+
+    & .featured-picture--wrapper {
+        border-radius: 3rem;
+        corner-shape: squircle;
+
+        &::before,
+        &::after {
+            border-radius: 3rem;
+            corner-shape: squircle;
+        }
+
+        & .featured-picture__overlay {
+            border-bottom-left-radius: 3rem;
+            border-bottom-right-radius: 3rem;
+            corner-shape: squircle;
+        }
+
+        & .wp-post-image {
+            border-radius: 3rem;
+            corner-shape: squircle;
+        }
+    }
+
+    /* FORMS */
+    input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
+    textarea,
+    select {
+        border-radius: .8rem;
+        corner-shape: squircle;
+    }
+
+    /* SIDEBAR */
+    .site-main {
+        & .block {
+            &:has(.properties--filter) {
+                & .properties--filter {
+                    & .property-filter-form {
+                        border-radius: 1.6rem;
+                        corner-shape: squircle;
+                    }
+                }
+            }
+        }
+    }
 }
