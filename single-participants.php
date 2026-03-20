@@ -129,16 +129,16 @@ get_header(); ?>
                             <span class="data-participant-item-value"><?php echo esc_html( $ranking_i ); ?></span>
                         </div>
                         <?php endif; ?>
-                        <?php if ( $others = get_field('others') ) : ?>
-                        <div class="data-participant-item">
-                            <h3 class="data-participant-item-label">Presencia y dominio escénico:</h3>
-                            <span class="data-participant-item-value"><?php echo wp_kses_post( $others ); ?></span>
-                        </div>
-                        <?php endif; ?>
                         <?php if ( $observations = get_field('observations') ) : ?>
                         <div class="data-participant-item">
                             <h3 class="data-participant-item-label">Desempeño retórico y contenidos:</h3>
                             <span class="data-participant-item-value"><?php echo wp_kses_post( $observations ); ?></span>
+                        </div>
+                        <?php endif; ?>
+                        <?php if ( $others = get_field('others') ) : ?>
+                        <div class="data-participant-item">
+                            <h3 class="data-participant-item-label">Presencia y dominio escénico:</h3>
+                            <span class="data-participant-item-value"><?php echo wp_kses_post( $others ); ?></span>
                         </div>
                         <?php endif; ?>
                     </div>
