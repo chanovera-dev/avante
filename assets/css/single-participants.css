@@ -101,6 +101,11 @@ header.block {
                         & .data-participant-item-label {
                             font-size: var(--wp--preset--font-size--medium);
                         }
+
+                        & ul {
+                            margin-top: .5rem;
+                            padding-left: .85rem;
+                        }
                     }
                 }
             }
