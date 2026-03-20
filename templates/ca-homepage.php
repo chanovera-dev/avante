@@ -23,8 +23,9 @@ get_header(); ?>
                     'posts_per_page' => 12,
                     'paged'          => $paged,
                     'post_status'    => 'publish',
-                    'orderby'        => 'date',
-                    'order'          => 'DESC'
+                    'meta_key'       => 'personal_ranking',
+                    'orderby'        => 'meta_value_num',
+                    'order'          => 'ASC'
                 );
 
                 $wp_query = new WP_Query($participants_args);
