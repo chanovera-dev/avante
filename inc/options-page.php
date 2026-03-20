@@ -59,6 +59,26 @@ function avante_get_color_themes()
                 'post-shadow-hover' => '#65573140 0px 54px 55px, #6557311f 0px -12px 30px, #6557311f 0px 4px 6px, #6557312b 0px 12px 13px, #65573117 0px -3px 5px',
             ),
         ),
+        'carolinaeslava' => array(
+            'name' => __('Carolina Eslava', 'avante'),
+            'colors' => array(
+                'base' => '#FFFFFF',
+                'contrast' => '#1d224f',
+                'line' => '#e1e4e8',
+                'primary' => '#83a6d0',
+                'secondary' => '#bacfe7',
+                'tertiary' => '#edf5ff',
+                'background' => '#ffffff',
+                'button' => '#5b85b9',
+                'footer-background' => '#040722',
+                'focus' => '#c90a21',
+                'bullet' => '#c56171',
+                'bullet-active' => '#c64c60',
+                'post-shadow-light' => '#1d224f12 0 -2px 0 inset, #1d224f12 0px 54px 55px, #1d224f08 0px -12px 30px, #1d224f08 0px 4px 6px, #1d224f08 0px 12px 13px, #1d224f08 0px -3px 5px',
+                'post-shadow' => '#1d224f20 0px 54px 55px, #1d224f0f 0px -12px 30px, #1d224f0f 0px 4px 6px, #1d224f16 0px 12px 13px, #1d224f0b 0px -3px 5px',
+                'post-shadow-hover' => '#1d224f40 0px 54px 55px, #1d224f1f 0px -12px 30px, #1d224f1f 0px 4px 6px, #1d224f2b 0px 12px 13px, #1d224f17 0px -3px 5px',
+            ),
+        ),
         'dark' => array(
             'name' => __('Oscuro', 'avante'),
             'colors' => array(

@@ -209,6 +209,11 @@ get_header(); ?>
                 </div>
             </div>
         </section>
+        <section class="block participant-footer">
+            <div class="content">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/CE-red-logo.png" alt="Logo de Carolina Eslava" width="150" height="61" loading="lazy">
+            </div>
+        </section>
     </article>
 </main>
 

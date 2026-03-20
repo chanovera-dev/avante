@@ -24,6 +24,7 @@ header.block {
                     width: 50%;
                     height: 2px;
                     background-color: var(--wp--preset--color--contrast);
+                    opacity: .25;
                 }
             }
 
@@ -51,6 +52,7 @@ header.block {
                     right: -1rem;
                     font-weight: 400;
                     font-size: var(--wp--preset--font-size--large);
+                    color: var(--wp--preset--color--contrast);
                 }
             }
 
@@ -86,7 +88,7 @@ header.block {
             }
 
             &:nth-child(1) {
-                background-color: var(--wp--preset--color--base);
+                background-color: var(--wp--preset--color--tertiary);
                 padding: 2rem;
 
                 & .data-participant {
@@ -103,5 +105,13 @@ header.block {
                 }
             }
         }
+    }
+}
+
+.block.participant-footer {
+    & .content {
+        display: flex;
+        justify-content: end;
+        padding-bottom: 3rem;
     }
 }
