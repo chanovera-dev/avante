@@ -31,9 +31,9 @@
                         // Output the image safely letting WordPress handle attributes
                         echo wp_get_attachment_image( $avatar_id, 'thumbnail', false, array( 'alt' => get_the_title(), 'class' => 'avatar' ) );
                     }
-                echo '<h3 class="author-name">';
+                echo '<a href="' . get_permalink() . '"><h3 class="author-name">';
                 the_title();
-                echo '</h3><span class="author-description">';
+                echo '</h3></a><span class="author-description">';
                 if ( $position = get_field('position') ) : 
                     echo esc_html($position);
                 endif;
@@ -57,6 +57,11 @@
                     <div title="Ranking Institucional"><strong>Ranking Institucional:</strong> <?php echo esc_html($ir); ?></div>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
+            <?php if ( $others = get_field('others') ) : ?>
+                <div class="participant__others">
+                   <?php echo wp_kses_post( $others ); ?>
+                </div>
             <?php endif; ?>
         </div>
         <?php

@@ -185,6 +185,16 @@
                 z-index: 3;
                 opacity: 0;
                 transition: opacity .3s ease;
+
+                & .participant__rankings {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                }
+
+                & .participant__others {
+                    font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                }
             }
 
             & .post--content {
@@ -204,6 +214,10 @@
                 & .participant__rankings {
                     display: flex;
                     gap: 1rem;
+                    font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                }
+
+                & .participant__others {
                     font-size: calc(var(--wp--preset--font-size--small) - .125rem);
                 }
 
