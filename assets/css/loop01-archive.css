@@ -219,6 +219,10 @@
 
                 & .participant__others {
                     font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+
+                    & ul {
+                        padding-left: .85rem;
+                    }
                 }
 
                 &:has(.property__metadata) {
