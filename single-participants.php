@@ -27,8 +27,63 @@ get_header(); ?>
                         <h3 class="company"><?php echo esc_html( $company ); ?></h3>
                     <?php endif; ?>
                     
-                    <h2 class="document-title">MAPCO</h2>
-                    <h2 class="document-subtitle">Mapa de competencias comunicativas</h2>
+                    <?php
+                    $global_excluded = get_option('storytelling_global_excluded_metrics', array());
+                    if (!is_array($global_excluded)) $global_excluded = array();
+
+                    $label_to_db_key = array(
+                        'Lenguaje no verbal'   => 'm_lenguaje_no_verbal',
+                        'Dirige la entrevista' => 'm_dirige_entrevista',
+                        'Mensajes memorables'  => 'm_mensajes',
+                        'Preguntas incisivas'  => 'm_preguntas_incisivas',
+                        'Frases citables'      => 'm_frases_citables',
+                        'Usa datos, cifras'    => 'm_usa_datos',
+                        'Valores e historias'  => 'm_habla_valores'
+                    );
+
+                    $label_to_acf_key = array(
+                        'Lenguaje no verbal'   => 'no_verbal_language',
+                        'Dirige la entrevista' => 'manage_interview',
+                        'Mensajes memorables'  => 'memorable_messages',
+                        'Preguntas incisivas'  => 'incisive_questions',
+                        'Frases citables'      => 'soundbites_messages',
+                        'Usa datos, cifras'    => 'show_data',
+                        'Valores e historias'  => 'show_storytelling'
+                    );
+
+                    $total_score = 0;
+                    $valid_count = 0;
+
+                    foreach ( $label_to_acf_key as $label => $acf_key ) {
+                        $db_key = $label_to_db_key[ $label ];
+                        if ( in_array( $db_key, $global_excluded ) ) continue;
+                        
+                        $local_excluded = json_decode(get_post_meta(get_the_ID(), 'excluded_metrics', true), true);
+                        if ( is_array($local_excluded) && in_array($db_key, $local_excluded) ) continue;
+                        
+                        $val = get_field( $acf_key );
+                        if (empty($val) || $val === 'No hay datos') continue;
+
+                        $score = 0;
+                        if ( $val === 'Buen vocero/a' ) $score = 2.5;
+                        elseif ( $val === 'Experto/a' ) $score = 5;
+                        elseif ( $val === 'Manejo insuficiente' ) $score = 1;
+
+                        $total_score += $score;
+                        $valid_count++;
+                    }
+                    
+                    $average = $valid_count > 0 ? round($total_score / $valid_count, 1) : 0;
+                    
+                    if ($valid_count > 0) :
+                    ?>
+                    <div class="data-participant-item mt-3">
+                        <h3 class="data-participant-item-label" style="color: var(--wp--preset--color--focus);">Promedio de competencias:</h3>
+                        <span class="data-participant-item-value" style="font-size: 1.25rem; font-weight: 700; color: var(--wp--preset--color--focus);">
+                            <?php echo number_format($average, 1); ?> <span style="font-size: 1rem; font-weight: 400; color: var(--wp--preset--color--contrast);">/ 5.0</span>
+                        </span>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 <div class="container">
                     <?php 
@@ -84,63 +139,6 @@ get_header(); ?>
                         <div class="data-participant-item">
                             <h3 class="data-participant-item-label">Desempeño retórico y contenidos:</h3>
                             <span class="data-participant-item-value"><?php echo wp_kses_post( $observations ); ?></span>
-                        </div>
-                        <?php endif; ?>
-                        <?php
-                        $global_excluded = get_option('storytelling_global_excluded_metrics', array());
-                        if (!is_array($global_excluded)) $global_excluded = array();
-
-                        $label_to_db_key = array(
-                            'Lenguaje no verbal'   => 'm_lenguaje_no_verbal',
-                            'Dirige la entrevista' => 'm_dirige_entrevista',
-                            'Mensajes memorables'  => 'm_mensajes',
-                            'Preguntas incisivas'  => 'm_preguntas_incisivas',
-                            'Frases citables'      => 'm_frases_citables',
-                            'Usa datos, cifras'    => 'm_usa_datos',
-                            'Valores e historias'  => 'm_habla_valores'
-                        );
-
-                        $label_to_acf_key = array(
-                            'Lenguaje no verbal'   => 'no_verbal_language',
-                            'Dirige la entrevista' => 'manage_interview',
-                            'Mensajes memorables'  => 'memorable_messages',
-                            'Preguntas incisivas'  => 'incisive_questions',
-                            'Frases citables'      => 'soundbites_messages',
-                            'Usa datos, cifras'    => 'show_data',
-                            'Valores e historias'  => 'show_storytelling'
-                        );
-
-                        $total_score = 0;
-                        $valid_count = 0;
-
-                        foreach ( $label_to_acf_key as $label => $acf_key ) {
-                            $db_key = $label_to_db_key[ $label ];
-                            if ( in_array( $db_key, $global_excluded ) ) continue;
-                            
-                            $local_excluded = json_decode(get_post_meta(get_the_ID(), 'excluded_metrics', true), true);
-                            if ( is_array($local_excluded) && in_array($db_key, $local_excluded) ) continue;
-                            
-                            $val = get_field( $acf_key );
-                            if (empty($val) || $val === 'No hay datos') continue;
-
-                            $score = 0;
-                            if ( $val === 'Buen vocero/a' ) $score = 2.5;
-                            elseif ( $val === 'Experto/a' ) $score = 5;
-                            elseif ( $val === 'Manejo insuficiente' ) $score = 1;
-
-                            $total_score += $score;
-                            $valid_count++;
-                        }
-                        
-                        $average = $valid_count > 0 ? round($total_score / $valid_count, 1) : 0;
-                        
-                        if ($valid_count > 0) :
-                        ?>
-                        <div class="data-participant-item mt-3">
-                            <h3 class="data-participant-item-label" style="color: var(--wp--preset--color--focus);">Promedio de competencias:</h3>
-                            <span class="data-participant-item-value" style="font-size: 1.25rem; font-weight: 700; color: var(--wp--preset--color--focus);">
-                                <?php echo number_format($average, 1); ?> <span style="font-size: 1rem; font-weight: 400; color: var(--wp--preset--color--contrast);">/ 5.0</span>
-                            </span>
                         </div>
                         <?php endif; ?>
                     </div>

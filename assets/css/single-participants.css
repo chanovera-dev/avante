@@ -38,22 +38,8 @@ header.block {
                 font-weight: 400;
             }
 
-            & .document-title {
+            & .data-participant-item {
                 margin-top: 2rem;
-                color: var(--wp--preset--color--focus);
-                font-weight: 900;
-                position: relative;
-                display: inline-flex;
-
-                &::after {
-                    content: '®';
-                    position: absolute;
-                    top: 0;
-                    right: -1rem;
-                    font-weight: 400;
-                    font-size: var(--wp--preset--font-size--large);
-                    color: var(--wp--preset--color--contrast);
-                }
             }
 
             & .document-subtitle {
