@@ -49,7 +49,7 @@ function setup_avante()
     add_theme_support('customize-selective-refresh-widgets');
     add_theme_support('wp-block-styles');
     add_theme_support('align-wide');
-    add_theme_support('post-thumbnails', ['post', 'page', 'nsfw']);
+    add_theme_support('post-thumbnails', ['post', 'page', 'nsfw', 'detras-del-espejo']);
     set_post_thumbnail_size(350, 200, true);
     add_image_size('loop-thumbnail', 400, 400, true);
 }
@@ -253,6 +253,9 @@ function avante_get_assets()
 
             // real estate
             'single-property' => "$assets_path/css/single-property.css",
+
+            // participants
+            'single-participants' => "$assets_path/css/single-participants.css",
         ],
         'js' => [
             // All pages
@@ -1425,6 +1428,23 @@ function properties_templates() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'properties_templates' );
+
+/**
+ * Enqueues scripts and styles for the participants template.
+ */
+function participants_templates() {
+    if ( is_singular( 'participants' ) ) {
+        $a = avante_get_assets();
+
+        function unload_parts_header() {
+            wp_dequeue_style( 'page' );
+        }
+        add_action( 'wp_enqueue_scripts', 'unload_parts_header', 100 );
+
+        avante_enqueue_style( 'single-participants', $a['css']['single-participants'] );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'participants_templates' );
 
 /*
  * =========================================================================
