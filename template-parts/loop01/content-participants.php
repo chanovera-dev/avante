@@ -79,9 +79,9 @@
                 <?php endif; ?>
             </div>
             <?php endif; ?>
-            <?php if ( $others = get_field('others') ) : ?>
+            <?php if ( $observations = get_field('observations') ) : ?>
                 <div class="participant__others">
-                   <?php echo wp_kses_post( $others ); ?>
+                   <?php echo wp_kses_post( $observations ); ?>
                 </div>
             <?php endif; ?>
         </div>
