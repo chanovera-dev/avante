@@ -35,7 +35,7 @@
 
     & .post_body {
         position: relative;
-        min-height: 620px;
+        min-height: 400px;
 
         & .wp-post-image,
         & .post-video-wrapper video {
@@ -222,6 +222,8 @@
 
                     & ul {
                         padding-left: .85rem;
+                        max-height: 100px;
+                        mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
                     }
                 }
 
