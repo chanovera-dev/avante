@@ -72,10 +72,10 @@
             ?>
             <div class="participant__rankings">
                 <?php if ( $pr ) : ?>
-                    <div title="Ranking Personal"><strong>Ranking Personal:</strong> <?php echo esc_html($pr); ?></div>
+                    <div title="Ranking Personal"><strong>Reputación Personal:</strong> <?php echo esc_html($pr); ?></div>
                 <?php endif; ?>
                 <?php if ( $ir ) : ?>
-                    <div title="Ranking Institucional"><strong>Ranking Institucional:</strong> <?php echo esc_html($ir); ?></div>
+                    <div title="Ranking Institucional"><strong>Reputación Institucional:</strong> <?php echo esc_html($ir); ?></div>
                 <?php endif; ?>
             </div>
             <?php endif; ?>
