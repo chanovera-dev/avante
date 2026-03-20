@@ -12,8 +12,6 @@
         <div class="post__header">
             <?php
             $post_id = get_the_ID();
-            $likes_count = avante_get_likes_count($post_id);
-            $has_liked = avante_user_has_liked($post_id);
             $global_excluded = get_option('storytelling_global_excluded_metrics', array());
             if (!is_array($global_excluded)) $global_excluded = array();
             $label_to_db_key = array('Lenguaje no verbal'=>'m_lenguaje_no_verbal','Dirige la entrevista'=>'m_dirige_entrevista','Mensajes memorables'=>'m_mensajes','Preguntas incisivas'=>'m_preguntas_incisivas','Frases citables'=>'m_frases_citables','Usa datos, cifras'=>'m_usa_datos','Valores e historias'=>'m_habla_valores');
@@ -39,10 +37,6 @@
 
             echo '<div class="format-post-tag" title="Promedio de competencias" style="opacity:1;">' . avante_get_icon('star') . esc_html('Promedio vocería:') .'<span>' . esc_html($average_text) . '</span></div>';
             ?>
-            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
-                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
-                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
-            </button>
         </div>
         <div class="post--content">
             <div class="post--author participant">
