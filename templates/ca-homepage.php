@@ -20,7 +20,7 @@ get_header(); ?>
                 
                 $participants_args = array(
                     'post_type'      => 'participants',
-                    'posts_per_page' => 10,
+                    'posts_per_page' => 12,
                     'paged'          => $paged,
                     'post_status'    => 'publish',
                     'orderby'        => 'date',
