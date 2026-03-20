@@ -223,7 +223,7 @@
                     & ul {
                         padding-left: .85rem;
                         max-height: 100px;
-                        mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+                        mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
                     }
                 }
 
@@ -370,6 +370,16 @@
                             height: 1px;
                             background-color: var(--wp--preset--color--line);
                             opacity: .5;
+                        }
+
+                        & .post_permalink {
+                            text-decoration: underline;
+                            transition: color .3s ease;
+
+                            &:hover {
+                                text-decoration: underline;
+                                color: var(--wp--preset--color--focus);
+                            }
                         }
                     }
 

@@ -52,7 +52,7 @@
                         // Output the image safely letting WordPress handle attributes
                         echo wp_get_attachment_image( $avatar_id, 'thumbnail', false, array( 'alt' => get_the_title(), 'class' => 'avatar' ) );
                     }
-                echo '<a href="' . get_permalink() . '"><h3 class="author-name">';
+                echo '<a href="' . get_permalink() . '" class="post_permalink"><h3 class="author-name">';
                 the_title();
                 echo '</h3></a><span class="author-description">';
                 if ( $position = get_field('position') ) : 
