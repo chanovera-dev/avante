@@ -22,6 +22,10 @@
                         $part = $post_format;
                     }
                 }
+                
+                if ( get_post_type() === 'participants' ) {
+                    $part = 'participants';
+                }
 
                 get_template_part( "template-parts/{$loop_design}/content", $part );
             }

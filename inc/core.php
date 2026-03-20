@@ -49,7 +49,7 @@ function setup_avante()
     add_theme_support('customize-selective-refresh-widgets');
     add_theme_support('wp-block-styles');
     add_theme_support('align-wide');
-    add_theme_support('post-thumbnails', ['post', 'page', 'nsfw', 'detras-del-espejo']);
+    add_theme_support('post-thumbnails', ['post', 'page', 'nsfw', 'detras-del-espejo', 'participants']);
     set_post_thumbnail_size(350, 200, true);
     add_image_size('loop-thumbnail', 400, 400, true);
 }
@@ -1283,7 +1283,7 @@ function posts_styles()
     //     return;
     // }
 
-    if (is_home() || is_archive() || is_search() || is_page_template('templates/homepage.php') || is_page_template('archive-property.php') || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo')) {
+    if (is_home() || is_archive() || is_search() || is_page_template('templates/homepage.php') || is_page_template('archive-property.php') || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo') || is_post_type_archive('participants')) {
         $a = avante_get_assets();
 
         avante_enqueue_style('breadcrumbs', $a['css']['breadcrumbs']);
@@ -1448,7 +1448,7 @@ add_action( 'wp_enqueue_scripts', 'participants_templates' );
 
 /*
  * =========================================================================
- * CUSTOM POST TYPE ARCHIVE 'NSFW' Y 'DETRÁS DEL ESPEJO'
+ * CUSTOM POST TYPE ARCHIVE 'NSFW' Y 'DETRÁS DEL ESPEJO' Y 'PARTICIPANTS'
  * =========================================================================
  */
 
@@ -1507,6 +1507,34 @@ function avante_detras_del_espejo_archive_query($query)
     }
 }
 add_action('pre_get_posts', 'avante_detras_del_espejo_archive_query');
+
+/**
+ * Filter to ensure the 'participants' custom post type has an archive enabled.
+ * This makes archive-participants.php work automatically.
+ */
+add_filter('register_post_type_args', function ($args, $post_type) {
+    if ($post_type === 'participants') {
+        $args['has_archive'] = 'participants'; // Enable archive at /participants/
+        $args['rewrite'] = array('slug' => 'participants');
+    }
+    return $args;
+}, 10, 2);
+
+/**
+ * Configure the main query for the 'participant' archive.
+ * This ensures pagination works correctly and filters the main loop.
+ */
+function avante_participant_archive_query($query)
+{
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('participants')) {
+        $query->set('post_type', 'participants');
+        $query->set('post_status', 'publish');
+        // El número de posts por página se toma de Ajustes > Lectura por defecto,
+        // pero puedes forzarlo aquí si lo deseas:
+        // $query->set('posts_per_page', 10);
+    }
+}
+add_action('pre_get_posts', 'avante_participant_archive_query');
 
 /*
  * =========================================================================

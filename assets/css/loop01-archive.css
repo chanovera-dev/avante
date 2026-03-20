@@ -1,7 +1,8 @@
 .post.glass-post,
 .nsfw.glass-post,
 .detras-del-espejo.glass-post,
-.property.glass-post {
+.property.glass-post,
+.participants.glass-post {
     position: relative;
     opacity: 0;
     transform: translateY(4rem);
@@ -99,7 +100,7 @@
         }
     }
 
-    &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-link, .format-property) {
+    &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-link, .format-property, .participants) {
         box-shadow: var(--wp--preset--shadow--post-shadow);
         transition: box-shadow .3s ease;
 
@@ -199,6 +200,12 @@
                 backdrop-filter: blur(.5rem);
                 box-shadow: var(--wp--preset--shadow--post-shadow-light);
                 transition: opacity .3s ease, transform .3s ease;
+
+                & .participant__rankings {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+                }
 
                 &:has(.property__metadata) {
                     padding-bottom: 0;
@@ -317,6 +324,34 @@
                     grid-template-rows: auto auto;
                     gap: 0 .5rem;
                     height: 30px;
+
+                    &.participant {
+                        padding-bottom: 3rem;
+                        margin-top: 1rem;
+                        position: relative;
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            left: -1rem;
+                            width: calc(100% + 2rem);
+                            height: 1px;
+                            background-color: var(--wp--preset--color--contrast);
+                            opacity: .25;
+                        }
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            bottom: -1px;
+                            left: -1rem;
+                            width: calc(100% + 2rem);
+                            height: 1px;
+                            background-color: var(--wp--preset--color--line);
+                            opacity: .5;
+                        }
+                    }
 
                     & .avatar {
                         width: 30px;
