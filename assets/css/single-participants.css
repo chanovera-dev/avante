@@ -120,3 +120,15 @@ header.block {
         padding-bottom: 3rem;
     }
 }
+
+@media (width < 1024px) {
+    header.block {
+        & .content {
+            & .container {
+                & .avatar {
+                    margin-inline: auto;
+                }
+            }
+        }
+    }
+}
