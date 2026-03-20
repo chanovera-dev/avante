@@ -172,6 +172,11 @@
     }
 }
 
+/* CA HOMEPAGE */
+.container:has(.slideshow--wrapper) {
+    border-radius: 1.7rem;
+}
+
 /* FORMS */
 input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
 textarea,
@@ -381,6 +386,12 @@ select {
             border-radius: 3rem;
             corner-shape: squircle;
         }
+    }
+
+    /* CA HOMEPAGE */
+    .container:has(.slideshow--wrapper) {
+        border-radius: 3rem;
+        corner-shape: squircle;
     }
 
     /* FORMS */
