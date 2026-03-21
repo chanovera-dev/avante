@@ -90,6 +90,7 @@
                 font-size: calc(var(--wp--preset--font-size--small) - .125rem);
                 line-height: 1;
                 position: relative;
+                width: 100%;
                 transition: opacity .3s ease;
 
                 & svg {
@@ -567,6 +568,16 @@
             display: grid;
             grid-template-rows: 1fr auto;
             gap: 1rem;
+
+            & .post--content {
+                display: grid;
+                grid-template-rows: 1fr auto;
+                height: 100%;
+
+                &>* {
+                    width: 100%;
+                }
+            }
 
             & .post_footer {
                 z-index: 2;

@@ -13,8 +13,10 @@ $has_liked = avante_user_has_liked($post_id);
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class('glass-post'); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post_body">
-        <div class="post--content is-layout-constrained">
-            <?php the_content(); ?>
+        <div class="post--content">
+            <div class="is-layout-constrained">
+                <?php the_content(); ?>
+            </div>
             <div class="post--date" style="display: flex; align-items: center; gap: 0.5rem;">
                 <?= avante_get_icon('date'); ?>
                 <p><?= get_the_date('F j, Y'); ?></p>
