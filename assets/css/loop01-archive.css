@@ -35,7 +35,7 @@
 
     & .post_body {
         position: relative;
-        min-height: 320px;
+        min-height: 300px;
 
         & .wp-post-image,
         & .post-video-wrapper video {
