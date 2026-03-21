@@ -247,6 +247,7 @@ function avante_get_assets()
             'comments' => "$assets_path/css/comments.css",
             'error404' => "$assets_path/css/error404.css",
             'homepage' => "$assets_path/css/homepage.css",
+            'quotes-slideshow-styles' => "$assets_path/css/quotes-slideshow.css",
 
             // home ajax
             'home-ajax-styles' => "$assets_path/css/home-ajax.css",
@@ -271,6 +272,8 @@ function avante_get_assets()
             'related-script' => "$assets_path/js/related.js",
             'post-scripts' => "$assets_path/js/post.js",
             'homepage-script' => "$assets_path/js/homepage.js",
+            'quotes-slideshow-script' => "$assets_path/js/quotes-slideshow.js",
+            'moving-clouds-script' => "$assets_path/js/moving-clouds.js",
 
             // home ajax
             'home-ajax-script' => "$assets_path/js/home-ajax.js",
@@ -281,8 +284,6 @@ function avante_get_assets()
             'reset-properties-filter' => "$assets_path/js/reset-properties-filter.js",
             'ajax-properties'         => "$assets_path/js/ajax-properties.js",
             'ajax-search'             => "$assets_path/js/ajax-search-properties.js",
-
-            'quotes-slideshow' => "$assets_path/js/quotes-slideshow.js",
         ]
     ];
 }
@@ -1290,12 +1291,23 @@ function posts_styles()
     if (is_home() || is_archive() || is_search() || is_page_template('templates/homepage.php') || is_page_template('archive-property.php') || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo') || is_post_type_archive('participants')) {
         $a = avante_get_assets();
 
+        function unload_parts_header() {
+            wp_dequeue_style( 'page' );
+        }
+        add_action( 'wp_enqueue_scripts', 'unload_parts_header', 100 );
+
         avante_enqueue_style('breadcrumbs', $a['css']['breadcrumbs']);
         avante_enqueue_style('posts-styles', $a['css']['posts-styles']);
         avante_enqueue_style('archive-design', $a['css']['archive-design']);
         avante_enqueue_style('pagination', $a['css']['pagination']);
         avante_enqueue_script('animate-in', $a['js']['animate-in']);
         avante_enqueue_script('posts-scripts', $a['js']['posts-scripts']);
+
+        if (is_home() && !is_paged()) {
+            avante_enqueue_style('quotes-slideshow-styles', $a['css']['quotes-slideshow-styles']);
+            avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
+            avante_enqueue_script('moving-clouds-script', $a['js']['moving-clouds-script']);
+        }
 
         if (is_active_sidebar('sidebar-1')) {
             avante_enqueue_style('sidebar', $a['css']['sidebar']);

@@ -14,6 +14,12 @@ get_header(); ?>
     <?php wp_breadcrumbs(); ?>
 
     <section class="block posts--body">
+        <?php
+        if (!is_paged()) :
+            get_template_part('templates/relatosycartas-homepage/quotes-slideshow');
+        endif;
+        ?>
+
         <div class="content">
             <?php
             get_template_part('templates/archive/wp', 'loop');
