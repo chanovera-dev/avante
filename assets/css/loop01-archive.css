@@ -347,11 +347,9 @@
                     height: 30px;
 
                     &.participant {
-                        position: relative;
                         padding-bottom: 3rem;
-                        grid-template-columns: 36px 1fr;
-                        gap: 0 .9rem;
-                        height: 36px;
+                        margin-top: 1rem;
+                        position: relative;
 
                         &::before {
                             content: '';
@@ -383,19 +381,6 @@
                                 text-decoration: underline;
                                 color: var(--wp--preset--color--focus);
                             }
-                        }
-
-                        & .avatar {
-                            width: 36px;
-                            height: 36px;
-                        }
-
-                        & .author-name {
-                            font-size: var(--wp--preset--font-size--medium);
-                        }
-
-                        & .author-description {
-                            font-size: calc(var(--wp--preset--font-size--medium) - .125rem);
                         }
                     }
 
