@@ -130,7 +130,7 @@
                 cursor: pointer;
 
                 &.active {
-                    background-color: var(--wp--preset--color--bullet-active);
+                    background-color: var(--wp--preset--color--bullet);
                 }
             }
         }

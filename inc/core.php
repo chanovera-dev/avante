@@ -1469,7 +1469,7 @@ function participants_templates() {
         add_action( 'wp_enqueue_scripts', 'unload_parts_header', 100 );
 
         avante_enqueue_style( 'ca-homepage', $a['css']['ca-homepage'] );
-        avante_enqueue_script('quotes-slideshow', $a['js']['quotes-slideshow']);
+        avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
         avante_enqueue_style('posts-styles', $a['css']['posts-styles']);
         avante_enqueue_style('archive-design', $a['css']['archive-design']);
         avante_enqueue_style('pagination', $a['css']['pagination']);
