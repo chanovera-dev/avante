@@ -347,6 +347,7 @@
                     height: 30px;
 
                     &.participant {
+                        position: relative;
                         padding-bottom: 3rem;
                         grid-template-columns: 36px 1fr;
                         gap: 0 .9rem;
