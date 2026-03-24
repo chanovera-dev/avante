@@ -469,6 +469,8 @@ add_action('wp_head', 'theme_custom_icons');
 function avante_custom_css_variables()
 {
     $header_height = get_option('avante_header_height', '63.44');
+    $loop01_height = get_option('avante_loop01_height', '320');
+    $loop_gap = get_option('avante_loop_gap', '1');
     
     // Add px if missing and numeric
     if (!empty($header_height) && is_numeric($header_height)) {
@@ -478,11 +480,25 @@ function avante_custom_css_variables()
     if (empty($header_height)) {
         $header_height = '63.44px';
     }
+
+    if (!empty($loop01_height) && is_numeric($loop01_height)) {
+        $loop01_height .= 'px';
+    }
+
+    if (empty($loop01_height)) {
+        $loop01_height = '320px';
+    }
     
+    if (empty($loop_gap) && !is_numeric($loop_gap)) {
+        $loop_gap = '1';
+    }
+
     ?>
     <style>
         :root {
             --header-height: <?php echo esc_attr($header_height); ?>;
+            --loop01-height: <?php echo esc_attr($loop01_height); ?>;
+            --loop-gap: <?php echo esc_attr($loop_gap); ?>rem;
         }
     </style>
     <?php

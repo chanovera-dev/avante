@@ -35,7 +35,7 @@
 
     & .post_body {
         position: relative;
-        min-height: 320px;
+        min-height: var(--loop01-height, 320px);
 
         & .wp-post-image,
         & .post-video-wrapper video {
@@ -154,7 +154,6 @@
             &:hover {
                 & .post_body {
                     & .post--content {
-                        transform: translateY(-3rem);
                         opacity: 1;
                     }
                 }
@@ -165,6 +164,7 @@
 
                 & .post--content {
                     opacity: 0;
+                    transform: translateY(-3rem);
                     transition: opacity .3s ease, transform .3s ease;
                 }
 

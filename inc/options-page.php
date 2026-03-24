@@ -258,10 +258,22 @@ function avante_register_settings()
         'default' => false,
     ));
 
+    register_setting('avante_options_group', 'avante_loop_gap', array(
+        'type' => 'number',
+        'sanitize_callback' => 'floatval',
+        'default' => 1,
+    ));
+
     register_setting('avante_options_group', 'avante_loop_design', array(
         'type' => 'string',
         'sanitize_callback' => 'sanitize_text_field',
         'default' => 'loop00',
+    ));
+
+    register_setting('avante_options_group', 'avante_loop01_height', array(
+        'type' => 'number',
+        'sanitize_callback' => 'absint',
+        'default' => 320,
     ));
 
     // Site Identity Settings (Synced with core)
@@ -443,11 +455,28 @@ function avante_register_settings()
     );
 
     add_settings_field(
+        'avante_loop_gap',
+        __('Espacio entre Posts (rem)', 'avante'),
+        'avante_loop_gap_render',
+        'avante-settings',
+        'avante_archive_design_section'
+    );
+
+    add_settings_field(
         'avante_loop_design',
         __('Diseño del Loop (Posts)', 'avante'),
         'avante_loop_design_render',
         'avante-settings',
         'avante_archive_design_section'
+    );
+
+    add_settings_field(
+        'avante_loop01_height',
+        __('Altura de la tarjeta (Sólo loop01)', 'avante'),
+        'avante_loop01_height_render',
+        'avante-settings',
+        'avante_archive_design_section',
+        array('id' => 'loop01_height')
     );
 
     add_settings_field(
@@ -782,6 +811,19 @@ function avante_rounded_render()
 }
 
 /**
+ * Render the loop gap field.
+ */
+function avante_loop_gap_render()
+{
+    $default = 1;
+    $value = get_option('avante_loop_gap', $default);
+
+    echo '<input type="number" name="avante_loop_gap" id="avante_loop_gap" value="' . esc_attr($value) . '" class="small-text" placeholder="1" min="0" max="10" step="0.1">';
+    echo '<span> rem</span>';
+    echo '<p class="description">' . __('Ajusta el espacio (gap) entre cada tarjeta en el listado de posts.', 'avante') . '</p>';
+}
+
+/**
  * Render the loop design dropdown field.
  */
 function avante_loop_design_render()
@@ -812,6 +854,20 @@ function avante_loop_design_render()
     echo '<p class="description">' . __('Selecciona el diseño para el listado de posts (carpetas loop, loop2, etc. en template-parts).', 'avante') . '</p>';
 }
 
+/**
+ * Render the loop01 height field.
+ */
+function avante_loop01_height_render()
+{
+    $default = 320;
+    $value = get_option('avante_loop01_height', $default);
+
+    echo '<div id="avante_loop01_height_wrapper">';
+    echo '<input type="number" name="avante_loop01_height" id="avante_loop01_height_input" value="' . esc_attr($value) . '" class="small-text" placeholder="320" min="100" max="1000" step="1">';
+    echo '<span> px</span>';
+    echo '<p class="description">' . __('Ajusta la altura mínima de las tarjetas para el diseño loop01.', 'avante') . '</p>';
+    echo '</div>';
+}
 
 /**
  * Render Theme Preset selector.
@@ -1091,6 +1147,24 @@ function avante_render_settings_page()
             
             // Initial update
             updateHeaderPreview();
+
+            // Loop01 Height logic
+            const loopDesignSelector = document.getElementById('avante_loop_design');
+            const loop01HeightWrapper = document.getElementById('avante_loop01_height_wrapper');
+            
+            function updateLoopSettings() {
+                if (loopDesignSelector && loop01HeightWrapper) {
+                    const row = loop01HeightWrapper.closest('.avante-field-row');
+                    if (row) {
+                        row.style.display = loopDesignSelector.value === 'loop01' ? 'block' : 'none';
+                    }
+                }
+            }
+
+            if (loopDesignSelector) {
+                loopDesignSelector.addEventListener('change', updateLoopSettings);
+                updateLoopSettings();
+            }
         });
 
         // Media Uploader
