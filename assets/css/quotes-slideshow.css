@@ -206,7 +206,7 @@
                     border-radius: 50%;
                     background-color: transparent;
                     border: 2px solid var(--wp--preset--color--base);
-                    cursor: pointer;
+                    transition: background-color .3s ease;
 
                     &.active {
                         background-color: var(--wp--preset--color--base);
