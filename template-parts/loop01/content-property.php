@@ -36,7 +36,7 @@ $gallery   = $property_data['gallery'];
         </div>
         <div class="post--content">
             <a href="<?= get_the_permalink(); ?>" class="post__permalink">
-                <?php the_title('<h2 class="post__title">', '</h2>'); ?>
+                <?php the_title('<h2 class="post__title" style="font-size: var(--wp--preset--font-size--small);">', '</h2>'); ?>
             </a>
             <span class="location">
                 <?= avante_get_icon('location'); ?>

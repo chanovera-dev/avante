@@ -39,8 +39,6 @@ if (!defined('AVANTE_VERSION')) {
 $inc_files = array(
     'core' => 'inc/core.php',
     'options-page' => 'inc/options-page.php',
-    'sync-properties' => 'inc/easybroker-sync.php',
-    'real-estate-tools' => 'inc/real-estate-tools.php',
     'likes' => 'inc/likes.php',
 );
 
@@ -50,3 +48,24 @@ foreach ($inc_files as $key => $relative_path) {
         require_once $path;
     }
 }
+
+/**
+ * Conditionally load real estate tools only if the CPT 'property' is registered.
+ * Hooked to init with a high priority (99) to ensure plugins
+ * have already registered the custom post type.
+ */
+add_action('init', function() {
+    if (post_type_exists('property')) {
+        $real_estate_files = array(
+            'sync-properties' => 'inc/easybroker-sync.php',
+            'real-estate-tools' => 'inc/real-estate-tools.php',
+        );
+
+        foreach ($real_estate_files as $key => $relative_path) {
+            $path = __DIR__ . '/' . $relative_path;
+            if (file_exists($path)) {
+                require_once $path;
+            }
+        }
+    }
+}, 99);

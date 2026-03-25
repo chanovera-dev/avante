@@ -134,7 +134,7 @@ body {
 .loop-gallery-bullets {
     background: #ffffff80;
     backdrop-filter: blur(.5rem);
-    height: 3rem;
+    height: 2rem;
     margin-inline: auto;
     max-width: 170px;
 

@@ -82,8 +82,7 @@
                     }
 
                     & .loop-gallery-bullets {
-                        border-top-left-radius: .5rem;
-                        border-top-right-radius: .5rem;
+                        border-radius: .5rem;
                     }
 
                     & .gallery-next {
@@ -292,17 +291,18 @@ select {
                     & .gallery-navigation {
                         & .gallery-prev {
                             border-top-right-radius: 1rem;
+                            border-bottom-left-radius: 2.7rem;
                             corner-shape: squircle;
                         }
 
                         & .loop-gallery-bullets {
-                            border-top-left-radius: 1rem;
-                            border-top-right-radius: 1rem;
+                            border-radius: 1rem;
                             corner-shape: squircle;
                         }
 
                         & .gallery-next {
                             border-top-left-radius: 1rem;
+                            border-bottom-right-radius: 2.7rem;
                             corner-shape: squircle;
                         }
                     }
