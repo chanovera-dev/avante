@@ -10,7 +10,7 @@
                         'posts_per_page' => -1,
                         'post_status' => 'publish',
                         'orderby' => 'date',
-                        'order' => 'DESC',
+                        'order' => 'ASC',
                     );
 
                     $quotes_query = new WP_Query($args);
