@@ -37,11 +37,7 @@ get_header(); ?>
                 ?>
             </div>
         </section>
-        <section class="block">
-            <div class="content is-layout-constrained">
-                <?php the_content(); ?>
-            </div>
-        </section>
+        <?php get_template_part('templates/ca-homepage/conclusions-slideshow'); ?>
     </article>
 </main>
 

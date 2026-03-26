@@ -6,7 +6,7 @@
                 <div class="slideshow">
                     <?php
                     $args = array(
-                        'post_type' => 'quote',
+                        'post_type' => 'solution',
                         'posts_per_page' => -1,
                         'post_status' => 'publish',
                         'orderby' => 'date',
@@ -28,7 +28,7 @@
                         <?php endwhile;
                         wp_reset_postdata();
                     else:
-                        echo '<p>No se encontraron citas recientes.</p>';
+                        echo '<p>No se encontraron soluciones recientes.</p>';
                     endif;
                     ?>
                 </div>
