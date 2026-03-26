@@ -19,8 +19,8 @@
                         while ($quotes_query->have_posts()):
                             $quotes_query->the_post(); ?>
 
-                            <article id="post-<?php the_ID(); ?>" <?php post_class('conclusion-item'); ?>>
-                                <div class="conclusion-content">
+                            <article id="post-<?php the_ID(); ?>" <?php post_class('quote-item'); ?>>
+                                <div class="quote-content">
                                     <?php the_content(); ?>
                                 </div>
                             </article>
