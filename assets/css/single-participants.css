@@ -117,6 +117,12 @@ header.block {
             }
         }
     }
+
+    .block.metadata-wrapper {
+        & .content {
+            flex-direction: column-reverse;
+        }
+    }
 }
 
 /* Fix radar chart labels legibility when overlapping the polygon or lines */
@@ -126,13 +132,4 @@ header.block {
     stroke-width: 4px;
     stroke-linecap: round;
     stroke-linejoin: round;
-}
-
-@media (width < 1023px) {
-
-    .block.metadata-wrapper {
-        & .content {
-            flex-direction: column-reverse;
-        }
-    }
 }
