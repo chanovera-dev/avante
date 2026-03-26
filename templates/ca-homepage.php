@@ -37,6 +37,11 @@ get_header(); ?>
                 ?>
             </div>
         </section>
+        <section class="block">
+            <div class="content is-layout-constrained">
+                <?php the_content(); ?>
+            </div>
+        </section>
     </article>
 </main>
 
