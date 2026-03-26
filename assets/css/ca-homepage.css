@@ -160,6 +160,8 @@
                 align-items: center;
                 justify-content: space-between;
                 padding: .5rem;
+                position: relative;
+                z-index: 5;
 
                 & .btn-pagination {
                     background-color: transparent;
