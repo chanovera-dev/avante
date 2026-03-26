@@ -1,6 +1,6 @@
 <section class="block">
     <div class="content quotes-heading">
-        <div class="container">
+        <div class="container glass-border-bright">
             <h2>La voz del CEO como activo estratégico</h2>
             <div class="slideshow--wrapper">
                 <div class="slideshow">

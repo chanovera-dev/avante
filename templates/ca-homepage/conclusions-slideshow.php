@@ -1,6 +1,6 @@
 <section class="block">
     <div class="content quotes-heading">
-        <div class="container conclusions">
+        <div class="container conclusions glass-border-bright">
             <h2>Conclusiones</h2>
             <div class="slideshow--wrapper">
                 <div class="slideshow">
