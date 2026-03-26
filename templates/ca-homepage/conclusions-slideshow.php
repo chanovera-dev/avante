@@ -1,5 +1,5 @@
 <section class="block">
-    <div class="content">
+    <div class="content quotes-heading">
         <div class="container conclusions">
             <h2>Conclusiones</h2>
             <div class="slideshow--wrapper">
