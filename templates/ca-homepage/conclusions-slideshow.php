@@ -20,7 +20,7 @@
                             $quotes_query->the_post(); ?>
 
                             <article id="post-<?php the_ID(); ?>" <?php post_class('quote-item'); ?>>
-                                <div class="quote-content is-layout-constrained">
+                                <div class="quote-content">
                                     <?php the_content(); ?>
                                 </div>
                             </article>
