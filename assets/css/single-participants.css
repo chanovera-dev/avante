@@ -127,3 +127,12 @@ header.block {
     stroke-linecap: round;
     stroke-linejoin: round;
 }
+
+@media (width < 1023px) {
+
+    .block.metadata-wrapper {
+        & .content {
+            flex-direction: column-reverse;
+        }
+    }
+}
