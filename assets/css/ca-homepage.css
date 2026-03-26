@@ -27,7 +27,7 @@
             margin-bottom: 3rem;
 
             &:has(.slideshow--wrapper .slideshow .quote-item:nth-child(2).active) {
-                background-color: var(--wp--preset--color--button);
+                background-color: var(--wp--preset--color--bullet);
                 color: var(--wp--preset--color--base);
 
                 & h2 {
