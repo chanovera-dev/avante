@@ -16,6 +16,7 @@
         box-shadow: var(--wp--preset--shadow--post-shadow);
         transition: box-shadow .3s ease;
         margin-top: 2rem;
+        transition: background-color .3s ease;
 
         &:hover {
             box-shadow: var(--wp--preset--shadow--post-shadow-hover);
@@ -24,6 +25,40 @@
         &.conclusions {
             margin-top: 0;
             margin-bottom: 3rem;
+
+            &:has(.slideshow--wrapper .slideshow .quote-item:nth-child(2).active) {
+                background-color: var(--wp--preset--color--focus);
+                color: var(--wp--preset--color--base);
+
+                & h2 {
+                    &::after {
+                        opacity: .25;
+                    }
+                }
+
+                & .slideshow--wrapper {
+                    & .slideshow .quote-item {
+                        color: var(--wp--preset--color--base);
+                    }
+                }
+
+                & .slideshow-bullets-wrapper {
+
+                    & .btn-pagination {
+                        color: var(--wp--preset--color--base);
+                    }
+
+                    & .slideshow-bullets {
+                        & .bullet {
+                            border-color: var(--wp--preset--color--base);
+
+                            &.active {
+                                background-color: var(--wp--preset--color--base);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         &>h2 {
@@ -32,6 +67,7 @@
             margin-bottom: 1rem;
             position: relative;
             font-size: var(--wp--preset--font-size--large);
+            transition: color .3s ease;
 
             &::before {
                 content: '';
@@ -52,6 +88,7 @@
                 width: 100%;
                 height: 1px;
                 background-color: var(--wp--preset--color--base);
+                transition: opacity .3s ease;
             }
         }
 
@@ -72,6 +109,7 @@
                     display: grid;
                     place-content: center;
                     /* Make visible globally, handle visibility via content */
+                    transition: color .3s ease;
 
                     &.active {
                         & .quote-content {
@@ -121,7 +159,7 @@
                 background-color: transparent;
                 color: var(--wp--preset--color--contrast);
                 opacity: .5;
-                transition: opacity .3s ease;
+                transition: opacity .3s ease, color .3s ease;
 
                 &:hover {
                     background-color: transparent;
