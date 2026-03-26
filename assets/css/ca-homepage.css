@@ -20,7 +20,7 @@
             box-shadow: var(--wp--preset--shadow--post-shadow);
             transition: box-shadow .3s ease;
             margin-top: 2rem;
-            transition: background-color .3s ease;
+            transition: background-color .3s ease, box-shadow .3s ease;
 
             &:hover {
                 box-shadow: var(--wp--preset--shadow--post-shadow-hover);
