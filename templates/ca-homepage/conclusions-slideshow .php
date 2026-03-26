@@ -1,12 +1,12 @@
 <section class="block">
     <div class="content">
         <div class="container">
-            <h2>La voz del CEO como activo estratégico</h2>
+            <h2>Conclusiones</h2>
             <div class="slideshow--wrapper">
                 <div class="slideshow">
                     <?php
                     $args = array(
-                        'post_type' => 'solution',
+                        'post_type' => 'conclusion',
                         'posts_per_page' => -1,
                         'post_status' => 'publish',
                         'orderby' => 'date',
@@ -19,8 +19,8 @@
                         while ($quotes_query->have_posts()):
                             $quotes_query->the_post(); ?>
 
-                            <article id="post-<?php the_ID(); ?>" <?php post_class('quote-item'); ?>>
-                                <div class="quote-content">
+                            <article id="post-<?php the_ID(); ?>" <?php post_class('conclusion-item'); ?>>
+                                <div class="conclusion-content">
                                     <?php the_content(); ?>
                                 </div>
                             </article>
@@ -28,7 +28,7 @@
                         <?php endwhile;
                         wp_reset_postdata();
                     else:
-                        echo '<p>No se encontraron soluciones recientes.</p>';
+                        echo '<p>No se encontraron conclusiones recientes.</p>';
                     endif;
                     ?>
                 </div>
