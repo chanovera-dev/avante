@@ -12,6 +12,11 @@
         box-shadow: var(--wp--preset--shadow--post-shadow-hover);
     }
 
+    &.conclutions {
+        margin-top: 0;
+        margin-bottom: 3rem;
+    }
+
     &>h2 {
         text-align: center;
         padding: 1rem;

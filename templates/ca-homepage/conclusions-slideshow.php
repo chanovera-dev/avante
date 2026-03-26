@@ -1,6 +1,6 @@
 <section class="block">
     <div class="content">
-        <div class="container">
+        <div class="container conclusions">
             <h2>Conclusiones</h2>
             <div class="slideshow--wrapper">
                 <div class="slideshow">
