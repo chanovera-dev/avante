@@ -24,6 +24,7 @@ Tags:
 
         & .content {
             gap: .25rem;
+            min-height: 61.04px;
 
             & .site-brand {
                 & .custom-logo {
