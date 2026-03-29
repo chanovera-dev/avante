@@ -23,6 +23,17 @@
             box-shadow: var(--wp--preset--shadow--post-shadow-hover);
         }
 
+        & .post__overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4rem;
+            box-shadow: rgba(0, 0, 0, .15) 0 -2px 0 inset;
+            z-index: 2;
+            transition: transform .3s ease .3s;
+        }
+
         & .clouds--wrapper {
             position: absolute;
             top: 0;
