@@ -124,6 +124,67 @@
             }
         }
 
+        & .grass--wrapper {
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            z-index: 2;
+            pointer-events: none;
+
+            & .blade {
+                position: absolute;
+                bottom: 0;
+                width: 1.5px;
+                height: var(--h, 35px);
+                background: linear-gradient(to top, #283815 0%, #445a27 50%, #92b85c 100%);
+                border-radius: 100% 100% 0 0;
+                transform-origin: bottom center;
+                animation: grass-sway var(--speed, 3s) ease-in-out infinite;
+                animation-delay: var(--delay, 0s);
+                filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.1));
+                transform: rotate(var(--rot, 0deg));
+
+                &::before,
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    height: 80%;
+                    background: inherit;
+                    border-radius: inherit;
+                    transform-origin: bottom center;
+                }
+
+                &::before {
+                    left: -3px;
+                    transform: rotate(-12deg);
+                    height: 90%;
+                }
+
+                &::after {
+                    right: -3px;
+                    transform: rotate(10deg);
+                    height: 75%;
+                }
+
+                &:nth-child(even) {
+                    filter: brightness(1.2);
+                    z-index: 2;
+                }
+
+                &:nth-child(3n) {
+                    filter: brightness(0.8);
+                    z-index: 1;
+                }
+            }
+        }
+
         & .slideshow--wrapper {
             width: 100%;
             height: 100%;
@@ -283,5 +344,21 @@
     75% {
         transform: translateX(3px) translateY(0) scaleY(.999);
         filter: brightness(1.5);
+    }
+}
+
+@keyframes grass-sway {
+
+    0%,
+    100% {
+        transform: rotate(var(--rot, 0deg)) skewX(0deg);
+    }
+
+    30% {
+        transform: rotate(calc(var(--rot, 0deg) + 8deg)) skewX(12deg);
+    }
+
+    60% {
+        transform: rotate(calc(var(--rot, 0deg) - 3deg)) skewX(-4deg);
     }
 }
