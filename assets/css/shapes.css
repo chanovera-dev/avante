@@ -82,7 +82,7 @@ body {
     text-wrap: nowrap;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.125rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     background-color: var(--wp--preset--color--tertiary);
     transition: all .3s ease;
     background-image: linear-gradient(-60deg, transparent, transparent 40%, #ffffff44 40%, #ffffff44 60%, transparent 60%, transparent 100%);
