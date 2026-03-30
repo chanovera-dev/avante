@@ -95,7 +95,7 @@ get_header(); ?>
 
             <!-- Botón de Paginación -->
             <div class="pagination-wrapper" style="text-align: center; margin-top: 2rem;">
-                <button id="load-more-btn" class="btn" 
+                <button id="load-more-btn" class="btn" style="margin-inline: auto;" 
                     data-page="1" 
                     data-max-pages="<?php echo esc_attr($max_pages); ?>"
                     style="<?php echo ($max_pages <= 1) ? 'display: none;' : ''; ?>">

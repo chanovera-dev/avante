@@ -90,11 +90,13 @@ textarea {
     font-family: var(--wp--preset--font-family--manrope);
     font-size: var(--wp--preset--font-size--medium);
     font-weight: 500;
-    height: 46px;
+    height: 36px;
     padding: .5rem 1rem;
+    border-radius: 4px;
     background-color: var(--wp--preset--color--button);
     border: 1px solid var(--wp--preset--color--button);
     color: var(--wp--preset--color--base);
+    box-shadow: var(--wp--preset--shadow--post-shadow);
     transition: all .3s ease;
     background-image: linear-gradient(-60deg, transparent, transparent 40%, #ffffff44 40%, #ffffff44 60%, transparent 60%, transparent 100%);
     background-size: 200% 100%;
@@ -105,6 +107,7 @@ textarea {
         cursor: pointer;
         background-position-x: -150%;
         transition: all 1s;
+        box-shadow: var(--wp--preset--shadow--post-shadow-hover);
         filter: brightness(1.1);
     }
 
