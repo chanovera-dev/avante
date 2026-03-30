@@ -1,61 +1,15 @@
 <?php
 /**
- * Template Name: Homepage Custom Filter
- * Template Post Type: page
+ * Template Name: Galería con filtros por categorías
  * 
  * Plantilla de inicio con filtros AJAX por categoría y toggle NSFW.
  */
 
-get_header(); 
-
-// Obtener todas las categorías ordenadas
-$categories = get_categories([
-    'orderby' => 'name',
-    'order'   => 'ASC',
-    'hide_empty' => true
-]);
-?>
+get_header(); ?>
 
 <main id="main" class="site-main homepage-wrapper" role="main">
     <!-- SECCIÓN DE FILTROS -->
-    <section class="block filters-section">
-        <div class="content">
-            <div class="home-filters-control">
-                
-                <!-- 1. Filtro Categorías -->
-                <div class="categories-filter-wrapper">
-                    <ul class="cat-filters-list">
-                        <li>
-                            <button type="button" class="cat-filter-btn active" data-cat-id="0">
-                                <?php esc_html_e('Todos', 'avante'); ?>
-                            </button>
-                        </li>
-                        <?php foreach($categories as $cat): ?>
-                            <li>
-                                <button type="button" class="cat-filter-btn" data-cat-id="<?php echo esc_attr($cat->term_id); ?>">
-                                    <?php echo esc_html($cat->name); ?>
-                                </button>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-
-                <!-- 2. Toggle NSFW -->
-                <div class="nsfw-filter-wrapper">
-                    <div class="nsfw-toggle-wrapper">
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="nsfw-toggle-input">
-                            <span class="slider"></span>
-                        </label>
-                        <label for="nsfw-toggle-input" class="nsfw-toggle-label">
-                            <?php esc_html_e('NSFW', 'avante'); ?>
-                        </label>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
+    <?php gallery_homepage_breadcrumbs(); ?>
 
     <!-- GRID DE RESULTADOS -->
     <section class="block posts--body">

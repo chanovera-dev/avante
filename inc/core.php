@@ -250,7 +250,7 @@ function avante_get_assets()
             'quotes-slideshow-styles' => "$assets_path/css/quotes-slideshow.css",
 
             // home ajax
-            'home-ajax-styles' => "$assets_path/css/home-ajax.css",
+            'gallery-homepage-styles' => "$assets_path/css/gallery-homepage.css",
 
             // real estate
             'single-property' => "$assets_path/css/single-property.css",
@@ -276,7 +276,7 @@ function avante_get_assets()
             'moving-clouds-script' => "$assets_path/js/moving-clouds.js",
 
             // home ajax
-            'home-ajax-script' => "$assets_path/js/home-ajax.js",
+            'gallery-homepage-script' => "$assets_path/js/gallery-homepage.js",
 
             // real estate
             'filters'                 => "$assets_path/js/filters.js",
@@ -743,13 +743,17 @@ function wp_breadcrumbs()
             echo esc_html('Página ' . $paged . ' de ');
             the_archive_title('<h1 class="page-title">', '</h1>');
         }
-    } elseif (is_home()) {
+    }
+    
+    elseif (is_home()) {
         if ($paged === 1) {
             echo '<h1 class="page-title">' . esc_html__('Contenido más reciente', 'avante') . '</h1>';
         } else {
             echo '<span>' . esc_html('Página ' . $paged . ' de ') . '</span>' . '<h1 class="page-title">todo el contenido</h1>';
         }
-    } elseif (is_page()) {
+    } 
+    
+    elseif (is_page()) {
         if ($post->post_parent) {
             $ancestors = get_post_ancestors($post->ID);
             foreach ($ancestors as $ancestor) {
@@ -761,7 +765,9 @@ function wp_breadcrumbs()
             if ($showCurrent == 1)
                 echo $current . ' ' . get_the_title();
         }
-    } elseif (is_search()) {
+    } 
+    
+    elseif (is_search()) {
         if ($paged === 1) {
             echo '<h1 class="page-title">';
             esc_html_e('Resultados de búsqueda de "', 'avante');
@@ -771,17 +777,25 @@ function wp_breadcrumbs()
         } else {
             echo '<h1 class="page-title">' . esc_html('Página ' . $paged) . '</h1>';
         }
-    } elseif (is_day()) {
+    } 
+    
+    elseif (is_day()) {
         echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a>' . $separator;
         echo '<a href="' . get_month_link(get_the_time('Y'), get_the_time('m')) . '">' . get_the_time('F') . '</a>' . $separator;
         echo get_the_time('d') . $separator;
         echo $current . ' ' . get_the_time('l');
-    } elseif (is_month()) {
+    } 
+    
+    elseif (is_month()) {
         echo '<a href="' . get_year_link(get_the_time('Y')) . '">' . get_the_time('Y') . '</a>' . $separator;
         echo $current . ' ' . get_the_time('F');
-    } elseif (is_year()) {
+    } 
+    
+    elseif (is_year()) {
         echo $current . ' ' . get_the_time('Y');
-    } elseif (is_single() && !is_attachment()) {
+    } 
+    
+    elseif (is_single() && !is_attachment()) {
         $post_type_slug = get_post_type();
 
         switch ($post_type_slug) {
@@ -877,11 +891,62 @@ function wp_breadcrumbs()
                 }
                 break;
         }
-    } elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
+    } 
+    
+    elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
         // Aquí podrías manejar archivos de CPT si quisieras
     }
 
     echo '</div></div></section>';
+}
+
+function gallery_homepage_breadcrumbs() {
+    // Obtener todas las categorías ordenadas
+    $categories = get_categories([
+        'orderby' => 'name',
+        'order'   => 'ASC',
+        'hide_empty' => true
+    ]);
+    ?>
+    <section class="block breadcrumbs--wrapper">
+        <div class="content">
+            <div class="breadcrumbs for-gallery">
+                <!-- 1. Filtro Categorías -->
+                <div class="categories-filter-wrapper">
+                    <ul class="cat-filters-list">
+                        <li>
+                            <button type="button" class="cat-filter-btn active" data-cat-id="0">
+                                <?php esc_html_e('Todos', 'avante'); ?>
+                                <div class="button_overlay"></div>
+                            </button>
+                        </li>
+                        <?php foreach($categories as $cat): ?>
+                            <li>
+                                <button type="button" class="cat-filter-btn" data-cat-id="<?php echo esc_attr($cat->term_id); ?>">
+                                    <?php echo esc_html($cat->name); ?>
+                                    <div class="button_overlay"></div>
+                                </button>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <!-- 2. Toggle NSFW -->
+                <div class="nsfw-filter-wrapper">
+                    <div class="nsfw-toggle-wrapper">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="nsfw-toggle-input">
+                            <span class="slider"></span>
+                        </label>
+                        <label for="nsfw-toggle-input" class="nsfw-toggle-label">
+                            <?php esc_html_e('NSFW', 'avante'); ?>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <?php
 }
 
 /**
@@ -1282,7 +1347,7 @@ function posts_styles()
     //     return;
     // }
 
-    if (is_home() || is_archive() || is_search() || is_page_template('templates/homepage.php') || is_page_template('archive-property.php') || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo') || is_post_type_archive('participants')) {
+    if (is_home() || is_archive() || is_search() || is_page_template('templates/gallery-homepage.php') || is_page_template('archive-property.php') || is_post_type_archive('nsfw') || is_post_type_archive('detras-del-espejo') || is_post_type_archive('participants')) {
         $a = avante_get_assets();
 
         function unload_parts_header() {
@@ -1573,11 +1638,11 @@ add_action('pre_get_posts', 'avante_participant_archive_query');
  * Enqueue assets specifically for the Homepage Template
  */
 function avante_enqueue_home_assets() {
-    if (is_page_template('templates/homepage.php')) {
+    if (is_page_template('templates/gallery-homepage.php')) {
         $a = avante_get_assets();
 
-        avante_enqueue_style( 'home-ajax-styles', $a['css']['home-ajax-styles'] );
-        avante_enqueue_script( 'home-ajax-script', $a['js']['home-ajax-script'] );
+        avante_enqueue_style( 'gallery-homepage-styles', $a['css']['gallery-homepage-styles'] );
+        avante_enqueue_script( 'gallery-homepage-script', $a['js']['gallery-homepage-script'] );
         avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'] );
         avante_enqueue_script('likes-script', $a['js']['likes-script']);
         
@@ -1585,7 +1650,7 @@ function avante_enqueue_home_assets() {
             'ajax_url' => admin_url('admin-ajax.php'),
         ]);
 
-        wp_localize_script('home-ajax-script', 'avante_ajax', [
+        wp_localize_script('gallery-homepage-script', 'avante_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce'    => wp_create_nonce('avante_home_nonce')
         ]);

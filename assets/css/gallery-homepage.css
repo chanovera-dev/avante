@@ -16,77 +16,6 @@
 
 .site-main {
     & .block {
-        &.filters-section {
-            background-color: var(--wp--preset--color--background);
-            border-bottom: 1px solid var(--wp--preset--color--line);
-
-            & .home-filters-control {
-                display: grid;
-                grid-template-columns: 1fr auto;
-                align-items: center;
-                padding: .357rem 0;
-
-                & .categories-filter-wrapper {
-                    height: 34.5px;
-                    display: flex;
-                    align-items: center;
-                    overflow: hidden;
-                    position: relative;
-
-                    & .cat-filters-list {
-                        position: absolute;
-                        top: 0;
-                        width: 100%;
-                        gap: .188rem;
-                        flex-wrap: nowrap;
-                        overflow-x: auto;
-                        scrollbar-gutter: stable;
-                        padding-right: 1.5rem;
-                        mask-image: linear-gradient(to right, black 80%, transparent 100%);
-
-                        &::-webkit-scrollbar {
-                            height: .375rem;
-                            background: transparent;
-                        }
-
-                        &::-webkit-scrollbar-thumb {
-                            background-color: transparent;
-                            transition: background-color .3s ease;
-                        }
-
-                        & .cat-filter-btn {
-                            appearance: none;
-                            background: transparent;
-                            border: 1px solid transparent;
-                            text-wrap: nowrap;
-                            padding: 0.5rem 1rem;
-                            font-size: 0.9rem;
-                            font-weight: 500;
-                            cursor: pointer;
-                            transition: all 0.2s ease;
-                            font-family: var(--wp--preset--font-family--manrope);
-                            color: var(--wp--preset--color--contrast);
-                            font-size: var(--wp--preset--font-size--small);
-
-                            &:hover {
-                                border-color: var(--wp--preset--color--line);
-                            }
-
-                            &.active {
-                                background-color: var(--wp--preset--color--primary);
-                                border-color: var(--wp--preset--color--primary);
-                            }
-                        }
-                    }
-                }
-
-                & .nsfw-filter-wrapper {
-                    padding-left: 1rem;
-                    transform: translateY(2px);
-                }
-            }
-        }
-
         &.posts--body {
             & .content {
                 border-top: 1px solid var(--wp--preset--color--base);
@@ -143,7 +72,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #cbae63;
+    box-shadow: var(--toggle-shadow-inset);
     transition: .4s;
     border-radius: 34px;
 }
@@ -156,16 +86,19 @@
     left: 4px;
     bottom: 4px;
     background-color: white;
+    box-shadow: var(--toggle-shadow);
     transition: .4s;
     border-radius: 50%;
 }
 
 input:checked+.slider {
     background-color: var(--wp--preset--color--primary);
+    box-shadow: var(--toggle-shadow-inset);
 }
 
 input:focus+.slider {
     box-shadow: 0 0 1px var(--wp--preset--color--primary);
+    box-shadow: var(--toggle-shadow-inset);
 }
 
 input:checked+.slider:before {
@@ -205,6 +138,7 @@ input:checked+.slider:before {
 
     &:hover {
         box-shadow: var(--wp--preset--shadow--post-shadow-hover);
+        animation: jump .3s ease forwards;
 
         & article {
             & .post__backdrop {
@@ -234,6 +168,10 @@ input:checked+.slider:before {
                             background-color: var(--wp--preset--color--primary);
                         }
                     }
+
+                    & .loop-gallery-bullets {
+                        opacity: 1 !important;
+                    }
                 }
             }
         }
@@ -256,7 +194,14 @@ input:checked+.slider:before {
                         opacity: 0;
                         background-color: transparent;
                         backdrop-filter: none;
-                        transition: opacity .3s ease, background-color .3s ease;
+                        transition: opacity .3s ease, background-color .3s ease, transform .3s ease;
+                    }
+
+                    & .loop-gallery-bullets {
+                        background-color: transparent;
+                        backdrop-filter: none;
+                        opacity: 0;
+                        transition: opacity .3s ease;
                     }
                 }
             }
@@ -366,6 +311,7 @@ input:checked+.slider:before {
                 cursor: pointer;
                 transition: all 0.3s ease;
                 font-size: var(--wp--preset--font-size--small);
+                font-family: var(--wp--preset--font-family--manrope);
                 font-weight: 600;
                 color: inherit;
                 width: fit-content;
@@ -614,5 +560,19 @@ input:checked+.slider:before {
         font-size: var(--wp--preset--font-size--medium);
         right: 1rem;
         padding: 2px 6px;
+    }
+}
+
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0);
     }
 }
