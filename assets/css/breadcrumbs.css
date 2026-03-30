@@ -72,11 +72,7 @@
 .page-template-archive-property {
     & .site-main {
         & .block.breadcrumbs--wrapper {
-            /* background-color: var(--wp--preset--color--base); */
-
             & .content {
-                padding: .5rem 0;
-
                 & .breadcrumbs {
                     position: relative;
 
