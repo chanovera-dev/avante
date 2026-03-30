@@ -18,7 +18,24 @@
     & article {
         & .block.breadcrumbs--wrapper {
             & .content {
-                padding: .4375rem 0;
+                padding: .5rem 0;
+
+                & .breadcrumbs {
+                    & .post-tag {
+                        box-shadow: var(--wp--preset--shadow--post-shadow);
+                        background-color: var(--wp--preset--color--primary);
+
+                        & svg {
+                            width: 11px;
+                            height: 11px;
+                        }
+
+                        &:hover {
+                            box-shadow: var(--wp--preset--shadow--post-shadow-hover);
+                            filter: brightness(1.05);
+                        }
+                    }
+                }
             }
         }
 
