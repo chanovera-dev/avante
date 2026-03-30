@@ -9,7 +9,7 @@
  *  - Custom Gutenberg block rendering and filters.
  *  - Template tags and helper functions (breadcrumbs, icons).
  *
- * It is included by functions.php and acts as the backbone for
+ * It is included by functions.php  and acts as the backbone for
  * the theme's features and global operations.
  *
  * @package Avante
@@ -562,39 +562,20 @@ function wp_breadcrumbs()
     echo '<section class="block breadcrumbs--wrapper"><div class="content"><div class="breadcrumbs">';
     echo '<a class="go-home" href="' . $homeLink . '">' . $icon_home . $home . '</a>' . $separator;
 
-    // ARCHIVO FORMATO IMAGE
-    if (is_tax('post_format', 'post-format-image')) {
-        echo $current . 'Dibujos más recientes';
-    }
-
-    // ARCHIVO FORMATO AUDIO
-    elseif (is_tax('post_format', 'post-format-audio')) {
-        echo $current . 'Audios más recientes';
-    }
-
-    // ARCHIVO FORMATO VIDEO
-    elseif (is_tax('post_format', 'post-format-video')) {
-        echo $current . 'Videos más recientes';
-    }
-
-    // ARCHIVO FORMATO GALERÍA
-    elseif (is_tax('post_format', 'post-format-gallery')) {
-        echo $current . 'Galerías más recientes';
-    }
-
-    // ARCHIVO FORMATO ENLACES
-    elseif (is_tax('post_format', 'post-format-link')) {
-        echo $current . 'Artículos externos más recientes';
-    }
-
-    // ARCHIVO FORMATO CITAS
-    elseif (is_tax('post_format', 'post-format-quote')) {
-        echo $current . 'Citas más recientes';
-    }
-
-    // ARCHIVO FORMATO MINIENTRADA
-    elseif (is_tax('post_format', 'post-format-aside')) {
-        echo $current . 'Minientradas más recientes';
+    // ARCHIVO FORMATO
+    if (is_tax('post_format')) {
+        $format = get_queried_object()->slug;
+        echo $current;
+        switch ($format) {
+            case 'post-format-image':   echo 'Dibujos más recientes'; break;
+            case 'post-format-audio':   echo 'Audios más recientes'; break;
+            case 'post-format-video':   echo 'Videos más recientes'; break;
+            case 'post-format-gallery': echo 'Galerías más recientes'; break;
+            case 'post-format-link':    echo 'Artículos externos más recientes'; break;
+            case 'post-format-quote':   echo 'Citas más recientes'; break;
+            case 'post-format-aside':   echo 'Minientradas más recientes'; break;
+            default: echo 'Artículos más recientes'; break;
+        }
     }
 
     // 2. ARCHIVO CPT PROPIEDADES
@@ -801,103 +782,100 @@ function wp_breadcrumbs()
     } elseif (is_year()) {
         echo $current . ' ' . get_the_time('Y');
     } elseif (is_single() && !is_attachment()) {
+        $post_type_slug = get_post_type();
 
-        // PROPIEDADES
-        if (get_post_type() === 'property') {
-            $post_type = get_post_type_object('property');
-            $slug      = $post_type->rewrite['slug'] ?? 'propiedades';
-            $label     = $post_type->labels->name;
-            
-            echo '<a href="' . $homeLink . '/' . $slug . '/">' . $label . '</a>' . $separator;
-            
-            $operation = get_post_meta(get_the_ID(), 'eb_operation', true);
-            $type      = get_post_meta(get_the_ID(), 'eb_property_type', true);
-            
-            if ($operation) {
-                $op_label = ($operation === 'sale') ? 'En venta' : (($operation === 'rental') ? 'En renta' : ucfirst($operation));
-                echo '<span>' . esc_html($op_label) . '</span>' . $separator;
-            }
-            
-            if ($type) {
-                $type_label = function_exists('translate_property_type') ? translate_property_type($type) : ucfirst($type);
-                echo '<span>' . esc_html($type_label) . '</span>' . $separator;
-            }
-            
-            if ($showCurrent == 1) {
-                echo '<span class="current">' . get_the_title() . '</span>';
-            }
+        switch ($post_type_slug) {
+            case 'property':
+                $pt_obj    = get_post_type_object('property');
+                $slug      = $pt_obj->rewrite['slug'] ?? 'propiedades';
+                $label     = $pt_obj->labels->name;
+                
+                echo '<a href="' . $homeLink . '/' . $slug . '/">' . $label . '</a>' . $separator;
+                
+                $operation = get_post_meta(get_the_ID(), 'eb_operation', true);
+                $type      = get_post_meta(get_the_ID(), 'eb_property_type', true);
+                
+                if ($operation) {
+                    $op_label = ($operation === 'sale') ? 'En venta' : (($operation === 'rental') ? 'En renta' : ucfirst($operation));
+                    echo '<span>' . esc_html($op_label) . '</span>' . $separator;
+                }
+                
+                if ($type) {
+                    $type_label = function_exists('translate_property_type') ? translate_property_type($type) : ucfirst($type);
+                    echo '<span>' . esc_html($type_label) . '</span>' . $separator;
+                }
+                
+                if ($showCurrent == 1) {
+                    echo '<span class="current">' . get_the_title() . '</span>';
+                }
+                break;
 
-        } elseif (get_post_type() != 'post') {
-            $post_type = get_post_type_object(get_post_type());
-            $slug = $post_type->rewrite;
-            $label = (get_post_type() === 'nsfw') ? esc_html__('Contenido NSFW', 'avante') : $post_type->labels->singular_name;
-            echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $label . '</a>' . $separator;
-            if ($showCurrent == 1)
-                echo '<span class="current">' . get_the_title() . '</span>';
+            case 'nsfw':
+            case 'detras-del-espejo':
+                $pt_obj = get_post_type_object($post_type_slug);
+                $slug   = $pt_obj->rewrite;
+                $label  = ($post_type_slug === 'nsfw') ? esc_html__('Contenido NSFW', 'avante') : esc_html__('Detrás del espejo', 'avante');
+                
+                echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $label . '</a>' . $separator;
+                if ($showCurrent == 1) {
+                    echo '<span class="current">' . get_the_title() . '</span>';
+                }
+                break;
 
-        } elseif (get_post_type() === 'detras-del-espejo') {
-            $post_type = get_post_type_object('detras-del-espejo');
-            $slug = $post_type->rewrite;
-            $label = (get_post_type() === 'detras-del-espejo') ? esc_html__('Detrás del espejo', 'avante') : $post_type->labels->singular_name;
-            echo '<a href="' . $homeLink . '/' . $slug['slug'] . '/">' . $label . '</a>' . $separator;
-            if ($showCurrent == 1)
-                echo '<span class="current">' . get_the_title() . '</span>';
+            case 'post':
+                $categories = get_the_category();
+                if ($categories) {
+                    $links = [];
+                    foreach ($categories as $category) {
+                        $ancestors = get_ancestors($category->term_id, 'category');
+                        $ancestors = array_reverse($ancestors);
 
-        } else {
-            $categories = get_the_category();
-            if ($categories) {
-                $links = [];
-                foreach ($categories as $category) {
-                    $ancestors = get_ancestors($category->term_id, 'category');
-                    $ancestors = array_reverse($ancestors);
-
-                    foreach ($ancestors as $ancestor_id) {
-                        $ancestor = get_category($ancestor_id);
-                        if ($ancestor) {
-                            $links[] = '<a class="post-tag" href="' . esc_url(get_category_link($ancestor->term_id)) . '">' . avante_get_icon('category') . esc_html($ancestor->name) . '</a>';
+                        foreach ($ancestors as $ancestor_id) {
+                            $ancestor = get_category($ancestor_id);
+                            if ($ancestor) {
+                                $links[] = '<a class="post-tag" href="' . esc_url(get_category_link($ancestor->term_id)) . '">' . avante_get_icon('category') . esc_html($ancestor->name) . '</a>';
+                            }
                         }
+
+                        $links[] = '<a class="post-tag" href="' . esc_url(get_category_link($category->term_id)) . '">' . avante_get_icon('category') . esc_html($category->name) . '</a>';
+                    }
+                    echo implode($cat_separator, array_unique($links));
+                }
+
+                $post_format = get_post_format();
+                if ($post_format) {
+                    echo $separator;
+                    $format_label = '';
+                    switch ($post_format) {
+                        case 'aside':   $format_label = __('Minientrada', 'avante'); break;
+                        case 'gallery': $format_label = __('Galería', 'avante'); break;
+                        case 'image':   $format_label = __('Dibujo', 'avante'); break;
+                        case 'video':   $format_label = __('Video', 'avante'); break;
+                        case 'audio':   $format_label = __('Audio', 'avante'); break;
+                        case 'quote':   $format_label = __('Cita', 'avante'); break;
+                        case 'link':    $format_label = __('Artículo externo', 'avante'); break;
                     }
 
-                    $links[] = '<a class="post-tag" href="' . esc_url(get_category_link($category->term_id)) . '">' . avante_get_icon('category') . esc_html($category->name) . '</a>';
-                }
-                echo implode($cat_separator, array_unique($links));
-            }
-
-            $post_format = get_post_format();
-            if ($post_format) {
-                echo $separator;
-                $format_label = '';
-                switch ($post_format) {
-                    case 'aside':
-                        $format_label = __('Minientrada', 'avante');
-                        break;
-                    case 'gallery':
-                        $format_label = __('Galería', 'avante');
-                        break;
-                    case 'image':
-                        $format_label = __('Dibujo', 'avante');
-                        break;
-                    case 'video':
-                        $format_label = __('Video', 'avante');
-                        break;
-                    case 'audio':
-                        $format_label = __('Audio', 'avante');
-                        break;
-                    case 'quote':
-                        $format_label = __('Cita', 'avante');
-                        break;
-                    case 'link':
-                        $format_label = __('Artículo externo', 'avante');
-                        break;
+                    if ($format_label) {
+                        echo '<a class="post-tag" href="' . esc_url(get_post_format_link($post_format)) . '">' . avante_get_icon($post_format) . esc_html($format_label) . '</a>';
+                    }
                 }
 
-                if ($format_label) {
-                    echo '<a class="post-tag" href="' . esc_url(get_post_format_link($post_format)) . '">' . avante_get_icon($post_format) . esc_html($format_label) . '</a>';
+                if ($showCurrent == 1) {
+                    echo $separator . '<span class="current">' . get_the_title() . '</span>';
                 }
-            }
+                break;
 
-            if ($showCurrent == 1)
-                echo $separator . '<span class="current">' . get_the_title() . '</span>';
+            default:
+                // Other CPTs
+                $pt_obj = get_post_type_object($post_type_slug);
+                if ($pt_obj && isset($pt_obj->rewrite['slug'])) {
+                    echo '<a href="' . $homeLink . '/' . $pt_obj->rewrite['slug'] . '/">' . $pt_obj->labels->singular_name . '</a>' . $separator;
+                    if ($showCurrent == 1) {
+                        echo '<span class="current">' . get_the_title() . '</span>';
+                    }
+                }
+                break;
         }
     } elseif (!is_single() && !is_page() && get_post_type() != 'post' && !is_404()) {
         // Aquí podrías manejar archivos de CPT si quisieras

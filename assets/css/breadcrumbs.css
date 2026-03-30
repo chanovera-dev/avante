@@ -4,7 +4,8 @@
         border-bottom: 1px solid var(--wp--preset--color--line);
 
         & .content {
-            padding: .5rem 0;
+            padding: .849rem 0;
+            line-height: 1;
 
             & .breadcrumbs {
                 display: inline-flex;
@@ -17,6 +18,7 @@
                     display: inline-flex;
                     align-items: center;
                     gap: .625rem;
+                    line-height: 1;
                     transition: color .3s ease-in-out;
 
                     & svg {
@@ -41,6 +43,7 @@
                 & :is(h1.page-title, h3.property-title) {
                     font-size: var(--wp--preset--font-size--small);
                     font-weight: 400;
+                    line-height: 1;
                 }
 
                 & span+h1.page-title {
@@ -53,6 +56,8 @@
 
                 & .bi.bi-chevron-right {
                     margin: 0 .623rem;
+                    width: 11px;
+                    height: 11px;
                 }
 
                 & .separator {
