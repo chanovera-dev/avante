@@ -124,7 +124,7 @@
             }
         }
 
-        & .grass--wrapper {
+        /* & .grass--wrapper {
             position: absolute;
             bottom: 0px;
             left: 0;
@@ -183,7 +183,7 @@
                     z-index: 1;
                 }
             }
-        }
+        } */
 
         & .slideshow--wrapper {
             width: 100%;
@@ -347,7 +347,7 @@
     }
 }
 
-@keyframes grass-sway {
+/* @keyframes grass-sway {
 
     0%,
     100% {
@@ -361,4 +361,4 @@
     60% {
         transform: rotate(calc(var(--rot, 0deg) - 3deg)) skewX(-4deg);
     }
-}
+} */
