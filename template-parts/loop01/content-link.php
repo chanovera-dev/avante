@@ -211,14 +211,47 @@ if ($url && wp_http_validate_url($url)) {
                         $node = $xpath->query($q);
                         if ($node && $node->length > 0) { $date = $node->item(0)->nodeValue; break; }
                     }
+
+                    // Secondary Body Search (Exclude Sidebars/Widgets)
+                    if (empty($date)) {
+                        $sidebar_exclude = "not(ancestor::*[contains(@class, 'sidebar') or contains(@id, 'sidebar') or contains(@class, 'widget') or contains(@class, 'related')])";
+                        $date_containers = ['publicate-date', 'published-date', 'post-date', 'entry-date', 'publish-date', 'wp-block-post-date', 'date', 'published'];
+                        $xpath_parts = [];
+                        foreach ($date_containers as $c) { 
+                            $xpath_parts[] = "contains(@class, '$c') or contains(@id, '$c') or contains(@class, '" . str_replace('-', '_', $c) . "')"; 
+                        }
+                        
+                        $nodes = $xpath->query("//*[ " . implode(' or ', $xpath_parts) . " ][" . $sidebar_exclude . "]");
+                        foreach ($nodes as $node) {
+                            $txt = trim(strip_tags($node->nodeValue ?: $node->textContent));
+                            if (empty($txt)) continue;
+                            
+                            // Look for Spanish or ISO patterns
+                            // Updated Spanish Regex to handle commas after the month: "22 junio, 2023"
+                            if (preg_match('/\b\d{1,2}\s+(?:de\s+)?(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre),?\s+(?:de\s+)?20\d{2}\b/ui', $txt, $es_match)) {
+                                $date = $es_match[0]; break;
+                            }
+                            if (preg_match('/\b(20\d{2}[-\/]\d{2}[-\/]((0?[1-9]|[12]\d|3[01])))\b/', $txt, $iso_match)) {
+                                $date = $iso_match[0]; break;
+                            }
+                        }
+                    }
                     libxml_clear_errors();
                 }
 
                 // Normalization & Formatting
                 if (!empty($date)) {
                     $es_months = ['enero' => 'january', 'febrero' => 'february', 'marzo' => 'march', 'abril' => 'april', 'mayo' => 'may', 'junio' => 'june', 'julio' => 'july', 'agosto' => 'august', 'septiembre' => 'september', 'setiembre' => 'september', 'octubre' => 'october', 'noviembre' => 'november', 'diciembre' => 'december'];
+                    // Remove comma before normalization
+                    $date = str_replace(',', '', $date);
                     $date = str_ireplace(array_keys($es_months), array_values($es_months), $date);
                     $date = str_ireplace([' de ', ' del '], [' ', ' '], $date);
+                    
+                    // Kill time part to avoid timezone shifts of +/- 1 day
+                    if (preg_match('/^(\d{4}-\d{2}-\d{2})/', $date, $date_only)) {
+                        $date = $date_only[1];
+                    }
+
                     $ts = strtotime($date);
                     if ($ts) $date = date_i18n('F j, Y', $ts);
                 }
@@ -291,30 +324,33 @@ if ($url && wp_http_validate_url($url)) {
                     $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOWARNING | LIBXML_NOERROR);
                     $xpath = new DOMXPath($doc);
 
-                    // Search for common avatar/author image patterns
+                    // Search for common avatar/author image patterns + site branding
                     $avatar_queries = [
                         "//*[contains(@class, 'avatar')]//img",
                         "//img[contains(@class, 'avatar')]",
                         "//img[contains(@class, 'author-image')]",
                         "//*[contains(@class, 'author')]//img",
-                        "//*[contains(@id, 'author')]//img"
+                        "//meta[@property='og:logo']/@content",
+                        "//link[@rel='apple-touch-icon']/@href",
+                                           "//link[@rel='shortcut icon']/@href"
                     ];
 
                     foreach ($avatar_queries as $query) {
                         $nodes = $xpath->query($query);
-                        if ($nodes->length > 0) {
+                        if ($nodes && $nodes->length > 0) {
                             foreach ($nodes as $node) {
-                                $src = $node->getAttribute('src') ?: $node->getAttribute('data-src');
+                                // Extract from various attributes
+                                $src = ($node instanceof DOMAttr) ? $node->nodeValue : ($node->getAttribute('src') ?: $node->getAttribute('data-src') ?: $node->getAttribute('href') ?: $node->getAttribute('content'));
+
                                 if ($src && (!strpos($src, 'gravatar')) && (!strpos($src, 'svg'))) {
-                                     // Convert relative URL to absolute
                                      if (strpos($src, 'http') !== 0) {
-                                         $url_parts = wp_parse_url($url);
-                                         $base = $url_parts['scheme'] . '://' . $url_parts['host'];
+                                         $url_p = wp_parse_url($url);
+                                         $base = $url_p['scheme'] . '://' . $url_p['host'];
                                          $src = $base . '/' . ltrim($src, '/');
                                      }
                                      $author_avatar = $src;
                                      break 2;
-                                }
+                                 }
                             }
                         }
                     }
