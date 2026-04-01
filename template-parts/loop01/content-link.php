@@ -199,125 +199,30 @@ if ($url && wp_http_validate_url($url)) {
                 
                 $date_source = 'Fallback';
 
-                // 0. URL-based Date (Extremely accurate for WordPress/News URLs)
-                if (preg_match('/\/(\d{4})[\/\-](\d{2})[\/\-](\d{2})\//', $url, $url_match)) {
-                    $date = $url_match[1] . '-' . $url_match[2] . '-' . $url_match[3];
-                }
-
                 if (empty($date)) {
                     libxml_use_internal_errors(true);
                     $doc = new DOMDocument();
-                    $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOWARNING | LIBXML_NOERROR);
+                    @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOWARNING | LIBXML_NOERROR);
                     $xpath = new DOMXPath($doc);
 
-                    // 1. Meta Tags (Prioritized Search)
-                    $meta_queries = [
-                        "//meta[@property='article:published_time']/@content",
-                        "//meta[@name='article:published_time']/@content",
-                        "//meta[@property='og:published_time']/@content",
-                        "//*[@itemprop='datePublished']/@content",
-                        "//meta[@name='date']/@content",
-                        "//meta[@name='dcterms.issued']/@content",
-                        "//meta[@name='DC.date.issued']/@content",
-                        "//meta[@name='citation_date']/@content",
-                        "//meta[@name='pubdate']/@content",
-                    ];
-                    foreach ($meta_queries as $query) {
-                        $nodes = $xpath->query($query);
-                        foreach ($nodes as $node) {
-                            $val = trim($node->nodeValue);
-                            if ($val && (strtotime($val) || preg_match('/^\d{4}-\d{2}-\d{2}/', $val))) {
-                                $date = $val;
-                                break 2;
-                            }
-                        }
-                    }
-
-                    // 2. Focused JSON-LD date extraction (datePublished)
-                    if (empty($date)) {
-                        $scripts = $doc->getElementsByTagName('script');
-                        foreach ($scripts as $script) {
-                            if ($script->getAttribute('type') === 'application/ld+json') {
-                                if (preg_match('/"(?:datePublished|pubdate)"\s*:\s*"([^"]+)"/i', $script->textContent, $json_match)) {
-                                    $date = $json_match[1];
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    // 3. Body Search (WP Block Themes & News Styles)
-                    if (empty($date)) {
-                        $date_containers = ['post-body', 'entry-content', 'article', 'post-date', 'wp-block-post-date', 'published', 'time'];
-                        $xpath_parts = [];
-                        foreach ($date_containers as $c) { $xpath_parts[] = "contains(@class, '$c') or contains(@id, '$c')"; }
-                        $nodes = $xpath->query("//*[ " . implode(' or ', $xpath_parts) . " ]");
-                        
-                        foreach ($nodes as $node) {
-                            $txt = trim(strip_tags($node->nodeValue ?: $node->textContent));
-                            if (empty($txt)) continue;
-                            
-                            // Check for Spanish date pattern: "8 de agosto 2023"
-                            if (preg_match('/\b\d{1,2}\s+(?:de\s+)?(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)\s+(?:de\s+)?20\d{2}\b/ui', $txt, $es_match)) {
-                                $date = $es_match[0];
-                                break;
-                            }
-                        }
-                    }
-
-                    // 4. Last Resort: Any meta tag with 'date' or 'time'
-                    if (empty($date)) {
-                        $nodes = $xpath->query("//meta[contains(@property, 'date') or contains(@name, 'date') or contains(@property, 'time') or contains(@name, 'time')]/@content");
-                        foreach ($nodes as $node) {
-                            $val = trim($node->nodeValue);
-                            if ($val && strtotime($val)) {
-                                $date = $val;
-                                break;
-                            }
-                        }
+                    // Standard Search
+                    $queries = ["//meta[@property='article:published_time']/@content", "//meta[@property='og:published_time']/@content", "//*[@itemprop='datePublished']/@content"];
+                    foreach ($queries as $q) {
+                        $node = $xpath->query($q);
+                        if ($node && $node->length > 0) { $date = $node->item(0)->nodeValue; break; }
                     }
                     libxml_clear_errors();
                 }
 
-                // 4. Hard fallback regex for YYYY-MM-DD or MM/DD/YYYY
-                if (empty($date)) {
-                    // Try regex first for article:published_time directly from HTML (more robust than DOM for messy sites)
-                    if (preg_match('/property=["\']article:published_time["\'][^>]+content=["\']([^"\']+)["\']/i', $html, $reg_pdate)) {
-                        $date = $reg_pdate[1];
-                    } elseif (preg_match('/name=["\']article:published_time["\'][^>]+content=["\']([^"\']+)["\']/i', $html, $reg_pdate)) {
-                        $date = $reg_pdate[1];
-                    }
-
-                    if (empty($date)) {
-                        $head_sample = substr($html, 0, 5000);
-                        if (preg_match('/\b(20\d{2}-\d{2}-\d{2})\b/', $head_sample, $simple_date)) {
-                            $date = $simple_date[1];
-                        } elseif (preg_match('/\b(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/(20\d{2})\b/', $head_sample, $slash_date)) {
-                            $date = $slash_date[3] . '-' . $slash_date[1] . '-' . $slash_date[2];
-                        }
-                    }
-                }
-
-                // 5. Cleanup found date (Spanish Translation)
+                // Normalization & Formatting
                 if (!empty($date)) {
-                    $raw_date = $date; // Capture raw string
                     $es_months = ['enero' => 'january', 'febrero' => 'february', 'marzo' => 'march', 'abril' => 'april', 'mayo' => 'may', 'junio' => 'june', 'julio' => 'july', 'agosto' => 'august', 'septiembre' => 'september', 'setiembre' => 'september', 'octubre' => 'october', 'noviembre' => 'november', 'diciembre' => 'december'];
                     $date = str_ireplace(array_keys($es_months), array_values($es_months), $date);
                     $date = str_ireplace([' de ', ' del '], [' ', ' '], $date);
+                    $ts = strtotime($date);
+                    if ($ts) $date = date_i18n('F j, Y', $ts);
                 }
-
-                // Final formatting
-                if ($date) {
-                    $timestamp = strtotime($date);
-                    if ($timestamp && $timestamp > 0) {
-                        $date = date_i18n('F j, Y', $timestamp);
-                        $date_source = 'Scraped';
-                    } else {
-                        $date = ''; // Reset if invalid
-                    }
-                }
-                // author/avatar/tags logic (moved back inside)
-
+                // (Scraping end)
 
 
 
@@ -563,12 +468,6 @@ $scraped_site_status = (!empty($site_name)) ? $site_name : 'No Site Name Found';
                 <?= avante_get_icon('date'); ?>
                 <p><?= esc_html($date); ?></p>
             </div>
-            <!-- Link Preview Debug System: 
-                 Date: [<?= esc_html($date); ?>] (Source: <?= esc_html($date_source); ?>) (Raw: <?= esc_html($raw_date ?: 'None'); ?>)
-                 Title: [<?= esc_html($title); ?>] (Source: <?= esc_html($scraped_title_status); ?>)
-                 Site: [<?= esc_html($scraped_site_status); ?>]
-                 HTTP: [<?= esc_html($http_status); ?>]
-            -->
             <a href="<?= esc_url($url); ?>" class="post__permalink">
                 <h2 class="post__title"><?= esc_html($title); ?></h2>
             </a>
