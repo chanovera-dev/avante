@@ -69,3 +69,12 @@ add_action('init', function() {
         }
     }
 }, 99);
+
+/**
+ * TEMPORAL: Limpiar transients de link preview.
+ * BORRAR este bloque después de cargar cualquier página.
+ */
+add_action('init', function() {
+    global $wpdb;
+    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '%avante_link_preview_%'");
+}, 1);

@@ -15,7 +15,25 @@
             <div class="content">
                 <?php
                 the_title('<h1 class="page-title">', '</h1>');
-                echo '<div class="metadata"><div class="date">' . avante_get_icon('date') . get_the_date() . '</div>';
+                
+                // Handle external date for Link format posts
+                $display_date = get_the_date();
+                $debug_info = '';
+                if (has_post_format('link')) {
+                    $content = get_the_content();
+                    preg_match('/https?:\/\/[^\s"]+/', $content, $matches);
+                    $url = $matches[0] ?? '';
+                    if ($url) {
+                        $transient_key = 'avante_link_preview_' . md5($url);
+                        $cached = get_transient($transient_key);
+                        if ($cached && !empty($cached['date'])) {
+                            $display_date = $cached['date'];
+                            $debug_info = '<!-- Date Source: Cache (' . ($cached['date_source'] ?? 'Unknown') . ') -->';
+                        }
+                    }
+                }
+                
+                echo '<div class="metadata"><div class="date">' . avante_get_icon('date') . esc_html($display_date) . '</div>' . $debug_info;
                 if (get_comments_number() > 0):
                     echo '<div class="comments">';
                     if (get_comments_number() == 1) {
