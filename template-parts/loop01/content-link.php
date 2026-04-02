@@ -41,19 +41,118 @@ if ($url && wp_http_validate_url($url)) {
         $raw_date = $cached_data['raw_date'] ?? '';
         $http_status = $cached_data['http_status'] ?? 'Cached';
     } else {
-        // Make secure request with WP HTTP API
-        $response = wp_remote_get($url, array(
-            'timeout' => 5,
+        $args = array(
+            'timeout' => 8,
             'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'redirection' => 5,
-        ));
+        );
 
-        $http_status = is_wp_error($response) ? 'Error: ' . $response->get_error_message() : 'Code: ' . wp_remote_retrieve_response_code($response);
+        // Bypass agresivo para firewalls de sitios específicos (ej. Wordfence/Cloudflare)
+        if (strpos($url, 'crisisconsultant') !== false || true) {
+            $args['headers'] = array(
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Language' => 'es-ES,es;q=0.9,en;q=0.8',
+                'Cache-Control' => 'max-age=0',
+                'Connection' => 'keep-alive',
+                'Sec-Fetch-Dest' => 'document',
+                'Sec-Fetch-Mode' => 'navigate',
+                'Sec-Fetch-Site' => 'none',
+                'Sec-Fetch-User' => '?1',
+                'Upgrade-Insecure-Requests' => '1',
+            );
+        }
 
-        if (!is_wp_error($response) && 200 === wp_remote_retrieve_response_code($response)) {
+        $response = wp_remote_get($url, $args);
+
+        $http_code = is_wp_error($response) ? 0 : wp_remote_retrieve_response_code($response);
+        $http_status = is_wp_error($response) ? 'Error: ' . $response->get_error_message() : 'Code: ' . $http_code;
+
+        $html = '';
+        $used_api = false;
+
+        if ($http_code === 200) {
             $html = wp_remote_retrieve_body($response);
+            // Detect Cloudflare or similar challenge screens
+            if (stripos($html, '<title>Just a moment</title>') !== false || stripos($html, 'Cloudflare') !== false) {
+                $html = ''; 
+                $http_status = 'Error: WAF Challenge Detected';
+            }
+        }
 
-            if ($html) {
+        /**
+         * ===================================
+         *  WP REST API FALLBACK (IF BLOCKED)
+         * ===================================
+         */
+        if (empty($html) || in_array($http_code, [401, 403, 406, 429])) {
+            $parsed = wp_parse_url($url);
+            if (!empty($parsed['path'])) {
+                $slug = basename(trim($parsed['path'], '/'));
+                if ($slug && !empty($parsed['host'])) {
+                    // Endpoint estándar para REST API de WordPress
+                    $api_url = $parsed['scheme'] . '://' . $parsed['host'] . '/wp-json/wp/v2/posts?slug=' . urlencode($slug) . '&_embed=1';
+                    $api_res = wp_remote_get($api_url, array('timeout' => 8, 'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0'));
+                    
+                    if (!is_wp_error($api_res) && 200 === wp_remote_retrieve_response_code($api_res)) {
+                        $json_data = json_decode(wp_remote_retrieve_body($api_res), true);
+                        
+                        if (!empty($json_data) && is_array($json_data) && isset($json_data[0])) {
+                            $post_data = $json_data[0];
+                            
+                            $title = html_entity_decode(strip_tags($post_data['title']['rendered'] ?? ''));
+                            
+                            $date_raw = $post_data['date'] ?? '';
+                            if ($date_raw) {
+                                $ts = strtotime($date_raw);
+                                if ($ts) $date = date_i18n('F j, Y', $ts);
+                            }
+                            
+                            $site_name = preg_replace('/^www\./', '', $parsed['host']);
+                            
+                            // Autor desde array embebido '_embedded' -> 'author'
+                            if (!empty($post_data['_embedded']['author'][0]['name'])) {
+                                $author_name = $post_data['_embedded']['author'][0]['name'];
+                                $author_avatar = $post_data['_embedded']['author'][0]['avatar_urls']['96'] ?? '';
+                            }
+                            
+                            // Imagen destacada
+                            if (!empty($post_data['_embedded']['wp:featuredmedia'][0]['source_url'])) {
+                                $image = $post_data['_embedded']['wp:featuredmedia'][0]['source_url'];
+                            }
+
+                            $http_status = 'Code: 200 (Via WP REST API Bypass)';
+                            $date_source = 'WP REST API';
+                            $used_api = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * ===================================
+         *  PLAN C: PROXY ALLORIGINS (ULTIMATE FALLBACK)
+         * ===================================
+         * Si el servidor bloqueó tanto el HTML directo como el REST API, pedimos la web
+         * a través del proxy gratuito de allorigins para saltar el bloqueo de IP/WAF.
+         */
+        if (empty($html) && !$used_api) {
+            $proxy_url = 'https://api.allorigins.win/raw?url=' . urlencode($url);
+            $proxy_res = wp_remote_get($proxy_url, array('timeout' => 12));
+            
+            if (!is_wp_error($proxy_res) && 200 === wp_remote_retrieve_response_code($proxy_res)) {
+                $proxy_html = wp_remote_retrieve_body($proxy_res);
+                if (!empty($proxy_html) && stripos($proxy_html, '<title>Just a moment</title>') === false && stripos($proxy_html, 'Cloudflare') === false) {
+                    $html = $proxy_html;
+                    $http_status = 'Code: 200 (Via Proxy Bypass)';
+                }
+            }
+        }
+
+
+        if (!empty($html) || $used_api) {
+
+            if (!empty($html)) {
 
                 /**
                  * ===================================
@@ -110,7 +209,7 @@ if ($url && wp_http_validate_url($url)) {
                  */
 
                 // og:title
-                if (preg_match('/<meta property="og:title" content="([^"]+)"/i', $html, $og_title)) {
+                if (preg_match('/<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)["\']/is', $html, $og_title)) {
                     $title = html_entity_decode($og_title[1]);
                 }
                 // <title>
@@ -135,8 +234,18 @@ if ($url && wp_http_validate_url($url)) {
                  */
 
                 // 1. og:image (Handles both " and ' and property/content order)
-                if (preg_match('/<meta[^>]+(?:property|name)=["\'](?:og:image|twitter:image)["\'][^>]+content=["\']([^"\']+)["\']/i', $html, $meta_image)) {
+                if (preg_match('/<meta[^>]+(?:property|name)=["\'](?:og:image|twitter:image)["\'][^>]+content=["\']([^"\']+)["\']/is', $html, $meta_image)) {
                     $image = $meta_image[1];
+                }
+
+                // Fallback agresivo para imágenes de Elementor/Yoast/Astra
+                if (empty($image)) {
+                    if (preg_match('/"primaryImageOfPage"\s*:\s*\{[^}]*"@id"\s*:\s*"([^"]+)"/', $html, $j_img)) {
+                         if (strpos($j_img[1], 'http') === 0) $image = $j_img[1];
+                    }
+                    if (empty($image) && preg_match('/"thumbnailUrl"\s*:\s*"([^"]+)"/', $html, $j_thumb)) {
+                        $image = $j_thumb[1];
+                    }
                 }
 
                 // 2. JSON-LD "image" (string or object)
@@ -190,6 +299,12 @@ if ($url && wp_http_validate_url($url)) {
                     libxml_clear_errors();
                 }
 
+                // ÚLTIMO RECURSO: Buscar imagen de Elementor (muy común si lo anterior falla)
+                if (empty($image)) {
+                    if (preg_match('/class=["\'][^"\']*elementor-image[^"\']*["\'].*src=["\']([^"\']+)["\']/i', $html, $el_img)) {
+                        $image = $el_img[1];
+                    }
+                }
 
                 /**
                  * ===================================
@@ -210,6 +325,28 @@ if ($url && wp_http_validate_url($url)) {
                     foreach ($queries as $q) {
                         $node = $xpath->query($q);
                         if ($node && $node->length > 0) { $date = $node->item(0)->nodeValue; break; }
+                    }
+
+                    // Búsqueda en JSON-LD (Yoast Graph y Schema)
+                    if (empty($date)) {
+                        $scripts = $doc->getElementsByTagName('script');
+                        foreach ($scripts as $s) {
+                            if ($s->getAttribute('type') === 'application/ld+json') {
+                                $data = json_decode($s->textContent, true);
+                                if ($data) {
+                                    if (isset($data['@graph'])) {
+                                        foreach ($data['@graph'] as $item) {
+                                            if (isset($item['datePublished'])) { $date = $item['datePublished']; }
+                                            if (empty($author_name) && isset($item['@type']) && $item['@type'] === 'Person' && isset($item['name'])) { $author_name = $item['name']; }
+                                            if (empty($image) && isset($item['@type']) && $item['@type'] === 'ImageObject' && isset($item['url'])) { $image = $item['url']; }
+                                        }
+                                    } else {
+                                        if (isset($data['datePublished'])) $date = $data['datePublished'];
+                                        if (empty($author_name) && isset($data['author']['name'])) $author_name = $data['author']['name'];
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     // Secondary Body Search (Exclude Sidebars/Widgets)
@@ -266,20 +403,20 @@ if ($url && wp_http_validate_url($url)) {
                  * ===================================
                  */
 
-                // 1. meta property="article:author"
-                if (preg_match('/<meta[^>]+property=["\']article:author["\'][^>]+content=["\']([^"\']+)["\']/i', $html, $meta_author)) {
-                    $author_name = $meta_author[1];
+                // 1. Meta etiquetas (og / name / author)
+                if (empty($author_name)) {
+                    if (preg_match('/<meta[^>]+(?:property|name)=["\'](?:article:author|author)["\'][^>]+content=["\']([^"\']+)["\']/is', $html, $m_auth)) {
+                        $author_name = $m_auth[1];
+                    }
                 }
-                // 2. JSON-LD author
-                elseif (preg_match('/"author"\s*:\s*\{[^}]*"name"\s*:\s*"([^"]+)"/i', $html, $json_author)) {
-                    $author_name = $json_author[1];
+                // 2. JSON-LD Graph (Yoast/Elementor/Astra fallback)
+                if (empty($author_name)) {
+                   if (preg_match('/"@type"\s*:\s*"Person"[^}]+"name"\s*:\s*"([^"]+)"/i', $html, $j_auth)) {
+                       $author_name = $j_auth[1];
+                   }
                 }
-                // 3. meta name="author"
-                elseif (preg_match('/<meta[^>]+name=["\']author["\'][^>]+content=["\']([^"\']+)["\']/i', $html, $meta_name_author)) {
-                    $author_name = $meta_name_author[1];
-                }
-                // 4. Extract from title if it looks like "Title - Author" (already in raw_title_tag)
-                elseif ($raw_title_tag && preg_match('/[-–—]\s*([A-ZÀ-ÿ][a-zà-ÿ]+(?:\s[A-ZÀ-ÿ][a-zà-ÿ]+)+)$/u', $raw_title_tag, $match_author)) {
+                // 3. Extract from title if it looks like "Title - Author" (already in raw_title_tag)
+                if (empty($author_name) && $raw_title_tag && preg_match('/[-–—]\s*([A-ZÀ-ÿ][a-zà-ÿ]+(?:\s[A-ZÀ-ÿ][a-zà-ÿ]+)+)$/u', $raw_title_tag, $match_author)) {
                     $author_name = $match_author[1];
                 }
 
@@ -357,6 +494,17 @@ if ($url && wp_http_validate_url($url)) {
                     libxml_clear_errors();
                 }
 
+                // Buscar Avatar o Logo como fallback si sigue vacío
+                if (empty($author_avatar)) {
+                    // Buscar og:image:alt, apple-touch-icon para sitios que no usan author links directos
+                    if (preg_match('/<meta[^>]+property=["\']og:image:alt["\'][^>]+content=["\']([^"\']+)["\']|apple-touch-icon.*href=["\']([^"\']+)["\']|icon.*href=["\']([^"\']+)["\']/is', $html, $site_logo)) {
+                        $author_avatar = $site_logo[2] ?? ($site_logo[3] ?? '');
+                    }
+                    if (empty($author_avatar) && preg_match('/<img[^>]+class=["\'][^"\']*[Ll]ogo[^"\']*["\'][^>]+src=["\']([^"\']+)["\']/i', $html, $logo_img)) {
+                        $author_avatar = $logo_img[1];
+                    }
+                }
+
                 /**
                  * ===================================
                  *  EXTERNAL TAGS
@@ -386,6 +534,21 @@ if ($url && wp_http_validate_url($url)) {
                         $external_tags = array_unique($external_tags);
                     }
                     libxml_clear_errors();
+                }
+
+                // Buscar Avatar o Logo como fallback si sigue vacío
+                if (empty($author_avatar)) {
+                    // Buscar og:image:alt, apple-touch-icon para sitios que no usan author links directos
+                    if (preg_match('/<meta[^>]+property=["\']og:image:alt["\'][^>]+content=["\']([^"\']+)["\']|apple-touch-icon.*href=["\']([^"\']+)["\']|icon.*href=["\']([^"\']+)["\']/is', $html, $site_logo)) {
+                        $author_avatar = $site_logo[2] ?? ($site_logo[3] ?? '');
+                    }
+                    if (empty($author_avatar) && preg_match('/<img[^>]+class=["\'][^"\']*[Ll]ogo[^"\']*["\'][^>]+src=["\']([^"\']+)["\']/i', $html, $logo_img)) {
+                        $author_avatar = $logo_img[1];
+                    }
+                    // Si todo falla, permitir un Gravatar si hay uno en la página
+                    if (empty($author_avatar) && preg_match('/src=["\']([^"\']+gravatar\.com\/avatar[^"\']+)["\']/i', $html, $gravatar_match)) {
+                        $author_avatar = html_entity_decode($gravatar_match[1]);
+                    }
                 }
 
                 /**
@@ -419,7 +582,10 @@ if ($url && wp_http_validate_url($url)) {
                 }
 
 
-                // Cache for 24 hours
+            } // end html parse parsing block
+            
+            // Cache for 24 hours (Para ambos, HTML scrapeado o REST API)
+            if (!empty($title) || !empty($image)) {
                 set_transient($transient_key, array(
                     'title' => $title,
                     'image' => $image,
@@ -432,9 +598,9 @@ if ($url && wp_http_validate_url($url)) {
                     'http_status' => $http_status,
                     'date_source' => $date_source,
                 ), DAY_IN_SECONDS);
+            }
 
-            } // end html
-        } // end response
+        } // end valid response (html or api)
     } // end transient else
 } // end url check
 
@@ -467,6 +633,22 @@ $scraped_title_status = ($title !== get_the_title()) ? 'Scraped' : 'Original/Fal
 $scraped_site_status = (!empty($site_name)) ? $site_name : 'No Site Name Found';
 
 ?>
+
+<?php 
+// DEPILACIÓN RÁPIDA DE ERRORES:
+// if (strpos($url, 'crisisconsultant') !== false) {
+//     echo '<div style="background:#000; color:#0f0; padding:20px; text-align:left; font-family:monospace; font-size: 12px; margin-bottom: 20px;">';
+//     echo '<strong>STATUS HTTP:</strong> ' . esc_html($http_status) . '<br>';
+//     echo '<strong>¿HAY HTML?:</strong> ' . (empty($html) ? 'NO' : 'SÍ (' . strlen($html) . ' bytes)') . '<br>';
+//     if (!empty($html)) {
+//         // Obtenemos los 500 primeros caracteres o el contenido de <title> para verificar qué devuelve
+//         preg_match('/<title[^>]*>(.*?)<\/title>/is', $html, $matches);
+//         echo '<strong>TÍTULO REAL EN HTML:</strong> ' . esc_html($matches[1] ?? 'Sin etiqueta de título') . '<br>';
+//     }
+//     echo '</div>';
+// }
+?>
+
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('glass-post'); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post_body glass-border-bright">
@@ -523,7 +705,7 @@ $scraped_site_status = (!empty($site_name)) ? $site_name : 'No Site Name Found';
                 </span>
             </div>
         </div>
-        <!-- Link Preview Image: <?= esc_html($image ?: 'Empty'); ?> -->
+        <!-- Link Preview Image: <?= esc_html($image ?: 'Empty'); ?> | Debug: <?= esc_html($http_status) ?> -->
         <?php if ($image): ?>
             <img class="wp-post-image" src="<?= esc_url($image); ?>" alt="<?= esc_attr($title); ?>" loading="lazy" />
         <?php endif; ?>
