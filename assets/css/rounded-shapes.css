@@ -176,6 +176,11 @@
     border-radius: 1.7rem;
 }
 
+/* CRISIS ACADEMY HOMEPAGE */
+.span-tag {
+    border-radius: .3rem;
+}
+
 /* FORMS */
 input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
 textarea,
@@ -400,6 +405,12 @@ select {
     /* CA HOMEPAGE */
     .container:has(.slideshow--wrapper) {
         border-radius: 3rem;
+        corner-shape: squircle;
+    }
+
+    /* CRISIS ACADEMY HOMEPAGE */
+    .span-tag {
+        border-radius: .6rem;
         corner-shape: squircle;
     }
 
