@@ -183,6 +183,15 @@ select {
     border-radius: .4rem;
 }
 
+.btn,
+#submit,
+.wpcf7-submit,
+.wp-element-button {
+    &.primary {
+        border-radius: .5rem;
+    }
+}
+
 /* SIDEBAR */
 .site-main {
     & .block {
@@ -400,6 +409,16 @@ select {
     select {
         border-radius: .8rem;
         corner-shape: squircle;
+    }
+
+    .btn,
+    #submit,
+    .wpcf7-submit,
+    .wp-element-button {
+        &.primary {
+            border-radius: .8rem;
+            corner-shape: squircle;
+        }
     }
 
     /* SIDEBAR */

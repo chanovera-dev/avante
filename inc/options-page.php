@@ -37,6 +37,8 @@ function avante_get_color_themes()
                 'post-shadow-light' => '#40495412 0 -2px 0 inset, #40495412 0px 54px 55px, #40495408 0px -12px 30px, #40495408 0px 4px 6px, #40495408 0px 12px 13px, #40495408 0px -3px 5px',
                 'post-shadow' => '#40495420 0px 54px 55px, #4049540f 0px -12px 30px, #4049540f 0px 4px 6px, #40495416 0px 12px 13px, #4049540b 0px -3px 5px',
                 'post-shadow-hover' => '#40495440 0px 54px 55px, #4049541f 0px -12px 30px, #4049541f 0px 4px 6px, #4049542b 0px 12px 13px, #40495417 0px -3px 5px',
+                'button-shadow' => '#1f242b26 0 -2px 0 inset, #40495420 0px 54px 55px, #4049540f 0px -12px 30px, #4049540f 0px 4px 6px, #40495416 0px 12px 13px, #4049540b 0px -3px 5px',
+                'button-shadow-hover' => '#1f242b26 0 -2px 0 inset, #40495440 0px 54px 55px, #4049541f 0px -12px 30px, #4049541f 0px 4px 6px, #4049542b 0px 12px 13px, #40495417 0px -3px 5px',
             ),
         ),
         'zuky' => array(
@@ -57,6 +59,8 @@ function avante_get_color_themes()
                 'post-shadow-light' => '#65573112 0 -2px 0 inset, #65573112 0px 54px 55px, #65573108 0px -12px 30px, #65573108 0px 4px 6px, #65573108 0px 12px 13px, #65573108 0px -3px 5px',
                 'post-shadow' => '#65573120 0px 54px 55px, #6557310f 0px -12px 30px, #6557310f 0px 4px 6px, #65573116 0px 12px 13px, #6557310b 0px -3px 5px',
                 'post-shadow-hover' => '#65573140 0px 54px 55px, #6557311f 0px -12px 30px, #6557311f 0px 4px 6px, #6557312b 0px 12px 13px, #65573117 0px -3px 5px',
+                'button-shadow' => '#43381b26 0 -2px 0 inset, #65573120 0px 54px 55px, #6557310f 0px -12px 30px, #6557310f 0px 4px 6px, #65573116 0px 12px 13px, #6557310b 0px -3px 5px',
+                'button-shadow-hover' => '#43381b26 0 -2px 0 inset, #65573140 0px 54px 55px, #6557311f 0px -12px 30px, #6557311f 0px 4px 6px, #6557312b 0px 12px 13px, #65573117 0px -3px 5px',
             ),
         ),
         'carolinaeslava' => array(
@@ -77,6 +81,8 @@ function avante_get_color_themes()
                 'post-shadow-light' => '#1d224f12 0 -2px 0 inset, #1d224f12 0px 54px 55px, #1d224f08 0px -12px 30px, #1d224f08 0px 4px 6px, #1d224f08 0px 12px 13px, #1d224f08 0px -3px 5px',
                 'post-shadow' => '#1d224f20 0px 54px 55px, #1d224f0f 0px -12px 30px, #1d224f0f 0px 4px 6px, #1d224f16 0px 12px 13px, #1d224f0b 0px -3px 5px',
                 'post-shadow-hover' => '#1d224f40 0px 54px 55px, #1d224f1f 0px -12px 30px, #1d224f1f 0px 4px 6px, #1d224f2b 0px 12px 13px, #1d224f17 0px -3px 5px',
+                'button-shadow' => '#0f122926 0 -2px 0 inset, #1d224f20 0px 54px 55px, #1d224f0f 0px -12px 30px, #1d224f0f 0px 4px 6px, #1d224f16 0px 12px 13px, #1d224f0b 0px -3px 5px',
+                'button-shadow-hover' => '#0f122926 0 -2px 0 inset, #1d224f40 0px 54px 55px, #1d224f1f 0px -12px 30px, #1d224f1f 0px 4px 6px, #1d224f2b 0px 12px 13px, #1d224f17 0px -3px 5px',
             ),
         ),
         'dark' => array(
@@ -97,6 +103,8 @@ function avante_get_color_themes()
                 'post-shadow-light' => '#00000012 0 -2px 0 inset, #00000012 0px 54px 55px, #00000008 0px -12px 30px, #00000008 0px 4px 6px, #00000008 0px 12px 13px, #00000008 0px -3px 5px',
                 'post-shadow' => '#ffffff20 0px 54px 55px, #ffffff0f 0px -12px 30px, #ffffff0f 0px 4px 6px, #ffffff16 0px 12px 13px, #ffffff0b 0px -3px 5px',
                 'post-shadow-hover' => '#ffffff40 0px 54px 55px, #ffffff1f 0px -12px 30px, #ffffff1f 0px 4px 6px, #ffffff2b 0px 12px 13px, #ffffff17 0px -3px 5px',
+                'button-shadow' => '#00000026 0 -2px 0 inset, #ffffff20 0px 54px 55px, #ffffff0f 0px -12px 30px, #ffffff0f 0px 4px 6px, #ffffff16 0px 12px 13px, #ffffff0b 0px -3px 5px',
+                'button-shadow-hover' => '#00000026 0 -2px 0 inset, #ffffff40 0px 54px 55px, #ffffff1f 0px -12px 30px, #ffffff1f 0px 4px 6px, #ffffff2b 0px 12px 13px, #ffffff17 0px -3px 5px',
             ),
         ),
         'ocean' => array(
@@ -117,6 +125,8 @@ function avante_get_color_themes()
                 'post-shadow-light' => '#00336612 0 -2px 0 inset, #00336612 0px 54px 55px, #00336608 0px -12px 30px, #00336608 0px 4px 6px, #00336608 0px 12px 13px, #00336608 0px -3px 5px',
                 'post-shadow' => '#00336620 0px 54px 55px, #0033660f 0px -12px 30px, #0033660f 0px 4px 6px, #00336616 0px 12px 13px, #0033660b 0px -3px 5px',
                 'post-shadow-hover' => '#00336640 0px 54px 55px, #0033661f 0px -12px 30px, #0033661f 0px 4px 6px, #0033662b 0px 12px 13px, #00336617 0px -3px 5px',
+                'button-shadow' => '#001a3326 0 -2px 0 inset, #00336620 0px 54px 55px, #0033660f 0px -12px 30px, #0033660f 0px 4px 6px, #00336616 0px 12px 13px, #0033660b 0px -3px 5px',
+                'button-shadow-hover' => '#001a3326 0 -2px 0 inset, #00336640 0px 54px 55px, #0033661f 0px -12px 30px, #0033661f 0px 4px 6px, #0033662b 0px 12px 13px, #00336617 0px -3px 5px',
             ),
         ),
         'sakura' => array(
@@ -137,6 +147,8 @@ function avante_get_color_themes()
                 'post-shadow-light' => '#5d3b3e12 0 -2px 0 inset, #5d3b3e12 0px 54px 55px, #5d3b3e08 0px -12px 30px, #5d3b3e08 0px 4px 6px, #5d3b3e08 0px 12px 13px, #5d3b3e08 0px -3px 5px',
                 'post-shadow' => '#5d3b3e20 0px 54px 55px, #5d3b3e0f 0px -12px 30px, #5d3b3e0f 0px 4px 6px, #5d3b3e16 0px 12px 13px, #5d3b3e0b 0px -3px 5px',
                 'post-shadow-hover' => '#5d3b3e40 0px 54px 55px, #5d3b3e1f 0px -12px 30px, #5d3b3e1f 0px 4px 6px, #5d3b3e2b 0px 12px 13px, #5d3b3e17 0px -3px 5px',
+                'button-shadow' => '#2e1e1f26 0 -2px 0 inset, #5d3b3e20 0px 54px 55px, #5d3b3e0f 0px -12px 30px, #5d3b3e0f 0px 4px 6px, #5d3b3e16 0px 12px 13px, #5d3b3e0b 0px -3px 5px',
+                'button-shadow-hover' => '#2e1e1f26 0 -2px 0 inset, #5d3b3e40 0px 54px 55px, #5d3b3e1f 0px -12px 30px, #5d3b3e1f 0px 4px 6px, #5d3b3e2b 0px 12px 13px, #5d3b3e17 0px -3px 5px',
             ),
         ),
         'forest' => array(
@@ -157,6 +169,8 @@ function avante_get_color_themes()
                 'post-shadow-light' => '#1b5e2012 0 -2px 0 inset, #1b5e2012 0px 54px 55px, #1b5e2008 0px -12px 30px, #1b5e2008 0px 4px 6px, #1b5e2008 0px 12px 13px, #1b5e2008 0px -3px 5px',
                 'post-shadow' => '#1b5e2020 0px 54px 55px, #1b5e200f 0px -12px 30px, #1b5e200f 0px 4px 6px, #1b5e2016 0px 12px 13px, #1b5e200b 0px -3px 5px',
                 'post-shadow-hover' => '#1b5e2040 0px 54px 55px, #1b5e201f 0px -12px 30px, #1b5e201f 0px 4px 6px, #1b5e202b 0px 12px 13px, #1b5e2017 0px -3px 5px',
+                'button-shadow' => '#0f261126 0 -2px 0 inset, #1b5e2020 0px 54px 55px, #1b5e200f 0px -12px 30px, #1b5e200f 0px 4px 6px, #1b5e2016 0px 12px 13px, #1b5e200b 0px -3px 5px',
+                'button-shadow-hover' => '#0f261126 0 -2px 0 inset, #1b5e2040 0px 54px 55px, #1b5e201f 0px -12px 30px, #1b5e201f 0px 4px 6px, #1b5e202b 0px 12px 13px, #1b5e2017 0px -3px 5px',
             ),
         ),
     );
@@ -503,6 +517,8 @@ function avante_register_settings()
         'post-shadow-light' => __('Sombra de Post [light]', 'avante'),
         'post-shadow' => __('Sombra de Post', 'avante'),
         'post-shadow-hover' => __('Sombra de Post [hover]', 'avante'),
+        'button-shadow' => __('Sombra de Botón', 'avante'),
+        'button-shadow-hover' => __('Sombra de Botón [hover]', 'avante'),
     );
 
     foreach ($color_labels as $color_id => $label) {
@@ -525,7 +541,7 @@ function avante_sanitize_color($color)
 {
     // Support color-mix or complex shadow strings (containing spaces)
     if (strpos($color, 'color-mix') !== false || strpos($color, ' ') !== false) {
-        return wp_kses_post($color);
+        return sanitize_text_field($color);
     }
 
     // Support 3, 4, 6, or 8 digit hex colors

@@ -132,7 +132,7 @@ function avante_override_theme_json_colors($theme_json)
 
     // Shadows
     $shadow_presets = array();
-    foreach (['post-shadow-light', 'post-shadow', 'post-shadow-hover'] as $id) {
+    foreach (['post-shadow-light', 'post-shadow', 'post-shadow-hover', 'button-shadow', 'button-shadow-hover'] as $id) {
         $default_val = $default_colors[$id] ?? '';
         $shadow_value = get_option('avante_color_' . $id, $default_val);
 
@@ -199,19 +199,28 @@ add_action('wp_enqueue_scripts', 'load_parts_header');
 function avante_enqueue_style($handle, $path, $media = 'all')
 {
     $uri = get_template_directory_uri();
-    wp_enqueue_style($handle, $uri . $path, [], get_asset_version($path), $media);
+    // Support external URLs
+    $src = (strpos($path, 'http') === 0) ? $path : $uri . $path;
+    $ver = (strpos($path, 'http') === 0) ? '1.0' : get_asset_version($path);
+    
+    wp_enqueue_style($handle, $src, [], $ver, $media);
 }
 
 /**
- * Helper function to enqueue a script with versioning.
+ * Helper function to enqueue a script with versioning and dependency support.
  *
  * @param string $handle Name of the script.
- * @param string $path   Relative path to the script.
+ * @param string $path   Relative path to the script or external URL.
+ * @param array  $deps   Optional list of dependencies.
  */
-function avante_enqueue_script($handle, $path)
+function avante_enqueue_script($handle, $path, $deps = [])
 {
     $uri = get_template_directory_uri();
-    wp_enqueue_script($handle, $uri . $path, [], get_asset_version($path), true);
+    // Support external URLs
+    $src = (strpos($path, 'http') === 0) ? $path : $uri . $path;
+    $ver = (strpos($path, 'http') === 0) ? '1.0' : get_asset_version($path);
+    
+    wp_enqueue_script($handle, $src, $deps, $ver, true);
 }
 
 /**
@@ -258,6 +267,11 @@ function avante_get_assets()
             // participants
             'single-participants' => "$assets_path/css/single-participants.css",
             'ca-homepage' => "$assets_path/css/ca-homepage.css",
+
+            // crisisacademy homepage
+            'crisisacademy-homepage' => "$assets_path/css/crisisacademy-homepage.css",
+            'crisisacademy-hero' => "$assets_path/css/crisisacademy-homepage/hero.css",
+            
         ],
         'js' => [
             // All pages
@@ -284,6 +298,10 @@ function avante_get_assets()
             'reset-properties-filter' => "$assets_path/js/reset-properties-filter.js",
             'ajax-properties'         => "$assets_path/js/ajax-properties.js",
             'ajax-search'             => "$assets_path/js/ajax-search-properties.js",
+
+            // crisisacademy scripts
+            // 'three' => "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+            'crisisacademy-hero-script' => "$assets_path/js/crisisacademy-homepage/hero.js",
         ]
     ];
 }
@@ -1537,6 +1555,26 @@ function participants_templates() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'participants_templates' );
+
+function crisisacademy_homepage_templates() {
+    if (is_page_template('templates/crisisacademy-homepage.php')) {
+        $a = avante_get_assets();
+
+        function unload_parts_header() {
+            wp_dequeue_style( 'page' );
+        }
+        add_action( 'wp_enqueue_scripts', 'unload_parts_header', 100 );
+
+        avante_enqueue_style('crisisacademy-homepage', $a['css']['crisisacademy-homepage']);
+        avante_enqueue_style('crisisacademy-hero', $a['css']['crisisacademy-hero']);
+
+        // Crisis academy scripts
+        // avante_enqueue_script('three', $a['js']['three']);
+        // avante_enqueue_script('crisisacademy-hero-script', $a['js']['crisisacademy-hero-script'], ['three']);
+        avante_enqueue_script('crisisacademy-hero-script', $a['js']['crisisacademy-hero-script']);
+    }
+}
+add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );
 
 /*
  * =========================================================================
