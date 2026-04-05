@@ -192,7 +192,9 @@ select {
 #submit,
 .wpcf7-submit,
 .wp-element-button {
-    &.primary {
+
+    &.primary,
+    &.alert {
         border-radius: .5rem;
     }
 }
@@ -426,7 +428,9 @@ select {
     #submit,
     .wpcf7-submit,
     .wp-element-button {
-        &.primary {
+
+        &.primary,
+        &.alert {
             border-radius: .8rem;
             corner-shape: squircle;
         }

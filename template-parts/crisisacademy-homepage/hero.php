@@ -25,13 +25,6 @@ if (empty($hero_span) && empty($hero_title) && empty($hero_subtitle) && empty($h
 }
 ?>
 <section id="hero" class="block">
-    <div class="parallax-layer layer-6"></div>
-    <div class="parallax-layer layer-5"></div>
-    <div class="parallax-layer layer-4"></div>
-    <div class="parallax-layer bike-1"></div>
-    <div class="parallax-layer bike-2"></div>
-    <div class="parallax-layer layer-3"></div>
-    <div class="parallax-layer layer-2"></div>
     <div class="content hero--content heading">
 
         <?php if ($hero_span): ?>
@@ -67,6 +60,8 @@ if (empty($hero_span) && empty($hero_title) && empty($hero_subtitle) && empty($h
                         <?php echo esc_html($hero_contact_label); ?>
                     </a>
                 <?php endif; ?>
+
+                <a href="http://" class="btn alert">Manual de crisis gratuito</a>
 
             </div>
         <?php endif; ?>

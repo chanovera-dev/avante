@@ -2,6 +2,7 @@
     height: min(100dvh, 1016.56px);
     background-color: var(--wp--preset--color--tertiary);
     display: grid;
+    align-items: center;
     position: relative;
 
     & .content {
@@ -11,7 +12,6 @@
 
         &>* {
             max-width: 720px;
-            opacity: 0;
         }
 
         & .page-title {
@@ -32,71 +32,4 @@
             gap: .5rem;
         }
     }
-}
-
-.layer-2 {
-    background: url(../../img/2.webp) 0 100% repeat-x;
-    z-index: 1;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: auto 145px;
-}
-
-.layer-3 {
-    background: url(../../img/3.webp) 0 100% repeat-x;
-    z-index: 1;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: auto 158px;
-}
-
-.layer-4 {
-    background: url(../../img/4.webp) 0 100% repeat-x;
-    z-index: 1;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: auto 468px;
-}
-
-.layer-5 {
-    background: url(../../img/5.webp) 0 100% repeat-x;
-    z-index: 1;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: auto 311px;
-}
-
-.layer-6 {
-    background: url(../../img/6.webp) 0 100% repeat-x;
-    z-index: 1;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: auto 222px;
-}
-
-.bike-1,
-.bike-2 {
-    background: url(../../img/bike.webp) 0 100% no-repeat;
-    z-index: 1;
-    position: absolute;
-    bottom: 100px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: auto 75px;
 }

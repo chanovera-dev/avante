@@ -131,6 +131,25 @@ textarea {
         }
     }
 
+    &.alert {
+        background-color: var(--wp--preset--color--focus);
+        border: 1px solid var(--wp--preset--color--focus);
+        color: var(--wp--preset--color--base);
+        box-shadow: var(--wp--preset--shadow--button-shadow);
+        transition: all .3s ease;
+        background-image: linear-gradient(-60deg, transparent, transparent 40%, #ffffff44 40%, #ffffff44 60%, transparent 60%, transparent 100%);
+        background-size: 200% 100%;
+        background-position-x: 150%;
+        background-repeat: no-repeat;
+
+        &:hover {
+            background-position-x: -150%;
+            transition: all 1s;
+            box-shadow: var(--wp--preset--shadow--button-shadow-hover);
+            filter: brightness(1.1);
+        }
+    }
+
     &.secondary {
         background-color: var(--wp--preset--color--secondary);
         border-color: var(--wp--preset--color--secondary);
