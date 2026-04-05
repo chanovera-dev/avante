@@ -30,18 +30,6 @@ if ($quotes_query->have_posts()): ?>
             <img class="tree1" src="<?php echo get_template_directory_uri() ?>/assets/img/tree-min-1.webp" alt="" srcset="" loading="lazy">
             <img class="tree2" src="<?php echo get_template_directory_uri() ?>/assets/img/tree-min-2.webp" alt="" srcset="" loading="lazy">
         </div>
-        <div class="grass--wrapper">
-            <?php 
-            // for ($i = 0; $i < 600; $i++): 
-            //     $h = rand(25, 60);
-            //     $speed = rand(20, 50) / 10;
-            //     $delay = rand(0, 50) / -10;
-            //     $left = ($i / 6);
-            //     $rot = rand(-15, 15);
-            // ?>
-                <!-- <div class="blade" style="--h: <?= $h ?>px; --speed: <?= $speed ?>s; --delay: <?= $delay ?>s; --rot: <?= $rot ?>deg; left: <?= $left ?>%;"></div> -->
-            <?php //endfor; ?>
-        </div>
         <div class="slideshow--wrapper">
             <div class="slideshow">
                 <?php
