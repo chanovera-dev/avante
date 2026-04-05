@@ -638,6 +638,7 @@
 
     & .post-tag {
         font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+        padding: .125rem .5rem;
 
         & svg {
             width: 11px;
