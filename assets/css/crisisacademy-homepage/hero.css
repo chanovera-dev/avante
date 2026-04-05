@@ -11,6 +11,7 @@
 
         &>* {
             max-width: 720px;
+            opacity: 0;
         }
 
         & .page-title {
