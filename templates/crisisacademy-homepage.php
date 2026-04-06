@@ -11,11 +11,11 @@ get_header(); ?>
 
     $sections = [
         'hero',
-        // 'crisis',
-        // 'metodology',
-        // 'services',
-        // 'how-works',
-        // 'privacy',
+        'crisis',
+        'metodology',
+        'services',
+        'how-works',
+        'privacy',
         // 'cases',
         // 'why-us',
         // 'testimonies',

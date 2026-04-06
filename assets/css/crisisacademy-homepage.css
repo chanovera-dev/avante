@@ -1,3 +1,27 @@
+.site-main .block>.content {
+    padding: 3rem 0;
+
+    &.heading {
+
+        & .title-section,
+        & .subtitle-section {
+            text-align: center;
+        }
+    }
+
+    & ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    & .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(19.5rem, 1fr));
+        align-content: baseline;
+        gap: 3rem;
+    }
+}
+
 .span-tag {
     background-color: var(--wp--preset--color--secondary);
     font-size: var(--wp--preset--font-size--small);

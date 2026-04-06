@@ -1,0 +1,13 @@
+#crisis {
+    & .content {
+        & .crisis--text {
+            &>p {
+                margin: 1lh 0;
+            }
+
+            & .cta {
+                margin-top: 1rem;
+            }
+        }
+    }
+}

@@ -271,6 +271,12 @@ function avante_get_assets()
             // crisisacademy homepage
             'crisisacademy-homepage' => "$assets_path/css/crisisacademy-homepage.css",
             'crisisacademy-hero' => "$assets_path/css/crisisacademy-homepage/hero.css",
+            'crisisacademy-crisis' => "$assets_path/css/crisisacademy-homepage/crisis.css",
+            'crisisacademy-metodology' => "$assets_path/css/crisisacademy-homepage/metodology.css",
+            'crisisacademy-how-works' => "$assets_path/css/crisisacademy-homepage/how-works.css",
+
+            // contact
+            'contact' => "$assets_path/css/contact.css",
             
         ],
         'js' => [
@@ -288,6 +294,7 @@ function avante_get_assets()
             'homepage-script' => "$assets_path/js/homepage.js",
             'quotes-slideshow-script' => "$assets_path/js/quotes-slideshow.js",
             'moving-clouds-script' => "$assets_path/js/moving-clouds.js",
+            'parallax-script' => "$assets_path/js/parallax.js",
 
             // home ajax
             'gallery-homepage-script' => "$assets_path/js/gallery-homepage.js",
@@ -1026,6 +1033,10 @@ function avante_get_icon($type)
         'size' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-fullscreen" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"/></svg>',
         'filter' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-left" viewBox="0 0 16 16"><path d="M2 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/></svg>',
         'star' => '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+
+        // Crisis Academy
+        'unlock' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock2" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0c1.07 0 2.041.42 2.759 1.104l.14.14.062.08a.5.5 0 0 1-.71.675l-.076-.066-.216-.205A3 3 0 0 0 5 4v2h6.5A2.5 2.5 0 0 1 14 8.5v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7z"/></svg>',
+        'exclamation-triangle-fill' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/></svg>',
     ];
 
     return $icons[$type] ?? '';
@@ -1567,6 +1578,9 @@ function crisisacademy_homepage_templates() {
 
         avante_enqueue_style('crisisacademy-homepage', $a['css']['crisisacademy-homepage']);
         avante_enqueue_style('crisisacademy-hero', $a['css']['crisisacademy-hero']);
+        avante_enqueue_style('crisisacademy-crisis', $a['css']['crisisacademy-crisis']);
+        avante_enqueue_style('crisisacademy-metodology', $a['css']['crisisacademy-metodology']);
+        avante_enqueue_style('crisisacademy-how-works', $a['css']['crisisacademy-how-works']);
 
         // Crisis academy scripts
         // avante_enqueue_script('three', $a['js']['three']);
@@ -1575,6 +1589,21 @@ function crisisacademy_homepage_templates() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );
+
+function contact_templates() {
+    if (is_page_template('templates/contact.php')) {
+        $a = avante_get_assets();
+
+        function unload_parts_header() {
+            wp_dequeue_style( 'page' );
+        }
+        add_action( 'wp_enqueue_scripts', 'unload_parts_header', 100 );
+
+        avante_enqueue_style('contact', $a['css']['contact']);
+        avante_enqueue_script('parallax-script', $a['js']['parallax-script']);
+    }
+}
+add_action( 'wp_enqueue_scripts', 'contact_templates' );
 
 /*
  * =========================================================================
