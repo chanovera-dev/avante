@@ -790,14 +790,17 @@
 
 @keyframes jump {
     0% {
+        opacity: 1;
         transform: translateY(0);
     }
 
     50% {
+        opacity: .8;
         transform: translateY(-20px);
     }
 
     100% {
+        opacity: 1;
         transform: translateY(0);
     }
 }
