@@ -181,6 +181,28 @@
     border-radius: .3rem;
 }
 
+/* CRISIS SIMULATOR */
+.sdc-card,
+.sdc-summary-card,
+.sdc-radar-hint,
+.sdc-threat-card,
+.sdc-radius-quadrant,
+.sdc-pair-item,
+.sdc-pair-tool,
+.sdc-info-box,
+.sdc-option-btn,
+.sdc-scenario-card,
+.sdc-status-card,
+.sdc-protocol-card,
+.sdc-metric-card,
+.sdc-decision-item {
+    border-radius: 1.7rem;
+}
+
+.sdc-summary-metric {
+    border-radius: .5rem;
+}
+
 /* FORMS */
 input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
 textarea,
@@ -413,6 +435,30 @@ select {
     /* CRISIS ACADEMY HOMEPAGE */
     .span-tag {
         border-radius: .6rem;
+        corner-shape: squircle;
+    }
+
+    /* CRISIS SIMULATOR */
+    .sdc-card,
+    .sdc-summary-card,
+    .sdc-radar-hint,
+    .sdc-threat-card,
+    .sdc-radius-quadrant,
+    .sdc-pair-item,
+    .sdc-pair-tool,
+    .sdc-info-box,
+    .sdc-option-btn,
+    .sdc-scenario-card,
+    .sdc-status-card,
+    .sdc-protocol-card,
+    .sdc-metric-card,
+    .sdc-decision-item {
+        border-radius: 3rem;
+        corner-shape: squircle;
+    }
+
+    .sdc-summary-metric {
+        border-radius: 1rem;
         corner-shape: squircle;
     }
 

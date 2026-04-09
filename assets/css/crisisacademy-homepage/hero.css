@@ -1,5 +1,4 @@
 #hero {
-    height: min(100dvh, 1016.56px);
     background-color: var(--wp--preset--color--tertiary);
     display: grid;
     align-items: center;
@@ -9,26 +8,41 @@
         position: relative;
         z-index: 2;
 
-        &>* {
+        & .hero-content--text {
             max-width: 720px;
+
+            &>* {
+
+                &:not(:last-child) {
+                    margin-bottom: 1.5rem;
+                }
+            }
+
+            & .page-title {
+                font-size: clamp(2.5rem, 8vw, 2.5rem);
+                line-height: 1.4;
+            }
+
+            & .page-subtitle {
+                font-size: var(--wp--preset--font-size--large);
+                margin-bottom: 3rem;
+                font-weight: 400;
+            }
+
+            & .cta-buttons {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: .5rem;
+            }
         }
 
-        & .page-title {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            line-height: 1.4;
-        }
+        & .hero-content--image {}
+    }
+}
 
-        & .page-subtitle {
-            font-size: var(--wp--preset--font-size--large);
-            margin-bottom: 3rem;
-            font-weight: 400;
-        }
-
-        & .cta-buttons {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: .5rem;
-        }
+@media (width >=768px) {
+    #hero {
+        height: min(100dvh - 63.44px, 1016.56px);
     }
 }

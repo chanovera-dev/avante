@@ -13,58 +13,40 @@
  * @version 1.0.0
  */
 $hero_span = get_field('hero_span');
-$hero_title = get_field('hero_title');
-$hero_subtitle = get_field('hero_subtitle');
-$hero_phone = get_field('hero_phone');
-$hero_phone_label = get_field('hero_phone_label');
-$hero_contact = get_field('hero_section_contact_link');
-$hero_contact_label = get_field('hero_section_contact_link_label');
+$hero_text = get_field('hero_text');
+$hero_button_file = get_field('hero_button_file');
+$hero_button_label = get_field('hero_button_label');
 
-if (empty($hero_span) && empty($hero_title) && empty($hero_subtitle) && empty($hero_phone) && empty($hero_contact)) {
+if (empty($hero_span) && empty($hero_text) && empty($hero_button_file)) {
     return;
 }
 ?>
 <section id="hero" class="block">
     <div class="content hero--content heading">
 
-        <?php if ($hero_span): ?>
-            <span class="span-tag"><?php echo esc_html($hero_span); ?></span>
-        <?php endif; ?>
+        <div class="hero-content--text">
+            <?php if ($hero_span): ?>
+                <span class="span-tag"><?php echo esc_html($hero_span); ?></span>
+            <?php endif; ?>
 
-        <?php if ($hero_title): ?>
-            <div class="page-title">
-                <?php echo apply_filters('the_content', $hero_title); ?>
-            </div>
-        <?php endif; ?>
-        <?php if ($hero_subtitle): ?>
-            <div class="page-subtitle">
-                <?php echo apply_filters('the_content', $hero_subtitle); ?>
-            </div>
-        <?php endif; ?>
+            <?php if ($hero_text): ?>
+                <?php echo wp_kses_post($hero_text); ?>
+            <?php endif; ?>
 
-        <?php if (($hero_phone && $hero_phone_label) || ($hero_contact && $hero_contact_label)): ?>
-            <div class="cta-buttons">
-
-                <?php if ($hero_phone && $hero_phone_label): ?>
-                    <?php $tel_link = preg_replace('/[^0-9+]/', '', $hero_phone); ?>
-                    <a href="tel:<?php echo esc_attr($tel_link); ?>" class="btn primary">
+            <?php if (($hero_button_file && $hero_button_label)): ?>
+                <div class="cta-buttons">
+                    <?php 
+                        // Manage both array and string return types from ACF File field
+                        $file_url = is_array($hero_button_file) ? $hero_button_file['url'] : $hero_button_file; 
+                    ?>
+                    <a href="<?php echo esc_url($file_url); ?>" class="btn primary" download>
                         <?php
-                        echo avante_get_icon('phone');
-                        echo esc_html($hero_phone_label);
+                        echo avante_get_icon('file');
+                        echo esc_html($hero_button_label);
                         ?>
                     </a>
-                <?php endif; ?>
-
-                <?php if ($hero_contact && $hero_contact_label): ?>
-                    <a href="<?php echo esc_url($hero_contact); ?>" class="btn">
-                        <?php echo esc_html($hero_contact_label); ?>
-                    </a>
-                <?php endif; ?>
-
-                <a href="http://" class="btn alert">Manual de crisis gratuito</a>
-
-            </div>
-        <?php endif; ?>
-
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 </section>

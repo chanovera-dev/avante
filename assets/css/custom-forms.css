@@ -122,12 +122,23 @@ textarea {
         background-size: 200% 100%;
         background-position-x: 150%;
         background-repeat: no-repeat;
+        z-index: 5;
 
         &:hover {
             background-position-x: -150%;
             transition: all 1s;
             box-shadow: var(--wp--preset--shadow--button-shadow-hover);
             filter: brightness(1.1);
+        }
+
+        &.disabled {
+            opacity: .5;
+
+            &:hover {
+                cursor: not-allowed;
+                background-position-x: 150%;
+                box-shadow: var(--wp--preset--shadow--button-shadow);
+            }
         }
     }
 

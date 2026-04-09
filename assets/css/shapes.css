@@ -200,3 +200,27 @@ body {
         transform: translateY(0);
     }
 }
+
+.span-tag {
+    background-color: var(--wp--preset--color--secondary);
+    font-size: calc(var(--wp--preset--font-size--small) - .125rem);
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: .25rem .75rem;
+    margin-bottom: .5rem;
+
+    &:has(svg) {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+
+        & svg {
+            height: 1em;
+        }
+    }
+
+    &.alert {
+        color: var(--wp--preset--color--base);
+        background-color: var(--wp--preset--color--focus);
+    }
+}
