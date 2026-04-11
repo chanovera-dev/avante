@@ -776,6 +776,7 @@
         transition: mask-position .3s ease, max-height .3s ease;
         z-index: 2;
         transition: max-height .3s ease .3s;
+        pointer-events: none; /* Permitir clics a través de la capa decorativa */
     }
 
     &::after {

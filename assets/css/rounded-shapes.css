@@ -182,6 +182,19 @@
 }
 
 /* CRISIS SIMULATOR */
+.sdc-triage-btn,
+.sdc-triage-feedback,
+.btn-assign-tool,
+.picker-option,
+.btn-cancel {
+    border-radius: .5rem;
+}
+
+.sdc-active-card,
+.sdc-option-btn {
+    border-radius: 1rem;
+}
+
 .sdc-card,
 .sdc-summary-card,
 .sdc-radar-hint,
@@ -190,12 +203,13 @@
 .sdc-pair-item,
 .sdc-pair-tool,
 .sdc-info-box,
-.sdc-option-btn,
 .sdc-scenario-card,
 .sdc-status-card,
 .sdc-protocol-card,
 .sdc-metric-card,
-.sdc-decision-item {
+.sdc-decision-item,
+.sdc-stk-module,
+.sdc-picker-content {
     border-radius: 1.7rem;
 }
 
@@ -439,6 +453,21 @@ select {
     }
 
     /* CRISIS SIMULATOR */
+    .sdc-triage-btn,
+    .sdc-triage-feedback,
+    .picker-option,
+    .btn-cancel {
+        border-radius: 1rem;
+        corner-shape: squircle;
+    }
+
+    .sdc-active-card,
+    .sdc-option-btn,
+    .btn-assign-tool {
+        border-radius: 2rem;
+        corner-shape: squircle;
+    }
+
     .sdc-card,
     .sdc-summary-card,
     .sdc-radar-hint,
@@ -447,12 +476,13 @@ select {
     .sdc-pair-item,
     .sdc-pair-tool,
     .sdc-info-box,
-    .sdc-option-btn,
     .sdc-scenario-card,
     .sdc-status-card,
     .sdc-protocol-card,
     .sdc-metric-card,
-    .sdc-decision-item {
+    .sdc-decision-item,
+    .sdc-stk-module,
+    .sdc-picker-content {
         border-radius: 3rem;
         corner-shape: squircle;
     }

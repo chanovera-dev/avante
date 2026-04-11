@@ -114,8 +114,8 @@ textarea {
 
     &.primary {
         background-color: var(--wp--preset--color--button);
-        border: 1px solid var(--wp--preset--color--button);
         color: var(--wp--preset--color--base);
+        border: none;
         box-shadow: var(--wp--preset--shadow--button-shadow);
         transition: all .3s ease;
         background-image: linear-gradient(-60deg, transparent, transparent 40%, #ffffff44 40%, #ffffff44 60%, transparent 60%, transparent 100%);
@@ -133,6 +133,7 @@ textarea {
 
         &.disabled {
             opacity: .5;
+            color: var(--wp--preset--color--primary);
 
             &:hover {
                 cursor: not-allowed;
