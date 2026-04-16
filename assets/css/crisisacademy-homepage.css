@@ -1,3 +1,35 @@
 .site-main .block>.content {
     padding: 4rem 0;
+    padding-bottom: clamp(4rem, 5vw, 6rem);
+
+    &:has(.container) {
+        padding-top: 0;
+    }
+
+    & .span-pretext {
+        font-size: clamp(.8rem, 2vw, 1.5rem);
+        text-transform: uppercase;
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
+
+    & .title-section {
+        font-size: clamp(2rem, 5vw, 6rem);
+        line-height: 1.2;
+        font-weight: 400;
+    }
+
+    & .btn.primary.large {
+        font-size: clamp(1rem, 2vw, 2rem);
+        padding: clamp(.125rem, 2vw, 1rem) clamp(1rem, 2vw, 2rem);
+        height: auto;
+        gap: clamp(.5rem, 2vw, 1.5rem);
+
+        & svg {
+            width: clamp(.8rem, 2vw, 1.5rem);
+            height: clamp(.8rem, 2vw, 1.5rem);
+        }
+
+
+    }
 }

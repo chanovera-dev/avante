@@ -151,6 +151,11 @@ function avante_override_theme_json_colors($theme_json)
         }
     }
 
+    // Typography Overrides
+    $font_body = get_option('avante_font_body', 'manrope');
+    $font_headings = get_option('avante_font_headings', 'manrope');
+    $font_monospace = get_option('avante_font_monospace', 'fira-code');
+
     $new_data = array(
         'version' => 3,
         'settings' => array(
@@ -159,6 +164,25 @@ function avante_override_theme_json_colors($theme_json)
             ),
             'shadow' => array(
                 'presets' => $shadow_presets
+            )
+        ),
+        'styles' => array(
+            'typography' => array(
+                'fontFamily' => 'var:preset|font-family|' . $font_body
+            ),
+            'elements' => array(
+                'heading' => array(
+                    'typography' => array(
+                        'fontFamily' => 'var:preset|font-family|' . $font_headings
+                    )
+                )
+            ),
+            'blocks' => array(
+                'core/code' => array(
+                    'typography' => array(
+                        'fontFamily' => 'var:preset|font-family|' . $font_monospace
+                    )
+                )
             )
         )
     );
@@ -271,8 +295,10 @@ function avante_get_assets()
             // crisisacademy homepage
             'crisisacademy-homepage' => "$assets_path/css/crisisacademy-homepage.css",
             'crisisacademy-hero' => "$assets_path/css/crisisacademy-homepage/hero.css",
-            'crisisacademy-experiences' => "$assets_path/css/crisisacademy-homepage/experiences.css",
-            'crisisacademy-guide' => "$assets_path/css/crisisacademy-homepage/guide.css",
+            'crisisacademy-about' => "$assets_path/css/crisisacademy-homepage/about.css",
+            'crisisacademy-services' => "$assets_path/css/crisisacademy-homepage/services.css",
+            'crisisacademy-calendary' => "$assets_path/css/crisisacademy-homepage/calendary.css",
+            'crisisacademy-training' => "$assets_path/css/crisisacademy-homepage/training.css",
 
             // contact
             'contact' => "$assets_path/css/contact.css",
@@ -292,8 +318,10 @@ function avante_get_assets()
             'post-scripts' => "$assets_path/js/post.js",
             'homepage-script' => "$assets_path/js/homepage.js",
             'quotes-slideshow-script' => "$assets_path/js/quotes-slideshow.js",
+            'webgl-slideshow-script' => "$assets_path/js/webgl-slideshow.js",
             'moving-clouds-script' => "$assets_path/js/moving-clouds.js",
             'parallax-script' => "$assets_path/js/parallax.js",
+            'counter' => "$assets_path/js/counter.js",
 
             // gallery homepage
             'gallery-homepage-script' => "$assets_path/js/gallery-homepage.js",
@@ -306,8 +334,9 @@ function avante_get_assets()
             'ajax-search'             => "$assets_path/js/ajax-search-properties.js",
 
             // crisisacademy scripts
-            // 'three' => "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+            'three' => "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
             'crisisacademy-hero-script' => "$assets_path/js/crisisacademy-homepage/hero.js",
+            'crisisacademy-homepage-script' => "$assets_path/js/crisisacademy-homepage.js",
         ]
     ];
 }
@@ -517,12 +546,18 @@ function avante_custom_css_variables()
         $loop_gap = '1';
     }
 
+    $font_body = get_option('avante_font_body', 'manrope');
+    $font_headings = get_option('avante_font_headings', 'manrope');
+    $font_monospace = get_option('avante_font_monospace', 'fira-code');
     ?>
     <style>
         :root {
             --header-height: <?php echo esc_attr($header_height); ?>;
             --loop01-height: <?php echo esc_attr($loop01_height); ?>;
             --loop-gap: <?php echo esc_attr($loop_gap); ?>rem;
+            --font-headings: var(--wp--preset--font-family--<?php echo esc_attr($font_headings); ?>);
+            --font-body: var(--wp--preset--font-family--<?php echo esc_attr($font_body); ?>);
+            --font-mono: var(--wp--preset--font-family--<?php echo esc_attr($font_monospace); ?>);
         }
     </style>
     <?php
@@ -1600,14 +1635,17 @@ function crisisacademy_homepage_templates() {
 
         avante_enqueue_style('crisisacademy-homepage', $a['css']['crisisacademy-homepage']);
         avante_enqueue_style('crisisacademy-hero', $a['css']['crisisacademy-hero']);
-        avante_enqueue_style('crisisacademy-experiences', $a['css']['crisisacademy-experiences']);
-        avante_enqueue_style('crisisacademy-guide', $a['css']['crisisacademy-guide']);
+        avante_enqueue_style('crisisacademy-about', $a['css']['crisisacademy-about']);
+        avante_enqueue_style('crisisacademy-services', $a['css']['crisisacademy-services']);
+        avante_enqueue_style('crisisacademy-calendary', $a['css']['crisisacademy-calendary']);
+        avante_enqueue_style('crisisacademy-training', $a['css']['crisisacademy-training']);
 
         // Crisis academy scripts
-        // avante_enqueue_script('three', $a['js']['three']);
-        // avante_enqueue_script('crisisacademy-hero-script', $a['js']['crisisacademy-hero-script'], ['three']);
+        avante_enqueue_script('three', $a['js']['three']);
         avante_enqueue_script('crisisacademy-hero-script', $a['js']['crisisacademy-hero-script']);
-        avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
+        avante_enqueue_script('webgl-slideshow-script', $a['js']['webgl-slideshow-script']);
+        avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
+        avante_enqueue_script('counter', $a['js']['counter']);
     }
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );

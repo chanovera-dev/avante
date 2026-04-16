@@ -12,6 +12,10 @@ body {
     & .content {
         width: var(--max-width--content);
         margin-inline: auto;
+
+        &.wide {
+            width: var(--max-width--wide);
+        }
     }
 }
 

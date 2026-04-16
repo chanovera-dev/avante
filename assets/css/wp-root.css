@@ -4,6 +4,7 @@
     /* sizes */
     --heigh-wp-adminbar: 2.875rem;
     --max-width--content: min(100% - 1.25rem, 90rem);
+    --max-width--wide: min(100% - 1.25rem);
 
     /* shadows */
     --toggle-shadow-inset: inset 0 0 4px #65573150;

@@ -187,6 +187,21 @@
 					]
 				},
 				{
+					"name": "Bricolage Grotesque",
+					"slug": "bricolage-grotesque",
+					"fontFamily": "\"Bricolage Grotesque\", sans-serif",
+					"fontFace": [
+						{
+							"src": [
+								"file:./assets/fonts/bricolage-grotesque/BricolageGrotesque[opsz,wdth,wght].woff2"
+							],
+							"fontWeight": "200 800",
+							"fontStyle": "large",
+							"fontFamily": "\"Bricolage Grotesque\""
+						}
+					]
+				},
+				{
 					"name": "Fira Code",
 					"slug": "fira-code",
 					"fontFamily": "\"Fira Code\", monospace",

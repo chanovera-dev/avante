@@ -181,6 +181,19 @@
     border-radius: .3rem;
 }
 
+.event__date,
+.event__video video {
+    border-radius: 1rem;
+}
+
+.service-item--back {
+    border-radius: 1.7rem;
+}
+
+.calendary-loop__event {
+    border-radius: 2.5rem;
+}
+
 /* CRISIS SIMULATOR */
 .sdc-triage-btn,
 .sdc-triage-feedback,
@@ -232,6 +245,10 @@ select {
     &.primary,
     &.alert {
         border-radius: .5rem;
+
+        &.large {
+            border-radius: .7rem;
+        }
     }
 }
 
@@ -452,6 +469,22 @@ select {
         corner-shape: squircle;
     }
 
+    .event__date,
+    .event__video video {
+        border-radius: 2rem;
+        corner-shape: squircle;
+    }
+
+    .service-item--back {
+        border-radius: 3rem;
+        corner-shape: squircle;
+    }
+
+    .calendary-loop__event {
+        border-radius: 5rem;
+        corner-shape: squircle;
+    }
+
     /* CRISIS SIMULATOR */
     .sdc-triage-btn,
     .sdc-triage-feedback,
@@ -509,6 +542,11 @@ select {
         &.alert {
             border-radius: .8rem;
             corner-shape: squircle;
+
+            &.large {
+                border-radius: 1.5rem;
+                corner-shape: squircle;
+            }
         }
     }
 

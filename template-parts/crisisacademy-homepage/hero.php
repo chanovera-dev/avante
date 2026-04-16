@@ -13,36 +13,38 @@
  * @version 1.0.0
  */
 $hero_span = get_field('hero_span');
-$hero_text = get_field('hero_text');
-$hero_button_file = get_field('hero_button_file');
-$hero_button_label = get_field('hero_button_label');
+$hero_first_content = get_field('hero_first_content');
+$hero_action_file_button = get_field('hero_action_file_button');
+$hero_action_file_button_label = get_field('hero_action_file_button_label');
 
-if (empty($hero_span) && empty($hero_text) && empty($hero_button_file)) {
+if (empty($hero_span) && empty($hero_first_content) && empty($hero_action_file_button)) {
     return;
 }
 ?>
 <section id="hero" class="block">
-    <div class="content hero--content heading">
+    <div class="content wide hero--content heading">
 
         <div class="hero-content--text">
             <?php if ($hero_span): ?>
-                <span class="span-tag"><?php echo esc_html($hero_span); ?></span>
+                <span class="span-pretext"><?php echo esc_html($hero_span); ?></span>
             <?php endif; ?>
 
-            <?php if ($hero_text): ?>
-                <?php echo wp_kses_post($hero_text); ?>
+            <?php if ($hero_first_content): ?>
+                <div class="hero-description">
+                    <?php echo apply_filters( 'the_content', $hero_first_content ); ?>
+                </div>
             <?php endif; ?>
 
-            <?php if (($hero_button_file && $hero_button_label)): ?>
+            <?php if (($hero_action_file_button && $hero_action_file_button_label)): ?>
                 <div class="cta-buttons">
                     <?php 
                         // Manage both array and string return types from ACF File field
-                        $file_url = is_array($hero_button_file) ? $hero_button_file['url'] : $hero_button_file; 
+                        $file_url = is_array($hero_action_file_button) ? $hero_action_file_button['url'] : $hero_action_file_button; 
                     ?>
-                    <a href="<?php echo esc_url($file_url); ?>" class="btn primary" download>
+                    <a href="<?php echo esc_url($file_url); ?>" class="btn primary large" download>
                         <?php
                         echo avante_get_icon('file');
-                        echo esc_html($hero_button_label);
+                        echo esc_html($hero_action_file_button_label);
                         ?>
                     </a>
                 </div>

@@ -257,6 +257,24 @@ function avante_register_settings()
         'sanitize_callback' => 'wp_kses_post',
     ));
 
+    register_setting('avante_options_group', 'avante_font_headings', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' => 'manrope',
+    ));
+
+    register_setting('avante_options_group', 'avante_font_body', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' => 'manrope',
+    ));
+
+    register_setting('avante_options_group', 'avante_font_monospace', array(
+        'type' => 'string',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' => 'fira-code',
+    ));
+
     register_setting('avante_options_group', 'avante_footer_title', array(
         'type' => 'string',
         'sanitize_callback' => 'sanitize_text_field',
@@ -368,6 +386,13 @@ function avante_register_settings()
     add_settings_section(
         'avante_archive_design_section',
         __('DISEÑO DE ARCHIVO', 'avante'),
+        '__return_empty_string',
+        'avante-settings'
+    );
+
+    add_settings_section(
+        'avante_typography_section',
+        __('TIPOGRAFÍA', 'avante'),
         '__return_empty_string',
         'avante-settings'
     );
@@ -498,6 +523,33 @@ function avante_register_settings()
         'avante-settings',
         'avante_archive_design_section',
         array('id' => 'loop01_height')
+    );
+
+    add_settings_field(
+        'avante_font_headings',
+        __('Fuente de Títulos', 'avante'),
+        'avante_font_select_render',
+        'avante-settings',
+        'avante_typography_section',
+        array('id' => 'avante_font_headings')
+    );
+
+    add_settings_field(
+        'avante_font_body',
+        __('Fuente de Texto General', 'avante'),
+        'avante_font_select_render',
+        'avante-settings',
+        'avante_typography_section',
+        array('id' => 'avante_font_body')
+    );
+
+    add_settings_field(
+        'avante_font_monospace',
+        __('Fuente Monoespaciada', 'avante'),
+        'avante_font_select_render',
+        'avante-settings',
+        'avante_typography_section',
+        array('id' => 'avante_font_monospace')
     );
 
     add_settings_field(
@@ -774,6 +826,55 @@ function avante_header_height_render()
 }
 
 /**
+ * Returns registered font families from theme.json.
+ */
+function avante_get_registered_fonts()
+{
+    $fonts = [];
+    
+    // Check if we can get it from WP Global Settings (WP 5.8+)
+    if (function_exists('wp_get_global_settings')) {
+        $typography = wp_get_global_settings(['typography']);
+        if (isset($typography['fontFamilies']['theme'])) {
+            foreach ($typography['fontFamilies']['theme'] as $font) {
+                $fonts[$font['slug']] = $font['name'];
+            }
+        }
+    }
+
+    // Fallback if empty (e.g. if WP function doesn't return theme fonts as expected)
+    if (empty($fonts)) {
+        $theme_json_path = get_template_directory() . '/theme.json';
+        if (file_exists($theme_json_path)) {
+            $theme_json = json_decode(file_get_contents($theme_json_path), true);
+            if (isset($theme_json['settings']['typography']['fontFamilies'])) {
+                foreach ($theme_json['settings']['typography']['fontFamilies'] as $font) {
+                    $fonts[$font['slug']] = $font['name'];
+                }
+            }
+        }
+    }
+
+    return $fonts;
+}
+
+/**
+ * Render font selection dropdown.
+ */
+function avante_font_select_render($args)
+{
+    $option_name = $args['id'];
+    $value = get_option($option_name);
+    $fonts = avante_get_registered_fonts();
+
+    echo '<select name="' . esc_attr($option_name) . '">';
+    foreach ($fonts as $slug => $name) {
+        echo '<option value="' . esc_attr($slug) . '" ' . selected($value, $slug, false) . '>' . esc_html($name) . '</option>';
+    }
+    echo '</select>';
+}
+
+/**
  * Render the featured image field.
  */
 function avante_home_featured_image_render()
@@ -951,6 +1052,7 @@ function avante_render_settings_page()
         'avante_footer_section' => array('title' => __('FOOTER', 'avante'), 'icon' => 'dashicons-editor-insertmore'),
         'avante_homepage_ajax_section' => array('title' => __('HOMEPAGE AJAX', 'avante'), 'icon' => 'dashicons-admin-home'),
         'avante_archive_design_section' => array('title' => __('DISEÑO DE ARCHIVO', 'avante'), 'icon' => 'dashicons-layout'),
+        'avante_typography_section' => array('title' => __('TIPOGRAFÍA', 'avante'), 'icon' => 'dashicons-editor-spellcheck'),
         'avante_colors_themes_section' => array('title' => __('TEMAS DE COLOR', 'avante'), 'icon' => 'dashicons-admin-appearance'),
     );
     ?>

@@ -1,0 +1,193 @@
+#services.block {
+    & .content {
+        & .services-loop__wrapper {
+            & .services-loop {
+                & .service-item {
+                    position: relative;
+
+                    &:hover {
+                        & .service-item--back {
+                            transform: rotate(0deg) scale(1);
+                            opacity: 1;
+                        }
+                    }
+
+                    & .service-item--front {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: var(--wp--preset--color--base);
+                        color: var(--wp--preset--color--contrast);
+                        display: grid;
+                        place-content: center;
+                        z-index: 0;
+                        font-weight: 800;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+
+                        & h3 {
+                            font-size: clamp(1rem, 2vw, 2rem);
+                            text-align: center;
+                        }
+                    }
+
+                    & .service-item--back {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: var(--wp--preset--color--contrast);
+                        color: var(--wp--preset--color--base);
+                        padding: 20px;
+                        overflow-y: scroll;
+                        z-index: 1;
+
+                        transition: all .3s ease;
+                        transform: rotate(-15deg) scale(.1);
+                        opacity: 0;
+
+                        &::-webkit-scrollbar {
+                            height: .375rem;
+                            background: transparent;
+                        }
+
+                        &::-webkit-scrollbar-thumb {
+                            background-color: transparent;
+                            transition: background-color .3s ease;
+                        }
+
+                        &:hover::-webkit-scrollbar-thumb {
+                            background-color: rgba(0, 0, 0, .3);
+                        }
+
+                        &>*:not(:last-child) {
+                            margin-bottom: 1lh;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (width >=768px) {
+    #services.block {
+        & .content {
+            & .services-loop {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+}
+
+@media (width >=1024px) {
+    #services.block {
+        & .content {
+            & .services-loop {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    }
+}
+
+@media (width < 1440px) {
+    #services.block {
+        & .content {
+            & .services-loop__wrapper {
+                position: relative;
+                height: 420px;
+                overflow-x: scroll;
+                margin-top: 1rem;
+                transition: mask-image .3s ease;
+
+                /* Default / Initial state (fade only right) */
+                -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
+                mask-image: linear-gradient(to right, black 80%, transparent);
+
+                /* Scrolling state (fade both sides) - Only when NOT at start/end */
+                &.is-scrolling:not(.at-start):not(.at-end) {
+                    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+                    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+                }
+
+                /* End state (fade only left) */
+                &.at-end:not(.at-start) {
+                    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 100%, transparent);
+                    mask-image: linear-gradient(to right, transparent, black 20%, black 100%, transparent);
+                }
+
+                /* No scroll needed fallback */
+                &.at-start.at-end {
+                    -webkit-mask-image: none;
+                    mask-image: none;
+                }
+
+                & .services-loop {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    display: flex;
+                    gap: 1.5rem;
+                    /* width: max-content; */
+                    padding-right: 2rem;
+
+                    & .service-item {
+                        width: 70vw;
+                        max-width: 350px;
+                        height: 400px;
+                    }
+                }
+
+                &::-webkit-scrollbar {
+                    height: .375rem;
+                    background: transparent;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: transparent;
+                    transition: background-color .3s ease;
+                }
+
+                &:hover::-webkit-scrollbar-thumb {
+                    background-color: rgba(0, 0, 0, .3);
+                }
+            }
+        }
+    }
+}
+
+@media (width >=1440px) {
+    #services.block {
+        & .content {
+            & .services-loop__wrapper {
+                margin-top: 2rem;
+
+                & .services-loop {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 1px;
+                    border-top: 1px solid var(--wp--preset--color--secondary);
+                    background: linear-gradient(var(--wp--preset--color--secondary), var(--wp--preset--color--tertiary));
+
+                    & .service-item {
+                        width: 100%;
+                        padding: 2rem;
+                        background-color: var(--wp--preset--color--base);
+
+                        & .service-item__border {
+                            position: relative;
+                            height: 500px;
+
+                            & .service-item--back {
+                                padding: clamp(2rem, 2vw, 3rem);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
