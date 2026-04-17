@@ -36,8 +36,8 @@
                 }
 
                 &.is-bottom {
-                    transform: scale(0.95);
-                    filter: blur(3px) saturate(0.3);
+                    transform: scale(1);
+                    filter: blur(0) saturate(0.3);
                 }
 
                 &.is-bottom::after {
