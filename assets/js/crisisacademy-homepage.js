@@ -189,6 +189,12 @@ function initTitlesFadeEffect() {
         if (title.dataset.prepared) return;
         title.dataset.prepared = 'true';
         
+        // Guardamos el texto puro en aria-label para que los lectores
+        // de pantalla lo lean fluidamente y no palabra por palabra fragmentada
+        if (!title.hasAttribute('aria-label')) {
+            title.setAttribute('aria-label', title.textContent.trim().replace(/\s+/g, ' '));
+        }
+        
         const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT, null, false);
         const textNodes = [];
         while (walker.nextNode()) {
@@ -262,6 +268,9 @@ function initScrambleEffect() {
             if (entry.isIntersecting) {
                 const el = entry.target;
                 const originalText = el.dataset.scrambleOriginal || el.textContent.trim();
+                
+                // Mostrar visualmente el contenedor al intersectar
+                el.classList.add('is-visible');
                 
                 // Save original text to data attribute to prevent losing it if re-triggered
                 if (!el.dataset.scrambleOriginal) {
