@@ -1,3 +1,12 @@
 #training.block {
     background-color: var(--wp--preset--color--tertiary);
+
+    & .content {
+        & .description {
+            font-size: clamp(1rem, 2vw, 2.4rem);
+            font-weight: 400;
+            margin-top: clamp(2rem, 2vw, 5rem);
+            font-family: var(--wp--preset--font-family--manrope);
+        }
+    }
 }

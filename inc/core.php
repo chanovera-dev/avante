@@ -295,7 +295,6 @@ function avante_get_assets()
             // crisisacademy homepage
             'crisisacademy-homepage' => "$assets_path/css/crisisacademy-homepage.css",
             'crisisacademy-hero' => "$assets_path/css/crisisacademy-homepage/hero.css",
-            'crisisacademy-about' => "$assets_path/css/crisisacademy-homepage/about.css",
             'crisisacademy-services' => "$assets_path/css/crisisacademy-homepage/services.css",
             'crisisacademy-calendary' => "$assets_path/css/crisisacademy-homepage/calendary.css",
             'crisisacademy-training' => "$assets_path/css/crisisacademy-homepage/training.css",
@@ -1635,7 +1634,6 @@ function crisisacademy_homepage_templates() {
 
         avante_enqueue_style('crisisacademy-homepage', $a['css']['crisisacademy-homepage']);
         avante_enqueue_style('crisisacademy-hero', $a['css']['crisisacademy-hero']);
-        avante_enqueue_style('crisisacademy-about', $a['css']['crisisacademy-about']);
         avante_enqueue_style('crisisacademy-services', $a['css']['crisisacademy-services']);
         avante_enqueue_style('crisisacademy-calendary', $a['css']['crisisacademy-calendary']);
         avante_enqueue_style('crisisacademy-training', $a['css']['crisisacademy-training']);

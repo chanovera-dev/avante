@@ -11,7 +11,6 @@ get_header(); ?>
 
     $sections = [
         'hero',
-        'about',
         'services',
         'calendary',
         'training',

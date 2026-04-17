@@ -4,7 +4,7 @@
             <span class="span-pretext"><?php echo esc_html($hero_span); ?></span>
         <?php endif; ?>
 
-        <h2 class="title-section">Esto es lo que hacemos para ser los mejores</h2>
+        <h2 class="title-section">Esto es parte de lo que hacemos para ser los mejores</h2>
         <div class="services-loop__wrapper">
             <div class="services-loop">
                 <article class="service-item">
