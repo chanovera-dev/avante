@@ -9,7 +9,9 @@
  */
 $a = avante_get_assets();
 require_once get_template_directory() . '/templates/helpers/extract-gallery-images.php';
-avante_enqueue_script('loop-gallery', $a['js']['loop-gallery']);
+avante_enqueue_script('three', $a['js']['three']);
+avante_enqueue_script('gsap', $a['js']['gsap']);
+avante_enqueue_script('loop-gallery', $a['js']['loop-gallery'], ['three', 'gsap']);
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class('glass-post'); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post_body glass-border-bright">
@@ -21,6 +23,10 @@ avante_enqueue_script('loop-gallery', $a['js']['loop-gallery']);
             $has_liked = avante_user_has_liked($post_id);
             echo '<a href="' . esc_url(get_post_format_link('gallery')) . '" class="format-post-tag">' . avante_get_icon('gallery') . esc_html(__('Galería', 'core')) . '</a>';
             ?>
+            <button class="toggle-post-content" aria-label="Mostrar información">
+                <span class="icon-info"><?= avante_get_icon('info-circle'); ?></span>
+                <span class="icon-close" style="display:none;"><?= avante_get_icon('close'); ?></span>
+            </button>
             <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
                 <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
                 <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>

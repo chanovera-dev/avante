@@ -152,9 +152,22 @@
             overflow: hidden;
 
             &:hover {
-                & .post_body {
-                    & .post--content {
+                & .post__header {
+                    & .toggle-post-content {
                         opacity: 1;
+                    }
+                }
+
+                & .post_body {
+
+                    & .post--content {
+                        opacity: 0;
+
+                        &.show {
+                            opacity: 1;
+                            transform: translateY(-3rem);
+                            pointer-events: auto;
+                        }
                     }
                 }
             }
@@ -170,6 +183,31 @@
 
                 & .gallery-wrapper {
                     overflow: hidden !important;
+                }
+            }
+
+            & .post__header {
+                & .toggle-post-content {
+                    display: grid;
+                    place-content: center;
+                    width: 2rem;
+                    height: 2rem;
+                    margin-left: auto;
+                    background-color: transparent;
+                    border: none;
+                    opacity: 0;
+                    color: var(--wp--preset--color--contrast);
+                    transition: opacity .3s ease;
+
+                    & span {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+
+                & .button__like {
+                    margin-left: 0;
                 }
             }
         }
@@ -776,7 +814,8 @@
         transition: mask-position .3s ease, max-height .3s ease;
         z-index: 2;
         transition: max-height .3s ease .3s;
-        pointer-events: none; /* Permitir clics a través de la capa decorativa */
+        pointer-events: none;
+        /* Permitir clics a través de la capa decorativa */
     }
 
     &::after {

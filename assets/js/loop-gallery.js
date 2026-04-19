@@ -1,5 +1,162 @@
 const initializedGalleries = new WeakSet()
 
+const displacementVertexShader = `
+varying vec2 vUv;
+void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const displacementFragmentShader = `
+varying vec2 vUv;
+uniform sampler2D currentImage;
+uniform sampler2D nextImage;
+uniform float dispFactor;
+uniform vec2 currentRatio;
+uniform vec2 nextRatio;
+
+vec2 getCoverUv(vec2 uv, vec2 ratio) {
+    return vec2(
+        uv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+        uv.y * ratio.y + (1.0 - ratio.y) * 0.5
+    );
+}
+
+void main() {
+    vec2 uv = vUv;
+    float intensity = 0.3;
+    
+    vec2 uvCurrent = getCoverUv(uv, currentRatio);
+    vec2 uvNext = getCoverUv(uv, nextRatio);
+
+    vec4 orig1 = texture2D(currentImage, uvCurrent);
+    vec4 orig2 = texture2D(nextImage, uvNext);
+    
+    vec4 _currentImage = texture2D(currentImage, vec2(uvCurrent.x, uvCurrent.y + dispFactor * (orig2.r * intensity)));
+    vec4 _nextImage = texture2D(nextImage, vec2(uvNext.x, uvNext.y + (1.0 - dispFactor) * (orig1.r * intensity)));
+    
+    gl_FragColor = mix(_currentImage, _nextImage, dispFactor);
+}
+`;
+
+function setupWebGLSlider(wrapper, images, firstIndex = 0) {
+    if (!window.THREE) return null;
+
+    const width = wrapper.offsetWidth;
+    const height = wrapper.offsetHeight;
+    if (width === 0 || height === 0) return null;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(width, height);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '0';
+    renderer.domElement.style.left = '0';
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
+    renderer.domElement.style.zIndex = '0';
+    renderer.domElement.style.pointerEvents = 'none';
+    wrapper.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 1000);
+    camera.position.z = 1;
+
+    const getRatio = (texture) => {
+        const w = wrapper.offsetWidth;
+        const h = wrapper.offsetHeight;
+        if (!texture || !texture.image || w === 0 || h === 0) return new THREE.Vector2(1, 1);
+        const s = w / h;
+        const i = texture.image.width / texture.image.height;
+        return (s > i) ? new THREE.Vector2(1, i / s) : new THREE.Vector2(s / i, 1);
+    };
+
+    const loader = new THREE.TextureLoader();
+    loader.crossOrigin = "anonymous";
+    const sliderImages = images.map((img, idx) => {
+        const texture = loader.load(img.src, (tex) => {
+            if (idx === firstIndex) {
+                mat.uniforms.currentRatio.value = getRatio(tex);
+                mat.uniforms.nextRatio.value = getRatio(tex);
+            }
+        });
+        texture.magFilter = texture.minFilter = THREE.LinearFilter;
+        if (renderer.capabilities && renderer.capabilities.getMaxAnisotropy) {
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        }
+        return texture;
+    });
+
+    const mat = new THREE.ShaderMaterial({
+        uniforms: {
+            dispFactor: { type: "f", value: 0.0 },
+            currentImage: { type: "t", value: sliderImages[firstIndex] },
+            nextImage: { type: "t", value: sliderImages[firstIndex] },
+            currentRatio: { type: "v2", value: new THREE.Vector2(1, 1) },
+            nextRatio: { type: "v2", value: new THREE.Vector2(1, 1) }
+        },
+        vertexShader: displacementVertexShader,
+        fragmentShader: displacementFragmentShader,
+        transparent: true
+    });
+
+    const geometry = new THREE.PlaneGeometry(width, height, 1);
+    const object = new THREE.Mesh(geometry, mat);
+    scene.add(object);
+
+    const animate = () => {
+        if (!wrapper.isConnected) return;
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    };
+    animate();
+
+    return {
+        transitionTo: (index, onComplete) => {
+            if (!sliderImages[index]) return;
+            mat.uniforms.nextImage.value = sliderImages[index];
+            mat.uniforms.nextRatio.value = getRatio(sliderImages[index]);
+            mat.uniforms.nextImage.needsUpdate = true;
+
+            const gsapObj = window.gsap || (window.TweenLite ? { to: window.TweenLite.to } : null);
+            if (gsapObj) {
+                gsapObj.to(mat.uniforms.dispFactor, {
+                    value: 1,
+                    duration: 1.2,
+                    ease: "expo.inOut",
+                    onComplete: () => {
+                        mat.uniforms.currentImage.value = sliderImages[index];
+                        mat.uniforms.currentRatio.value = getRatio(sliderImages[index]);
+                        mat.uniforms.currentImage.needsUpdate = true;
+                        mat.uniforms.dispFactor.value = 0.0;
+                        if (onComplete) onComplete();
+                    }
+                });
+            } else {
+                mat.uniforms.currentImage.value = sliderImages[index];
+                mat.uniforms.currentRatio.value = getRatio(sliderImages[index]);
+                mat.uniforms.dispFactor.value = 0.0;
+                if (onComplete) onComplete();
+            }
+        },
+        resize: () => {
+            const w = wrapper.offsetWidth;
+            const h = wrapper.offsetHeight;
+            renderer.setSize(w, h);
+            camera.left = w / -2;
+            camera.right = w / 2;
+            camera.top = h / 2;
+            camera.bottom = h / -2;
+            camera.updateProjectionMatrix();
+            if (object.geometry) object.geometry.dispose();
+            object.geometry = new THREE.PlaneGeometry(w, h, 1);
+            mat.uniforms.currentRatio.value = getRatio(mat.uniforms.currentImage.value);
+            mat.uniforms.nextRatio.value = getRatio(mat.uniforms.nextImage.value);
+        }
+    };
+}
+
 function initGallery(wrapper) {
     if (initializedGalleries.has(wrapper)) return
     initializedGalleries.add(wrapper)
@@ -29,6 +186,17 @@ function initGallery(wrapper) {
     let currentSlide = 1
     let animationFrame
     let isAnimating = false
+
+    let webglSlider = null
+    const images = originalSlides.map(s => s.querySelector('img')).filter(i => !!i)
+
+    if (window.THREE && images.length > 0) {
+        webglSlider = setupWebGLSlider(wrapper, images, 0)
+        if (webglSlider) {
+            gallery.style.opacity = "0"
+            window.addEventListener("resize", () => webglSlider.resize())
+        }
+    }
 
     gallery.style.width = `${100 * totalSlides}%`
     slides.forEach(slide => {
@@ -113,6 +281,18 @@ function initGallery(wrapper) {
         isAnimating = true
 
         updateActiveClasses(targetIndex, false)
+
+        if (webglSlider) {
+            const realIndex = ((targetIndex - 1) % visibleSlides + visibleSlides) % visibleSlides
+            webglSlider.transitionTo(realIndex, () => {
+                currentSlide = targetIndex
+                if (!handleInfiniteLoop()) {
+                    updateActiveClasses()
+                    isAnimating = false
+                }
+            })
+            return
+        }
 
         setTimeout(() => {
             const from = (100 / totalSlides) * currentSlide
@@ -210,3 +390,30 @@ if (document.readyState === "loading") {
 } else {
     initAllGalleries()
 }
+// Delegated listener for the info toggle button
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.toggle-post-content');
+    if (!btn) return;
+
+    const postBody = btn.closest('.post_body');
+    if (!postBody) return;
+
+    const content = postBody.querySelector('.post--content');
+    if (!content) return;
+
+    const isShowing = content.classList.toggle('show');
+
+    // Toggle icons
+    const infoIcon = btn.querySelector('.icon-info');
+    const closeIcon = btn.querySelector('.icon-close');
+
+    if (infoIcon && closeIcon) {
+        if (isShowing) {
+            infoIcon.style.display = 'none';
+            closeIcon.style.display = 'inline-block';
+        } else {
+            infoIcon.style.display = 'inline-block';
+            closeIcon.style.display = 'none';
+        }
+    }
+});

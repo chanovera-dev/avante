@@ -334,6 +334,7 @@ function avante_get_assets()
 
             // crisisacademy scripts
             'three' => "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+            'gsap' => "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js",
             'crisisacademy-hero-script' => "$assets_path/js/crisisacademy-homepage/hero.js",
             'crisisacademy-homepage-script' => "$assets_path/js/crisisacademy-homepage.js",
         ]
@@ -1491,7 +1492,9 @@ function page_template()
         $post = get_post($post_id);
         if ($post && (has_block('core/gallery', $post) || has_shortcode($post->post_content, 'gallery'))) {
             avante_enqueue_style('post-gallery-styles', $a['css']['post-gallery-styles']);
-            avante_enqueue_script('post-gallery-script', $a['js']['post-gallery-script']);
+            avante_enqueue_script('three', $a['js']['three']);
+            avante_enqueue_script('gsap', $a['js']['gsap']);
+            avante_enqueue_script('post-gallery-script', $a['js']['post-gallery-script'], ['three', 'gsap']);
         }
 
         if (is_single()) {
@@ -1552,7 +1555,9 @@ function properties_templates() {
         avante_enqueue_style( 'sidebar', $a['css']['sidebar'] );
         avante_enqueue_style( 'posts-styles', $a['css']['posts-styles'] );
 
-        avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'] );
+        avante_enqueue_script('three', $a['js']['three']);
+        avante_enqueue_script('gsap', $a['js']['gsap']);
+        avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'], ['three', 'gsap'] );
         avante_enqueue_style( 'pagination', $a['css']['pagination'] );
         avante_enqueue_script( 'filters', $a['js']['filters'] );
         avante_enqueue_script( 'filter-listeners', $a['js']['filter-listeners'] );
@@ -1582,7 +1587,9 @@ function properties_templates() {
             
         avante_enqueue_script( 'post-scripts', $a['js']['post-scripts'] );
         avante_enqueue_script( 'animate-in', $a['js']['animate-in'] );
-        avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'] );
+        avante_enqueue_script('three', $a['js']['three']);
+        avante_enqueue_script('gsap', $a['js']['gsap']);
+        avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'], ['three', 'gsap'] );
         avante_enqueue_script( 'post-gallery-script', $a['js']['post-gallery-script'] );
         avante_enqueue_script( 'related-script', $a['js']['related-script'] );
     }
@@ -1768,7 +1775,9 @@ function avante_enqueue_home_assets() {
 
         avante_enqueue_style( 'gallery-homepage-styles', $a['css']['gallery-homepage-styles'] );
         avante_enqueue_script( 'gallery-homepage-script', $a['js']['gallery-homepage-script'] );
-        avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'] );
+        avante_enqueue_script('three', $a['js']['three']);
+        avante_enqueue_script('gsap', $a['js']['gsap']);
+        avante_enqueue_script( 'loop-gallery', $a['js']['loop-gallery'], ['three', 'gsap'] );
         avante_enqueue_script('likes-script', $a['js']['likes-script']);
         
         wp_localize_script('likes-script', 'avante_likes_obj', [

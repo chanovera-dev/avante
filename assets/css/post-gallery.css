@@ -58,6 +58,8 @@
             overflow: hidden;
             padding: .5rem;
             padding-top: 0;
+            position: relative;
+            z-index: 2;
 
             & .post-gallery-thumbs {
                 list-style: none;

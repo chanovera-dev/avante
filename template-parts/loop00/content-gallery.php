@@ -10,7 +10,9 @@
 
 $a = avante_get_assets();
 require_once get_template_directory() . '/templates/helpers/extract-gallery-images.php';
-avante_enqueue_script('loop-gallery', $a['js']['loop-gallery']);
+avante_enqueue_script('three', $a['js']['three']);
+avante_enqueue_script('gsap', $a['js']['gsap']);
+avante_enqueue_script('loop-gallery', $a['js']['loop-gallery'], ['three', 'gsap']);
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-id="<?= get_the_ID(); ?>">
     <div class="post-body">
