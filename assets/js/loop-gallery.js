@@ -395,10 +395,12 @@ document.addEventListener('click', (e) => {
     const btn = e.target.closest('.toggle-post-content');
     if (!btn) return;
 
-    const postBody = btn.closest('.post_body');
-    if (!postBody) return;
+    // Support for both standard loop (.post_body) and justified grid (.justified-post)
+    const postContainer = btn.closest('.post_body') || btn.closest('.justified-post');
+    if (!postContainer) return;
 
-    const content = postBody.querySelector('.post--content');
+    // Support for both class naming conventions (.post--content and .post__content)
+    const content = postContainer.querySelector('.post--content, .post__content');
     if (!content) return;
 
     const isShowing = content.classList.toggle('show');

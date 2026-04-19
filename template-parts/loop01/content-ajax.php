@@ -46,6 +46,16 @@ if (has_post_thumbnail()) {
                 echo '<a href="' . esc_url(get_post_format_link('image')) . '" class="format-post-tag">' . avante_get_icon('image') . esc_html(__('Dibujo', 'avante')) . '</a>';
             }
             ?>
+            <?php
+            if (in_array($format, ['gallery'])) {
+                ?>
+                <button class="toggle-post-content" aria-label="Mostrar información">
+                    <span class="icon-info"><?= avante_get_icon('info-circle'); ?></span>
+                    <span class="icon-close" style="display:none;"><?= avante_get_icon('close'); ?></span>
+                </button>
+                <?php
+            }
+            ?>
             <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
                 <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
                 <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>

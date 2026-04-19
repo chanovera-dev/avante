@@ -141,13 +141,42 @@ input:checked+.slider:before {
         animation: jump .3s ease forwards;
 
         & article {
+
+            &:has(.post__header .toggle-post-content) {
+                & .post__backdrop {
+                    opacity: 0;
+                }
+
+                &:has(.post__content.show) {
+                    & .post__backdrop {
+                        opacity: 1;
+                    }
+                }
+
+                & .post__content {
+                    opacity: 0;
+
+                    &.show {
+                        opacity: 1;
+                    }
+                }
+            }
+
             & .post__backdrop {
                 opacity: 1;
             }
 
+
+
             & .post__header {
                 & .format-post-tag {
                     opacity: 1;
+                }
+
+                &:has(.toggle-post-content) {
+                    & .toggle-post-content {
+                        opacity: 1;
+                    }
                 }
 
                 & .button__like {
@@ -296,6 +325,35 @@ input:checked+.slider:before {
                 & svg {
                     width: 11px;
                     height: 11px;
+                }
+            }
+
+            &:has(.toggle-post-content) {
+                display: flex;
+                justify-content: end;
+                align-items: center;
+
+                & .toggle-post-content {
+                    display: grid;
+                    place-content: center;
+                    width: 2rem;
+                    height: 2rem;
+                    margin-left: auto;
+                    background-color: transparent;
+                    border: none;
+                    opacity: 0;
+                    color: var(--wp--preset--color--contrast);
+                    transition: opacity .3s ease;
+
+                    & span {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+
+                & .button__like {
+                    margin-left: 0;
                 }
             }
 
