@@ -4,21 +4,24 @@
     align-items: center;
     position: relative;
 
-    & .content.wide {
-        position: relative;
-        z-index: 2;
+    & .content.hero--content {
+        height: min(100dvh - 63.43px, 860px);
+        display: flex;
+        align-items: center;
 
         & .hero-content--text {
-            & .span-pretext {
-                font-size: clamp(.8rem, 2vw, 1.5rem);
-                text-transform: uppercase;
-                font-weight: 800;
-                letter-spacing: 2px;
-            }
+            max-width: 720px;
 
             & .page-title {
-                font-size: clamp(2rem, 5vw, 6rem);
+                font-size: clamp(2rem, 5vw, 3rem);
                 line-height: 1.2;
+            }
+
+            & .page-description {
+                font-family: var(--wp--preset--font-family--manrope);
+                font-size: clamp(1.2rem, 2vw, 2.5rem);
+                line-height: 1.5;
+                margin-top: .5rem;
             }
 
             & ul {
@@ -31,21 +34,7 @@
                 align-items: center;
                 flex-wrap: wrap;
                 gap: .5rem;
-                margin-top: clamp(3rem, 5vw, 5rem);
-
-                /* & .btn.primary.large {
-                    font-size: clamp(1rem, 2vw, 2rem);
-                    padding: clamp(.125rem, 2vw, 1rem) clamp(1rem, 2vw, 2rem);
-                    height: auto;
-                    gap: clamp(.5rem, 2vw, 1.5rem);
-
-                    & svg {
-                        width: clamp(.8rem, 2vw, 1.5rem);
-                        height: clamp(.8rem, 2vw, 1.5rem);
-                    }
-
-
-                } */
+                margin-top: clamp(2rem, 3vw, 3rem);
             }
         }
     }
@@ -158,17 +147,16 @@
 
         & .about-content {
             & .title-section {
-                font-size: clamp(2rem, 2vw, 4rem);
+                font-size: clamp(1.5rem, 2vw, 2rem);
                 font-family: var(--wp--preset--font-family--manrope);
+                font-weight: 600;
             }
 
             & .subtitle-section {
-                margin-top: clamp(3rem, 5vw, 5rem);
-                font-size: clamp(1rem, 2vw, 1.65rem);
+                margin-top: clamp(1rem, 2vw, 2rem);
+                font-size: clamp(1rem, 1.5vw, 1.4rem);
                 font-family: var(--wp--preset--font-family--manrope);
                 font-weight: 500;
-                text-transform: uppercase;
-                letter-spacing: 2px;
 
                 & strong {
                     font-weight: 700;
@@ -179,78 +167,8 @@
                 }
             }
 
-            & .logos {
-                margin-top: clamp(2rem, 2vw, 3rem);
-                display: grid;
-                grid-template-columns: 1fr;
-                align-items: center;
-                gap: 1px;
-                border-top: 1px solid var(--wp--preset--color--secondary);
-                background: linear-gradient(var(--wp--preset--color--secondary), var(--wp--preset--color--tertiary));
-
-                & .logo-wrapper {
-                    display: grid;
-                    place-content: center;
-                    aspect-ratio: 16 / 9;
-                    background-color: var(--wp--preset--color--tertiary);
-
-                    & .logo {
-                        width: 70%;
-                        height: auto;
-                        margin-inline: auto;
-                    }
-                }
-            }
-
-            & .numbers {
-                display: grid;
-                grid-template-columns: 1fr;
-                align-items: normal;
-                gap: 1px;
-                background: linear-gradient(var(--wp--preset--color--secondary), var(--wp--preset--color--tertiary));
-                margin-top: 1rem;
-
-                & .number {
-                    padding: clamp(1.25rem, 2vw, 3rem);
-                    background-color: var(--wp--preset--color--tertiary);
-                    text-align: center;
-
-                    & .number-wrapper {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: .5rem;
-
-                        & .number-value-counter,
-                        & .postfix {
-                            font-size: clamp(2rem, 2vw, 5rem);
-                            font-family: var(--wp--preset--font-family--manrope);
-                            font-weight: 700;
-                        }
-                    }
-
-                    & .number-label {
-                        font-size: clamp(1rem, 1vw, 1.3rem);
-                        font-family: var(--wp--preset--font-family--manrope);
-                        font-weight: 500;
-                        text-transform: uppercase;
-                        letter-spacing: 2px;
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media (width >=768px) {
-    #hero.block {
-        & .content.about {
-            & .about-content {
-
-                & .logos,
-                & .numbers {
-                    grid-template-columns: 1fr 1fr;
-                }
+            & p {
+                margin-top: clamp(1.5rem, 3vw, 3rem);
             }
         }
     }
@@ -260,25 +178,11 @@
     #hero.block {
         & .content.about {
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 3rem;
 
             & .container {
                 position: sticky;
                 top: 3rem;
-            }
-        }
-    }
-}
-
-@media (width >=1440px) {
-    #hero.block {
-        & .content.about {
-            & .about-content {
-
-                & .logos,
-                & .numbers {
-                    grid-template-columns: repeat(4, 1fr);
-                }
             }
         }
     }

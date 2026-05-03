@@ -11,9 +11,10 @@ get_header(); ?>
 
     $sections = [
         'hero',
-        'services',
-        'calendary',
-        'training',
+        'how-works',
+        // 'services',
+        // 'calendary',
+        // 'training',
         // 'services',
         // 'how-works',
         // 'privacy',

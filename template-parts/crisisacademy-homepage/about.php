@@ -1,5 +1,5 @@
 <section id="about" class="block">
-    <div class="content wide">
+    <div class="content about">
         <div class="container glass-border-bright">
             <div class="slideshow--wrapper">
                 <div class="slideshow">

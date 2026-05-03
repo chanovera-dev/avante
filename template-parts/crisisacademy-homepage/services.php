@@ -1,5 +1,5 @@
 <section id="services" class="block">
-    <div class="content wide">
+    <div class="content">
         <?php if ($hero_span): ?>
             <span class="span-pretext"><?php echo esc_html($hero_span); ?></span>
         <?php endif; ?>

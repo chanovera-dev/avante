@@ -193,18 +193,6 @@ body {
     backdrop-filter: blur(.5rem);
 }
 
-@keyframes animate-in--post {
-    from {
-        opacity: 0;
-        transform: translateY(4rem);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .span-tag {
     background-color: var(--wp--preset--color--secondary);
     font-size: calc(var(--wp--preset--font-size--small) - .125rem);
@@ -226,5 +214,17 @@ body {
     &.alert {
         color: var(--wp--preset--color--base);
         background-color: var(--wp--preset--color--focus);
+    }
+}
+
+@keyframes animate-in--post {
+    from {
+        opacity: 0;
+        transform: translateY(4rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

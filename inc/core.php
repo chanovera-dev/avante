@@ -295,6 +295,7 @@ function avante_get_assets()
             // crisisacademy homepage
             'crisisacademy-homepage' => "$assets_path/css/crisisacademy-homepage.css",
             'crisisacademy-hero' => "$assets_path/css/crisisacademy-homepage/hero.css",
+            'crisisacademy-how-works' => "$assets_path/css/crisisacademy-homepage/how-works.css",
             'crisisacademy-services' => "$assets_path/css/crisisacademy-homepage/services.css",
             'crisisacademy-calendary' => "$assets_path/css/crisisacademy-homepage/calendary.css",
             'crisisacademy-training' => "$assets_path/css/crisisacademy-homepage/training.css",
@@ -1090,6 +1091,7 @@ function avante_get_icon($type)
         'question-circle' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286m1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94"/></svg>',
         'radar' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-radar" viewBox="0 0 16 16"><path d="M6.634 1.135A7 7 0 0 1 15 8a.5.5 0 0 1-1 0 6 6 0 1 0-6.5 5.98v-1.005A5 5 0 1 1 13 8a.5.5 0 0 1-1 0 4 4 0 1 0-4.5 3.969v-1.011A2.999 2.999 0 1 1 11 8a.5.5 0 0 1-1 0 2 2 0 1 0-2.5 1.936v-1.07a1 1 0 1 1 1 0V15.5a.5.5 0 0 1-1 0v-.518a7 7 0 0 1-.866-13.847"/></svg>',
         'stopwatch' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16"><path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z"/><path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3"/></svg>',
+        'info-circle' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg>',
 
         // social
         'twitter' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/></svg>',
@@ -1641,13 +1643,13 @@ function crisisacademy_homepage_templates() {
 
         avante_enqueue_style('crisisacademy-homepage', $a['css']['crisisacademy-homepage']);
         avante_enqueue_style('crisisacademy-hero', $a['css']['crisisacademy-hero']);
+        avante_enqueue_style('crisisacademy-how-works', $a['css']['crisisacademy-how-works']);
         avante_enqueue_style('crisisacademy-services', $a['css']['crisisacademy-services']);
         avante_enqueue_style('crisisacademy-calendary', $a['css']['crisisacademy-calendary']);
         avante_enqueue_style('crisisacademy-training', $a['css']['crisisacademy-training']);
 
         // Crisis academy scripts
         avante_enqueue_script('three', $a['js']['three']);
-        avante_enqueue_script('crisisacademy-hero-script', $a['js']['crisisacademy-hero-script']);
         avante_enqueue_script('webgl-slideshow-script', $a['js']['webgl-slideshow-script']);
         avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
         avante_enqueue_script('counter', $a['js']['counter']);

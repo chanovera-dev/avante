@@ -181,11 +181,13 @@
     border-radius: .3rem;
 }
 
+.how-works-modal-container,
 .event__date,
 .event__video video {
     border-radius: 1rem;
 }
 
+.how-it-works--card,
 .service-item--back {
     border-radius: 1.7rem;
 }
@@ -469,12 +471,14 @@ select {
         corner-shape: squircle;
     }
 
+    .how-works-modal-container,
     .event__date,
     .event__video video {
         border-radius: 2rem;
         corner-shape: squircle;
     }
 
+    .how-it-works--card,
     .service-item--back {
         border-radius: 3rem;
         corner-shape: squircle;

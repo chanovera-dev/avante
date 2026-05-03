@@ -1,7 +1,7 @@
 <section id="calendary" class="block">
-    <div class="content wide">
+    <div class="content">
         <?php if ($hero_span): ?>
-            <span class="span-pretext"><?php echo esc_html($hero_span); ?></span>
+            <span class="span-pretext changing-letters"><?php echo esc_html($hero_span); ?></span>
         <?php endif; ?>
 
         <h2 class="title-section">Acompáñanos en nuestras próximas sesiones de formación.</h2>

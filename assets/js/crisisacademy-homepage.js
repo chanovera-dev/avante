@@ -2,9 +2,9 @@
  * Effect for horizontal scroll mask in Services.
  */
 function initServicesScrollMask() {
-    const wrapper = document.querySelector('.services-loop__wrapper');
-    const loop = document.querySelector('.services-loop');
-    
+    const wrapper = document.querySelector('#how-works');
+    const loop = document.querySelector('#how-works .content');
+
     if (!wrapper || !loop) return;
 
     const firstItem = loop.firstElementChild;
@@ -18,7 +18,7 @@ function initServicesScrollMask() {
 
         const atStart = scrollLeft <= 10;
         const atEnd = scrollLeft + clientWidth >= scrollWidth - 10;
-        
+
         wrapper.classList.toggle('at-start', atStart);
         wrapper.classList.toggle('at-end', atEnd);
         wrapper.classList.toggle('is-scrolling', !atStart && !atEnd);
@@ -34,52 +34,45 @@ function initServicesScrollMask() {
 function initSectionStacking() {
     const sections = document.querySelectorAll('.site-main > .block');
     const footer = document.querySelector('#main-footer');
-    
+
     if (sections.length === 0) return;
 
     // Asignar z-index incremental para asegurar que la siguiente sección flote por encima
     sections.forEach((section, index) => {
         section.style.zIndex = index + 1;
-        section.style.position = 'relative'; 
+        section.style.position = 'relative';
     });
 
     const handleScroll = () => {
         const viewportHeight = window.innerHeight;
-        
-        sections.forEach((section, index) => {
-            // Excluir la última sección (#training) para que fluya de manera normal con el footer
-            if (index === sections.length - 1) return;
 
+        sections.forEach((section, index) => {
             const rect = section.getBoundingClientRect();
-            
+
             // 1. Detectamos por JS cuando el fondo exacto de la sección ya es visible
-            // Le damos +1px de tolerancia por posibles decimales
             if (rect.bottom <= viewportHeight + 1) {
-                
+
                 // Agregamos la clase y la anclamos
                 if (!section.classList.contains('is-fixed')) {
                     section.classList.add('is-fixed');
                     section.style.position = 'sticky';
-                    
-                    // Calculamos matemáticamente dónde queda su "top"
-                    // Así el final de la sección siempre será exactamente visible, sin saltos
+
                     const height = section.offsetHeight;
                     const topOffset = height > viewportHeight ? viewportHeight - height : 0;
                     section.style.top = topOffset + 'px';
                 }
-                
+
                 // 2. Evaluamos la posición del siguiente bloque para la impresión de "irse por debajo"
                 const nextSection = sections[index + 1];
                 if (nextSection) {
                     const nextRect = nextSection.getBoundingClientRect();
-                    // Si el siguiente elemento ya empezó a entrar en pantalla
                     if (nextRect.top <= viewportHeight) {
                         section.classList.add('is-bottom');
                     } else {
                         section.classList.remove('is-bottom');
                     }
                 }
-                
+
             } else {
                 // El fondo aún no se ve, la sección fluye normal
                 if (section.classList.contains('is-fixed')) {
@@ -100,7 +93,7 @@ function initSectionStacking() {
         });
         handleScroll();
     }, { passive: true });
-    
+
     setTimeout(handleScroll, 100);
 }
 
@@ -112,24 +105,18 @@ function initCardsStacking() {
     if (cards.length === 0) return;
 
     cards.forEach((card, index) => {
-        // Asegura que las posteriores floten por encima
         card.style.zIndex = index + 1;
     });
 
     const handleScroll = () => {
         cards.forEach((card, index) => {
             const nextCard = cards[index + 1];
-            
+
             if (nextCard) {
                 const nextRect = nextCard.getBoundingClientRect();
                 const cardRect = card.getBoundingClientRect();
-                
-                // Usamos offsetHeight sumado al `top` top para obtener un "punto fijo" 
-                // inquebrantable, y evitar un ciclo de jitter al ejecutar el `scale`
                 const staticBottom = cardRect.top + card.offsetHeight;
-                
-                // Si la siguiente tarjeta "alcanza" la altura del fondo de la tarjeta actual
-                // (Le damos +15px de margen para activar un milisegundo antes)
+
                 if (nextRect.top <= staticBottom + 15) {
                     card.classList.add('is-bottom');
                 } else {
@@ -140,182 +127,218 @@ function initCardsStacking() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Refrescar en resize no es estrictamente necesario ya que usamos un cálculo estático, pero bueno
     setTimeout(handleScroll, 100);
+}
+
+/**
+ * Preparación para el efecto de palabras deslizantes.
+ */
+function prepareTitles() {
+    const titles = document.querySelectorAll('.scramble-words');
+    titles.forEach(title => {
+        if (title.dataset.prepared) return;
+        title.dataset.prepared = 'true';
+
+        if (!title.hasAttribute('aria-label')) {
+            title.setAttribute('aria-label', title.textContent.trim().replace(/\s+/g, ' '));
+        }
+
+        const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT, null, false);
+        const textNodes = [];
+        while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+        }
+
+        let globalWordIndex = 0;
+        textNodes.forEach(node => {
+            const text = node.nodeValue;
+            if (!text.trim() && text.includes('\n')) return;
+
+            const fragment = document.createDocumentFragment();
+            const parts = text.split(/(\s+)/);
+
+            parts.forEach(part => {
+                if (part === '') return;
+                const inner = document.createElement('span');
+                inner.textContent = part;
+                inner.className = 'word-slide-anim';
+
+                if (part.trim().length > 0) {
+                    inner.style.transitionDelay = `${globalWordIndex * 45}ms`;
+                    globalWordIndex++;
+                } else {
+                    inner.style.whiteSpace = 'pre-wrap';
+                    inner.style.transitionDelay = `${Math.max(0, globalWordIndex - 1) * 45}ms`;
+                }
+                fragment.appendChild(inner);
+            });
+            node.parentNode.replaceChild(fragment, node);
+        });
+    });
+}
+
+/**
+ * Preparación para el efecto de letras aleatorias.
+ */
+function prepareScramble() {
+    const scrambleLetters = document.querySelectorAll('.scramble-letters');
+    scrambleLetters.forEach(el => {
+        if (!el.dataset.scrambleOriginal) {
+            const originalText = el.textContent.trim();
+            el.dataset.scrambleOriginal = originalText;
+            el.setAttribute('aria-label', originalText);
+        }
+    });
+}
+
+/**
+ * Activa el efecto de scramble para un elemento.
+ */
+function triggerScramble(el) {
+    const originalText = el.dataset.scrambleOriginal;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
+    let iteration = 0;
+
+    el.classList.add('is-visible');
+    clearInterval(el.scrambleInterval);
+
+    el.scrambleInterval = setInterval(() => {
+        el.textContent = originalText
+            .split('')
+            .map((letter, index) => {
+                if (index < iteration) return originalText[index];
+                if (originalText[index] === ' ') return ' ';
+                return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join('');
+
+        iteration += .5;
+
+        if (iteration >= originalText.length) {
+            clearInterval(el.scrambleInterval);
+            el.textContent = originalText;
+        }
+    }, 30);
+}
+
+/**
+ * Orquestación de animaciones de entrada individuales con escalonado para grupos.
+ */
+function initStaggeredEntrances() {
+    const animatables = document.querySelectorAll('.scramble-letters, .scramble-words, .btn.primary, .animate-in--fadein, .animate-in--scale-up');
+    if (animatables.length === 0) return;
+
+    prepareTitles();
+    prepareScramble();
+
+    let staggerCounter = 0;
+    let staggerTimeout;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const el = entry.target;
+
+            if (entry.isIntersecting) {
+                // Si varios elementos entran casi a la vez, los escalonamos
+                clearTimeout(staggerTimeout);
+
+                const timeoutId = setTimeout(() => {
+                    if (el.classList.contains('scramble-letters')) {
+                        triggerScramble(el);
+                    } else {
+                        el.classList.add('is-visible');
+                    }
+                    staggerCounter = 0; // Reset tras la ráfaga
+                }, staggerCounter * 100);
+
+                el.dataset.animTimeout = timeoutId;
+
+                staggerCounter++;
+
+                // Reiniciamos el contador si no entran más elementos en breve
+                staggerTimeout = setTimeout(() => { staggerCounter = 0; }, 150);
+            } else {
+                // Cuando salgan del observer se quita la clase is-visible
+                if (el.dataset.animTimeout) {
+                    clearTimeout(parseInt(el.dataset.animTimeout, 10));
+                    delete el.dataset.animTimeout;
+                }
+                if (el.scrambleInterval) {
+                    clearInterval(el.scrambleInterval);
+                }
+                el.classList.remove('is-visible');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px' // Margen pequeño para que no se dispare "tan" al borde
+    });
+
+    animatables.forEach(el => observer.observe(el));
+}
+
+function initHowWorksModal() {
+    const modal = document.querySelector('#how-works--complete');
+    if (!modal) return;
+
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalWysiwyg = modal.querySelector('.modal-wysiwyg');
+    const closeBtn = modal.querySelector('.how-works-modal-close');
+    const overlay = modal.querySelector('.how-works-modal-overlay');
+
+    const openModal = (title, htmlContent) => {
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalWysiwyg) modalWysiwyg.innerHTML = htmlContent;
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('is-active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    // Escuchar clicks en los botones de las tarjetas
+    document.querySelectorAll('.how-it-works--card .btn-more-info').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const card = button.closest('.how-it-works--card');
+            if (!card) return;
+
+            const title = button.getAttribute('data-title') || '';
+            const template = card.querySelector('.modal-complete-content');
+            let htmlContent = template ? template.innerHTML : '';
+
+            // Limpiar cualquier h3 duplicado que sea igual al título
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlContent, 'text/html');
+            const h3 = doc.querySelector('h3');
+            if (h3 && h3.textContent.trim() === title.trim()) {
+                h3.remove();
+            }
+            htmlContent = doc.body.innerHTML;
+
+            openModal(title, htmlContent);
+        });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+
+    // Cerrar al presionar la tecla Esc
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+            closeModal();
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     initServicesScrollMask();
     initSectionStacking();
     initCardsStacking();
-    initScrambleEffect();
-    initTitlesFadeEffect();
-    initButtonsFadeEffect();
+    initStaggeredEntrances(); // Reemplaza a initScrambleEffect, initTitlesFadeEffect e initButtonsFadeEffect
+    initHowWorksModal();
 });
-
-/**
- * Slide-up and scale-in effect for main buttons.
- */
-function initButtonsFadeEffect() {
-    const buttons = document.querySelectorAll('.site-main .btn.primary.large');
-    if (buttons.length === 0) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Add a small delay so they pop up slightly after the title sequence starts
-                setTimeout(() => {
-                    entry.target.classList.add('is-visible');
-                }, 200);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1 
-    });
-
-    buttons.forEach(el => observer.observe(el));
-}
-
-/**
- * Slide-up word-by-word effect for main titles.
- */
-function initTitlesFadeEffect() {
-    const titles = document.querySelectorAll('.page-title, .title-section');
-    if (titles.length === 0) return;
-
-    // 1. Preparar las palabras rompiendo subnodos de texto en spans pero sin tocar HTML
-    titles.forEach(title => {
-        if (title.dataset.prepared) return;
-        title.dataset.prepared = 'true';
-        
-        // Guardamos el texto puro en aria-label para que los lectores
-        // de pantalla lo lean fluidamente y no palabra por palabra fragmentada
-        if (!title.hasAttribute('aria-label')) {
-            title.setAttribute('aria-label', title.textContent.trim().replace(/\s+/g, ' '));
-        }
-        
-        const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT, null, false);
-        const textNodes = [];
-        while (walker.nextNode()) {
-            textNodes.push(walker.currentNode);
-        }
-        
-        let globalWordIndex = 0;
-        
-        textNodes.forEach(node => {
-            const text = node.nodeValue;
-            // Si es puro salto de línea de formato de código, lo dejamos quieto (no lo envolvemos)
-            if (!text.trim() && text.includes('\n')) return; 
-            
-            const fragment = document.createDocumentFragment();
-            // Desglosar por palabras conservando el map de espacios exacto
-            const parts = text.split(/(\s+)/); 
-            
-            parts.forEach(part => {
-                if (part === '') return;
-                
-                const inner = document.createElement('span');
-                inner.textContent = part;
-                inner.className = 'word-slide-anim';
-                
-                if (part.trim().length > 0) {
-                    // Es una palabra
-                    inner.style.transitionDelay = `${globalWordIndex * 45}ms`;
-                    globalWordIndex++;
-                } else {
-                    // Es un espacio: aplicamos el mismo retraso que la palabra anterior para que viaje junto a ella
-                    // y usamos pre-wrap para que el inline-block no colapse
-                    inner.style.whiteSpace = 'pre-wrap';
-                    inner.style.transitionDelay = `${Math.max(0, globalWordIndex - 1) * 45}ms`;
-                }
-                
-                fragment.appendChild(inner);
-            });
-            node.parentNode.replaceChild(fragment, node);
-        });
-    });
-
-    // 2. Animar al hacer intersección
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                // observer.unobserve(entry.target); // Si quisieras que no lo vuelva a hacer al subir, manténla
-            } else {
-                // Removemos la clase si subimos para que vuelva a hacer el intro al bajar (opcional)
-                entry.target.classList.remove('is-visible');
-            }
-        });
-    }, {
-        threshold: 0.15
-    });
-
-    titles.forEach(el => observer.observe(el));
-}
-
-/**
- * Text scramble effect for .span-pretext elements upon entering the viewport.
- */
-function initScrambleEffect() {
-    const pretexts = document.querySelectorAll('.span-pretext');
-    if (pretexts.length === 0) return;
-
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                const originalText = el.dataset.scrambleOriginal || el.textContent.trim();
-                
-                // Mostrar visualmente el contenedor al intersectar
-                el.classList.add('is-visible');
-                
-                // Save original text to data attribute to prevent losing it if re-triggered
-                if (!el.dataset.scrambleOriginal) {
-                    el.dataset.scrambleOriginal = originalText;
-                    // Añadir aria-label para accesibilidad (lectores de pantalla ignoran las letras revueltas y leen la original)
-                    el.setAttribute('aria-label', originalText);
-                }
-
-                
-                let iteration = 0;
-                clearInterval(el.scrambleInterval);
-
-                el.scrambleInterval = setInterval(() => {
-                    el.textContent = originalText
-                        .split('')
-                        .map((letter, index) => {
-                            if (index < iteration) {
-                                return originalText[index];
-                            }
-                            // Mantén los espacios en blanco
-                            if (originalText[index] === ' ') return ' ';
-                            
-                            // Letra aleatoria
-                            return chars[Math.floor(Math.random() * chars.length)];
-                        })
-                        .join('');
-
-                    // Avanzar más rápido para que la duración total sea menor,
-                    // conservando los 30ms de "parpadeo" de las letras.
-                    iteration += 1.5;
-
-                    if (iteration >= originalText.length) {
-                        clearInterval(el.scrambleInterval);
-                        el.textContent = originalText;
-                    }
-                }, 30);
-
-                // Des-observar si solo queremos que el efecto ocurra una vez (al entrar por primera vez)
-                // Si quieres que suceda cada vez que entran en pantalla, puedes quitar esta línea:
-                observer.unobserve(el);
-            }
-        });
-    }, {
-        threshold: 0.1 // Se activa cuando al menos el 10% del elemento es visible
-    });
-
-    pretexts.forEach(el => observer.observe(el));
-}
