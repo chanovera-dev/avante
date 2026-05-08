@@ -2,11 +2,14 @@
     background-color: var(--wp--preset--color--secondary);
     position: relative;
     overflow: hidden;
+    clip-path: ellipse(100% 100% at 30% 0%);
+    z-index: 1;
 
     & .content {
         position: relative;
         z-index: 2;
         text-align: center;
+        padding-bottom: 10rem;
 
         & .signals-container {
             display: flex;
@@ -155,5 +158,11 @@
 
     100% {
         transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
+}
+
+@media (width < 600px) {
+    #signals {
+        clip-path: ellipse(200% 100% at 30% 0%);
     }
 }
