@@ -140,12 +140,28 @@ document.addEventListener("DOMContentLoaded", function () {
             requestAnimationFrame(animate);
         }
 
+        let autoplayInterval;
+
+        function startAutoplay() {
+            autoplayInterval = setInterval(() => {
+                goToSlide((currentSlide + 1) % textures.length);
+            }, 6000);
+        }
+
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            startAutoplay();
+        }
+
+        startAutoplay();
+
         const prevBtn = wrapper.querySelector(".slideshow-prev") || wrapper.parentElement.querySelector(".slideshow-prev");
         const nextBtn = wrapper.querySelector(".slideshow-next") || wrapper.parentElement.querySelector(".slideshow-next");
 
         if (prevBtn) {
             prevBtn.addEventListener("click", (e) => {
                 e.preventDefault();
+                resetAutoplay();
                 goToSlide((currentSlide - 1 + textures.length) % textures.length);
             });
         }
@@ -153,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (nextBtn) {
             nextBtn.addEventListener("click", (e) => {
                 e.preventDefault();
+                resetAutoplay();
                 goToSlide((currentSlide + 1) % textures.length);
             });
         }
@@ -160,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (bulletsWrapper) {
             bulletsWrapper.addEventListener("click", (e) => {
                 if (e.target.classList.contains("bullet")) {
+                    resetAutoplay();
                     goToSlide(parseInt(e.target.dataset.index));
                 }
             });

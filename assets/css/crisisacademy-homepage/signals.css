@@ -1,0 +1,62 @@
+#signals {
+    background-color: var(--wp--preset--color--secondary);
+
+    & .content {
+        text-align: center;
+
+        & .signals-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 3rem 0 5rem;
+            gap: 1rem;
+
+            & .signal-item {
+                flex: 1;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                grid-template-rows: auto 1fr;
+                background-color: var(--wp--preset--color--tertiary);
+                padding: 2rem;
+                border-radius: 1rem;
+                box-shadow: var(--wp--preset--shadow--post-shadow-light);
+
+                & .signal-graph {
+                    grid-column: 1 / 2;
+                    grid-row: 1 / 3;
+                    width: 100px;
+                    height: 100px;
+                    margin-right: 1.5rem;
+                }
+
+                & .signal-number,
+                & .signal-label {
+                    grid-column: 2 / 3;
+                    grid-row: 1 / 2;
+                    text-align: left;
+                    font-weight: bold;
+                    font-size: 42px;
+                }
+
+                & .signal-label {
+                    font-size: 1.25rem;
+                    line-height: 1.3;
+                }
+
+                & .signal-info {
+                    grid-column: 2 / 3;
+                    grid-row: 2 / 3;
+                    text-align: left;
+                    ;
+                }
+            }
+        }
+
+        & .subtitle-section {
+            font-weight: 400;
+
+            & strong {
+                font-weight: 700;
+            }
+        }
+    }
+}

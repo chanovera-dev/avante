@@ -1,6 +1,35 @@
+<?php
+/**
+ * Template part for displaying the about section on the homepage.
+ *
+ * This section features a main heading, subheading, and call-to-action buttons.
+ * All content is managed through Advanced Custom Fields (ACF).
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package Avante
+ * @subpackage Template-parts/crisisacademy-homepage
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+$about_content = get_field('about_content');
+
+if (empty($about_content)) {
+    return;
+}
+?>
 <section id="about" class="block">
-    <div class="content about">
-        <div class="container glass-border-bright">
+    <div class="content">
+        <div class="container app">
+            <?php
+            if ( ! function_exists( 'is_plugin_active' ) ) {
+                include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            }
+            if ( is_plugin_active( 'crisis-simulator/simulador-de-crisis.php' ) ) : ?>
+                <a href="<?php echo esc_url( home_url( '/simulador-de-crisis/' ) ); ?>" class="btn-simulator-link btn primary">
+                    Simular Crisis
+                </a>
+            <?php endif; ?>
             <div class="slideshow--wrapper">
                 <div class="slideshow">
                     <?php
@@ -42,41 +71,27 @@
             </div>
             <?php endif; ?>
         </div>
-        <div class="about-content">
-            <h2 class="title-section">El 75% de las crisis dieron señales que nadie en la organización fue capaz de detectar o atender hasta que explotaron.</h2>
-            <h3 class="subtitle-section">Capacitamos <strong>profesionalmente</strong> a quienes participan en el <u>manejo de crisis.</u></h3>
-            <div class="logos">
-                <div class="logo-wrapper">
-                    <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/logos/php.svg" alt="" srcset="">
-                </div>
-                <div class="logo-wrapper">
-                    <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/logos/RedHat.svg" alt="" srcset="">
-                </div>
-                <div class="logo-wrapper">
-                    <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/logos/Windows.svg" alt="" srcset="">
-                </div>
-                <div class="logo-wrapper">
-                    <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/logos/Wordpress.svg" alt="" srcset="">
-                </div>
-            </div>
-            <h3 class="subtitle-section">The Crisis Academy en números</h3>
-            <div class="numbers">
-                <div class="number">
-                    <div class="number-wrapper"><div class="number-value-counter" data-target="30" data-duration="3000">30</div><div class="postfix">+</div></div>
-                    <div class="number-label">Años de experiencia</div>
-                </div>
-                <div class="number">
-                    <div class="number-wrapper"><div class="number-value-counter" data-target="100" data-duration="3000">100</div><div class="postfix">+</div></div>
-                    <div class="number-label">Casos de éxito</div>
-                </div>
-                <div class="number">
-                    <div class="number-wrapper"><div class="number-value-counter" data-target="1000" data-duration="3000">1000</div><div class="postfix">+</div></div>
-                    <div class="number-label">Alumnos capacitados</div>
-                </div>
-                <div class="number">
-                    <div class="number-wrapper"><div class="number-value-counter" data-target="95" data-duration="3000">95</div><div class="postfix">%</div></div>
-                    <div class="number-label">de efectividad</div>
-                </div>
+        <div class="data">
+            <?php if ($about_content) : ?>
+                <?php echo apply_filters( 'the_content', $about_content )?>
+            <?php endif; ?>    
+            <div class="about-container">
+            <?php if (have_rows('about_items')) : ?>
+                <?php while (have_rows('about_items')) : the_row(); ?>
+                    <div class="about-item">
+                        <?php
+                        $icon = get_sub_field('about_item_icon');
+                        $label = get_sub_field('about_item_label');
+                        if ($icon) :
+                            ?>
+                            <img src="<?= $icon['url'] ?>" alt="<?= $icon['alt'] ?>" srcset="" width="50px" height="50px" loading="lazy">
+                        <?php endif; ?>
+                        <span class="about-item-label"><?= $label ?></span>
+                    </div>
+                <?php endwhile; ?>
+                <?php else : ?>
+                    <p>No se encontraron ítems.</p>
+            <?php endif; ?>
             </div>
         </div>
     </div>

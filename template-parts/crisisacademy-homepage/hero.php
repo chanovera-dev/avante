@@ -23,75 +23,43 @@ if (empty($hero_span) && empty($hero_first_content) && empty($hero_action_button
 }
 ?>
 <section id="hero" class="block">
-    <div class="content hero--content heading">
+    <div class="content">
+        <?php if ($hero_span): ?>
+            <span class="span-pretext"><?php echo esc_html($hero_span); ?></span>
+        <?php endif; ?>
 
-        <div class="hero-content--text">
-            <?php if ($hero_span): ?>
-                <span class="span-pretext scramble-letters"><?php echo esc_html($hero_span); ?></span>
-            <?php endif; ?>
-
-            <?php if ($hero_first_content): ?>
-                <div class="hero-description scramble-words">
-                    <?php echo apply_filters( 'the_content', $hero_first_content ); ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if ($hero_action_button && $hero_action_button_label): ?>
-                <div class="cta-buttons">
-                    <a href="<?= esc_url($hero_action_button); ?>" class="btn primary">
-                        <?= avante_get_icon('forward'); ?>
-                        <?= esc_html($hero_action_button_label); ?>
-                    </a>
-                </div>
-            <?php endif; ?>
-        </div>
-    </div>
-
-    <div class="content about">
-        <div class="container glass-border-bright animate-in--scale-up">
-            <div class="slideshow--wrapper">
-                <div class="slideshow">
-                    <?php
-                    if (have_rows('about_showreel')):
-                        $count = 0;
-                        while (have_rows('about_showreel')):
-                            the_row(); 
-                            $image = get_sub_field('about_showreel_image');
-                            $count++;
-                            ?>
-
-                            <article id="about-item-<?= $count; ?>" class="about-item post">
-                                <div class="about-content">
-                                    <?php
-                                    if ($image) {
-                                        $img_id = is_array($image) ? $image['ID'] : $image;
-                                        echo wp_get_attachment_image($img_id, 'full', false, ['loading' => 'lazy']);
-                                    }
-                                    ?>
-                                </div>
-                            </article>
-
-                        <?php endwhile;
-                    else:
-                        echo '<p>No se encontraron guías.</p>';
-                    endif;
-                    ?>
-                </div>
+        <?php if ($hero_first_content): ?>
+            <div class="hero-description">
+                <?php echo apply_filters( 'the_content', $hero_first_content ); ?>
             </div>
-            <?php if (have_rows('about_showreel')): ?>
-            <div class="slideshow-bullets-wrapper">
-                <button class="slideshow-prev btn-pagination small-pagination" aria-label="siguiente diapositiva">
-                    <?= avante_get_icon('backward'); ?>
-                </button>
-                <div class="slideshow-bullets bullets"></div>
-                <button class="slideshow-next btn-pagination small-pagination" aria-label="anterior diapositiva">
+        <?php endif; ?>
+        <div class="types-container">
+            <?php
+        if (have_rows('types_container')) :
+            while (have_rows('types_container')) :
+                the_row();
+                $icon = get_sub_field('types_container_icon');
+                $text = get_sub_field('types_container_text');
+                ?>
+                <div class="type-item">
+                    <?php if (!empty($icon) && is_array($icon)): ?>
+                        <img src="<?= esc_url($icon['url']) ?>" alt="<?= esc_attr($icon['alt']) ?>" width="100px" height="100px" loading="lazy">
+                    <?php endif; ?>
+                    <p><?= esc_html($text) ?></p>       
+                </div>
+            <?php endwhile;
+        else :
+            echo '<p>No se encontraron métodos de tipos.</p>';
+        endif;        
+        ?>
+        </div>
+        <?php if ($hero_action_button && $hero_action_button_label): ?>
+            <div class="cta-container">
+                <a href="<?= esc_url($hero_action_button); ?>" class="btn primary">
                     <?= avante_get_icon('forward'); ?>
-                </button>
+                    <?= esc_html($hero_action_button_label); ?>
+                </a>
             </div>
-            <?php endif; ?>
-        </div>
-        <div class="about-content">
-            <?php echo apply_filters( 'the_content', $hero_second_content ); ?>
-        </div>
+        <?php endif; ?>
     </div>
 </section>
