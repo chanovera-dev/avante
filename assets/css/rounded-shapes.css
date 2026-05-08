@@ -183,7 +183,13 @@
 
 .how-works-modal-container,
 .event__date,
-.event__video video {
+.event__video video,
+.type-item,
+.signal-item,
+.certifications-info-bar,
+.step-icon,
+.module-card,
+.modules-footer-panel {
     border-radius: 1rem;
 }
 
@@ -473,7 +479,13 @@ select {
 
     .how-works-modal-container,
     .event__date,
-    .event__video video {
+    .event__video video,
+    .type-item,
+    .signal-item,
+    .certifications-info-bar,
+    .step-icon,
+    .module-card,
+    .modules-footer-panel {
         border-radius: 2rem;
         corner-shape: squircle;
     }

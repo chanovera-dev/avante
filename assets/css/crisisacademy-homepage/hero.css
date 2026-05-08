@@ -1,24 +1,140 @@
 #hero {
     background-color: var(--wp--preset--color--tertiary);
+    position: relative;
+    overflow: hidden;
 
     & .content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding-bottom: 10rem;
+
+        & .page-subtitle {
+            color: #285386;
+            font-family: var(--wp--preset--font-family--manrope);
+        }
+
         & .types-container {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
             gap: 1rem;
-            margin-top: 2rem;
+            justify-content: center;
+            margin-top: 4rem;
+            margin-inline: auto;
 
             & .type-item {
                 text-align: center;
+                backdrop-filter: blur(3px);
+                padding: .5rem;
+                box-shadow: #1d224f09 0 -2px 0 inset, #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
+                border: 1px solid rgba(0, 0, 0, 0.06);
+                transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
 
                 & img {
                     margin-inline: auto;
+                }
+
+                &:hover {
+                    transform: translateY(-6px);
+                    border-color: var(--wp--preset--color--secondary);
+                    box-shadow: var(--wp--preset--shadow--post-shadow-light);
                 }
             }
         }
 
         & .cta-container {
             margin-top: 4rem;
+        }
+    }
+
+    /* Cuadrícula secundaria fina (Minor Grid) */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(to top, color-mix(in srgb, var(--wp--preset--color--contrast) 6%, transparent) 1px, transparent 1px),
+            linear-gradient(to right, color-mix(in srgb, var(--wp--preset--color--contrast) 6%, transparent) 1px, transparent 1px);
+        background-size: 30px 30px;
+        background-position: center top;
+        z-index: 1;
+        pointer-events: none;
+
+        /* Máscara de transparencia de arriba a abajo */
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    /* Cuadrícula principal más gruesa (Major Grid) */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(to top, color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent) 1.5px, transparent 1.5px),
+            linear-gradient(to right, color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent) 1.5px, transparent 1.5px);
+        background-size: 150px 150px;
+        background-position: center top;
+        z-index: 1;
+        pointer-events: none;
+
+        /* Máscara de transparencia de arriba a abajo */
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    /* Estilo de subrayado estilo trazo de lápiz moderno para <u> */
+    & u {
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+        color: inherit;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 12px;
+
+            /* Degradado cilíndrico 3D para darle volumen al cuerpo físico del trazo */
+            background: linear-gradient(to bottom,
+                    color-mix(in srgb, var(--wp--preset--color--focus) 85%, white) 0%,
+                    var(--wp--preset--color--focus) 45%,
+                    color-mix(in srgb, var(--wp--preset--color--focus) 70%, black) 100%);
+
+            /* Máscara con doble trazo de lápiz esbozado (Dual sketchy stroke) para un aspecto no plano y realista */
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpath d='M2,4 Q25,1 50,5 T98,4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M5,8 Q32,5 65,8 T95,6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' opacity='0.75'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpath d='M2,4 Q25,1 50,5 T98,4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M5,8 Q32,5 65,8 T95,6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' opacity='0.75'/%3E%3C/svg%3E");
+            mask-size: 100% 100%;
+            -webkit-mask-size: 100% 100%;
+            mask-repeat: no-repeat;
+            -webkit-mask-repeat: no-repeat;
+
+            /* Animación de entrada de izquierda a derecha */
+            transform-origin: left center;
+            transform: scaleX(0);
+            animation: drawUnderline 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 0.6s;
+        }
+    }
+}
+
+/* Animación para el trazo de lápiz */
+@keyframes drawUnderline {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@media (width > 1024px) {
+    #hero {
+        & .content {
+            & .types-container {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 960px;
+            }
         }
     }
 }
