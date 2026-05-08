@@ -2,12 +2,14 @@
     background-color: var(--wp--preset--color--tertiary);
     position: relative;
     overflow: hidden;
+    clip-path: ellipse(100% 100% at 50% 0%);
+    /* Arco continuo y matemáticamente perfecto de extremo a extremo sin esquinas */
 
     & .content {
         position: relative;
         z-index: 2;
         text-align: center;
-        padding-bottom: 10rem;
+        padding-bottom: 15rem;
 
         & .page-subtitle {
             color: #285386;
@@ -127,6 +129,8 @@
         transform: scaleX(1);
     }
 }
+
+
 
 @media (width > 1024px) {
     #hero {

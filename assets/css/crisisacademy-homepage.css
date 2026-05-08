@@ -1,4 +1,6 @@
 .site-main {
+    background-color: var(--wp--preset--color--secondary);
+
     & .block {
         & .content {
             padding: 5rem 0;
