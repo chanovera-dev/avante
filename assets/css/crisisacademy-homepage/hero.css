@@ -130,7 +130,11 @@
     }
 }
 
-
+@media (width < 600px) {
+    #hero {
+        clip-path: ellipse(200% 100% at 50% 0%);
+    }
+}
 
 @media (width > 1024px) {
     #hero {
