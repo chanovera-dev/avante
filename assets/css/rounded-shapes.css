@@ -189,7 +189,8 @@
 .certifications-info-bar,
 .step-icon,
 .module-card,
-.modules-footer-panel {
+.modules-footer-panel,
+.about-item {
     border-radius: 1rem;
 }
 
@@ -485,7 +486,8 @@ select {
     .certifications-info-bar,
     .step-icon,
     .module-card,
-    .modules-footer-panel {
+    .modules-footer-panel,
+    .about-item {
         border-radius: 2rem;
         corner-shape: squircle;
     }

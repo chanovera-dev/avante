@@ -52,6 +52,10 @@
                     font-size: 42px;
                 }
 
+                & .signal-number {
+                    color: var(--wp--preset--color--focus);
+                }
+
                 & .signal-label {
                     font-size: 1.25rem;
                     line-height: 1.3;

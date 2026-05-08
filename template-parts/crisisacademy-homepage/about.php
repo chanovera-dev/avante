@@ -84,7 +84,7 @@ if (empty($about_content)) {
                         $label = get_sub_field('about_item_label');
                         if ($icon) :
                             ?>
-                            <img src="<?= $icon['url'] ?>" alt="<?= $icon['alt'] ?>" srcset="" width="50px" height="50px" loading="lazy">
+                            <img src="<?= $icon['url'] ?>" alt="<?= $icon['alt'] ?>" srcset="" width="64px" height="64px" loading="lazy">
                         <?php endif; ?>
                         <span class="about-item-label"><?= $label ?></span>
                     </div>
