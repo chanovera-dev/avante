@@ -167,8 +167,8 @@
                     </div>
                 </div>
             </div>
-            <div class="cta-panel">
-                <div class="cta-panel-glow"></div>
+            <div class="cta-panel" style="background-image: url('<?= get_template_directory_uri(); ?>/assets/img/war-room-big.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                <div class="cta-panel-backdrop"></div>
                 <div class="cta-panel-content">
                     <h2 class="cta-headline">Prepárate antes de que la crisis defina tu respuesta</h2>
                     <p class="cta-subheadline">Solicita información sobre nuestros programas de certificación, auditorías y manuales de crisis. Sin compromiso.</p>
@@ -177,7 +177,7 @@
                             <?= avante_get_icon('forward'); ?>
                             Solicitar información
                         </a>
-                        <a href="/taller-de-especializacion" class="btn cta-btn-secondary" id="cta-secondary-button">
+                        <a href="/taller-de-especializacion" class="btn hollow cta-btn-secondary" id="cta-secondary-button">
                             Ver próximos talleres
                         </a>
                     </div>

@@ -256,7 +256,9 @@ select {
 .wp-element-button {
 
     &.primary,
-    &.alert {
+    &.alert,
+    &.secondary,
+    &.hollow {
         border-radius: .5rem;
 
         &.large {
@@ -565,7 +567,9 @@ select {
     .wp-element-button {
 
         &.primary,
-        &.alert {
+        &.alert,
+        &.secondary,
+        &.hollow {
             border-radius: .8rem;
             corner-shape: squircle;
 
