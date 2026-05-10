@@ -299,6 +299,7 @@ function avante_get_assets()
             'crisisacademy-about' => "$assets_path/css/crisisacademy-homepage/about.css",
             'crisisacademy-how-works' => "$assets_path/css/crisisacademy-homepage/how-works.css",
             'crisisacademy-certifications' => "$assets_path/css/crisisacademy-homepage/certifications.css",
+            'crisisacademy-cta' => "$assets_path/css/crisisacademy-homepage/cta.css",
             // 'crisisacademy-services' => "$assets_path/css/crisisacademy-homepage/services.css",
             // 'crisisacademy-calendary' => "$assets_path/css/crisisacademy-homepage/calendary.css",
             // 'crisisacademy-training' => "$assets_path/css/crisisacademy-homepage/training.css",
@@ -342,6 +343,7 @@ function avante_get_assets()
             'crisisacademy-hero-script' => "$assets_path/js/crisisacademy-homepage/hero.js",
             'crisisacademy-homepage-script' => "$assets_path/js/crisisacademy-homepage.js",
             'crisisacademy-how-works-script' => "$assets_path/js/crisisacademy-homepage/how-works.js",
+            'cta-slideshow-script' => "$assets_path/js/cta-slideshow.js",
         ]
     ];
 }
@@ -1651,6 +1653,7 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_style('crisisacademy-about', $a['css']['crisisacademy-about']);
         avante_enqueue_style('crisisacademy-how-works', $a['css']['crisisacademy-how-works']);
         avante_enqueue_style('crisisacademy-certifications', $a['css']['crisisacademy-certifications']);
+        avante_enqueue_style('crisisacademy-cta', $a['css']['crisisacademy-cta']);
         // avante_enqueue_style('crisisacademy-services', $a['css']['crisisacademy-services']);
         // avante_enqueue_style('crisisacademy-calendary', $a['css']['crisisacademy-calendary']);
         // avante_enqueue_style('crisisacademy-training', $a['css']['crisisacademy-training']);
@@ -1662,6 +1665,7 @@ function crisisacademy_homepage_templates() {
         // avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
         // avante_enqueue_script('counter', $a['js']['counter']);
         avante_enqueue_script('crisisacademy-how-works-script', $a['js']['crisisacademy-how-works-script']);
+        avante_enqueue_script('cta-slideshow-script', $a['js']['cta-slideshow-script']);
     }
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );

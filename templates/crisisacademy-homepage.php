@@ -15,6 +15,7 @@ get_header(); ?>
         'about',
         'how-works',
         'certifications',
+        'cta',
         // 'blog' => !empty(get_posts(['post_type' => 'post', 'posts_per_page' => 1])),
         // 'special' => !empty(get_posts(['post_type' => 'special', 'posts_per_page' => 1])),
         // 'faq',

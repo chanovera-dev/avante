@@ -190,7 +190,11 @@
 .step-icon,
 .module-card,
 .modules-footer-panel,
-.about-item {
+.about-item,
+.audience-item,
+.authority-item,
+.cta-container,
+.cta-panel {
     border-radius: 1rem;
 }
 
@@ -487,7 +491,11 @@ select {
     .step-icon,
     .module-card,
     .modules-footer-panel,
-    .about-item {
+    .about-item,
+    .audience-item,
+    .authority-item,
+    .cta-container,
+    .cta-panel {
         border-radius: 2rem;
         corner-shape: squircle;
     }
