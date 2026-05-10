@@ -16,6 +16,7 @@ get_header(); ?>
         'how-works',
         'certifications',
         'cta',
+        'upcoming-events',
         // 'blog' => !empty(get_posts(['post_type' => 'post', 'posts_per_page' => 1])),
         // 'special' => !empty(get_posts(['post_type' => 'special', 'posts_per_page' => 1])),
         // 'faq',

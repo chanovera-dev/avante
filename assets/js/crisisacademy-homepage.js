@@ -1,344 +1,133 @@
 /**
- * Effect for horizontal scroll mask in Services.
+ * Upcoming Events — World Clock
+ *
+ * Reads [data-tz] from each .world-clock element and
+ * updates .world-clock__time every second with the local
+ * time for that timezone.
  */
-function initServicesScrollMask() {
-    const wrapper = document.querySelector('#how-works');
-    const loop = document.querySelector('#how-works .content');
+function initUpcomingEventsClocks() {
+    const clocks = document.querySelectorAll('#upcoming-events-clocks .world-clock');
+    if (clocks.length === 0) return;
 
-    if (!wrapper || !loop) return;
+    function tick() {
+        clocks.forEach(clock => {
+            const tz = clock.dataset.tz;
+            const timeEl = clock.querySelector('.world-clock__time');
+            if (!timeEl || !tz) return;
 
-    const firstItem = loop.firstElementChild;
-    const lastItem = loop.lastElementChild;
-    if (!firstItem || !lastItem) return;
-
-    const checkState = () => {
-        const scrollLeft = wrapper.scrollLeft;
-        const scrollWidth = wrapper.scrollWidth;
-        const clientWidth = wrapper.clientWidth;
-
-        const atStart = scrollLeft <= 10;
-        const atEnd = scrollLeft + clientWidth >= scrollWidth - 10;
-
-        wrapper.classList.toggle('at-start', atStart);
-        wrapper.classList.toggle('at-end', atEnd);
-        wrapper.classList.toggle('is-scrolling', !atStart && !atEnd);
-    };
-
-    wrapper.addEventListener('scroll', checkState, { passive: true });
-    checkState();
-}
-
-/**
- * Handles the overlapping sections effect requested.
- */
-function initSectionStacking() {
-    const sections = document.querySelectorAll('.site-main > .block');
-    const footer = document.querySelector('#main-footer');
-
-    if (sections.length === 0) return;
-
-    // Asignar z-index incremental para asegurar que la siguiente sección flote por encima
-    sections.forEach((section, index) => {
-        section.style.zIndex = index + 1;
-        section.style.position = 'relative';
-    });
-
-    const handleScroll = () => {
-        const viewportHeight = window.innerHeight;
-
-        sections.forEach((section, index) => {
-            const rect = section.getBoundingClientRect();
-
-            // 1. Detectamos por JS cuando el fondo exacto de la sección ya es visible
-            if (rect.bottom <= viewportHeight + 1) {
-
-                // Agregamos la clase y la anclamos
-                if (!section.classList.contains('is-fixed')) {
-                    section.classList.add('is-fixed');
-                    section.style.position = 'sticky';
-
-                    const height = section.offsetHeight;
-                    const topOffset = height > viewportHeight ? viewportHeight - height : 0;
-                    section.style.top = topOffset + 'px';
-                }
-
-                // 2. Evaluamos la posición del siguiente bloque para la impresión de "irse por debajo"
-                const nextSection = sections[index + 1];
-                if (nextSection) {
-                    const nextRect = nextSection.getBoundingClientRect();
-                    if (nextRect.top <= viewportHeight) {
-                        section.classList.add('is-bottom');
-                    } else {
-                        section.classList.remove('is-bottom');
-                    }
-                }
-
-            } else {
-                // El fondo aún no se ve, la sección fluye normal
-                if (section.classList.contains('is-fixed')) {
-                    section.classList.remove('is-fixed', 'is-bottom');
-                    section.style.position = 'relative';
-                    section.style.top = '';
-                }
+            try {
+                const now = new Date();
+                const formatted = now.toLocaleTimeString('es-MX', {
+                    timeZone: tz,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                });
+                timeEl.textContent = formatted;
+            } catch (e) {
+                timeEl.textContent = '--:--';
             }
         });
-    };
+    }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', () => {
-        sections.forEach(s => {
-            s.classList.remove('is-fixed', 'is-bottom');
-            s.style.position = 'relative';
-            s.style.top = '';
-        });
-        handleScroll();
-    }, { passive: true });
-
-    setTimeout(handleScroll, 100);
+    tick();
+    setInterval(tick, 1000);
 }
 
 /**
- * Handles the overlapping cards effect inside the calendary loop.
+ * Upcoming Events — Scroll fade edges
+ *
+ * Toggles .at-start / .at-end classes on the track wrapper
+ * so the CSS gradient fade hints are shown/hidden correctly.
  */
-function initCardsStacking() {
-    const cards = document.querySelectorAll('.calendary-loop__event');
+function initUpcomingEventsScroll() {
+    const wrapper = document.getElementById('upcoming-events-track-wrapper');
+    const track   = document.getElementById('upcoming-events-track');
+    if (!wrapper || !track) return;
+
+    const check = () => {
+        const { scrollLeft, scrollWidth, clientWidth } = track;
+        wrapper.classList.toggle('at-start', scrollLeft <= 4);
+        wrapper.classList.toggle('at-end',   scrollLeft + clientWidth >= scrollWidth - 4);
+    };
+
+    track.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    check();
+}
+
+/**
+ * Upcoming Events — Opacity cascade based on visible position
+ *
+ * Observes which cards are inside the scroll track viewport on each
+ * scroll/resize and applies opacity based on their ORDER within the
+ * visible window (not their global index in the array).
+ *
+ * First visible card  → opacity 1.00
+ * Second visible card → opacity 0.82
+ * Third visible card  → opacity 0.64
+ * … capped at 0.30 minimum
+ * Cards outside view  → opacity 0.25
+ */
+function initUpcomingEventsOpacityCascade() {
+    const track = document.getElementById('upcoming-events-track');
+    if (!track) return;
+
+    const cards = Array.from(track.querySelectorAll('.event-card'));
     if (cards.length === 0) return;
 
-    cards.forEach((card, index) => {
-        card.style.zIndex = index + 1;
-    });
+    const STEP    = 0.18;   // opacity drop per visible position
+    const MIN_VIS = 0.30;   // minimum opacity while still visible
+    const OFF     = 0.25;   // opacity for off-screen cards
 
-    const handleScroll = () => {
-        cards.forEach((card, index) => {
-            const nextCard = cards[index + 1];
+    function update() {
+        const trackLeft  = track.scrollLeft;
+        const trackRight = trackLeft + track.clientWidth;
 
-            if (nextCard) {
-                const nextRect = nextCard.getBoundingClientRect();
-                const cardRect = card.getBoundingClientRect();
-                const staticBottom = cardRect.top + card.offsetHeight;
+        // Classify each card
+        const visible = [];
 
-                if (nextRect.top <= staticBottom + 15) {
-                    card.classList.add('is-bottom');
-                } else {
-                    card.classList.remove('is-bottom');
-                }
-            }
-        });
-    };
+        cards.forEach(card => {
+            // offsetLeft is relative to scrollable parent
+            const cardLeft  = card.offsetLeft;
+            const cardRight = cardLeft + card.offsetWidth;
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    setTimeout(handleScroll, 100);
-}
+            // Consider visible if at least 30px of the card is inside the track
+            const overlap = Math.min(cardRight, trackRight) - Math.max(cardLeft, trackLeft);
 
-/**
- * Preparación para el efecto de palabras deslizantes.
- */
-function prepareTitles() {
-    const titles = document.querySelectorAll('.scramble-words');
-    titles.forEach(title => {
-        if (title.dataset.prepared) return;
-        title.dataset.prepared = 'true';
-
-        if (!title.hasAttribute('aria-label')) {
-            title.setAttribute('aria-label', title.textContent.trim().replace(/\s+/g, ' '));
-        }
-
-        const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT, null, false);
-        const textNodes = [];
-        while (walker.nextNode()) {
-            textNodes.push(walker.currentNode);
-        }
-
-        let globalWordIndex = 0;
-        textNodes.forEach(node => {
-            const text = node.nodeValue;
-            if (!text.trim() && text.includes('\n')) return;
-
-            const fragment = document.createDocumentFragment();
-            const parts = text.split(/(\s+)/);
-
-            parts.forEach(part => {
-                if (part === '') return;
-                const inner = document.createElement('span');
-                inner.textContent = part;
-                inner.className = 'word-slide-anim';
-
-                if (part.trim().length > 0) {
-                    inner.style.transitionDelay = `${globalWordIndex * 45}ms`;
-                    globalWordIndex++;
-                } else {
-                    inner.style.whiteSpace = 'pre-wrap';
-                    inner.style.transitionDelay = `${Math.max(0, globalWordIndex - 1) * 45}ms`;
-                }
-                fragment.appendChild(inner);
-            });
-            node.parentNode.replaceChild(fragment, node);
-        });
-    });
-}
-
-/**
- * Preparación para el efecto de letras aleatorias.
- */
-function prepareScramble() {
-    const scrambleLetters = document.querySelectorAll('.scramble-letters');
-    scrambleLetters.forEach(el => {
-        if (!el.dataset.scrambleOriginal) {
-            const originalText = el.textContent.trim();
-            el.dataset.scrambleOriginal = originalText;
-            el.setAttribute('aria-label', originalText);
-        }
-    });
-}
-
-/**
- * Activa el efecto de scramble para un elemento.
- */
-function triggerScramble(el) {
-    const originalText = el.dataset.scrambleOriginal;
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-    let iteration = 0;
-
-    el.classList.add('is-visible');
-    clearInterval(el.scrambleInterval);
-
-    el.scrambleInterval = setInterval(() => {
-        el.textContent = originalText
-            .split('')
-            .map((letter, index) => {
-                if (index < iteration) return originalText[index];
-                if (originalText[index] === ' ') return ' ';
-                return chars[Math.floor(Math.random() * chars.length)];
-            })
-            .join('');
-
-        iteration += .5;
-
-        if (iteration >= originalText.length) {
-            clearInterval(el.scrambleInterval);
-            el.textContent = originalText;
-        }
-    }, 30);
-}
-
-/**
- * Orquestación de animaciones de entrada individuales con escalonado para grupos.
- */
-function initStaggeredEntrances() {
-    const animatables = document.querySelectorAll('.scramble-letters, .scramble-words, .btn.primary, .animate-in--fadein, .animate-in--scale-up');
-    if (animatables.length === 0) return;
-
-    prepareTitles();
-    prepareScramble();
-
-    let staggerCounter = 0;
-    let staggerTimeout;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const el = entry.target;
-
-            if (entry.isIntersecting) {
-                // Si varios elementos entran casi a la vez, los escalonamos
-                clearTimeout(staggerTimeout);
-
-                const timeoutId = setTimeout(() => {
-                    if (el.classList.contains('scramble-letters')) {
-                        triggerScramble(el);
-                    } else {
-                        el.classList.add('is-visible');
-                    }
-                    staggerCounter = 0; // Reset tras la ráfaga
-                }, staggerCounter * 100);
-
-                el.dataset.animTimeout = timeoutId;
-
-                staggerCounter++;
-
-                // Reiniciamos el contador si no entran más elementos en breve
-                staggerTimeout = setTimeout(() => { staggerCounter = 0; }, 150);
+            if (overlap >= 30) {
+                visible.push({ card, cardLeft });
             } else {
-                // Cuando salgan del observer se quita la clase is-visible
-                if (el.dataset.animTimeout) {
-                    clearTimeout(parseInt(el.dataset.animTimeout, 10));
-                    delete el.dataset.animTimeout;
+                // Off-screen — skip featured
+                if (!card.classList.contains('event-card--featured')) {
+                    card.style.opacity = OFF;
                 }
-                if (el.scrambleInterval) {
-                    clearInterval(el.scrambleInterval);
-                }
-                el.classList.remove('is-visible');
             }
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px' // Margen pequeño para que no se dispare "tan" al borde
-    });
 
-    animatables.forEach(el => observer.observe(el));
-}
+        // Sort left-to-right so position 0 is always the leftmost visible
+        visible.sort((a, b) => a.cardLeft - b.cardLeft);
 
-function initHowWorksModal() {
-    const modal = document.querySelector('#how-works--complete');
-    if (!modal) return;
-
-    const modalTitle = modal.querySelector('.modal-title');
-    const modalWysiwyg = modal.querySelector('.modal-wysiwyg');
-    const closeBtn = modal.querySelector('.how-works-modal-close');
-    const overlay = modal.querySelector('.how-works-modal-overlay');
-
-    const openModal = (title, htmlContent) => {
-        if (modalTitle) modalTitle.textContent = title;
-        if (modalWysiwyg) modalWysiwyg.innerHTML = htmlContent;
-        modal.classList.add('is-active');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-    };
-
-    const closeModal = () => {
-        modal.classList.remove('is-active');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    };
-
-    // Escuchar clicks en los botones de las tarjetas
-    document.querySelectorAll('.how-it-works--card .btn-more-info').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            const card = button.closest('.how-it-works--card');
-            if (!card) return;
-
-            const title = button.getAttribute('data-title') || '';
-            const template = card.querySelector('.modal-complete-content');
-            let htmlContent = template ? template.innerHTML : '';
-
-            // Limpiar cualquier h3 duplicado que sea igual al título
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(htmlContent, 'text/html');
-            const h3 = doc.querySelector('h3');
-            if (h3 && h3.textContent.trim() === title.trim()) {
-                h3.remove();
+        visible.forEach(({ card }, i) => {
+            // Featured card is always fully opaque
+            if (card.classList.contains('event-card--featured')) {
+                card.style.opacity = '1';
+                return;
             }
-            htmlContent = doc.body.innerHTML;
-
-            openModal(title, htmlContent);
+            const opacity = Math.max(MIN_VIS, 1 - i * STEP);
+            card.style.opacity = opacity;
         });
-    });
+    }
 
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (overlay) overlay.addEventListener('click', closeModal);
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
 
-    // Cerrar al presionar la tecla Esc
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('is-active')) {
-            closeModal();
-        }
-    });
+    // Run once after layout is ready
+    requestAnimationFrame(update);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    initServicesScrollMask();
-    initSectionStacking();
-    initCardsStacking();
-    initStaggeredEntrances(); // Reemplaza a initScrambleEffect, initTitlesFadeEffect e initButtonsFadeEffect
-    initHowWorksModal();
+    initUpcomingEventsClocks();
+    initUpcomingEventsScroll();
+    initUpcomingEventsOpacityCascade();
 });
