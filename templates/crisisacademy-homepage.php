@@ -18,9 +18,7 @@ get_header(); ?>
         'cta',
         'upcoming-events',
         'news' => !empty(get_posts(['post_type' => 'news', 'posts_per_page' => 1])),
-        // 'blog' => !empty(get_posts(['post_type' => 'post', 'posts_per_page' => 1])),
-        // 'special' => !empty(get_posts(['post_type' => 'special', 'posts_per_page' => 1])),
-        // 'faq',
+        'faq',
     ];
 
     foreach ($sections as $section => $condition) {

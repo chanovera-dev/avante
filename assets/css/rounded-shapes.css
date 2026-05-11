@@ -198,7 +198,9 @@
 .cta-container,
 .cta-panel,
 .main-feat-img,
-.article-thumb img {
+.article-thumb img,
+.faq-cta-card,
+.accordion-item {
     border-radius: 1rem;
 }
 
@@ -506,7 +508,9 @@ select {
     .cta-panel,
     .main-feat-img,
     .article-thumb img,
-    .vid-thumb img {
+    .vid-thumb img,
+    .faq-cta-card,
+    .accordion-item {
         border-radius: 2rem;
         corner-shape: squircle;
     }
