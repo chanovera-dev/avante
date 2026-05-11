@@ -3,6 +3,39 @@ $sectionTitle = get_field('how_it_works_section_title');
 $cta = get_field('how_it_works_cta');
 ?>
 <section id="how-works" class="block">
+    <!-- Infraestructura de Hardware Ciberpunk: Chips y Circuitos Físicos -->
+    <div class="hardware-background" aria-hidden="true">
+        <!-- Chip Central de Procesamiento Izquierdo -->
+        <div class="motherboard-chip chip-one">
+            <div class="chip-housing">
+                <div class="chip-core"></div>
+            </div>
+            <div class="pins pin-top"></div><div class="pins pin-bottom"></div><div class="pins pin-left"></div><div class="pins pin-right"></div>
+        </div>
+
+        <!-- Chip Secundario Derecho -->
+        <div class="motherboard-chip chip-two">
+            <div class="chip-housing">
+                <div class="chip-core"></div>
+            </div>
+            <div class="pins pin-top"></div><div class="pins pin-bottom"></div>
+        </div>
+
+        <!-- Canales de Circuito y Flujos de Datos Activos -->
+        <div class="circuit-channel horizontal ch-1">
+            <div class="data-packet speed-fast delay-1"></div>
+        </div>
+        <div class="circuit-channel vertical ch-2">
+            <div class="data-packet speed-medium delay-2"></div>
+        </div>
+        <div class="circuit-channel horizontal ch-3">
+            <div class="data-packet speed-slow delay-3"></div>
+        </div>
+        <div class="circuit-channel vertical ch-4">
+            <div class="data-packet speed-fast delay-4"></div>
+        </div>
+    </div>
+
     <div class="content">
         <span class="span-pretext scramble-letters"><?php echo esc_html($sectionTitle); ?></span>
         <h2 class="title-section">Tres soluciones para fortalecer tu preparación ante una crisis</h2>
@@ -16,7 +49,7 @@ $cta = get_field('how_it_works_cta');
                         $content = get_sub_field('how_it_works_content');
                         $buttonLabel = get_sub_field('how_it_works_button_label');
                         ?>
-                        <article class="how-it-works--card animate-in--scale-up glass-border-bright">
+                        <article class="how-it-works--card">
                             <div class="how-it-works--card-content"><img src="<?php echo esc_url($logo['url']); ?>" alt="<?php echo esc_attr($logo['alt']); ?>" width="64px" height="64px" loading="lazy">
                             <h3><?php echo esc_html($title); ?></h3>
                             <?php echo apply_filters('the_content', $description); ?></div>

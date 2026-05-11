@@ -3,16 +3,220 @@
     position: relative;
 
 
+    /* Capa de Fondo 1: Microprocesador y Circuitos Lógicos (Hardware de Soluciones) */
     &::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         background-color: var(--wp--preset--color--footer-background);
+        /* SVG de Trazas de Microchips e Integrados en Cian Neon Sutil */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M20 0V40H80V100H100V120H150V180H200M0 80H40V120H80V160H120V200M120 0V60H160V100H200' fill='none' stroke='rgba(0,217,255,0.07)' stroke-width='1.5'/%3E%3Crect x='76' y='96' width='8' height='8' fill='rgba(0,217,255,0.1)' stroke='rgba(0,217,255,0.3)'/%3E%3Crect x='156' y='96' width='8' height='8' fill='rgba(0,217,255,0.1)' stroke='rgba(0,217,255,0.3)'/%3E%3Crect x='116' y='156' width='8' height='8' fill='rgba(0,217,255,0.1)' stroke='rgba(0,217,255,0.3)'/%3E%3Ccircle cx='40' cy='120' r='2' fill='rgba(0,217,255,0.4)'/%3E%3Ccircle cx='80' cy='160' r='2' fill='rgba(0,217,255,0.4)'/%3E%3C/svg%3E");
+        background-size: 200px 200px;
+        background-repeat: repeat;
         z-index: 0;
         clip-path: ellipse(200% 100% at 30% 100%);
+        animation: circuitDrift 50s linear infinite;
+        opacity: 0.9;
+        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    }
+
+    /* Capa de Fondo 2: Escáner Láser Periódico (Barrido de Procesamiento) */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        /* Barra de luz concentrada (Escáner Radar Green) que 'lee' los circuitos */
+        background: linear-gradient(to bottom, transparent 0%, rgba(57, 255, 20, 0) 45%, rgba(57, 255, 20, 0.25) 50%, rgba(57, 255, 20, 0) 55%, transparent 100%);
+        background-size: 100% 250px;
+        background-repeat: no-repeat;
+        background-position: center -300px;
+        z-index: 0;
+        pointer-events: none;
+        clip-path: ellipse(200% 100% at 30% 100%);
+        animation: cyberLaserSweep 15s ease-in-out infinite;
+        mix-blend-mode: screen;
+    }
+
+    /* ==========================================================================
+       Sistema de Hardware Activo: Chips Físicos y Flujos de Luz en Canales
+       ========================================================================== */
+    & .hardware-background {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+        /* Hereda la forma inclinada del contenedor */
+        clip-path: ellipse(200% 100% at 30% 100%);
+    }
+
+    /* Microchips Ciberpunk Reales */
+    & .motherboard-chip {
+        position: absolute;
+        background: #0e121a;
+        border: 2px solid #1f2937;
+        box-shadow: inset 0 0 15px rgba(0, 217, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.6);
+        border-radius: 4px;
+    }
+
+    & .chip-one {
+        width: 90px;
+        height: 90px;
+        top: 15%;
+        left: 10%;
+    }
+
+    & .chip-two {
+        width: 70px;
+        height: 70px;
+        bottom: 15%;
+        right: 12%;
+    }
+
+    & .chip-housing {
+        position: absolute;
+        inset: 12px;
+        background: #151b26;
+        border: 1px solid rgba(0, 217, 255, 0.25);
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & .chip-core {
+        width: 45%;
+        height: 45%;
+        background: #00d9ff;
+        border-radius: 2px;
+        box-shadow: 0 0 15px rgba(0, 217, 255, 0.8), 0 0 35px rgba(0, 217, 255, 0.4);
+        animation: chipCoreBeat 3s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
+    /* Pines metálicos del conector del chip */
+    & .pins {
+        position: absolute;
+        background-image: repeating-linear-gradient(90deg, #4b5563, #4b5563 3px, transparent 3px, transparent 7px);
+    }
+
+    & .pin-top {
+        top: -6px;
+        left: 15%;
+        right: 15%;
+        height: 6px;
+    }
+
+    & .pin-bottom {
+        bottom: -6px;
+        left: 15%;
+        right: 15%;
+        height: 6px;
+    }
+
+    & .pin-left {
+        left: -6px;
+        top: 15%;
+        bottom: 15%;
+        width: 6px;
+        background-image: repeating-linear-gradient(0deg, #4b5563, #4b5563 3px, transparent 3px, transparent 7px);
+    }
+
+    & .pin-right {
+        right: -6px;
+        top: 15%;
+        bottom: 15%;
+        width: 6px;
+        background-image: repeating-linear-gradient(0deg, #4b5563, #4b5563 3px, transparent 3px, transparent 7px);
+    }
+
+    /* Canales Físicos de Circuitería (Las pistas del PCB) */
+    & .circuit-channel {
+        position: absolute;
+        background: rgba(0, 217, 255, 0.08);
+    }
+
+    & .circuit-channel.horizontal {
+        height: 1px;
+    }
+
+    & .circuit-channel.vertical {
+        width: 1px;
+    }
+
+    & .ch-1 {
+        top: 25%;
+        left: 0;
+        width: 100%;
+    }
+
+    & .ch-2 {
+        top: 0;
+        bottom: 0;
+        left: 18%;
+    }
+
+    & .ch-3 {
+        bottom: 28%;
+        left: 0;
+        width: 100%;
+    }
+
+    & .ch-4 {
+        top: 0;
+        bottom: 0;
+        right: 15%;
+    }
+
+    /* Paquetes de Luz/Energía que cruzan las líneas ocasionalmente */
+    & .data-packet {
+        position: absolute;
+        opacity: 0;
+    }
+
+    & .horizontal .data-packet {
+        height: 3px;
+        width: 200px;
+        top: -1px;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), #00d9ff, transparent);
+        animation: runPacketHorizontal linear infinite;
+    }
+
+    & .vertical .data-packet {
+        width: 3px;
+        height: 200px;
+        left: -1px;
+        background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), #00d9ff, transparent);
+        animation: runPacketVertical linear infinite;
+    }
+
+    /* Variaciones de Velocidad y Tiempo */
+    & .speed-fast {
+        animation-duration: 5s !important;
+    }
+
+    & .speed-medium {
+        animation-duration: 9s !important;
+    }
+
+    & .speed-slow {
+        animation-duration: 15s !important;
+    }
+
+    & .delay-1 {
+        animation-delay: 1s;
+    }
+
+    & .delay-2 {
+        animation-delay: 4s;
+    }
+
+    & .delay-3 {
+        animation-delay: 7s;
+    }
+
+    & .delay-4 {
+        animation-delay: 10s;
     }
 
     & .content {
@@ -35,12 +239,83 @@
             gap: 1rem;
 
             & .how-it-works--card {
+                position: relative;
+                z-index: 1;
                 padding: 2rem;
-                background-color: var(--wp--preset--color--contrast);
                 color: var(--wp--preset--color--base);
                 display: grid;
                 grid-template-rows: auto 1fr;
                 gap: 2rem;
+                backdrop-filter: blur(3px);
+                transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease, box-shadow 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+                /* Asignación de colores únicos ciberpunk por tarjeta */
+                &:nth-of-type(4n+1) {
+                    background: #16253be6;
+                }
+
+                &:nth-of-type(4n+2) {
+                    background: #20813fba;
+                }
+
+                &:nth-of-type(4n+3) {
+                    background: #114c6de6;
+                }
+
+                &:nth-of-type(4n+4) {
+                    background: rgba(59, 43, 22, 0.9);
+                }
+
+                /* Elevar contenido sobre los brillos base */
+                &>* {
+                    position: relative;
+                    z-index: 2;
+                }
+
+                /* Resplandor interno dinámico (Mouse tracking) */
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.15), transparent 50%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    pointer-events: none;
+                    z-index: -1;
+                    border-radius: inherit;
+                    corner-shape: inherit;
+                }
+
+                /* Borde dinámico animado que sigue al ratón */
+                &::after {
+                    content: "";
+                    position: absolute;
+                    inset: -1px;
+                    background: radial-gradient(400px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.85), transparent 50%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    pointer-events: none;
+                    z-index: 1;
+                    border-radius: inherit;
+                    corner-shape: inherit;
+                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+                    padding: 1px;
+                }
+
+                &:hover {
+                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+                    border-color: rgba(255, 255, 255, 0.3);
+                }
+
+                &:hover::before,
+                &:hover::after {
+                    opacity: 1;
+                }
 
                 & .how-it-works--card-content {
                     & img {
@@ -209,4 +484,100 @@
 
 .how-works-modal-content .modal-wysiwyg strong {
     color: #fff;
+}
+
+/* Animación Cyberpunk de Procesamiento de Soluciones */
+@keyframes circuitDrift {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -200px 200px;
+    }
+}
+
+@keyframes cyberLaserSweep {
+    0% {
+        background-position: center -300px;
+    }
+
+    15% {
+        background-position: center 160%;
+    }
+
+    /* Barrido rápido inicial */
+    100% {
+        background-position: center 160%;
+    }
+
+    /* Pausa antes del siguiente ciclo */
+}
+
+/* Animaciones de Flujo de Paquetes de Luz (Circuitería Activa) */
+@keyframes runPacketHorizontal {
+    0% {
+        left: -250px;
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    35% {
+        left: 110%;
+        opacity: 1;
+    }
+
+    40% {
+        left: 120%;
+        opacity: 0;
+    }
+
+    100% {
+        left: 120%;
+        opacity: 0;
+    }
+}
+
+@keyframes runPacketVertical {
+    0% {
+        top: -250px;
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    35% {
+        top: 110%;
+        opacity: 1;
+    }
+
+    40% {
+        top: 120%;
+        opacity: 0;
+    }
+
+    100% {
+        top: 120%;
+        opacity: 0;
+    }
+}
+
+/* Pulsación Vital del Núcleo del Microchip */
+@keyframes chipCoreBeat {
+    0% {
+        opacity: 0.7;
+        transform: scale(0.92);
+        box-shadow: 0 0 10px rgba(0, 217, 255, 0.7), 0 0 20px rgba(0, 217, 255, 0.3);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 217, 255, 1), 0 0 40px rgba(0, 217, 255, 0.6);
+    }
 }

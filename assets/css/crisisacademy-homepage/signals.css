@@ -1,9 +1,43 @@
 #signals {
-    background-color: var(--wp--preset--color--secondary);
+    /* Degradado radial + Patrón de líneas CRT (Escaneo de monitor) */
+    background: #18263E;
+    color: #ffffff;
     position: relative;
     overflow: hidden;
     clip-path: ellipse(100% 100% at 30% 0%);
     z-index: 1;
+
+    /* Gráfica de Trading Profesional (Velas, Bandas y Promedios) */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        /* SVG compuesto: Rejilla + Bandas Bollinger + Promedio Azul + Tendencia Roja + Velas Rojas/Verdes */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cpath d='M0 150H1200M0 300H1200M0 450H1200' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3Cpath d='M150 0V600M300 0V600M450 0V600M600 0V600M750 0V600M900 0V600M1050 0V600' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3Cpath d='M0 200L200 180L400 250L600 150L800 100L1000 250L1200 200V450L1000 580L800 500L600 520L400 550L200 480L0 450Z' fill='rgba(0,255,195,0.03)'/%3E%3Cpath d='M0 200L200 180L400 250L600 150L800 100L1000 250L1200 200' fill='none' stroke='rgba(0,255,195,0.2)' stroke-width='1.5'/%3E%3Cpath d='M0 450L200 480L400 550L600 520L800 500L1000 580L1200 450' fill='none' stroke='rgba(0,255,195,0.2)' stroke-width='1.5'/%3E%3Cpath d='M0 350L200 380L400 420L600 280L800 450L1000 320L1200 350' fill='none' stroke='rgba(0,162,255,0.5)' stroke-width='2.5'/%3E%3Cpath d='M0 420Q300 550 600 470T1200 420' fill='none' stroke='rgba(255,0,85,0.4)' stroke-width='2'/%3E%3Cpath d='M40 300V380M80 280V360M120 260V330M160 230V310M200 250V320M240 210V290M280 230V300M320 190V270M360 160V240M400 130V220M440 160V240M480 120V190M520 100V170M560 120V200M600 150V230M640 190V260M680 220V300M720 260V340M760 300V380M800 340V420M840 320V390M880 280V360M920 240V310M960 210V280M1000 240V320M1040 270V350M1080 310V390M1120 340V420M1160 310V380' stroke='rgba(255,255,255,0.2)' stroke-width='1'/%3E%3Crect x='34' y='320' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='74' y='300' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='114' y='280' width='12' height='30' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='154' y='250' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='194' y='270' width='12' height='30' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='234' y='230' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='274' y='250' width='12' height='30' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='314' y='210' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='354' y='180' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='394' y='150' width='12' height='50' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='434' y='180' width='12' height='30' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='474' y='140' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='514' y='110' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='554' y='140' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='594' y='170' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='634' y='210' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='674' y='240' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='714' y='280' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='754' y='320' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='794' y='360' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='834' y='340' width='12' height='30' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='874' y='300' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='914' y='260' width='12' height='40' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='954' y='230' width='12' height='30' fill='rgba(0,255,195,0.4)'/%3E%3Crect x='994' y='260' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='1034' y='290' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='1074' y='330' width='12' height='40' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='1114' y='360' width='12' height='30' fill='rgba(255,0,85,0.4)'/%3E%3Crect x='1154' y='320' width='12' height='30' fill='rgba(0,255,195,0.4)'/%3E%3C/svg%3E");
+        background-size: 1200px 100%;
+        background-repeat: repeat-x;
+        background-position: center;
+        z-index: 1;
+        pointer-events: none;
+        animation: metricScrollX 40s linear infinite;
+        opacity: 0.85;
+        mask-image: radial-gradient(ellipse 90% 80% at center, black 50%, transparent 95%);
+        -webkit-mask-image: radial-gradient(ellipse 90% 80% at center, black 50%, transparent 95%);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: #304c7b;
+        z-index: 0;
+        filter: blur(150px);
+    }
 
     & .content {
         position: relative;
@@ -22,17 +56,62 @@
                 display: grid;
                 grid-template-columns: auto 1fr;
                 grid-template-rows: auto 1fr;
-                background-color: #ffffff80;
-                backdrop-filter: blur(3px);
+                position: relative;
+                backdrop-filter: blur(10px);
+                background: #1e2e4999;
                 padding: 2rem;
-                box-shadow: #1d224f09 0 -2px 0 inset, #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
-                border: 1px solid rgba(0, 0, 0, 0.06);
+                box-shadow: #0e102620 0px 54px 55px, #0e10260f 0px -12px 30px, #0e10260f 0px 4px 6px, #0e102616 0px 12px 13px, #0e10260b 0px -3px 5px;
+                border: 1px solid rgba(0, 217, 255, 0.15);
                 transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
+                z-index: 1;
+
+                /* Resplandor interno dinámico */
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.12), transparent 50%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    pointer-events: none;
+                    z-index: -1;
+                    border-radius: inherit;
+                    corner-shape: inherit;
+                }
+
+                /* Borde dinámico que sigue al ratón */
+                &::after {
+                    content: "";
+                    position: absolute;
+                    inset: -1px;
+                    background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.8), transparent 50%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    pointer-events: none;
+                    z-index: 1;
+                    border-radius: inherit;
+                    corner-shape: inherit;
+                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+                    padding: 1px;
+                }
+
+                &:hover::before,
+                &:hover::after {
+                    opacity: 1;
+                }
 
                 &:hover {
-                    transform: translateY(-6px);
-                    border-color: var(--wp--preset--color--primary);
-                    box-shadow: var(--wp--preset--shadow--post-shadow-light);
+                    border-color: rgba(0, 162, 255, 0.3);
+                    box-shadow: #0e102640 0px 54px 55px, #0e10261f 0px -12px 30px, #0e10261f 0px 4px 6px, #0e10262b 0px 12px 13px, #0e102617 0px -3px 5px;
+                }
+
+                /* Capa de apilamiento para contenidos del item */
+                &>* {
+                    position: relative;
+                    z-index: 2;
                 }
 
                 & .signal-graph {
@@ -72,96 +151,34 @@
 
         & .subtitle-section {
             font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
 
             & strong {
                 font-weight: 700;
+                color: #ffffff;
             }
         }
     }
+}
 
-    /* Primera onda difuminada (Onda superior) */
-    &::before {
-        content: '';
-        position: absolute;
-        inset: -10%;
-        /* Expandimos los márgenes para evitar cortes del blur durante el movimiento */
-        background-color: var(--wp--preset--color--contrast);
-        opacity: 0.05;
-
-        /* Máscara con onda superior fluida */
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath d='M0,160 C320,300 480,10 800,120 C1120,230 1280,50 1440,180 L1440,320 L0,320 Z'/%3E%3C/svg%3E");
-        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath d='M0,160 C320,300 480,10 800,120 C1120,230 1280,50 1440,180 L1440,320 L0,320 Z'/%3E%3C/svg%3E");
-        mask-size: 100% 100%;
-        -webkit-mask-size: 100% 100%;
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-
-        filter: blur(40px);
-        z-index: 1;
-        pointer-events: none;
-
-        /* Animación líquida de balanceo */
-        transform-origin: center center;
-        animation: waveMotion1 7s ease-in-out infinite;
+/* Animaciones de Scroll de Datos para Fondos Cyberpunk */
+@keyframes metricScrollX {
+    from {
+        background-position-x: 0;
     }
 
-    /* Segunda onda difuminada (Onda inferior con trayectoria complementaria) */
-    &::after {
-        content: '';
-        position: absolute;
-        inset: -10%;
-        /* Expandimos los márgenes para evitar cortes del blur durante el movimiento */
-        background-color: var(--wp--preset--color--contrast);
-        opacity: 0.03;
-
-        /* Máscara con onda inferior complementaria */
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath d='M0,220 C160,110 480,280 800,160 C1120,40 1280,260 1440,120 L1440,320 L0,320 Z'/%3E%3C/svg%3E");
-        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath d='M0,220 C160,110 480,280 800,160 C1120,40 1280,260 1440,120 L1440,320 L0,320 Z'/%3E%3C/svg%3E");
-        mask-size: 100% 100%;
-        -webkit-mask-size: 100% 100%;
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-
-        filter: blur(60px);
-        z-index: 1;
-        pointer-events: none;
-
-        /* Animación líquida de balanceo complementaria */
-        transform-origin: center center;
-        animation: waveMotion2 5s ease-in-out infinite;
+    to {
+        background-position-x: -1200px;
     }
 }
 
-/* Animaciones líquidas fluidas y orgánicas para las ondas de fondo */
-@keyframes waveMotion1 {
-    0% {
-        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+@keyframes matrixScrollY {
+    from {
+        background-position-y: 0;
     }
 
-    33% {
-        transform: translate3d(1.5%, 3%, 0) scale(1.03) rotate(0.8deg);
-    }
-
-    66% {
-        transform: translate3d(-1%, -1.5%, 0) scale(0.98) rotate(-0.5deg);
-    }
-
-    100% {
-        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-    }
-}
-
-@keyframes waveMotion2 {
-    0% {
-        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-    }
-
-    50% {
-        transform: translate3d(-2%, 2%, 0) scale(1.04) rotate(-1.5deg);
-    }
-
-    100% {
-        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    to {
+        background-position-y: 200px;
     }
 }
 

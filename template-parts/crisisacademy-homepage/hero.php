@@ -43,7 +43,7 @@ if (empty($hero_span) && empty($hero_first_content) && empty($hero_action_button
                 ?>
                 <div class="type-item">
                     <?php if (!empty($icon) && is_array($icon)): ?>
-                        <img src="<?= esc_url($icon['url']) ?>" alt="<?= esc_attr($icon['alt']) ?>" width="100px" height="100px" loading="lazy">
+                        <img src="<?= esc_url($icon['url']) ?>" alt="<?= esc_attr($icon['alt']) ?>" width="150px" height="150px" loading="lazy">
                     <?php endif; ?>
                     <p><?= esc_html($text) ?></p>       
                 </div>

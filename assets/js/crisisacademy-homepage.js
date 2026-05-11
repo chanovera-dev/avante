@@ -42,13 +42,13 @@ function initUpcomingEventsClocks() {
  */
 function initUpcomingEventsScroll() {
     const wrapper = document.getElementById('upcoming-events-track-wrapper');
-    const track   = document.getElementById('upcoming-events-track');
+    const track = document.getElementById('upcoming-events-track');
     if (!wrapper || !track) return;
 
     const check = () => {
         const { scrollLeft, scrollWidth, clientWidth } = track;
         wrapper.classList.toggle('at-start', scrollLeft <= 4);
-        wrapper.classList.toggle('at-end',   scrollLeft + clientWidth >= scrollWidth - 4);
+        wrapper.classList.toggle('at-end', scrollLeft + clientWidth >= scrollWidth - 4);
     };
 
     track.addEventListener('scroll', check, { passive: true });
@@ -76,12 +76,12 @@ function initUpcomingEventsOpacityCascade() {
     const cards = Array.from(track.querySelectorAll('.event-card'));
     if (cards.length === 0) return;
 
-    const STEP    = 0.18;   // opacity drop per visible position
+    const STEP = 0.18;   // opacity drop per visible position
     const MIN_VIS = 0.30;   // minimum opacity while still visible
-    const OFF     = 0.25;   // opacity for off-screen cards
+    const OFF = 0.25;   // opacity for off-screen cards
 
     function update() {
-        const trackLeft  = track.scrollLeft;
+        const trackLeft = track.scrollLeft;
         const trackRight = trackLeft + track.clientWidth;
 
         // Classify each card
@@ -89,7 +89,7 @@ function initUpcomingEventsOpacityCascade() {
 
         cards.forEach(card => {
             // offsetLeft is relative to scrollable parent
-            const cardLeft  = card.offsetLeft;
+            const cardLeft = card.offsetLeft;
             const cardRight = cardLeft + card.offsetWidth;
 
             // Consider visible if at least 30px of the card is inside the track
@@ -131,15 +131,15 @@ function initUpcomingEventsOpacityCascade() {
  */
 function initFaqAccordion() {
     const accordionItems = document.querySelectorAll('.accordion-item');
-    
+
     accordionItems.forEach(item => {
         const header = item.querySelector('.accordion-header');
         const body = item.querySelector('.accordion-body');
         const icon = item.querySelector('.accordion-icon');
-        
+
         header.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
-            
+
             // Close all other items
             accordionItems.forEach(otherItem => {
                 if (otherItem !== item) {
@@ -147,14 +147,14 @@ function initFaqAccordion() {
                     const otherBody = otherItem.querySelector('.accordion-body');
                     const otherBtn = otherItem.querySelector('.accordion-header');
                     const otherIcon = otherItem.querySelector('.accordion-icon');
-                    
+
                     otherBody.style.maxHeight = null;
                     otherBody.style.opacity = '0';
                     otherBtn.setAttribute('aria-expanded', 'false');
                     otherIcon.innerHTML = '+';
                 }
             });
-            
+
             // Toggle current item
             if (isActive) {
                 item.classList.remove('active');
@@ -173,10 +173,39 @@ function initFaqAccordion() {
     });
 }
 
+/**
+ * Dynamic Card Glow Effect (Mouse Tracking)
+ * Reads current mouse coordinates inside the card and updates
+ * CSS variables --mouse-x and --mouse-y for responsive glow styling.
+ */
+function initCardGlowEffect() {
+    const cards = document.querySelectorAll('.type-item, .signal-item, .how-it-works--card');
+
+    cards.forEach(card => {
+        let rect;
+        
+        // Capture boundary ONCE when mouse enters to avoid recursive render loops
+        card.addEventListener('mouseenter', () => {
+            rect = card.getBoundingClientRect();
+        });
+
+        card.addEventListener('mousemove', e => {
+            if (!rect) rect = card.getBoundingClientRect(); // Safety fallback
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUpcomingEventsClocks();
     initUpcomingEventsScroll();
     initUpcomingEventsOpacityCascade();
     initFaqAccordion();
+    initCardGlowEffect();
 });
+
 
