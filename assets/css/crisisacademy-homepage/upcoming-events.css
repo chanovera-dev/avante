@@ -45,7 +45,8 @@
         }
 
         & .events-container {
-            background: #edf5ff8f;
+            background-color: #edf5ff8f;
+            backdrop-filter: blur(4px);
             box-shadow: #1d224f12 0px 54px 55px, #1d224f08 0px -12px 30px, #1d224f08 0px 4px 6px, #1d224f08 0px 12px 13px, #1d224f08 0px -3px 5px;
             z-index: 1;
             position: relative;

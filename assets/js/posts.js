@@ -1,3 +1,3 @@
 document.addEventListener('DOMContentLoaded', () => {
-    animateIn('.post, .nsfw, .detras-del-espejo, .participants, .ajax-item-wrapper, .quotes-heading');
+    animateIn('.post, .nsfw, .detras-del-espejo, .participants, .ajax-item-wrapper, .quotes-heading, .news');
 });

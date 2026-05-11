@@ -63,18 +63,34 @@
         // 4) Gutenberg blocks
         if (!$first_video_html) {
             $blocks = parse_blocks($content);
-
             foreach ($blocks as $block) {
-
                 if ($block['blockName'] === 'core/video' && !empty($block['attrs']['src'])) {
-                    $first_video_html = '<video controls src="' . esc_url($block['attrs']['src']) . '"></video>';
+                    $first_video_html = '<div class="post-video-wrapper"><video controls src="' . esc_url($block['attrs']['src']) . '"></video></div>';
                     break;
                 }
-
                 if ($block['blockName'] === 'core/embed' && !empty($block['attrs']['url'])) {
-                    $first_video_html = wp_oembed_get($block['attrs']['url']);
+                    $embed = wp_oembed_get($block['attrs']['url']);
+                    if ($embed) {
+                        $first_video_html = '<div class="post-video-wrapper">' . $embed . '</div>';
+                    }
                     break;
                 }
+            }
+        }
+
+        // 5) [embed] shortcode
+        if (!$first_video_html && preg_match('/(?:\[embed[^\]]*\])(.*?)(?:\[\/embed\])/is', $content, $match)) {
+            $embed = wp_oembed_get(trim(strip_tags($match[1])));
+            if ($embed) {
+                $first_video_html = '<div class="post-video-wrapper">' . $embed . '</div>';
+            }
+        }
+
+        // 6) Plain YouTube/Vimeo URLs (oEmbed fallback)
+        if (!$first_video_html && preg_match('/(?:https?:\/\/(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)[a-zA-Z0-9_-]{11}|https?:\/\/(?:www\.)?vimeo\.com\/\d+)/i', $content, $match)) {
+            $embed = wp_oembed_get($match[0]);
+            if ($embed) {
+                $first_video_html = '<div class="post-video-wrapper">' . $embed . '</div>';
             }
         }
 
@@ -82,6 +98,8 @@
         // PRINT THE VIDEO (only if it exists)
         // --------------------------------------------
         if ($first_video_html) {
+            // Inject native lazy loading into any iframes to prevent heavy scripts from loading early
+            $first_video_html = str_replace('<iframe', '<iframe loading="lazy"', $first_video_html);
             echo $first_video_html;
         }
         ?>

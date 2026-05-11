@@ -2,7 +2,8 @@
 .nsfw.glass-post,
 .detras-del-espejo.glass-post,
 .property.glass-post,
-.participants.glass-post {
+.participants.glass-post,
+.news.glass-post {
     position: relative;
     opacity: 0;
     transform: translateY(4rem);
@@ -38,7 +39,8 @@
         min-height: var(--loop01-height, 320px);
 
         & .wp-post-image,
-        & .post-video-wrapper video {
+        & .post-video-wrapper video,
+        & .post-video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -46,6 +48,23 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
+        }
+
+        & .post-video-wrapper iframe {
+            position: relative;
+            aspect-ratio: 16 / 9;
+        }
+
+        &:has(.post-video-wrapper iframe) {
+
+
+            & .post__content,
+            & .post__header,
+            & .post__overlay,
+            & .post__backdrop,
+            &::after {
+                display: none;
+            }
         }
 
         & .gallery-wrapper {

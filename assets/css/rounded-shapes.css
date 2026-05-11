@@ -62,7 +62,8 @@
 .nsfw.glass-post,
 .detras-del-espejo.glass-post,
 .property.glass-post,
-.participants.glass-post {
+.participants.glass-post,
+.news.glass-post {
     border-radius: 1.7rem;
 
     &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-link, .format-property, .participants) {
@@ -105,6 +106,7 @@
 
         & .wp-post-image,
         & .post-video-wrapper video,
+        & .post-video-wrapper iframe,
         & .gallery-wrapper {
             border-radius: 1.7rem;
         }
@@ -194,7 +196,9 @@
 .audience-item,
 .authority-item,
 .cta-container,
-.cta-panel {
+.cta-panel,
+.main-feat-img,
+.article-thumb img {
     border-radius: 1rem;
 }
 
@@ -356,7 +360,8 @@ select {
     & .nsfw.glass-post,
     & .detras-del-espejo.glass-post,
     & .property.glass-post,
-    & .participants.glass-post {
+    & .participants.glass-post,
+    & .news.glass-post {
 
         &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-link, .format-property, .participants) {
             border-radius: 3rem;
@@ -407,6 +412,7 @@ select {
 
             & .wp-post-image,
             & .post-video-wrapper video,
+            & .post-video-wrapper iframe,
             & .gallery-wrapper {
                 border-radius: 3rem;
                 corner-shape: squircle;
@@ -497,7 +503,10 @@ select {
     .audience-item,
     .authority-item,
     .cta-container,
-    .cta-panel {
+    .cta-panel,
+    .main-feat-img,
+    .article-thumb img,
+    .vid-thumb img {
         border-radius: 2rem;
         corner-shape: squircle;
     }

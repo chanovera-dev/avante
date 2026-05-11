@@ -49,7 +49,7 @@ function setup_avante()
     add_theme_support('customize-selective-refresh-widgets');
     add_theme_support('wp-block-styles');
     add_theme_support('align-wide');
-    add_theme_support('post-thumbnails', ['post', 'page', 'nsfw', 'detras-del-espejo', 'participants', 'guides']);
+    add_theme_support('post-thumbnails', ['post', 'page', 'nsfw', 'detras-del-espejo', 'participants', 'guides', 'news']);
     set_post_thumbnail_size(350, 200, true);
     add_image_size('loop-thumbnail', 400, 400, true);
 }
@@ -301,9 +301,7 @@ function avante_get_assets()
             'crisisacademy-certifications' => "$assets_path/css/crisisacademy-homepage/certifications.css",
             'crisisacademy-cta' => "$assets_path/css/crisisacademy-homepage/cta.css",
             'crisisacademy-upcoming-events' => "$assets_path/css/crisisacademy-homepage/upcoming-events.css",
-            // 'crisisacademy-services' => "$assets_path/css/crisisacademy-homepage/services.css",
-            // 'crisisacademy-calendary' => "$assets_path/css/crisisacademy-homepage/calendary.css",
-            // 'crisisacademy-training' => "$assets_path/css/crisisacademy-homepage/training.css",
+            'crisisacademy-news' => "$assets_path/css/crisisacademy-homepage/news.css",
 
             // contact
             'contact' => "$assets_path/css/contact.css",
@@ -1656,9 +1654,8 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_style('crisisacademy-certifications', $a['css']['crisisacademy-certifications']);
         avante_enqueue_style('crisisacademy-cta', $a['css']['crisisacademy-cta']);
         avante_enqueue_style('crisisacademy-upcoming-events', $a['css']['crisisacademy-upcoming-events']);
-        // avante_enqueue_style('crisisacademy-services', $a['css']['crisisacademy-services']);
-        // avante_enqueue_style('crisisacademy-calendary', $a['css']['crisisacademy-calendary']);
-        // avante_enqueue_style('crisisacademy-training', $a['css']['crisisacademy-training']);
+        avante_enqueue_style('crisisacademy-news', $a['css']['crisisacademy-news']);
+        avante_enqueue_style('archive-design', $a['css']['archive-design']);
 
         // Crisis academy scripts
 
@@ -1666,9 +1663,9 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_script('webgl-slideshow-script', $a['js']['webgl-slideshow-script']);
         avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
         avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
-        // avante_enqueue_script('counter', $a['js']['counter']);
         avante_enqueue_script('crisisacademy-how-works-script', $a['js']['crisisacademy-how-works-script']);
         avante_enqueue_script('cta-slideshow-script', $a['js']['cta-slideshow-script']);
+        // avante_enqueue_script('counter', $a['js']['counter']);
     }
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );
