@@ -257,11 +257,11 @@
                 }
 
                 &:nth-of-type(4n+2) {
-                    background: #20813fba;
+                    background: #205c81ba;
                 }
 
                 &:nth-of-type(4n+3) {
-                    background: #114c6de6;
+                    background: #1f80b7e6;
                 }
 
                 &:nth-of-type(4n+4) {

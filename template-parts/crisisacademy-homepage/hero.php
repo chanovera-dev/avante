@@ -33,26 +33,6 @@ if (empty($hero_span) && empty($hero_first_content) && empty($hero_action_button
                 <?php echo apply_filters( 'the_content', $hero_first_content ); ?>
             </div>
         <?php endif; ?>
-        <div class="types-container">
-            <?php
-        if (have_rows('types_container')) :
-            while (have_rows('types_container')) :
-                the_row();
-                $icon = get_sub_field('types_container_icon');
-                $text = get_sub_field('types_container_text');
-                ?>
-                <div class="type-item">
-                    <?php if (!empty($icon) && is_array($icon)): ?>
-                        <img src="<?= esc_url($icon['url']) ?>" alt="<?= esc_attr($icon['alt']) ?>" width="150px" height="150px" loading="lazy">
-                    <?php endif; ?>
-                    <p><?= esc_html($text) ?></p>       
-                </div>
-            <?php endwhile;
-        else :
-            echo '<p>No se encontraron métodos de tipos.</p>';
-        endif;        
-        ?>
-        </div>
         <?php if ($hero_action_button && $hero_action_button_label): ?>
             <div class="cta-container">
                 <a href="<?= esc_url($hero_action_button); ?>" class="btn primary">

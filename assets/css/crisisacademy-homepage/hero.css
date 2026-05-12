@@ -12,13 +12,16 @@
         text-align: center;
         padding-bottom: 15rem;
 
+        & .span-pretext {
+            color: #00a2ff;
+        }
+
         & .page-subtitle {
+            margin-top: 3rem;
             color: #00a2ff;
             font-family: var(--wp--preset--font-family--manrope);
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
         }
 
         & .types-container {
