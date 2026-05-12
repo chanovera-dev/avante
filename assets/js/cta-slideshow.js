@@ -36,30 +36,36 @@ document.addEventListener("DOMContentLoaded", function () {
             if (isAnimating || targetIdx === current) return
             isAnimating = true
 
+            // Determine direction before normalising targetIdx
+            const direction = targetIdx > current ? 'next' : 'prev'
+
             // Normalise index with wrapping
             targetIdx = ((targetIdx % total) + total) % total
 
             const FLIP_DURATION = 600  // ms — matches CSS 0.6 s
 
-            // Phase 1: rotate 0 → 90° (card "falls away")
+            const phase1Angle = direction === 'next' ? 90 : -90
+            const phase2Angle = direction === 'next' ? -90 : 90
+
+            // Phase 1: rotate 0 → ±90° (card "falls away")
             wrapper.style.transition   = `transform ${FLIP_DURATION / 2}ms cubic-bezier(0.4, 0, 1, 1)`
-            wrapper.style.transform    = "rotateY(90deg)"
+            wrapper.style.transform    = `rotateY(${phase1Angle}deg)`
 
             setTimeout(() => {
-                // At 90° the card is edge-on and invisible — swap slides
+                // At ±90° the card is edge-on and invisible — swap slides
                 slides[current].classList.remove("active")
                 current = targetIdx
                 slides[current].classList.add("active")
                 updateBullets(current)
 
-                // Instantly jump to -90° on the other side (no transition)
+                // Instantly jump to ∓90° on the other side (no transition)
                 wrapper.style.transition = "none"
-                wrapper.style.transform  = "rotateY(-90deg)"
+                wrapper.style.transform  = `rotateY(${phase2Angle}deg)`
 
                 // Force reflow so the browser registers the position change
                 void wrapper.offsetWidth
 
-                // Phase 2: rotate -90° → 0° (card "comes back")
+                // Phase 2: rotate ∓90° → 0° (card "comes back")
                 wrapper.style.transition = `transform ${FLIP_DURATION / 2}ms cubic-bezier(0, 0, 0.6, 1)`
                 wrapper.style.transform  = "rotateY(0deg)"
 

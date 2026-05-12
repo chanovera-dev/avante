@@ -1658,6 +1658,7 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_style('crisisacademy-cta', $a['css']['crisisacademy-cta']);
         avante_enqueue_style('crisisacademy-upcoming-events', $a['css']['crisisacademy-upcoming-events']);
         avante_enqueue_style('crisisacademy-news', $a['css']['crisisacademy-news']);
+        avante_enqueue_style('posts-styles', $a['css']['posts-styles']);
         avante_enqueue_style('archive-design', $a['css']['archive-design']);
         avante_enqueue_style('crisisacademy-faq', $a['css']['crisisacademy-faq']);
 
@@ -1669,6 +1670,8 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
         avante_enqueue_script('crisisacademy-how-works-script', $a['js']['crisisacademy-how-works-script']);
         avante_enqueue_script('cta-slideshow-script', $a['js']['cta-slideshow-script']);
+        avante_enqueue_script('animate-in', $a['js']['animate-in']);
+        avante_enqueue_script('posts-scripts', $a['js']['posts-scripts']);
         // avante_enqueue_script('counter', $a['js']['counter']);
     }
 }

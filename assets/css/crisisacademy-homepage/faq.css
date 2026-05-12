@@ -79,20 +79,6 @@
     z-index: 1;
 }
 
-/* Inner glow overlay mimicking the subtle pink behind the avatar in screenshot */
-.faq-cta-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgb(51 131 255 / 21%) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: -1;
-    filter: blur(10px);
-}
-
 .faq-cta-avatar-wrapper {
     width: 80px;
     height: 80px;

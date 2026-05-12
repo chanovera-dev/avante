@@ -3,37 +3,21 @@ $sectionTitle = get_field('how_it_works_section_title');
 $cta = get_field('how_it_works_cta');
 ?>
 <section id="how-works" class="block">
-    <!-- Infraestructura de Hardware Ciberpunk: Chips y Circuitos Físicos -->
-    <div class="hardware-background" aria-hidden="true">
-        <!-- Chip Central de Procesamiento Izquierdo -->
-        <div class="motherboard-chip chip-one">
-            <div class="chip-housing">
-                <div class="chip-core"></div>
-            </div>
-            <div class="pins pin-top"></div><div class="pins pin-bottom"></div><div class="pins pin-left"></div><div class="pins pin-right"></div>
-        </div>
-
-        <!-- Chip Secundario Derecho -->
-        <div class="motherboard-chip chip-two">
-            <div class="chip-housing">
-                <div class="chip-core"></div>
-            </div>
-            <div class="pins pin-top"></div><div class="pins pin-bottom"></div>
-        </div>
-
-        <!-- Canales de Circuito y Flujos de Datos Activos -->
-        <div class="circuit-channel horizontal ch-1">
-            <div class="data-packet speed-fast delay-1"></div>
-        </div>
-        <div class="circuit-channel vertical ch-2">
-            <div class="data-packet speed-medium delay-2"></div>
-        </div>
-        <div class="circuit-channel horizontal ch-3">
-            <div class="data-packet speed-slow delay-3"></div>
-        </div>
-        <div class="circuit-channel vertical ch-4">
-            <div class="data-packet speed-fast delay-4"></div>
-        </div>
+    <!-- Radar Background -->
+    <div class="radar-bg">
+        <div class="radar-grid"></div>
+        <div class="radar-axis radar-axis-x"></div>
+        <div class="radar-axis radar-axis-y"></div>
+        <div class="radar-circle radar-circle-1"></div>
+        <div class="radar-circle radar-circle-2"></div>
+        <div class="radar-circle radar-circle-3"></div>
+        <div class="radar-circle radar-circle-4"></div>
+        <div class="radar-beam"></div>
+        <div class="radar-blip blip-1"></div>
+        <div class="radar-blip blip-2"></div>
+        <div class="radar-blip blip-3"></div>
+        <div class="radar-blip blip-4"></div>
+        <div class="radar-blip blip-5"></div>
     </div>
 
     <div class="content">

@@ -1,222 +1,202 @@
 #how-works {
     text-align: center;
     position: relative;
+    overflow: hidden;
 
-
-    /* Capa de Fondo 1: Microprocesador y Circuitos Lógicos (Hardware de Soluciones) */
     &::before {
         content: '';
         position: absolute;
-        inset: 0;
-        background-color: var(--wp--preset--color--footer-background);
-        /* SVG de Trazas de Microchips e Integrados en Cian Neon Sutil */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M20 0V40H80V100H100V120H150V180H200M0 80H40V120H80V160H120V200M120 0V60H160V100H200' fill='none' stroke='rgba(0,217,255,0.07)' stroke-width='1.5'/%3E%3Crect x='76' y='96' width='8' height='8' fill='rgba(0,217,255,0.1)' stroke='rgba(0,217,255,0.3)'/%3E%3Crect x='156' y='96' width='8' height='8' fill='rgba(0,217,255,0.1)' stroke='rgba(0,217,255,0.3)'/%3E%3Crect x='116' y='156' width='8' height='8' fill='rgba(0,217,255,0.1)' stroke='rgba(0,217,255,0.3)'/%3E%3Ccircle cx='40' cy='120' r='2' fill='rgba(0,217,255,0.4)'/%3E%3Ccircle cx='80' cy='160' r='2' fill='rgba(0,217,255,0.4)'/%3E%3C/svg%3E");
-        background-size: 200px 200px;
-        background-repeat: repeat;
+        width: 600px;
+        height: 600px;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: #304c7b;
         z-index: 0;
-        clip-path: ellipse(200% 100% at 30% 100%);
-        animation: circuitDrift 50s linear infinite;
-        opacity: 0.9;
-        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        filter: blur(150px);
     }
 
-    /* Capa de Fondo 2: Escáner Láser Periódico (Barrido de Procesamiento) */
-    &::after {
-        content: '';
+    & .radar-bg {
         position: absolute;
         inset: 0;
-        /* Barra de luz concentrada (Escáner Radar Green) que 'lee' los circuitos */
-        background: linear-gradient(to bottom, transparent 0%, rgba(57, 255, 20, 0) 45%, rgba(57, 255, 20, 0.25) 50%, rgba(57, 255, 20, 0) 55%, transparent 100%);
-        background-size: 100% 250px;
-        background-repeat: no-repeat;
-        background-position: center -300px;
         z-index: 0;
-        pointer-events: none;
-        clip-path: ellipse(200% 100% at 30% 100%);
-        animation: cyberLaserSweep 15s ease-in-out infinite;
-        mix-blend-mode: screen;
-    }
-
-    /* ==========================================================================
-       Sistema de Hardware Activo: Chips Físicos y Flujos de Luz en Canales
-       ========================================================================== */
-    & .hardware-background {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
         pointer-events: none;
         overflow: hidden;
-        /* Hereda la forma inclinada del contenedor */
-        clip-path: ellipse(200% 100% at 30% 100%);
-    }
 
-    /* Microchips Ciberpunk Reales */
-    & .motherboard-chip {
-        position: absolute;
-        background: #0e121a;
-        border: 2px solid #1f2937;
-        box-shadow: inset 0 0 15px rgba(0, 217, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.6);
-        border-radius: 4px;
-    }
+        & .radar-grid {
+            position: absolute;
+            inset: -50%;
+            background-image:
+                linear-gradient(rgba(30, 144, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 144, 255, 0.05) 1px, transparent 1px);
+            background-size: 100px 100px;
+            background-position: center center;
+        }
 
-    & .chip-one {
-        width: 90px;
-        height: 90px;
-        top: 15%;
-        left: 10%;
-    }
+        & .radar-axis {
+            position: absolute;
+            background: rgba(30, 144, 255, 0.3);
+            z-index: 1;
+        }
 
-    & .chip-two {
-        width: 70px;
-        height: 70px;
-        bottom: 15%;
-        right: 12%;
-    }
+        & .radar-axis-x {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            transform: translateY(-50%);
+        }
 
-    & .chip-housing {
-        position: absolute;
-        inset: 12px;
-        background: #151b26;
-        border: 1px solid rgba(0, 217, 255, 0.25);
-        border-radius: 2px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        & .radar-axis-y {
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            transform: translateX(-50%);
+        }
 
-    & .chip-core {
-        width: 45%;
-        height: 45%;
-        background: #00d9ff;
-        border-radius: 2px;
-        box-shadow: 0 0 15px rgba(0, 217, 255, 0.8), 0 0 35px rgba(0, 217, 255, 0.4);
-        animation: chipCoreBeat 3s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
-    }
+        & .radar-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(30, 144, 255, 0.25);
+            border-radius: 50%;
+            z-index: 1;
+        }
 
-    /* Pines metálicos del conector del chip */
-    & .pins {
-        position: absolute;
-        background-image: repeating-linear-gradient(90deg, #4b5563, #4b5563 3px, transparent 3px, transparent 7px);
-    }
+        & .radar-circle-1 {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.1) 0%, transparent 70%);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.2);
 
-    & .pin-top {
-        top: -6px;
-        left: 15%;
-        right: 15%;
-        height: 6px;
-    }
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 35px;
+                border: 2px solid rgba(30, 144, 255, 0.6);
+                border-radius: 50%;
+                background: rgba(30, 144, 255, 0.15);
+                box-shadow: 0 0 15px rgba(30, 144, 255, 0.6);
+            }
+        }
 
-    & .pin-bottom {
-        bottom: -6px;
-        left: 15%;
-        right: 15%;
-        height: 6px;
-    }
+        & .radar-circle-2 {
+            width: 350px;
+            height: 350px;
+            border-style: dashed;
+            opacity: 0.7;
+        }
 
-    & .pin-left {
-        left: -6px;
-        top: 15%;
-        bottom: 15%;
-        width: 6px;
-        background-image: repeating-linear-gradient(0deg, #4b5563, #4b5563 3px, transparent 3px, transparent 7px);
-    }
+        & .radar-circle-3 {
+            width: 600px;
+            height: 600px;
+        }
 
-    & .pin-right {
-        right: -6px;
-        top: 15%;
-        bottom: 15%;
-        width: 6px;
-        background-image: repeating-linear-gradient(0deg, #4b5563, #4b5563 3px, transparent 3px, transparent 7px);
-    }
+        & .radar-circle-4 {
+            width: 900px;
+            height: 900px;
+            border-style: dotted;
+            opacity: 0.5;
+        }
 
-    /* Canales Físicos de Circuitería (Las pistas del PCB) */
-    & .circuit-channel {
-        position: absolute;
-        background: rgba(0, 217, 255, 0.08);
-    }
+        & .radar-beam {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            margin-top: -250px;
+            margin-left: -250px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, rgba(30, 144, 255, 0) 0deg, rgba(30, 144, 255, 0) 300deg, rgba(30, 144, 255, 0.4) 360deg);
+            animation: radar-sweep 5s linear infinite;
+            opacity: .3;
+            z-index: 2;
 
-    & .circuit-channel.horizontal {
-        height: 1px;
-    }
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 2px;
+                height: 50%;
+                background: rgba(30, 144, 255, 0.8);
+                transform-origin: bottom center;
+                transform: translateX(-50%);
+                box-shadow: 0 0 12px rgba(30, 144, 255, 1);
+            }
+        }
 
-    & .circuit-channel.vertical {
-        width: 1px;
-    }
+        & .radar-blip {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            z-index: 3;
 
-    & .ch-1 {
-        top: 25%;
-        left: 0;
-        width: 100%;
-    }
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                inset: -6px;
+                border: 1px solid inherit;
+                border-radius: 50%;
+                animation: radar-blip-pulse 2s ease-out infinite;
+                border-color: inherit;
+            }
 
-    & .ch-2 {
-        top: 0;
-        bottom: 0;
-        left: 18%;
-    }
+            &::after {
+                animation-delay: 1s;
+            }
+        }
 
-    & .ch-3 {
-        bottom: 28%;
-        left: 0;
-        width: 100%;
-    }
+        & .blip-1 {
+            top: 30%;
+            left: 60%;
+            background: #ff3333;
+            border-color: #ff3333;
+            box-shadow: 0 0 10px #ff3333;
+            animation: blip-move-1 25s ease-in-out infinite alternate;
+        }
 
-    & .ch-4 {
-        top: 0;
-        bottom: 0;
-        right: 15%;
-    }
+        & .blip-2 {
+            top: 65%;
+            left: 35%;
+            background: #ff8800;
+            border-color: #ff8800;
+            box-shadow: 0 0 10px #ff8800;
+            animation: blip-move-2 30s ease-in-out infinite alternate;
+        }
 
-    /* Paquetes de Luz/Energía que cruzan las líneas ocasionalmente */
-    & .data-packet {
-        position: absolute;
-        opacity: 0;
-    }
+        & .blip-3 {
+            top: 75%;
+            left: 55%;
+            background: #00ff00;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            animation: blip-move-3 28s ease-in-out infinite alternate;
+        }
 
-    & .horizontal .data-packet {
-        height: 3px;
-        width: 200px;
-        top: -1px;
-        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), #00d9ff, transparent);
-        animation: runPacketHorizontal linear infinite;
-    }
+        & .blip-4 {
+            top: 40%;
+            left: 25%;
+            background: #ffcc00;
+            border-color: #ffcc00;
+            box-shadow: 0 0 10px #ffcc00;
+            animation: blip-move-4 35s ease-in-out infinite alternate;
+        }
 
-    & .vertical .data-packet {
-        width: 3px;
-        height: 200px;
-        left: -1px;
-        background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), #00d9ff, transparent);
-        animation: runPacketVertical linear infinite;
-    }
-
-    /* Variaciones de Velocidad y Tiempo */
-    & .speed-fast {
-        animation-duration: 5s !important;
-    }
-
-    & .speed-medium {
-        animation-duration: 9s !important;
-    }
-
-    & .speed-slow {
-        animation-duration: 15s !important;
-    }
-
-    & .delay-1 {
-        animation-delay: 1s;
-    }
-
-    & .delay-2 {
-        animation-delay: 4s;
-    }
-
-    & .delay-3 {
-        animation-delay: 7s;
-    }
-
-    & .delay-4 {
-        animation-delay: 10s;
+        & .blip-5 {
+            top: 45%;
+            left: 75%;
+            background: #00aaff;
+            border-color: #00aaff;
+            box-shadow: 0 0 10px #00aaff;
+            animation: blip-move-5 32s ease-in-out infinite alternate;
+        }
     }
 
     & .content {
@@ -579,5 +559,118 @@
         opacity: 1;
         transform: scale(1.05);
         box-shadow: 0 0 20px rgba(0, 217, 255, 1), 0 0 40px rgba(0, 217, 255, 0.6);
+    }
+}
+
+/* Radar Animations */
+@keyframes radar-sweep {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes radar-blip-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(3.5);
+        opacity: 0;
+    }
+}
+
+@keyframes blip-move-1 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    33% {
+        transform: translate(30px, -40px);
+    }
+
+    66% {
+        transform: translate(-20px, 15px);
+    }
+
+    100% {
+        transform: translate(10px, 20px);
+    }
+}
+
+@keyframes blip-move-2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    33% {
+        transform: translate(-40px, 20px);
+    }
+
+    66% {
+        transform: translate(20px, -30px);
+    }
+
+    100% {
+        transform: translate(-10px, -15px);
+    }
+}
+
+@keyframes blip-move-3 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    33% {
+        transform: translate(25px, 35px);
+    }
+
+    66% {
+        transform: translate(-30px, -20px);
+    }
+
+    100% {
+        transform: translate(-15px, 25px);
+    }
+}
+
+@keyframes blip-move-4 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    33% {
+        transform: translate(-20px, -30px);
+    }
+
+    66% {
+        transform: translate(35px, 20px);
+    }
+
+    100% {
+        transform: translate(15px, -25px);
+    }
+}
+
+@keyframes blip-move-5 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    33% {
+        transform: translate(40px, 10px);
+    }
+
+    66% {
+        transform: translate(-10px, -40px);
+    }
+
+    100% {
+        transform: translate(-25px, 15px);
     }
 }

@@ -4,6 +4,15 @@
 
 #certification {
     background-color: var(--wp--preset--color--tertiary);
+    background-image:
+        linear-gradient(to bottom, var(--wp--preset--color--tertiary) 0%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 35%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 55%, var(--wp--preset--color--tertiary) 100%),
+        url('../../img/war-room-big.webp');
+    background-position: center top, center center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% 100%, cover;
+    /* El primer valor (scroll) aplica al gradiente para que se mueva con la sección,
+       el segundo valor (fixed) aplica a la imagen para el efecto parallax */
+    background-attachment: scroll, fixed;
     position: relative;
     overflow: hidden;
 
@@ -26,7 +35,8 @@
                     z-index: 4;
                     display: grid;
                     grid-template-rows: 1fr auto;
-                    background-color: #ffffff80;
+                    background-color: #ffffff5e;
+                    backdrop-filter: blur(5px);
                     max-width: 411px;
                     overflow: hidden;
                     box-shadow: #1d224f09 0 -2px 0 inset, #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
@@ -34,8 +44,46 @@
                     transition: border-color .3s ease, box-shadow .3s ease;
                     transform-origin: center center;
 
+                    /* Resplandor interno dinámico */
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.75), transparent 50%);
+                        opacity: 0;
+                        transition: opacity 0.4s ease;
+                        pointer-events: none;
+                        z-index: -1;
+                        border-radius: inherit;
+                        corner-shape: inherit;
+                    }
+
+                    /* Borde dinámico que sigue al ratón */
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        inset: -1px;
+                        background: radial-gradient(300px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.8), transparent 50%);
+                        opacity: 0;
+                        transition: opacity 0.4s ease;
+                        pointer-events: none;
+                        z-index: 1;
+                        border-radius: inherit;
+                        corner-shape: inherit;
+                        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                        -webkit-mask-composite: xor;
+                        mask-composite: exclude;
+                        padding: 1px;
+                    }
+
+                    &:hover::before,
+                    &:hover::after {
+                        opacity: 1;
+                    }
+
                     &:hover {
-                        border-color: var(--wp--preset--color--primary);
+                        border-color: rgba(0, 162, 255, 0.3);
                         box-shadow: var(--wp--preset--shadow--post-shadow-light);
 
                         & .slideshow--wrapper {
@@ -112,7 +160,7 @@
                                         position: absolute;
                                         top: -3rem;
                                         right: .7rem;
-                                        background-color: var(--wp--preset--color--secondary);
+                                        background-color: color-mix(in srgb, var(--wp--preset--color--secondary) 65%, transparent);
                                         border-radius: 50%;
                                         display: grid;
                                         place-content: center;
@@ -122,7 +170,7 @@
 
                                     & .module-icon {
                                         transform: translateY(.3rem);
-                                        background-color: var(--wp--preset--color--tertiary);
+                                        background-color: color-mix(in srgb, var(--wp--preset--color--tertiary) 35%, transparent);
                                         color: var(--wp--preset--color--primary);
                                         width: 80px;
                                         height: 80px;
@@ -350,9 +398,9 @@
             align-items: center;
             gap: 2rem;
             padding: 1.75rem 2.5rem;
-            background: color-mix(in srgb, var(--wp--preset--color--secondary) 20%, transparent);
-            ;
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: color-mix(in srgb, var(--wp--preset--color--secondary) 70%, transparent);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--wp--preset--color--primary);
             margin-top: 3rem;
 
             & .info-bar-item {
@@ -364,7 +412,7 @@
                 text-align: left;
 
                 & .info-bar-icon {
-                    color: var(--wp--preset--color--secondary);
+                    color: var(--wp--preset--color--primary);
                     flex-shrink: 0;
                     display: flex;
                     align-items: center;

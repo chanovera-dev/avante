@@ -52,11 +52,10 @@
 
         & .post-video-wrapper iframe {
             position: relative;
-            aspect-ratio: 16 / 9;
+            height: var(--loop01-height, 320px);
         }
 
         &:has(.post-video-wrapper iframe) {
-
 
             & .post__content,
             & .post__header,
@@ -64,6 +63,10 @@
             & .post__backdrop,
             &::after {
                 display: none;
+            }
+
+            & .post-video-wrapper {
+                display: grid;
             }
         }
 
