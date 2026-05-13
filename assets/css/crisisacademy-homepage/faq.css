@@ -12,42 +12,6 @@
     overflow: hidden;
 }
 
-/* Cuadrícula secundaria fina (Minor Grid) */
-#faq-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(to top, color-mix(in srgb, var(--wp--preset--color--contrast) 6%, transparent) 1px, transparent 1px),
-        linear-gradient(to right, color-mix(in srgb, var(--wp--preset--color--contrast) 6%, transparent) 1px, transparent 1px);
-    background-size: 30px 30px;
-    background-position: center top;
-    z-index: 1;
-    pointer-events: none;
-
-    /* Máscara de transparencia de arriba a abajo */
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-}
-
-/* Cuadrícula principal más gruesa (Major Grid) */
-#faq-section::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(to top, color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent) 1.5px, transparent 1.5px),
-        linear-gradient(to right, color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent) 1.5px, transparent 1.5px);
-    background-size: 150px 150px;
-    background-position: center top;
-    z-index: 1;
-    pointer-events: none;
-
-    /* Máscara de transparencia de arriba a abajo */
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-}
-
 .faq-grid {
     display: grid;
     grid-template-columns: 1.2fr 1.8fr;

@@ -1,26 +1,55 @@
-#about {
-    background-color: var(--wp--preset--color--base);
+#crisis-simulator {
+    background-color: var(--wp--preset--color--secondary);
     position: relative;
-    clip-path: ellipse(100% 100% at 30% 0%);
+    overflow: hidden;
 
+    /* Cuadrícula secundaria fina (Minor Grid) */
     &::before {
         content: '';
         position: absolute;
-        top: -50%;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--wp--preset--color--base);
-        z-index: 0;
+        inset: 0;
+        background-image:
+            linear-gradient(to top, color-mix(in srgb, var(--wp--preset--color--contrast) 6%, transparent) 1px, transparent 1px),
+            linear-gradient(to right, color-mix(in srgb, var(--wp--preset--color--contrast) 6%, transparent) 1px, transparent 1px);
+        background-size: 30px 30px;
+        background-position: center top;
+        z-index: 1;
+        pointer-events: none;
+
+        /* Máscara de transparencia de arriba a abajo */
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
     }
+
+    /* Cuadrícula principal más gruesa (Major Grid) */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(to top, color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent) 1.5px, transparent 1.5px),
+            linear-gradient(to right, color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent) 1.5px, transparent 1.5px);
+        background-size: 150px 150px;
+        background-position: center top;
+        z-index: 1;
+        pointer-events: none;
+
+        /* Máscara de transparencia de arriba a abajo */
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
 
     & .content {
         display: grid;
         gap: 3rem;
-        padding: 7rem 0;
-        padding-bottom: 10rem;
-        position: relative;
-        z-index: 1;
+        padding: clamp(2rem, 5vw, 5rem) 0;
+
+        & .data {
+            & .title-section {
+                margin-bottom: clamp(2rem, 3vw, 3rem);
+            }
+        }
 
         & .container {
             z-index: 4;
@@ -28,7 +57,7 @@
             grid-template-rows: 1fr auto;
             box-shadow: var(--wp--preset--shadow--post-shadow-light);
             overflow: hidden;
-            aspect-ratio: 4 / 3;
+            aspect-ratio: 21 / 9;
             position: relative;
 
             & .post__overlay {
@@ -123,59 +152,37 @@
                     }
                 }
             }
-        }
 
-        & .data {
-            &>*:not(p:has(.span-pretext), .about-container) {
-                margin-bottom: 1rem;
-            }
+            & .btn-simulator-link {
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                z-index: 10;
+                background: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(6px);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                color: #fff !important;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                text-decoration: none;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transition: background 0.3s ease, transform 0.3s ease;
 
-            & .about-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-                gap: 1rem;
-                margin-top: 3rem;
-
-                & .about-item {
-                    display: flex;
-                    gap: 1rem;
-                    align-items: center;
-                    padding: 1rem;
-                    background-color: var(--wp--preset--color--tertiary);
-                    box-shadow: #1d224f09 0 -2px 0 inset, #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
-                    border: 1px solid rgba(0, 0, 0, 0.06);
-                    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
-
-                    &:hover {
-                        transform: translateY(-6px);
-                        border-color: var(--wp--preset--color--primary);
-                        box-shadow: var(--wp--preset--shadow--post-shadow-light);
-                    }
-
-                    & img {
-                        filter: invert(20%) sepia(92%) saturate(1469%) hue-rotate(199deg) brightness(105%) contrast(119%);
-                    }
-
-                    & .about-item-label {
-                        line-height: 1.3;
-                        font-size: 1.2rem;
-                        color: #285386;
-                    }
+                &:hover {
+                    background: var(--wp--preset--color--contrast);
                 }
             }
         }
     }
 }
 
-@media (width < 600px) {
-    #about {
-        clip-path: ellipse(200% 100% at 60% 0%);
-    }
-}
-
-@media (width >=1024px) {
-    #about .content {
-        grid-template-columns: clamp(300px, 128px + 16.8vw, 450px) 1fr;
-        align-items: start;
+@media (width >=768px) {
+    #crisis-simulator {
+        & .content {
+            grid-template-columns: clamp(300px, 128px + 16.8vw, 450px) 1fr;
+        }
     }
 }

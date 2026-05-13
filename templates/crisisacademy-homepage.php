@@ -11,11 +11,11 @@ get_header(); ?>
 
     $sections = [
         'hero',
-        'signals',
         'about',
+        'signals',
         'how-works',
         'certification',
-        // 'certifications',
+        'crisis-simulator',
         // 'cta',
         'upcoming-events',
         'news' => !empty(get_posts(['post_type' => 'news', 'posts_per_page' => 1])),

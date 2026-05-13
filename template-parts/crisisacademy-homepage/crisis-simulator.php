@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying the about section on the homepage.
+ * Template part for displaying the simulator section on the homepage.
  *
  * This section features a main heading, subheading, and call-to-action buttons.
  * All content is managed through Advanced Custom Fields (ACF).
@@ -12,28 +12,41 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-$about_content = get_field('about_content');
+$simulator_content = get_field('simulator_showreel');
 
-if (empty($about_content)) {
+if (empty($simulator_content)) {
     return;
 }
 ?>
-<section id="about" class="block">
+<section id="crisis-simulator" class="block">
     <div class="content">
+        <div class="data">
+            <span class="span-pretext">Simulador de crisis</span>
+            <h2 class="title-section">Experimenta la presión en tiempo real y descubre si tu equipo está preparado</h2>
+            <?php
+            if ( ! function_exists( 'is_plugin_active' ) ) {
+                include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            }
+            if ( is_plugin_active( 'crisis-simulator/simulador-de-crisis.php' ) ) : ?>
+                <a href="<?php echo esc_url( home_url( '/simulador-de-crisis/' ) ); ?>" class="btn-simulator-link btn primary">
+                    Simular Crisis
+                </a>
+            <?php endif; ?>
+        </div>
         <div class="container app">
             <div class="slideshow--wrapper">
                 <div class="slideshow">
                     <?php
-                    if (have_rows('about_showreel')):
+                    if (have_rows('simulator_showreel')):
                         $count = 0;
-                        while (have_rows('about_showreel')):
+                        while (have_rows('simulator_showreel')):
                             the_row(); 
-                            $image = get_sub_field('about_showreel_image');
+                            $image = get_sub_field('simulator_showreel_image');
                             $count++;
                             ?>
 
-                            <article id="about-item-<?= $count; ?>" class="about-item post">
-                                <div class="about-content">
+                            <article id="simulator-item-<?= $count; ?>" class="simulator-item post">
+                                <div class="simulator-content">
                                     <?php
                                     if ($image) {
                                         $img_id = is_array($image) ? $image['ID'] : $image;
@@ -50,7 +63,7 @@ if (empty($about_content)) {
                     ?>
                 </div>
             </div>
-            <?php if (have_rows('about_showreel')): ?>
+            <?php if (have_rows('simulator_showreel')): ?>
             <div class="slideshow-bullets-wrapper">
                 <button class="slideshow-prev btn-pagination small-pagination" aria-label="siguiente diapositiva">
                     <?= avante_get_icon('backward'); ?>
@@ -61,29 +74,6 @@ if (empty($about_content)) {
                 </button>
             </div>
             <?php endif; ?>
-        </div>
-        <div class="data">
-            <?php if ($about_content) : ?>
-                <?php echo apply_filters( 'the_content', $about_content )?>
-            <?php endif; ?>    
-            <div class="about-container">
-            <?php if (have_rows('about_items')) : ?>
-                <?php while (have_rows('about_items')) : the_row(); ?>
-                    <div class="about-item">
-                        <?php
-                        $icon = get_sub_field('about_item_icon');
-                        $label = get_sub_field('about_item_label');
-                        if ($icon) :
-                            ?>
-                            <img src="<?= $icon['url'] ?>" alt="<?= $icon['alt'] ?>" srcset="" width="64px" height="64px" loading="lazy">
-                        <?php endif; ?>
-                        <span class="about-item-label"><?= $label ?></span>
-                    </div>
-                <?php endwhile; ?>
-                <?php else : ?>
-                    <p>No se encontraron ítems.</p>
-            <?php endif; ?>
-            </div>
         </div>
     </div>
 </section>

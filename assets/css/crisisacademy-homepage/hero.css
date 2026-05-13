@@ -4,22 +4,28 @@
     position: relative;
     overflow: hidden;
     clip-path: ellipse(100% 100% at 50% 0%);
-    /* Arco continuo y matemáticamente perfecto de extremo a extremo sin esquinas */
+    z-index: 1;
 
     & .content {
         position: relative;
         z-index: 2;
         text-align: center;
-        padding-bottom: 15rem;
+        padding-top: clamp(2rem, 5vw, 10rem);
+        padding-bottom: clamp(5rem, 15vw, 15rem);
 
         & .span-pretext {
             color: #00a2ff;
+        }
+
+        & .page-title {
+            font-size: clamp(1.8rem, 2.5vw, 3rem);
         }
 
         & .page-subtitle {
             margin-top: 3rem;
             color: #00a2ff;
             font-family: var(--wp--preset--font-family--manrope);
+            font-size: clamp(1rem, 2.5vw, 2.5rem);
             font-weight: 600;
             letter-spacing: 1.5px;
         }
