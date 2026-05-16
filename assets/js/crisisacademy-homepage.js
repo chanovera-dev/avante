@@ -200,12 +200,48 @@ function initCardGlowEffect() {
     });
 }
 
+/**
+ * Sticky Overlap Effect
+ * Adds .is-bottom to a block when the next block slides over it.
+ * Uses a scroll listener + getBoundingClientRect because IntersectionObserver
+ * can't detect when a sticky element is visually covered by another.
+ */
+function initStickyOverlapEffect() {
+    const blocks = Array.from(document.querySelectorAll('.site-main > .block'));
+    if (blocks.length < 2) return;
+
+    // Force sticky + ascending z-index via inline styles (overrides ID specificity)
+    blocks.forEach((block, index) => {
+        block.style.position = 'sticky';
+        block.style.top = '0';
+        block.style.zIndex = index + 1;
+    });
+
+    function updateOverlap() {
+        blocks.forEach((block, index) => {
+            if (index === blocks.length - 1) {
+                block.classList.remove('is-bottom');
+                return;
+            }
+
+            const nextBlock = blocks[index + 1];
+            const nextTop = nextBlock.getBoundingClientRect().top;
+
+            // Start fading when the next block is within 40% of the viewport height
+            const threshold = window.innerHeight * 0.5;
+            block.classList.toggle('is-bottom', nextTop <= threshold);
+        });
+    }
+
+    window.addEventListener('scroll', updateOverlap, { passive: true });
+    updateOverlap(); // Run once on load
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUpcomingEventsClocks();
     initUpcomingEventsScroll();
     initUpcomingEventsOpacityCascade();
     initFaqAccordion();
     initCardGlowEffect();
+    initStickyOverlapEffect();
 });
-
-
