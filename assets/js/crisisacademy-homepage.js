@@ -202,20 +202,44 @@ function initCardGlowEffect() {
 
 /**
  * Sticky Overlap Effect
- * Adds .is-bottom to a block when the next block slides over it.
- * Uses a scroll listener + getBoundingClientRect because IntersectionObserver
- * can't detect when a sticky element is visually covered by another.
+ * Sections stack on top of each other as the user scrolls down.
+ * For sections taller than the viewport, a negative `top` is used so the
+ * section only sticks once the user has scrolled to its bottom.
  */
 function initStickyOverlapEffect() {
     const blocks = Array.from(document.querySelectorAll('.site-main > .block'));
     if (blocks.length < 2) return;
 
-    // Force sticky + ascending z-index via inline styles (overrides ID specificity)
+    // Force sticky + ascending z-index (overrides ID-level specificity)
     blocks.forEach((block, index) => {
         block.style.position = 'sticky';
-        block.style.top = '0';
         block.style.zIndex = index + 1;
     });
+
+    // Recalculate `top` for each block based on its full content height.
+    // scrollHeight is used (not offsetHeight) to get the real height including
+    // any content that may not yet have rendered at DOMContentLoaded.
+    function applyStickyTops() {
+        const vh = window.innerHeight;
+        blocks.forEach(block => {
+            const bh = block.scrollHeight;
+            // Negative top: section scrolls until its bottom hits the viewport bottom,
+            // then sticks — ensuring the user sees ALL content before overlap.
+            block.style.top = bh > vh ? `${vh - bh}px` : '0px';
+        });
+    }
+
+    applyStickyTops(); // Initial estimate (pre-images)
+
+    // Re-run after all resources (images, fonts) are loaded
+    window.addEventListener('load', applyStickyTops);
+    window.addEventListener('resize', applyStickyTops, { passive: true });
+
+    // Re-run if any section changes its rendered size (dynamic content, accordions, etc.)
+    if (window.ResizeObserver) {
+        const ro = new ResizeObserver(applyStickyTops);
+        blocks.forEach(block => ro.observe(block));
+    }
 
     function updateOverlap() {
         blocks.forEach((block, index) => {
@@ -227,14 +251,13 @@ function initStickyOverlapEffect() {
             const nextBlock = blocks[index + 1];
             const nextTop = nextBlock.getBoundingClientRect().top;
 
-            // Start fading when the next block is within 40% of the viewport height
-            const threshold = window.innerHeight * 0.5;
-            block.classList.toggle('is-bottom', nextTop <= threshold);
+            // Start dimming when the next block is within 50% of the viewport
+            block.classList.toggle('is-bottom', nextTop <= window.innerHeight * 0.5);
         });
     }
 
     window.addEventListener('scroll', updateOverlap, { passive: true });
-    updateOverlap(); // Run once on load
+    updateOverlap();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
