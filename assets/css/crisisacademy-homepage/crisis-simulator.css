@@ -43,7 +43,6 @@
     & .content {
         display: grid;
         gap: 3rem;
-        padding: clamp(2rem, 5vw, 5rem) 0;
 
         & .data {
             & .title-section {

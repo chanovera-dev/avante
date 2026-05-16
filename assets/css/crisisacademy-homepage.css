@@ -108,8 +108,7 @@
 }
 
 .site-main {
-    background-color: var(--wp--preset--color--contrast);
-    border-color: color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent);
+    border-top: 1px solid var(--wp--preset--color--contrast) !important;
     overflow: visible;
 
     /* ── Sticky overlap: cada sección queda pegada y la siguiente sube por encima ── */
@@ -135,7 +134,7 @@
     /* Estilos de contenido de los bloques */
     & .block {
         & .content {
-            padding: 5rem 0;
+            padding: clamp(2rem, 5vw, 10rem) 0;
 
             & .span-pretext {
                 color: #285386;

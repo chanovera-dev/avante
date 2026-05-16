@@ -43,7 +43,6 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        padding: 10rem 0rem;
 
         & .signals-container {
             display: grid;

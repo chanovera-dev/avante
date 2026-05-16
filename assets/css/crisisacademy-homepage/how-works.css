@@ -203,7 +203,6 @@
     & .content {
         position: relative;
         z-index: 1;
-        padding: 10rem 0;
 
         & .span-pretext {
             color: var(--wp--preset--color--secondary);

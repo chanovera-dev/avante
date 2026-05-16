@@ -1,7 +1,5 @@
 #news {
     background-color: var(--wp--preset--color--tertiary);
 
-    & .content {
-        padding: 5rem 0;
-    }
+    & .content {}
 }

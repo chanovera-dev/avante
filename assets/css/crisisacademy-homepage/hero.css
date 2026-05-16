@@ -24,8 +24,6 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        padding-top: clamp(2rem, 5vw, 10rem);
-        padding-bottom: clamp(5rem, 15vw, 15rem);
 
         & .span-pretext {
             color: #00a2ff;

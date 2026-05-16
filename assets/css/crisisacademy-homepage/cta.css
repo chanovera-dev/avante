@@ -9,7 +9,6 @@
 #cta .content {
     max-width: var(--wp--style--global--wide-size, 1200px);
     margin: 0 auto;
-    padding: 5rem 0;
 }
 
 .cta-premium-wrapper {

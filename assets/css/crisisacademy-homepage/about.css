@@ -6,8 +6,6 @@
     & .content {
         display: grid;
         gap: 3rem;
-        padding: 7rem 0;
-        padding-bottom: 10rem;
         position: relative;
         z-index: 1;
 
