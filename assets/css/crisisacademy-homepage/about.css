@@ -145,11 +145,49 @@
                     box-shadow: #1d224f09 0 -2px 0 inset, #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
                     border: 1px solid rgba(0, 0, 0, 0.06);
                     transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+                    position: relative;
+                    z-index: 1;
+
+                    /* Resplandor interno dinámico */
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.75), transparent 50%);
+                        opacity: 0;
+                        transition: opacity 0.4s ease;
+                        pointer-events: none;
+                        z-index: -1;
+                        border-radius: inherit;
+                        corner-shape: inherit;
+                    }
+
+                    /* Borde dinámico que sigue al ratón */
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        inset: -1px;
+                        background: radial-gradient(300px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.8), transparent 50%);
+                        opacity: 0;
+                        transition: opacity 0.4s ease;
+                        pointer-events: none;
+                        z-index: 1;
+                        border-radius: inherit;
+                        corner-shape: inherit;
+                        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                        -webkit-mask-composite: xor;
+                        mask-composite: exclude;
+                        padding: 1px;
+                    }
+
+                    &:hover::before,
+                    &:hover::after {
+                        opacity: 1;
+                    }
 
                     &:hover {
-                        transform: translateY(-6px);
-                        border-color: var(--wp--preset--color--primary);
-                        box-shadow: var(--wp--preset--shadow--post-shadow-light);
+                        box-shadow: var(--wp--preset--shadow--post-shadow-light-hover);
                     }
 
                     & img {

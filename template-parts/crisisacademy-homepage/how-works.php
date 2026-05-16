@@ -38,7 +38,7 @@ $cta = get_field('how_it_works_cta');
                             <h3><?php echo esc_html($title); ?></h3>
                             <?php echo apply_filters('the_content', $description); ?></div>
                             <?php if ($content && $buttonLabel): ?>
-                                <button class="btn-more-info btn primary" data-title="<?php echo esc_attr($title); ?>">
+                                <button class="btn-more-info" data-title="<?php echo esc_attr($title); ?>">
                                     <?= avante_get_icon('info-circle'); ?>
                                     <?php echo esc_html($buttonLabel); ?>
                                 </button>

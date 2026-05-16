@@ -2,7 +2,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-    background: #111e33;
+    background: var(--wp--preset--color--footer-background);
 
     &::before {
         content: '';
@@ -13,7 +13,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 50%;
-        background: #304c7b;
+        background: color-mix(in srgb, var(--wp--preset--color--primary) 40%, transparent);
         z-index: 0;
         filter: blur(150px);
     }
@@ -203,7 +203,7 @@
     & .content {
         position: relative;
         z-index: 1;
-        padding-top: 10rem;
+        padding: 10rem 0;
 
         & .span-pretext {
             color: var(--wp--preset--color--secondary);
@@ -227,26 +227,26 @@
                 display: grid;
                 grid-template-rows: auto 1fr;
                 gap: 2rem;
-                backdrop-filter: blur(3px);
+                backdrop-filter: blur(7px);
                 transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease, box-shadow 0.3s ease;
                 border: 1px solid rgba(255, 255, 255, 0.06);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
                 /* Asignación de colores únicos ciberpunk por tarjeta */
                 &:nth-of-type(4n+1) {
-                    background: #16253be6;
+                    background: color-mix(in srgb, var(--wp--preset--color--footer-background) 50%, transparent);
                 }
 
                 &:nth-of-type(4n+2) {
-                    background: #205c81ba;
+                    background: color-mix(in srgb, var(--wp--preset--color--contrast) 50%, transparent);
                 }
 
                 &:nth-of-type(4n+3) {
-                    background: #1f80b7e6;
+                    background: color-mix(in srgb, var(--wp--preset--color--primary) 50%, transparent);
                 }
 
                 &:nth-of-type(4n+4) {
-                    background: rgba(59, 43, 22, 0.9);
+                    background: color-mix(in srgb, var(--wp--preset--color--base) 40%, transparent);
                 }
 
                 /* Elevar contenido sobre los brillos base */
@@ -324,7 +324,23 @@
 
                 & .btn-more-info {
                     align-self: end;
-                    margin-inline: auto;
+                    margin-right: auto;
+                    background-color: transparent;
+                    border: none;
+                    color: var(--wp--preset--color--base);
+                    font-family: var(--wp--preset--font-family--manrope);
+                    display: flex;
+                    align-items: center;
+                    gap: .5rem;
+
+                    & svg {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                    }
                 }
             }
         }
@@ -370,7 +386,7 @@
     max-width: 800px;
     height: 100dvh;
     max-height: 750px;
-    background: #111827;
+    background: var(--wp--preset--color--footer-background);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -381,6 +397,44 @@
     transition: transform 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
     color: #f3f4f6;
     overflow: hidden;
+
+    /* Resplandor interno dinámico */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.15), transparent 50%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        z-index: -1;
+        border-radius: inherit;
+        corner-shape: inherit;
+    }
+
+    /* Borde dinámico animado que sigue al ratón */
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        background: radial-gradient(400px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.85), transparent 50%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        z-index: 1;
+        border-radius: inherit;
+        corner-shape: inherit;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        padding: 1px;
+    }
+
+    &:hover::before,
+    &:hover::after {
+        opacity: 1;
+    }
 }
 
 #how-works--complete.how-works-modal.is-active .how-works-modal-container {

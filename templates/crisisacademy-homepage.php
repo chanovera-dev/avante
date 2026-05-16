@@ -16,7 +16,7 @@ get_header(); ?>
         'how-works',
         'certification',
         'crisis-simulator',
-        // 'cta',
+        'cta',
         'upcoming-events',
         'news' => !empty(get_posts(['post_type' => 'news', 'posts_per_page' => 1])),
         'faq',

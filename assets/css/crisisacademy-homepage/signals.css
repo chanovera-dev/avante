@@ -1,7 +1,7 @@
 #signals {
     /* Degradado radial + Patrón de líneas CRT (Escaneo de monitor) */
-    background: #18263E;
-    color: #ffffff;
+    background: var(--wp--preset--color--contrast);
+    color: var(--wp--preset--color--base);
     position: relative;
     overflow: hidden;
     /* clip-path: ellipse(100% 100% at 60% 0%); */
@@ -43,7 +43,7 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        padding-bottom: 10rem;
+        padding: 10rem 0rem;
 
         & .signals-container {
             display: grid;

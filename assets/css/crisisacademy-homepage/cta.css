@@ -1,0 +1,148 @@
+/* CTA Section Premium Styles */
+#cta {
+    background-color: var(--wp--preset--color--tertiary);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+#cta .content {
+    max-width: var(--wp--style--global--wide-size, 1200px);
+    margin: 0 auto;
+    padding: 5rem 0;
+}
+
+.cta-premium-wrapper {
+    position: relative;
+    border-radius: 2rem;
+    corner-shape: squircle;
+    /* Usando el sistema de formas curvas redondeadas del tema */
+    padding: 5rem 2rem;
+    text-align: center;
+    background-color: var(--wp--preset--color--tertiary);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: var(--wp--preset--shadow--post-shadow);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Efecto visual de fondo con luces difuminadas (Spotlights) */
+.cta-premium-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.cta-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    z-index: 0;
+    animation: cta-float 10s ease-in-out infinite alternate;
+}
+
+.cta-glow-1 {
+    width: 400px;
+    height: 400px;
+    background-color: var(--wp--preset--color--focus);
+    top: -100px;
+    left: -100px;
+}
+
+.cta-glow-2 {
+    width: 300px;
+    height: 300px;
+    background-color: var(--wp--preset--color--secondary);
+    bottom: -50px;
+    right: -50px;
+    animation-delay: -5s;
+}
+
+/* Contenido Principal */
+.cta-premium-content {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.cta-premium-content .span-pretext {
+    color: var(--wp--preset--color--secondary);
+    font-size: var(--wp--preset--font-size--small);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.cta-premium-content .title-section {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    color: var(--wp--preset--color--contrast);
+    letter-spacing: -1px;
+}
+
+.cta-premium-content .cta-description {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+    color: rgba(0, 0, 0, 0.75);
+    max-width: 650px;
+}
+
+/* Acciones y Botón */
+.cta-action-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cta-pulse-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cta-pulse-btn:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px color-mix(in srgb, var(--wp--preset--color--primary) 40%, transparent);
+}
+
+/* Animación de luces de fondo flotantes */
+@keyframes cta-float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, 30px) scale(1.1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cta-premium-wrapper {
+        padding: 4rem 1.5rem;
+        border-radius: 1.5rem;
+    }
+
+    .cta-glow-1 {
+        width: 250px;
+        height: 250px;
+    }
+
+    .cta-glow-2 {
+        width: 200px;
+        height: 200px;
+    }
+}

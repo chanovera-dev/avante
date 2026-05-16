@@ -345,7 +345,7 @@ function avante_get_assets()
             'crisisacademy-hero-script' => "$assets_path/js/crisisacademy-homepage/hero.js",
             'crisisacademy-homepage-script' => "$assets_path/js/crisisacademy-homepage.js",
             'crisisacademy-how-works-script' => "$assets_path/js/crisisacademy-homepage/how-works.js",
-            'cta-slideshow-script' => "$assets_path/js/cta-slideshow.js",
+            'cert-slideshow-script' => "$assets_path/js/crisisacademy-homepage/cert-slideshow.js",
         ]
     ];
 }
@@ -1651,8 +1651,8 @@ function crisisacademy_homepage_templates() {
 
         avante_enqueue_style('crisisacademy-homepage', $a['css']['crisisacademy-homepage']);
         avante_enqueue_style('crisisacademy-hero', $a['css']['crisisacademy-hero']);
-        avante_enqueue_style('crisisacademy-signals', $a['css']['crisisacademy-signals']);
         avante_enqueue_style('crisisacademy-about', $a['css']['crisisacademy-about']);
+        avante_enqueue_style('crisisacademy-signals', $a['css']['crisisacademy-signals']);
         avante_enqueue_style('crisisacademy-how-works', $a['css']['crisisacademy-how-works']);
         avante_enqueue_style('crisisacademy-certification', $a['css']['crisisacademy-certification']);
         avante_enqueue_style('crisisacademy-crisis-simulator', $a['css']['crisisacademy-crisis-simulator']);
@@ -1664,13 +1664,12 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_style('crisisacademy-faq', $a['css']['crisisacademy-faq']);
 
         // Crisis academy scripts
-
+        avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
         avante_enqueue_script('three', $a['js']['three']);
         avante_enqueue_script('webgl-slideshow-script', $a['js']['webgl-slideshow-script']);
-        avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
-        avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
         avante_enqueue_script('crisisacademy-how-works-script', $a['js']['crisisacademy-how-works-script']);
-        avante_enqueue_script('cta-slideshow-script', $a['js']['cta-slideshow-script']);
+        avante_enqueue_script('cert-slideshow-script', $a['js']['cert-slideshow-script']);
+        avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
         avante_enqueue_script('animate-in', $a['js']['animate-in']);
         avante_enqueue_script('posts-scripts', $a['js']['posts-scripts']);
         // avante_enqueue_script('counter', $a['js']['counter']);

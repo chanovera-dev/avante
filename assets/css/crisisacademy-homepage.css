@@ -1,5 +1,115 @@
+#main-header {
+    & .block {
+        background: radial-gradient(circle at 50% 95%, var(--wp--preset--color--contrast) 0%, var(--wp--preset--color--footer-background) 100%);
+        border: 1px solid var(--wp--preset--color--footer-background);
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(800px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        &:hover::before {
+            opacity: 1;
+        }
+
+        & .content {
+            & .site-brand {
+                & a {
+                    color: var(--wp--preset--color--base);
+                }
+            }
+
+            & .avante-navigation {
+                & .main-navigation {
+                    &>ul {
+                        & li {
+                            &>a {
+                                color: var(--wp--preset--color--base);
+
+                                &:hover {
+                                    background-color: color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                & .avante-custom-searchform {
+                    & .section {
+                        & .wp-block-search__input {
+                            color: var(--wp--preset--color--base);
+                            background-color: color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent);
+
+                            &::placeholder {
+                                color: color-mix(in srgb, var(--wp--preset--color--base) 60%, transparent);
+                            }
+                        }
+
+                        & .buttons-container {
+                            & #searchsubmit {
+                                color: var(--wp--preset--color--base);
+
+                                &:hover {
+                                    background-color: color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            & .search-mobile__button {
+                &.active {
+                    &:hover {
+                        background-color: color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent);
+                    }
+
+                    &::before {
+                        opacity: .2;
+                    }
+
+                    & .icon--wrapper {
+                        & .bar {
+                            background-color: var(--wp--preset--color--base);
+                        }
+
+                        &::before {
+                            border-color: var(--wp--preset--color--base);
+                        }
+
+                        &::after {
+                            background-color: var(--wp--preset--color--base);
+                        }
+                    }
+                }
+
+                & .icon--wrapper {
+                    & .bar {
+                        background-color: var(--wp--preset--color--base);
+                    }
+
+                    &::before {
+                        border-color: var(--wp--preset--color--base);
+                    }
+
+                    &::after {
+                        background-color: var(--wp--preset--color--base);
+                    }
+                }
+            }
+        }
+    }
+}
+
 .site-main {
-    background-color: #18263E;
+    background-color: var(--wp--preset--color--contrast);
+    border-color: color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent);
 
     & .block {
         & .content {
@@ -19,6 +129,14 @@
             & .title-section {
                 font-size: clamp(1rem, 2.5vw, 2.5rem);
                 line-height: 1.2;
+            }
+        }
+
+        & .cta-container {
+            .btn {
+                &.primary {
+                    background-color: var(--wp--preset--color--footer-background) !important;
+                }
             }
         }
     }

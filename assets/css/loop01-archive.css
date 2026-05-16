@@ -3,7 +3,8 @@
 .detras-del-espejo.glass-post,
 .property.glass-post,
 .participants.glass-post,
-.news.glass-post {
+.news.glass-post,
+.type-page.glass-post {
     position: relative;
     opacity: 0;
     transform: translateY(4rem);

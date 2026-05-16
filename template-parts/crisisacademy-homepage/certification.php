@@ -24,14 +24,14 @@ $cert_slider2_title = get_field('cert_slider2_title') ?: 'Módulos de certificac
 
 // CTA Panel fields
 $cert_cta_bg        = get_field('cert_cta_background');
-$cert_cta_bg_url    = $cert_cta_bg ? (is_array($cert_cta_bg) ? $cert_cta_bg['url'] : $cert_cta_bg) : get_template_directory_uri() . '/assets/img/war-room-big.webp';
-$cert_cta_headline  = get_field('cert_cta_headline') ?: 'Prepárate antes de que la crisis defina tu respuesta';
-$cert_cta_subhead   = get_field('cert_cta_subheadline') ?: 'Solicita información sobre nuestros programas de certificación, auditorías y manuales de crisis. Sin compromiso.';
-$cert_cta_btn1_text = get_field('cert_cta_btn1_text') ?: 'Solicitar información';
-$cert_cta_btn1_url  = get_field('cert_cta_btn1_url') ?: '/contacto';
-$cert_cta_btn2_text = get_field('cert_cta_btn2_text') ?: 'Ver próximos talleres';
-$cert_cta_btn2_url  = get_field('cert_cta_btn2_url') ?: '/taller-de-especializacion';
-$cert_cta_microcopy = get_field('cert_cta_microcopy') ?: 'Respuesta en menos de 24 horas · Programas personalizados';
+$cert_cta_bg_url    = $cert_cta_bg ? (is_array($cert_cta_bg) ? $cert_cta_bg['url'] : $cert_cta_bg) : get_template_directory_uri() . '/assets/img/certificaciones-big.webp';
+$cert_cta_headline  = get_field('cert_cta_headline') ?: 'Obtén tu Certificación Oficial en Gestión de Crisis';
+$cert_cta_subhead   = get_field('cert_cta_subheadline') ?: 'Avalamos tus conocimientos con la primera certificación especializada de la región. Únete a la próxima generación de expertos.';
+$cert_cta_btn1_text = get_field('cert_cta_btn1_text') ?: 'Inscribirme';
+$cert_cta_btn1_url  = get_field('cert_cta_btn1_url') ?: '/#cta';
+$cert_cta_btn2_text = get_field('cert_cta_btn2_text') ?: 'Descargar Temario';
+$cert_cta_btn2_url  = get_field('cert_cta_btn2_url') ?: '/temario.pdf'; 
+$cert_cta_microcopy = get_field('cert_cta_microcopy') ?: 'Avalado internacionalmente · Plazas limitadas';
 
 // Footer Panel field
 $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden cursarse de manera individual. La Certificación se obtiene al cursar los 6 módulos, la simulación y demostrar el aprendizaje adquirido a través de una evaluación rigurosa.';
@@ -43,7 +43,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
         <h2 class="title-section"><?= esc_html($cert_title); ?></h2>
         <div class="grid-containers">
             <div class="containers">
-                <div class="cta-container">
+                <div class="cert-container">
                     <div class="span-pretext--wrapper">
                         <div class="span-pretext"><?= esc_html($cert_slider1_title); ?></div>
                     </div>
@@ -167,7 +167,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </button>
                     </div>
                 </div>
-                <div class="cta-container">
+                <div class="cert-container">
                     <div class="span-pretext--wrapper">
                         <div class="span-pretext"><?= esc_html($cert_slider2_title); ?></div>
                     </div>
@@ -284,25 +284,25 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                     </div>
                 </div>
             </div>
-            <div class="cta-panel" style="background-image: url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-                <div class="cta-panel-backdrop"></div>
-                <div class="cta-panel-content">
-                    <h2 class="cta-headline"><?= esc_html($cert_cta_headline); ?></h2>
-                    <p class="cta-subheadline"><?= esc_html($cert_cta_subhead); ?></p>
-                    <div class="cta-actions">
+            <div class="cert-panel" style="background-image: url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                <div class="cert-panel-backdrop"></div>
+                <div class="cert-panel-content">
+                    <h2 class="cert-headline"><?= esc_html($cert_cta_headline); ?></h2>
+                    <p class="cert-subheadline"><?= esc_html($cert_cta_subhead); ?></p>
+                    <div class="cert-actions">
                         <?php if ($cert_cta_btn1_text && $cert_cta_btn1_url): ?>
-                        <a href="<?= esc_url($cert_cta_btn1_url); ?>" class="btn primary cta-btn-primary" id="cta-main-button">
+                        <a href="<?= esc_url($cert_cta_btn1_url); ?>" class="btn primary cert-btn-primary" id="cert-main-button">
                             <?= avante_get_icon('forward'); ?>
                             <?= esc_html($cert_cta_btn1_text); ?>
                         </a>
                         <?php endif; ?>
                         <?php if ($cert_cta_btn2_text && $cert_cta_btn2_url): ?>
-                        <a href="<?= esc_url($cert_cta_btn2_url); ?>" class="btn hollow cta-btn-secondary" id="cta-secondary-button">
+                        <a href="<?= esc_url($cert_cta_btn2_url); ?>" class="btn hollow cert-btn-secondary" id="cert-secondary-button">
                             <?= esc_html($cert_cta_btn2_text); ?>
                         </a>
                         <?php endif; ?>
                     </div>
-                    <p class="cta-microcopy">
+                    <p class="cert-microcopy">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         <?= esc_html($cert_cta_microcopy); ?>
                     </p>

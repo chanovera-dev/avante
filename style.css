@@ -14,6 +14,10 @@ Text Domain: avante
 Tags:
 */
 
+html {
+    scroll-behavior: smooth;
+}
+
 #main-header {
     z-index: 99;
     height: 63.44px;

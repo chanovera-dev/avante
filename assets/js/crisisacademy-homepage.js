@@ -179,11 +179,11 @@ function initFaqAccordion() {
  * CSS variables --mouse-x and --mouse-y for responsive glow styling.
  */
 function initCardGlowEffect() {
-    const cards = document.querySelectorAll('.type-item, .signal-item, .how-it-works--card, .cta-container');
+    const cards = document.querySelectorAll('#hero, #main-header .block, .about-item, .signal-item, .how-it-works--card, .cta-container, .cert-container, .cert-panel, .how-works-modal-container');
 
     cards.forEach(card => {
         let rect;
-        
+
         // Capture boundary ONCE when mouse enters to avoid recursive render loops
         card.addEventListener('mouseenter', () => {
             rect = card.getBoundingClientRect();

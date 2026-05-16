@@ -30,7 +30,7 @@
                 gap: 1rem;
                 perspective: 1200px;
 
-                & .cta-container {
+                & .cert-container {
                     position: relative;
                     z-index: 4;
                     display: grid;
@@ -307,7 +307,7 @@
                 }
             }
 
-            & .cta-panel {
+            & .cert-panel {
                 position: relative;
                 background:
                     linear-gradient(135deg,
@@ -321,21 +321,59 @@
                 display: grid;
                 place-content: center;
 
-                & .cta-panel-backdrop {
+                /* Resplandor interno dinámico */
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(1000px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.2), transparent 40%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    pointer-events: none;
+                    z-index: 1;
+                    border-radius: inherit;
+                    corner-shape: inherit;
+                }
+
+                /* Borde dinámico que sigue al ratón */
+                &::after {
+                    content: "";
+                    position: absolute;
+                    inset: -1px;
+                    background: radial-gradient(500px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.4), transparent 50%);
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    pointer-events: none;
+                    z-index: 2;
+                    border-radius: inherit;
+                    corner-shape: inherit;
+                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                    -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+                    padding: 1px;
+                }
+
+                &:hover::before,
+                &:hover::after {
+                    opacity: 1;
+                }
+
+                & .cert-panel-backdrop {
                     position: absolute;
                     inset: 0;
                     background-color: #00000080;
                     z-index: 0;
                 }
 
-                & .cta-panel-content {
+                & .cert-panel-content {
                     position: relative;
-                    z-index: 1;
+                    z-index: 2;
                     max-width: 700px;
                     margin-inline: auto;
                 }
 
-                & .cta-headline {
+                & .cert-headline {
                     font-size: clamp(1.5rem, 3vw, 2.5rem);
                     font-weight: 600;
                     color: var(--wp--preset--color--base);
@@ -344,27 +382,27 @@
                     letter-spacing: -0.02em;
                 }
 
-                & .cta-subheadline {
+                & .cert-subheadline {
                     font-size: clamp(1rem, 1.5vw, 1.15rem);
-                    color: color-mix(in srgb, var(--wp--preset--color--base) 85%, transparent);
+                    color: var(--wp--preset--color--base);
                     line-height: 1.6;
                     margin-bottom: 2.5rem;
                     max-width: 560px;
                     margin-inline: auto;
                 }
 
-                & .cta-actions {
+                & .cert-actions {
                     display: flex;
                     flex-wrap: wrap;
                     justify-content: center;
                     gap: 1rem;
                     margin-bottom: 2rem;
 
-                    & .cta-btn-primary {
-                        background: var(--wp--preset--color--focus);
+                    & .cert-btn-primary {
+                        background-color: var(--wp--preset--color--focus);
                     }
 
-                    & .cta-btn-secondary {
+                    & .cert-btn-secondary {
                         color: var(--wp--preset--color--base);
                         border: 1px solid color-mix(in srgb, var(--wp--preset--color--base) 30%, transparent);
                         transition: border-color 0.3s ease;
@@ -375,7 +413,7 @@
                     }
                 }
 
-                & .cta-microcopy {
+                & .cert-microcopy {
                     display: flex;
                     align-items: center;
                     justify-content: center;

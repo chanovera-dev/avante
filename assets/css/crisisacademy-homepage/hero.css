@@ -1,10 +1,24 @@
 #hero {
-    background: radial-gradient(circle at 50% 30%, #1a273f 0%, #070c13 100%);
+    background: radial-gradient(circle at 50% 30%, var(--wp--preset--color--contrast) 0%, var(--wp--preset--color--footer-background) 100%);
     color: #ffffff;
     position: relative;
     overflow: hidden;
     clip-path: ellipse(100% 100% at 50% 0%);
     z-index: 1;
+
+    & .hero-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(800px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent), transparent 40%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    &:hover .hero-glow {
+        opacity: 1;
+    }
 
     & .content {
         position: relative;

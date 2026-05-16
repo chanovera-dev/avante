@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const wrappers = document.querySelectorAll(".cta-container")
+    const wrappers = document.querySelectorAll(".cert-container")
 
     wrappers.forEach((wrapper) => {
         const slideshowWrapper = wrapper.querySelector(".slideshow--wrapper")
-        const slideshow       = wrapper.querySelector(".slideshow")
-        const slides          = Array.from(slideshow ? slideshow.children : [])
-        const bulletsWrapper  = wrapper.querySelector(".slideshow-bullets")
+        const slideshow = wrapper.querySelector(".slideshow")
+        const slides = Array.from(slideshow ? slideshow.children : [])
+        const bulletsWrapper = wrapper.querySelector(".slideshow-bullets")
 
         if (!slideshow || slides.length === 0 || !bulletsWrapper) return
 
-        const total       = slides.length
-        let   current     = 0
-        let   isAnimating = false
+        const total = slides.length
+        let current = 0
+        let isAnimating = false
 
         /* ── Build bullets ────────────────────────────────────────────── */
         bulletsWrapper.innerHTML = ""
@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const phase2Angle = direction === 'next' ? -90 : 90
 
             // Phase 1: rotate 0 → ±90° (card "falls away")
-            wrapper.style.transition   = `transform ${FLIP_DURATION / 2}ms cubic-bezier(0.4, 0, 1, 1)`
-            wrapper.style.transform    = `rotateY(${phase1Angle}deg)`
+            wrapper.style.transition = `transform ${FLIP_DURATION / 2}ms cubic-bezier(0.4, 0, 1, 1)`
+            wrapper.style.transform = `rotateY(${phase1Angle}deg)`
 
             setTimeout(() => {
                 // At ±90° the card is edge-on and invisible — swap slides
@@ -60,18 +60,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Instantly jump to ∓90° on the other side (no transition)
                 wrapper.style.transition = "none"
-                wrapper.style.transform  = `rotateY(${phase2Angle}deg)`
+                wrapper.style.transform = `rotateY(${phase2Angle}deg)`
 
                 // Force reflow so the browser registers the position change
                 void wrapper.offsetWidth
 
                 // Phase 2: rotate ∓90° → 0° (card "comes back")
                 wrapper.style.transition = `transform ${FLIP_DURATION / 2}ms cubic-bezier(0, 0, 0.6, 1)`
-                wrapper.style.transform  = "rotateY(0deg)"
+                wrapper.style.transform = "rotateY(0deg)"
 
                 setTimeout(() => {
                     wrapper.style.transition = ""
-                    wrapper.style.transform  = ""
+                    wrapper.style.transform = ""
                     isAnimating = false
                 }, FLIP_DURATION / 2)
 
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
         /* ── Touch / swipe ────────────────────────────────────────────── */
         let startX = 0
         slideshow.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX }, { passive: true })
-        slideshow.addEventListener("touchend",   (e) => {
+        slideshow.addEventListener("touchend", (e) => {
             const delta = e.changedTouches[0].clientX - startX
             if (Math.abs(delta) > 50) {
                 goToSlide(delta < 0 ? current + 1 : current - 1)
