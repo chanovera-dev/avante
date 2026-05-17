@@ -1,21 +1,31 @@
 #main-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
     & .block {
-        background: radial-gradient(circle at 50% 95%, var(--wp--preset--color--contrast) 0%, var(--wp--preset--color--footer-background) 100%);
-        border: 1px solid var(--wp--preset--color--footer-background);
+        background-color: transparent;
+        border-bottom: none;
 
         &::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: radial-gradient(800px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent), transparent 40%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            z-index: 0;
+            top: 62.43px;
+            height: 1px;
+            width: 100%;
+            background-color: color-mix(in srgb, var(--wp--preset--color--footer-background) 50%, transparent);
+
         }
 
-        &:hover::before {
-            opacity: 1;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 64.43px;
+            height: 1px;
+            width: 100%;
+            background-color: color-mix(in srgb, var(--wp--preset--color--base) 5%, transparent);
         }
 
         & .content {

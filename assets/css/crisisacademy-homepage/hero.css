@@ -24,6 +24,7 @@
         position: relative;
         z-index: 2;
         text-align: center;
+        padding-top: calc(clamp(2rem, 5vw, 10rem) + 63.43px);
 
         & .span-pretext {
             color: #00a2ff;
