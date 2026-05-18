@@ -1,5 +1,5 @@
 /**
- * Script para la animación de contadores numéricos del Simulador de Crisis.
+ * Script para la animación de contadores numéricos del Simulador de Crisis
  */
 document.addEventListener('DOMContentLoaded', () => {
     const counters = document.querySelectorAll('.number-value-counter');

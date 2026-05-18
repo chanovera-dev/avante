@@ -257,35 +257,9 @@
 }
 
 .cta-pulse-btn {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    white-space: nowrap;
-    margin-right: auto;
     background-color: var(--wp--preset--color--focus) !important;
+    margin-right: auto;
 }
-
-/* Shimmer de entrada */
-.cta-pulse-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.25) 50%,
-            transparent 100%);
-    transform: skewX(-20deg);
-    animation: btn-shimmer 3.5s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.cta-pulse-btn:hover {}
 
 /* Micro-texto debajo del botón */
 .cta-micro-copy {
@@ -293,7 +267,7 @@
     align-items: center;
     gap: 0.4rem;
     font-size: 0.8rem;
-    color: color-mix(in srgb, var(--wp--preset--color--base) 40%, transparent);
+    color: var(--wp--preset--color--base);
     margin: 0;
 }
 

@@ -1672,7 +1672,7 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
         avante_enqueue_script('animate-in', $a['js']['animate-in']);
         avante_enqueue_script('posts-scripts', $a['js']['posts-scripts']);
-        // avante_enqueue_script('counter', $a['js']['counter']);
+        avante_enqueue_script('counter', $a['js']['counter']);
     }
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );

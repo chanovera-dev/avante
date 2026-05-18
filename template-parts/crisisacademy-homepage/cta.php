@@ -115,7 +115,7 @@ $stats = [
             <div class="cta-stats-bar">
                 <?php foreach ($stats as $stat) : ?>
                 <div class="cta-stat-item">
-                    <span class="cta-stat-number"><?= esc_html($stat['number']); ?></span>
+                    <span class="cta-stat-number pretext-reveal"><?= esc_html($stat['number']); ?></span>
                     <span class="cta-stat-label"><?= esc_html($stat['label']); ?></span>
                 </div>
                 <?php endforeach; ?>

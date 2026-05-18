@@ -113,22 +113,43 @@ textarea {
     }
 
     &.primary {
+        position: relative;
+        overflow: hidden;
         background-color: var(--wp--preset--color--button);
         color: var(--wp--preset--color--base);
         border: none;
         box-shadow: var(--wp--preset--shadow--button-shadow);
-        transition: all .3s ease;
-        background-image: linear-gradient(-60deg, transparent, transparent 40%, #ffffff44 40%, #ffffff44 60%, transparent 60%, transparent 100%);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* background-image: linear-gradient(-60deg, transparent, transparent 40%, #ffffff44 40%, #ffffff44 60%, transparent 60%, transparent 100%);
         background-size: 200% 100%;
         background-position-x: 150%;
         background-repeat: no-repeat;
-        z-index: 5;
+        z-index: 5; */
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.25) 50%,
+                    transparent 100%);
+            transform: skewX(-20deg);
+            pointer-events: none;
+        }
 
         &:hover {
-            background-position-x: -150%;
-            transition: all 1s;
+            /* background-position-x: -150%;
+            transition: all 1s; */
             box-shadow: var(--wp--preset--shadow--button-shadow-hover);
             filter: brightness(1.1);
+
+            &::before {
+                animation: btn-shimmer 3.5s ease-in-out forwards;
+            }
         }
 
         &.disabled {

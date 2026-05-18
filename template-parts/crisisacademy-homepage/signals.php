@@ -38,7 +38,7 @@ if (empty($title)) {
                             <img src="<?= $icon['url'] ?>" alt="<?= $icon['alt'] ?>" srcset="" width="100px" height="100px" loading="lazy">
                         </div>
                         <?php if( $number ): ?>
-                            <div class="signal-number"><span class="number"><?= $number ?></span><span class="sign">%</span></div>
+                            <div class="signal-number"><span class="number number-value-counter" data-target="<?= $number ?>" data-decimals="0" data-duration="7000"><?= $number ?></span><span class="sign">%</span></div>
                         <?php endif; ?>
                         <?php if( $label ): ?>
                             <span class="signal-label"><?= $label ?></span>
