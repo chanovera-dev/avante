@@ -54,10 +54,10 @@ $cta_avatar = get_field('homepage_faq_cta_avatar') ?: 'https://i.pravatar.cc/150
         <div class="faq-grid">
             <!-- Left Column -->
             <div class="faq-column-info">
-                <span class="span-pretext faq-pretext">
+                <span class="span-pretext faq-pretext pretext-reveal">
                     <?= esc_html($faq_subtitle); ?>
                 </span>
-                <h2 class="title-section faq-main-title"><?= wp_kses_post($faq_title); ?></h2>
+                <h2 class="title-section faq-main-title title-reveal"><?= wp_kses_post($faq_title); ?></h2>
 
                 <div class="faq-cta-card">
                     <div class="faq-cta-avatar-wrapper">

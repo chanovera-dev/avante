@@ -51,7 +51,7 @@ if (empty($title)) {
                 <?php else : ?>
                     <p>No se encontraron señales.</p>
             <?php endif; ?>
-            <p class="source">Fuente: Reporte anual 2025 ICM</p>
+            <p class="source pretext-reveal">Fuente: Reporte anual 2025 ICM</p>
         </div>
         <?php if ($subtitle): ?>
             <?php echo apply_filters( 'the_content', $subtitle ); ?>

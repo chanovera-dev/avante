@@ -21,8 +21,8 @@ $cta = get_field('how_it_works_cta');
     </div>
 
     <div class="content">
-        <span class="span-pretext scramble-letters"><?php echo esc_html($sectionTitle); ?></span>
-        <h2 class="title-section">Tres soluciones para fortalecer tu preparación ante una crisis</h2>
+        <span class="span-pretext pretext-reveal"><?php echo esc_html($sectionTitle); ?></span>
+        <h2 class="title-section title-reveal">Tres soluciones para fortalecer tu preparación ante una crisis</h2>
         <div class="how-works--cards-container">
             <?php
                 if (have_rows('how_it_works_cards')) : 

@@ -21,8 +21,8 @@ if (empty($simulator_content)) {
 <section id="crisis-simulator" class="block">
     <div class="content">
         <div class="data">
-            <span class="span-pretext">Simulador de crisis</span>
-            <h2 class="title-section">Experimenta la presión en tiempo real y descubre si tu equipo está preparado</h2>
+            <span class="span-pretext pretext-reveal">Simulador de crisis</span>
+            <h2 class="title-section title-reveal">Experimenta la presión en tiempo real y descubre si tu equipo está preparado</h2>
         </div>
         <div class="container app">
             <?php

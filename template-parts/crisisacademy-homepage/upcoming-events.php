@@ -152,11 +152,11 @@ $testimonials = [
     <div class="content">
         <div class="events-container">
             <header class="events-header">
-                <span class="span-pretext">
+                <span class="span-pretext pretext-reveal">
                     <?= avante_get_icon('calendar'); ?>
                     Agenda 2026
                 </span>
-                <h2 class="title-section">Próximos eventos</h2>
+                <h2 class="title-section title-reveal">Próximos eventos</h2>
             </header>
             <div class="upcoming-events__track-wrapper" id="upcoming-events-track-wrapper">
                 <div class="upcoming-events__track" id="upcoming-events-track">

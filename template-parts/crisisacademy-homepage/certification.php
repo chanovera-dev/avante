@@ -41,8 +41,8 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
         url('<?= $cert_cta_bg_url ?>')">
     <!-- Entrenamiento y Módulos -->
     <div class="content">
-        <span class="span-pretext scramble-letters"><?= esc_html($cert_pretext); ?></span>
-        <h2 class="title-section"><?= esc_html($cert_title); ?></h2>
+        <span class="span-pretext pretext-reveal"><?= esc_html($cert_pretext); ?></span>
+        <h2 class="title-section title-reveal"><?= esc_html($cert_title); ?></h2>
         <div class="grid-containers">
             <div class="containers">
                 <div class="cert-container">

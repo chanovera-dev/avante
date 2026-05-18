@@ -260,6 +260,270 @@ function initStickyOverlapEffect() {
     updateOverlap();
 }
 
+/**
+ * Pretext Scramble Reveal
+ *
+ * Targets every .pretext-reveal element. When it enters the viewport:
+ *   1. Runs a character-scramble animation that settles on the real text.
+ *   2. Adds .is-visible so CSS transitions it to opacity: 1.
+ *
+ * When the parent .block gains .is-bottom, CSS fades it out after 10 s.
+ * When .is-bottom is removed, the scramble re-runs from scratch.
+ *
+ * Each element gets aria-label set to its original text for SEO.
+ */
+function initPretextReveal() {
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
+    const SETTLE_FRAMES = 3;   // frames per letter (~32ms each at 60fps)
+
+    /**
+     * Scramble animation — resolves one letter at a time left→right.
+     * @param {HTMLElement} el
+     * @param {string} originalText
+     */
+    function scramble(el, originalText) {
+        // Cancel any running animation on this element
+        if (el._scrambleId) cancelAnimationFrame(el._scrambleId);
+        el.classList.remove('is-visible');
+
+        const len = originalText.length;
+        let frame = 0;
+
+        function tick() {
+            const total = len * SETTLE_FRAMES;
+            const lockedCount = Math.floor(frame / SETTLE_FRAMES);
+
+            let output = '';
+            for (let i = 0; i < len; i++) {
+                if (originalText[i] === ' ') {
+                    output += ' ';
+                } else if (i < lockedCount) {
+                    output += originalText[i];
+                } else {
+                    output += CHARS[Math.floor(Math.random() * CHARS.length)];
+                }
+            }
+
+            // Write scrambled text while keeping the aria-label intact
+            el.textContent = output;
+
+            if (frame < total) {
+                frame++;
+                el._scrambleId = requestAnimationFrame(tick);
+            } else {
+                el.textContent = originalText;
+                el._scrambleId = null;
+            }
+        }
+
+        // Slight delay so CSS opacity fade-in starts visibly before text settles
+        setTimeout(() => {
+            el.classList.add('is-visible');
+            tick();
+        }, 200);
+    }
+
+    /** Set up IntersectionObserver for a single element */
+    function observe(el, originalText) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Element entered viewport — cancel any pending reset and scramble in
+                    if (el._resetTimer) {
+                        clearTimeout(el._resetTimer);
+                        el._resetTimer = null;
+                    }
+                    scramble(el, originalText);
+                } else {
+                    // Element left viewport — reset after 10 s
+                    if (!el._resetTimer) {
+                        el._resetTimer = setTimeout(() => reset(el), 10000);
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        io.observe(el);
+        return io;
+    }
+
+    /** Reset element to initial invisible state */
+    function reset(el) {
+        if (el._scrambleId) {
+            cancelAnimationFrame(el._scrambleId);
+            el._scrambleId = null;
+        }
+        if (el._resetTimer) {
+            clearTimeout(el._resetTimer);
+            el._resetTimer = null;
+        }
+        el.classList.remove('is-visible');
+    }
+
+    /**
+     * Watch the parent .block for .is-bottom changes.
+     * - .is-bottom added  → reset element to initial invisible state
+     * - .is-bottom removed → re-run scramble from scratch
+     */
+    function watchParentBlock(el, originalText) {
+        const block = el.closest('.block');
+        if (!block) return;
+
+        let wasBottom = false;
+
+        const mo = new MutationObserver(() => {
+            const isBottom = block.classList.contains('is-bottom');
+
+            if (isBottom && !wasBottom) {
+                // Section just got covered — reset after 10 s if still covered
+                if (!el._resetTimer) {
+                    el._resetTimer = setTimeout(() => reset(el), 10000);
+                }
+            }
+
+            if (!isBottom && wasBottom) {
+                // Section re-appeared — cancel any pending reset and scramble in
+                if (el._resetTimer) {
+                    clearTimeout(el._resetTimer);
+                    el._resetTimer = null;
+                }
+                scramble(el, originalText);
+            }
+
+            wasBottom = isBottom;
+        });
+
+        mo.observe(block, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    document.querySelectorAll('.pretext-reveal').forEach(el => {
+        const originalText = el.textContent.trim();
+
+        // SEO: preserve readable text for screen readers & crawlers
+        el.setAttribute('aria-label', originalText);
+
+        observe(el, originalText);
+        watchParentBlock(el, originalText);
+    });
+}
+
+/**
+ * Title Word-by-Word Reveal
+ *
+ * Targets every .title-reveal element. On init, wraps each word in a
+ * <span class="title-word" style="--word-index: N"> so CSS can stagger
+ * the slide-up transition per word.
+ *
+ * Lifecycle mirrors initPretextReveal():
+ *   - Visible in viewport   → add .is-visible (words slide up)
+ *   - Section gets .is-bottom → reset after 1 s (words snap back down)
+ *   - Section loses .is-bottom → re-add .is-visible (words slide up again)
+ */
+function initTitleReveal() {
+    /**
+     * Walk all text nodes inside el and wrap individual words in spans.
+     * Preserves existing HTML structure (e.g. <u>, <strong>, <em>).
+     */
+    function wrapWords(el) {
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        let node;
+        while ((node = walker.nextNode())) textNodes.push(node);
+
+        let wordIndex = 0;
+
+        textNodes.forEach(textNode => {
+            const parts = textNode.textContent.split(/(\s+)/);
+            const frag = document.createDocumentFragment();
+
+            parts.forEach(part => {
+                if (!part || /^\s+$/.test(part)) {
+                    frag.appendChild(document.createTextNode(part || ''));
+                } else {
+                    const span = document.createElement('span');
+                    span.className = 'title-word';
+                    span.style.setProperty('--word-index', wordIndex++);
+                    span.textContent = part;
+                    frag.appendChild(span);
+                }
+            });
+
+            textNode.parentNode.replaceChild(frag, textNode);
+        });
+    }
+
+    function reset(el) {
+        if (el._titleResetTimer) {
+            clearTimeout(el._titleResetTimer);
+            el._titleResetTimer = null;
+        }
+        el.classList.remove('is-visible');
+    }
+
+    function observe(el) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Element entered viewport — cancel any pending reset and show
+                    if (el._titleResetTimer) {
+                        clearTimeout(el._titleResetTimer);
+                        el._titleResetTimer = null;
+                    }
+                    el.classList.add('is-visible');
+                } else {
+                    // Element left viewport — reset after 10 s
+                    if (!el._titleResetTimer) {
+                        el._titleResetTimer = setTimeout(() => reset(el), 10000);
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+
+        io.observe(el);
+    }
+
+    function watchParentBlock(el) {
+        const block = el.closest('.block');
+        if (!block) return;
+
+        let wasBottom = false;
+
+        const mo = new MutationObserver(() => {
+            const isBottom = block.classList.contains('is-bottom');
+
+            if (isBottom && !wasBottom) {
+                // Section just got covered — reset after 10 s
+                if (!el._titleResetTimer) {
+                    el._titleResetTimer = setTimeout(() => reset(el), 10000);
+                }
+            }
+
+            if (!isBottom && wasBottom) {
+                // Section re-appeared — cancel pending reset, re-trigger
+                if (el._titleResetTimer) {
+                    clearTimeout(el._titleResetTimer);
+                    el._titleResetTimer = null;
+                }
+                el.classList.add('is-visible');
+            }
+
+            wasBottom = isBottom;
+        });
+
+        mo.observe(block, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    document.querySelectorAll('.title-reveal').forEach(el => {
+        // SEO: preserve full readable text for screen readers & crawlers
+        // Must be set BEFORE wrapWords() replaces text nodes with spans
+        el.setAttribute('aria-label', el.textContent.trim());
+
+        wrapWords(el);
+        observe(el);
+        watchParentBlock(el);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUpcomingEventsClocks();
     initUpcomingEventsScroll();
@@ -267,4 +531,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initFaqAccordion();
     initCardGlowEffect();
     initStickyOverlapEffect();
+    initPretextReveal();
+    initTitleReveal();
 });

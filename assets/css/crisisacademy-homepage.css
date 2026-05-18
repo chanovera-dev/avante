@@ -156,6 +156,37 @@ body {
                     transition: opacity 0.2s ease;
                 }
 
+                /* ── Efecto de entrada scramble ──────────────────── */
+                & .pretext-reveal {
+                    opacity: 0;
+                    transition: opacity 1.4s ease;
+
+                    /* Visible tras la animación de entrada */
+                    &.is-visible {
+                        opacity: 1;
+                    }
+                }
+
+                /* ── Efecto de entrada por palabras ─────────────── */
+                & .title-reveal {
+                    /* Las palabras individuales controlan su visibilidad */
+                }
+
+                & .title-reveal .title-word {
+                    display: inline-block;
+                    opacity: 0;
+                    transform: translateY(0.5em);
+                    transition:
+                        opacity 1.4s ease,
+                        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+                    transition-delay: calc(var(--word-index) * 120ms);
+                }
+
+                & .title-reveal.is-visible .title-word {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
                 & .title-section {
                     font-size: clamp(1rem, 2.5vw, 2.5rem);
                     line-height: 1.2;

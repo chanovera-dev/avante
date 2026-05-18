@@ -26,7 +26,7 @@ if (empty($hero_span) && empty($hero_first_content) && empty($hero_action_button
     <div class="hero-glow"></div>
     <div class="content">
         <?php if ($hero_span): ?>
-            <span class="span-pretext"><?php echo esc_html($hero_span); ?></span>
+            <span class="span-pretext pretext-reveal"><?php echo esc_html($hero_span); ?></span>
         <?php endif; ?>
 
         <?php if ($hero_first_content): ?>

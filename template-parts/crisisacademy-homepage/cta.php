@@ -66,9 +66,9 @@ $stats = [
 
                 <!-- Columna izquierda: texto -->
                 <div class="cta-text-col">
-                    <span class="span-pretext"><?= esc_html($cta_pretext); ?></span>
+                    <span class="span-pretext pretext-reveal"><?= esc_html($cta_pretext); ?></span>
 
-                    <h2 class="title-section"><?= esc_html($cta_title); ?></h2>
+                    <h2 class="title-section title-reveal"><?= esc_html($cta_title); ?></h2>
 
                     <p class="cta-description"><?= esc_html($cta_desc); ?></p>
                 </div>
