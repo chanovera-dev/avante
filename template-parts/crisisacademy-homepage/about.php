@@ -69,7 +69,7 @@ if (empty($about_content)) {
             <div class="about-container">
             <?php if (have_rows('about_items')) : ?>
                 <?php while (have_rows('about_items')) : the_row(); ?>
-                    <div class="about-item">
+                    <div class="about-item card-reveal">
                         <?php
                         $icon = get_sub_field('about_item_icon');
                         $label = get_sub_field('about_item_label');
