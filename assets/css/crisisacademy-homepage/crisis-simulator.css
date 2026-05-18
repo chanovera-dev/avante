@@ -59,6 +59,18 @@
             aspect-ratio: 21 / 9;
             position: relative;
 
+            & .btn {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 6;
+
+                &.primary {
+                    background-color: var(--wp--preset--color--focus);
+                }
+            }
+
             & .post__overlay {
                 position: absolute;
                 bottom: 0;
@@ -149,29 +161,6 @@
                             background-color: var(--wp--preset--color--base);
                         }
                     }
-                }
-            }
-
-            & .btn-simulator-link {
-                position: absolute;
-                top: 1.5rem;
-                right: 1.5rem;
-                z-index: 10;
-                background: rgba(0, 0, 0, 0.6);
-                backdrop-filter: blur(6px);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                color: #fff !important;
-                padding: 0.6rem 1.2rem;
-                font-size: 0.85rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                text-decoration: none;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                transition: background 0.3s ease, transform 0.3s ease;
-
-                &:hover {
-                    background: var(--wp--preset--color--contrast);
                 }
             }
         }

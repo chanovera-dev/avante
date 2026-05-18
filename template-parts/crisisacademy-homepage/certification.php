@@ -21,6 +21,7 @@ $cert_title         = get_field('cert_title') ?: 'La ruta definitiva para conver
 // Slider Titles
 $cert_slider1_title = get_field('cert_slider1_title') ?: 'Certificación Profesional';
 $cert_slider2_title = get_field('cert_slider2_title') ?: 'Módulos de certificación';
+$cert_slider3_title = get_field('cert_slider3_title') ?: 'Modalidades';
 
 // CTA Panel fields
 $cert_cta_bg        = get_field('cert_cta_background');
@@ -36,7 +37,8 @@ $cert_cta_microcopy = get_field('cert_cta_microcopy') ?: 'Avalado internacionalm
 // Footer Panel field
 $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden cursarse de manera individual. La Certificación se obtiene al cursar los 6 módulos, la simulación y demostrar el aprendizaje adquirido a través de una evaluación rigurosa.';
 ?>
-<section id="certification" class="block">
+<section id="certification" class="block" style="background-image: linear-gradient(to bottom, var(--wp--preset--color--tertiary) 0%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 35%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 55%, var(--wp--preset--color--tertiary) 100%),
+        url('<?= $cert_cta_bg_url ?>')">
     <!-- Entrenamiento y Módulos -->
     <div class="content">
         <span class="span-pretext scramble-letters"><?= esc_html($cert_pretext); ?></span>
@@ -283,6 +285,93 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </button>
                     </div>
                 </div>
+                <div class="cert-container">
+
+                    <div class="slideshow--wrapper">
+                        <div class="slideshow">
+                            <?php if ( have_rows('cert_info_bar') ) : ?>
+                                <?php $count = 1; while ( have_rows('cert_info_bar') ) : the_row(); 
+                                    $icon = get_sub_field('icon');
+                                    $title = get_sub_field('title');
+                                    $desc = get_sub_field('description');
+                                ?>
+                                <div class="module-card">
+                                    <div class="module-card--content">
+                                        <div class="module-icon">
+                                            <?= $icon; ?>
+                                        </div>
+                                        <div class="info-bar-text">
+                                            <strong><?= esc_html($title); ?></strong>
+                                            <span><?= esc_html($desc); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endwhile; ?>
+                            <?php else : ?>
+                                <!-- Card 1 -->
+                                <div class="module-card">
+                                    <div class="module-card--content">
+                                        <span class="module-number">1</span>
+                                        <div class="module-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                                <circle cx="9" cy="7" r="4" />
+                                                <circle cx="18" cy="18" r="3" />
+                                                <line x1="22" y1="22" x2="20" y2="20" />
+                                            </svg>
+                                        </div>
+                                        <div class="info-bar-text">
+                                            <strong>Modalidad: Presencial y en vivo</strong>
+                                            <span>Grupos privados por empresa</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card 2 -->
+                                <div class="module-card">
+                                    <div class="module-card--content">
+                                        <span class="module-number">2</span>
+                                        <div class="module-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                                <line x1="8" y1="21" x2="16" y2="21" />
+                                                <line x1="12" y1="17" x2="12" y2="21" />
+                                                <polygon points="10 8 16 11 10 14 10 8" />
+                                            </svg>
+                                        </div>
+                                        <div class="info-bar-text">
+                                            <strong>También disponible en línea</strong>
+                                            <span>(en vivo, no grabado)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card 3 -->
+                                <div class="module-card">
+                                    <div class="module-card--content">
+                                        <span class="module-number">3</span>
+                                        <div class="module-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                            </svg>
+                                        </div>
+                                        <div class="info-bar-text">
+                                            <strong>Los módulos pueden cursarse</strong>
+                                            <span>de manera individual</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="slideshow-bullets-wrapper">
+                        <button class="slideshow-prev btn-pagination small-pagination" aria-label="diapositiva anterior">
+                            <?= avante_get_icon('backward'); ?>
+                        </button>
+                        <div class="slideshow-bullets bullets"></div>
+                        <button class="slideshow-next btn-pagination small-pagination" aria-label="siguiente diapositiva">
+                            <?= avante_get_icon('forward'); ?>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="cert-panel" style="background-image: url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                 <div class="cert-panel-backdrop"></div>
@@ -308,72 +397,6 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                     </p>
                 </div>
             </div>
-        </div>
-
-        <!-- Certifications info bar -->
-        <div class="certifications-info-bar">
-            <?php if ( have_rows('cert_info_bar') ) : ?>
-                <?php while ( have_rows('cert_info_bar') ) : the_row(); 
-                    $icon = get_sub_field('icon');
-                    $title = get_sub_field('title');
-                    $desc = get_sub_field('description');
-                ?>
-                <div class="info-bar-item">
-                    <div class="info-bar-icon">
-                        <?= $icon; ?>
-                    </div>
-                    <div class="info-bar-text">
-                        <strong><?= esc_html($title); ?></strong>
-                        <span><?= esc_html($desc); ?></span>
-                    </div>
-                </div>
-                <?php endwhile; ?>
-            <?php else : ?>
-                <!-- Item 1 -->
-                <div class="info-bar-item">
-                    <div class="info-bar-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <circle cx="18" cy="18" r="3" />
-                            <line x1="22" y1="22" x2="20" y2="20" />
-                        </svg>
-                    </div>
-                    <div class="info-bar-text">
-                        <strong>Modalidad: Presencial y en vivo</strong>
-                        <span>Grupos privados por empresa</span>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="info-bar-item">
-                    <div class="info-bar-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                            <line x1="8" y1="21" x2="16" y2="21" />
-                            <line x1="12" y1="17" x2="12" y2="21" />
-                            <polygon points="10 8 16 11 10 14 10 8" />
-                        </svg>
-                    </div>
-                    <div class="info-bar-text">
-                        <strong>También disponible en línea</strong>
-                        <span>(en vivo, no grabado)</span>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="info-bar-item">
-                    <div class="info-bar-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                    </div>
-                    <div class="info-bar-text">
-                        <strong>Los módulos pueden cursarse</strong>
-                        <span>de manera individual</span>
-                    </div>
-                </div>
-            <?php endif; ?>
         </div>
 
         <!-- Modules Footer panel -->

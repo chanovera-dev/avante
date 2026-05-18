@@ -23,17 +23,18 @@ if (empty($simulator_content)) {
         <div class="data">
             <span class="span-pretext">Simulador de crisis</span>
             <h2 class="title-section">Experimenta la presión en tiempo real y descubre si tu equipo está preparado</h2>
+        </div>
+        <div class="container app">
             <?php
             if ( ! function_exists( 'is_plugin_active' ) ) {
                 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
             }
             if ( is_plugin_active( 'crisis-simulator/simulador-de-crisis.php' ) ) : ?>
                 <a href="<?php echo esc_url( home_url( '/simulador-de-crisis/' ) ); ?>" class="btn-simulator-link btn primary">
+                    <?= avante_get_icon('terminal'); ?>
                     Simular Crisis
                 </a>
             <?php endif; ?>
-        </div>
-        <div class="container app">
             <div class="slideshow--wrapper">
                 <div class="slideshow">
                     <?php

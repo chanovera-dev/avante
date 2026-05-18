@@ -1,12 +1,5 @@
-/* =========================================
-   Certification Section — Programa
-   ========================================= */
-
 #certification {
     background-color: var(--wp--preset--color--tertiary);
-    background-image:
-        linear-gradient(to bottom, var(--wp--preset--color--tertiary) 0%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 35%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 55%, var(--wp--preset--color--tertiary) 100%),
-        url('../../img/war-room-big.webp');
     background-position: center top, center center;
     background-repeat: no-repeat, no-repeat;
     background-size: 100% 100%, cover;
@@ -34,7 +27,7 @@
                     z-index: 4;
                     display: grid;
                     grid-template-rows: 1fr auto;
-                    background-color: #ffffff5e;
+                    background-color: color-mix(in srgb, var(--wp--preset--color--base) 50%, transparent);
                     backdrop-filter: blur(5px);
                     max-width: 411px;
                     overflow: hidden;
@@ -42,6 +35,11 @@
                     border: 1px solid rgba(0, 0, 0, 0.06);
                     transition: border-color .3s ease, box-shadow .3s ease;
                     transform-origin: center center;
+
+                    &:has(.slideshow--wrapper .slideshow .module-card .module-card--content .info-bar-text) {
+                        background-color: color-mix(in srgb, var(--wp--preset--color--secondary) 50%, transparent);
+                        padding-top: 1rem;
+                    }
 
                     /* Resplandor interno dinámico */
                     &::before {
@@ -110,10 +108,18 @@
 
                     & .slideshow--wrapper {
                         width: 100%;
-                        height: 140px;
+                        height: 80px;
                         position: relative;
                         color: var(--wp--preset--color--contrast);
                         z-index: 5;
+
+                        &:has(.slideshow .module-card .module-card--content .step-title) {
+                            height: 90px;
+                        }
+
+                        &:has(.slideshow .module-card .module-card--content .info-bar-text) {
+                            height: 60px;
+                        }
 
                         & .slideshow {
                             position: relative;
@@ -171,15 +177,15 @@
                                         transform: translateY(.3rem);
                                         background-color: color-mix(in srgb, var(--wp--preset--color--tertiary) 35%, transparent);
                                         color: var(--wp--preset--color--primary);
-                                        width: 80px;
-                                        height: 80px;
+                                        width: 50px;
+                                        height: 50px;
                                         display: grid;
                                         place-content: center;
                                         transition: color .3s ease;
 
                                         & svg {
-                                            width: 32px;
-                                            height: 32px;
+                                            width: 18px;
+                                            height: 18px;
                                         }
                                     }
                                 }
@@ -483,7 +489,7 @@
         }
 
         & .modules-footer-panel {
-            margin-top: 1rem;
+            margin-top: 3rem;
             text-align: left;
 
             & p {
