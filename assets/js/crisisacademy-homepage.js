@@ -262,29 +262,14 @@ function initStickyOverlapEffect() {
 
 /**
  * Pretext Scramble Reveal
- *
- * Targets every .pretext-reveal element. When it enters the viewport:
- *   1. Runs a character-scramble animation that settles on the real text.
- *   2. Adds .is-visible so CSS transitions it to opacity: 1.
- *
- * When the parent .block gains .is-bottom, CSS fades it out after 10 s.
- * When .is-bottom is removed, the scramble re-runs from scratch.
- *
- * Each element gets aria-label set to its original text for SEO.
+ * Se activa una sola vez cuando el elemento entra en el viewport.
  */
 function initPretextReveal() {
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
-    const SETTLE_FRAMES = 3;   // frames per letter (~32ms each at 60fps)
+    const SETTLE_FRAMES = 3;
 
-    /**
-     * Scramble animation — resolves one letter at a time left→right.
-     * @param {HTMLElement} el
-     * @param {string} originalText
-     */
     function scramble(el, originalText) {
-        // Cancel any running animation on this element
         if (el._scrambleId) cancelAnimationFrame(el._scrambleId);
-        el.classList.remove('is-visible');
 
         const len = originalText.length;
         let frame = 0;
@@ -292,7 +277,6 @@ function initPretextReveal() {
         function tick() {
             const total = len * SETTLE_FRAMES;
             const lockedCount = Math.floor(frame / SETTLE_FRAMES);
-
             let output = '';
             for (let i = 0; i < len; i++) {
                 if (originalText[i] === ' ') {
@@ -303,10 +287,7 @@ function initPretextReveal() {
                     output += CHARS[Math.floor(Math.random() * CHARS.length)];
                 }
             }
-
-            // Write scrambled text while keeping the aria-label intact
             el.textContent = output;
-
             if (frame < total) {
                 frame++;
                 el._scrambleId = requestAnimationFrame(tick);
@@ -316,114 +297,61 @@ function initPretextReveal() {
             }
         }
 
-        // Slight delay so CSS opacity fade-in starts visibly before text settles
         setTimeout(() => {
             el.classList.add('is-visible');
             tick();
         }, 200);
     }
 
-    /** Set up IntersectionObserver for a single element */
-    function observe(el, originalText) {
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Element entered viewport — cancel any pending reset and scramble in
-                    if (el._resetTimer) {
-                        clearTimeout(el._resetTimer);
-                        el._resetTimer = null;
-                    }
-                    scramble(el, originalText);
-                } else {
-                    // Element left viewport — reset after 10 s
-                    if (!el._resetTimer) {
-                        el._resetTimer = setTimeout(() => reset(el), 10000);
-                    }
-                }
-            });
-        }, { threshold: 0.2 });
+    // Observer centralizado para escalar animaciones
+    let scrambleQueue = [];
+    let isProcessing = false;
 
-        io.observe(el);
-        return io;
+    function processQueue() {
+        if (scrambleQueue.length === 0) {
+            isProcessing = false;
+            return;
+        }
+        isProcessing = true;
+        
+        const { el, originalText } = scrambleQueue.shift();
+        scramble(el, originalText);
+        
+        // Retardo escalonado para el siguiente elemento
+        setTimeout(processQueue, 150);
     }
 
-    /** Reset element to initial invisible state */
-    function reset(el) {
-        if (el._scrambleId) {
-            cancelAnimationFrame(el._scrambleId);
-            el._scrambleId = null;
-        }
-        if (el._resetTimer) {
-            clearTimeout(el._resetTimer);
-            el._resetTimer = null;
-        }
-        el.classList.remove('is-visible');
-    }
-
-    /**
-     * Watch the parent .block for .is-bottom changes.
-     * - .is-bottom added  → reset element to initial invisible state
-     * - .is-bottom removed → re-run scramble from scratch
-     */
-    function watchParentBlock(el, originalText) {
-        const block = el.closest('.block');
-        if (!block) return;
-
-        let wasBottom = false;
-
-        const mo = new MutationObserver(() => {
-            const isBottom = block.classList.contains('is-bottom');
-
-            if (isBottom && !wasBottom) {
-                // Section just got covered — reset after 10 s if still covered
-                if (!el._resetTimer) {
-                    el._resetTimer = setTimeout(() => reset(el), 10000);
-                }
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                io.unobserve(entry.target);
+                
+                scrambleQueue.push({
+                    el: entry.target,
+                    originalText: entry.target._originalText
+                });
+                
+                if (!isProcessing) processQueue();
             }
-
-            if (!isBottom && wasBottom) {
-                // Section re-appeared — cancel any pending reset and scramble in
-                if (el._resetTimer) {
-                    clearTimeout(el._resetTimer);
-                    el._resetTimer = null;
-                }
-                scramble(el, originalText);
-            }
-
-            wasBottom = isBottom;
         });
-
-        mo.observe(block, { attributes: true, attributeFilter: ['class'] });
-    }
+    }, { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
     document.querySelectorAll('.pretext-reveal').forEach(el => {
         const originalText = el.textContent.trim();
-
-        // SEO: preserve readable text for screen readers & crawlers
         el.setAttribute('aria-label', originalText);
-
-        observe(el, originalText);
-        watchParentBlock(el, originalText);
+        el._originalText = originalText;
+        io.observe(el);
     });
 }
 
 /**
  * Title Word-by-Word Reveal
- *
- * Targets every .title-reveal element. On init, wraps each word in a
- * <span class="title-word" style="--word-index: N"> so CSS can stagger
- * the slide-up transition per word.
- *
- * Lifecycle mirrors initPretextReveal():
- *   - Visible in viewport   → add .is-visible (words slide up)
- *   - Section gets .is-bottom → reset after 1 s (words snap back down)
- *   - Section loses .is-bottom → re-add .is-visible (words slide up again)
+ * Se activa una sola vez cuando el elemento entra en el viewport.
  */
 function initTitleReveal() {
-    /**
-     * Walk all text nodes inside el and wrap individual words in spans.
-     * Preserves existing HTML structure (e.g. <u>, <strong>, <em>).
-     */
     function wrapWords(el) {
         const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
         const textNodes = [];
@@ -452,76 +380,101 @@ function initTitleReveal() {
         });
     }
 
-    function reset(el) {
-        if (el._titleResetTimer) {
-            clearTimeout(el._titleResetTimer);
-            el._titleResetTimer = null;
+    // Observer centralizado para escalar animaciones
+    let titleQueue = [];
+    let isTitleProcessing = false;
+
+    function processTitleQueue() {
+        if (titleQueue.length === 0) {
+            isTitleProcessing = false;
+            return;
         }
-        el.classList.remove('is-visible');
+        isTitleProcessing = true;
+        
+        const el = titleQueue.shift();
+        el.classList.add('is-visible');
+        
+        // Retardo escalonado para el siguiente título
+        setTimeout(processTitleQueue, 200);
     }
 
-    function observe(el) {
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Element entered viewport — cancel any pending reset and show
-                    if (el._titleResetTimer) {
-                        clearTimeout(el._titleResetTimer);
-                        el._titleResetTimer = null;
-                    }
-                    el.classList.add('is-visible');
-                } else {
-                    // Element left viewport — reset after 10 s
-                    if (!el._titleResetTimer) {
-                        el._titleResetTimer = setTimeout(() => reset(el), 10000);
-                    }
-                }
-            });
-        }, { threshold: 0.2 });
-
-        io.observe(el);
-    }
-
-    function watchParentBlock(el) {
-        const block = el.closest('.block');
-        if (!block) return;
-
-        let wasBottom = false;
-
-        const mo = new MutationObserver(() => {
-            const isBottom = block.classList.contains('is-bottom');
-
-            if (isBottom && !wasBottom) {
-                // Section just got covered — reset after 10 s
-                if (!el._titleResetTimer) {
-                    el._titleResetTimer = setTimeout(() => reset(el), 10000);
-                }
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                io.unobserve(entry.target);
+                titleQueue.push(entry.target);
+                if (!isTitleProcessing) processTitleQueue();
             }
-
-            if (!isBottom && wasBottom) {
-                // Section re-appeared — cancel pending reset, re-trigger
-                if (el._titleResetTimer) {
-                    clearTimeout(el._titleResetTimer);
-                    el._titleResetTimer = null;
-                }
-                el.classList.add('is-visible');
-            }
-
-            wasBottom = isBottom;
         });
-
-        mo.observe(block, { attributes: true, attributeFilter: ['class'] });
-    }
+    }, { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
     document.querySelectorAll('.title-reveal').forEach(el => {
-        // SEO: preserve full readable text for screen readers & crawlers
-        // Must be set BEFORE wrapWords() replaces text nodes with spans
         el.setAttribute('aria-label', el.textContent.trim());
-
         wrapWords(el);
-        observe(el);
-        watchParentBlock(el);
+        io.observe(el);
     });
+}
+
+/**
+ * Card Entrance Effect
+ * Adds .is-visible to each .card-entrada when it enters the viewport.
+ * Fires once per element, then disconnects the observer.
+ */
+function initCardReveal() {
+    // Observer centralizado para escalar animaciones de tarjetas
+    let cardQueue = [];
+    let isCardProcessing = false;
+
+    function processCardQueue() {
+        if (cardQueue.length === 0) {
+            isCardProcessing = false;
+            return;
+        }
+        isCardProcessing = true;
+        
+        // Procesar hasta 2 tarjetas al mismo tiempo para no hacerlo muy lento
+        // si hay muchas (como en la grilla de próximos eventos)
+        const batch = cardQueue.splice(0, 1);
+        batch.forEach(el => el.classList.add('is-visible'));
+        
+        // Retardo escalonado para el siguiente grupo
+        setTimeout(processCardQueue, 150);
+    }
+
+    const io = new IntersectionObserver((entries) => {
+        // Ordenar las entradas de izquierda a derecha y arriba a abajo
+        // para que la cascada siempre se vea natural
+        const visibleEntries = entries.filter(e => e.isIntersecting);
+        
+        if (visibleEntries.length === 0) return;
+        
+        visibleEntries.sort((a, b) => {
+            const rectA = a.target.getBoundingClientRect();
+            const rectB = b.target.getBoundingClientRect();
+            // Si están más o menos en la misma línea horizontal, ordenar por X
+            if (Math.abs(rectA.top - rectB.top) < 50) {
+                return rectA.left - rectB.left;
+            }
+            // Sino, ordenar por Y (arriba hacia abajo)
+            return rectA.top - rectB.top;
+        });
+
+        visibleEntries.forEach(entry => {
+            io.unobserve(entry.target);
+            cardQueue.push(entry.target);
+        });
+        
+        if (!isCardProcessing) processCardQueue();
+        
+    }, { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.card-reveal').forEach(el => io.observe(el));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -533,4 +486,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initStickyOverlapEffect();
     initPretextReveal();
     initTitleReveal();
+    initCardReveal();
 });

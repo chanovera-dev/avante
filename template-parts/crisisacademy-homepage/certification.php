@@ -45,7 +45,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
         <h2 class="title-section title-reveal"><?= esc_html($cert_title); ?></h2>
         <div class="grid-containers">
             <div class="containers">
-                <div class="cert-container">
+                <div class="cert-container card-reveal">
                     <div class="span-pretext--wrapper">
                         <div class="span-pretext"><?= esc_html($cert_slider1_title); ?></div>
                     </div>
@@ -169,7 +169,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </button>
                     </div>
                 </div>
-                <div class="cert-container">
+                <div class="cert-container card-reveal">
                     <div class="span-pretext--wrapper">
                         <div class="span-pretext"><?= esc_html($cert_slider2_title); ?></div>
                     </div>
@@ -285,7 +285,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </button>
                     </div>
                 </div>
-                <div class="cert-container">
+                <div class="cert-container card-reveal">
 
                     <div class="slideshow--wrapper">
                         <div class="slideshow">
@@ -373,7 +373,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                     </div>
                 </div>
             </div>
-            <div class="cert-panel" style="background-image: url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="cert-panel card-reveal" style="background-image: url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                 <div class="cert-panel-backdrop"></div>
                 <div class="cert-panel-content">
                     <h2 class="cert-headline"><?= esc_html($cert_cta_headline); ?></h2>

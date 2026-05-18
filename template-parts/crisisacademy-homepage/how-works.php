@@ -33,7 +33,7 @@ $cta = get_field('how_it_works_cta');
                         $content = get_sub_field('how_it_works_content');
                         $buttonLabel = get_sub_field('how_it_works_button_label');
                         ?>
-                        <article class="how-it-works--card">
+                        <article class="how-it-works--card card-reveal">
                             <div class="how-it-works--card-content"><!-- <img src="<?php // echo esc_url($logo['url']); ?>" alt="<?php // echo esc_attr($logo['alt']); ?>" width="64px" height="64px" loading="lazy"> -->
                             <h3><?php echo esc_html($title); ?></h3>
                             <?php echo apply_filters('the_content', $description); ?></div>

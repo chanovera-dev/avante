@@ -20,7 +20,7 @@ if (empty($about_content)) {
 ?>
 <section id="about" class="block">
     <div class="content">
-        <div class="container app">
+        <div class="container app card-reveal">
             <div class="slideshow--wrapper">
                 <div class="slideshow">
                     <?php

@@ -49,7 +49,7 @@ $stats = [
     </div>
 
     <div class="content">
-        <div class="cta-premium-wrapper" id="cta-wrapper">
+        <div class="cta-premium-wrapper card-reveal" id="cta-wrapper">
 
             <!-- Fondos de glow animados -->
             <div class="cta-premium-bg">

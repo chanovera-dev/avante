@@ -59,7 +59,7 @@ $cta_avatar = get_field('homepage_faq_cta_avatar') ?: 'https://i.pravatar.cc/150
                 </span>
                 <h2 class="title-section faq-main-title title-reveal"><?= wp_kses_post($faq_title); ?></h2>
 
-                <div class="faq-cta-card">
+                <div class="faq-cta-card card-reveal">
                     <div class="faq-cta-avatar-wrapper">
                         <img src="<?= esc_url($cta_avatar); ?>" alt="Avatar" class="faq-cta-avatar">
                     </div>

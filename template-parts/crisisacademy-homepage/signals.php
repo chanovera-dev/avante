@@ -33,7 +33,7 @@ if (empty($title)) {
                         $label = get_sub_field('signal_item_label');
                         $info = get_sub_field('signal_item_info');
                     ?>
-                    <div class="signal-item">
+                    <div class="signal-item card-reveal">
                         <div class="signal-graph">
                             <img src="<?= $icon['url'] ?>" alt="<?= $icon['alt'] ?>" srcset="" width="100px" height="100px" loading="lazy">
                         </div>

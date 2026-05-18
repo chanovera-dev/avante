@@ -24,7 +24,7 @@ if (empty($simulator_content)) {
             <span class="span-pretext pretext-reveal">Simulador de crisis</span>
             <h2 class="title-section title-reveal">Experimenta la presión en tiempo real y descubre si tu equipo está preparado</h2>
         </div>
-        <div class="container app">
+        <div class="container app card-reveal">
             <?php
             if ( ! function_exists( 'is_plugin_active' ) ) {
                 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );

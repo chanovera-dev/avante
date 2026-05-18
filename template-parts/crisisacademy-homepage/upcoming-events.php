@@ -163,7 +163,7 @@ $testimonials = [
                     <?php foreach ($events as $i => $event) : ?>
                         <a
                             href="<?= esc_url($event['url']); ?>"
-                            class="event-card<?= $i === 0 ? ' event-card--featured' : ''; ?>"
+                            class="card-reveal event-card<?= $i === 0 ? ' event-card--featured' : ''; ?>"
                             style="--card-index: <?= $i; ?>;"
                         >
                             <div class="event-card__date">
