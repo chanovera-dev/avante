@@ -145,7 +145,7 @@ body {
         /* Estilos de contenido de los bloques */
         & .block {
             & .content {
-                padding: clamp(2rem, 5vw, 10rem) 0;
+                padding: clamp(2rem, 5vw, 10rem) 0 !important;
 
                 & .span-pretext {
                     color: #285386;
@@ -159,7 +159,7 @@ body {
                 /* ── Efecto de entrada scramble ──────────────────── */
                 & .pretext-reveal {
                     opacity: 0;
-                    transition: opacity 1.4s ease;
+                    transition: opacity .3s ease;
 
                     /* Visible tras la animación de entrada */
                     &.is-visible {

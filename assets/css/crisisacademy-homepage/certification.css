@@ -3,8 +3,6 @@
     background-position: center top, center center;
     background-repeat: no-repeat, no-repeat;
     background-size: 100% 100%, cover;
-    /* El primer valor (scroll) aplica al gradiente para que se mueva con la sección,
-       el segundo valor (fixed) aplica a la imagen para el efecto parallax */
     background-attachment: scroll, fixed;
     position: relative;
     overflow: hidden;
@@ -21,6 +19,7 @@
                 display: grid;
                 gap: 1rem;
                 perspective: 1200px;
+                grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
 
                 & .cert-container {
                     position: relative;
@@ -29,11 +28,9 @@
                     grid-template-rows: 1fr auto;
                     background-color: color-mix(in srgb, var(--wp--preset--color--base) 50%, transparent);
                     backdrop-filter: blur(5px);
-                    max-width: 411px;
                     overflow: hidden;
                     box-shadow: #1d224f09 0 -2px 0 inset, #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
                     border: 1px solid rgba(0, 0, 0, 0.06);
-                    transition: border-color .3s ease, box-shadow .3s ease;
                     transform-origin: center center;
 
                     &:has(.slideshow--wrapper .slideshow .module-card .module-card--content .info-bar-text) {
@@ -489,24 +486,192 @@
         }
 
         & .modules-footer-panel {
-            margin-top: 3rem;
             text-align: left;
 
             & p {
                 margin: 0;
+                font-weight: 500;
+                font-size: var(--wp--preset--font-size--large);
             }
+        }
+
+        /* ── FUNNEL: Hook ──────────────────────────────────────────── */
+        & .funnel-hook {
+            text-align: center;
+
+            & .funnel-hook__sub {
+                font-size: clamp(1rem, 1.4vw, 1.15rem);
+                color: color-mix(in srgb, var(--wp--preset--color--contrast) 65%, transparent);
+                max-width: 600px;
+                margin-inline: auto;
+                margin-bottom: 2rem;
+                line-height: 1.6;
+            }
+        }
+
+        /* ── FUNNEL: Proof unificado (pills + stats) ───────────────── */
+        & .funnel-proof {
+            margin-block: 2.5rem 0;
+            background: color-mix(in srgb, var(--wp--preset--color--secondary) 45%, transparent);
+            backdrop-filter: blur(6px);
+            border: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 25%, transparent);
+            border-radius: var(--wp--custom--border-radius, 4px);
+            overflow: hidden;
+
+            /* ── Fila de pills ── */
+            & .funnel-proof__pills {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: .55rem;
+                padding: 1.5rem 2rem 1.25rem;
+
+                & .pain-pill {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: .45rem;
+                    padding: .32rem .8rem;
+                    border-radius: 999px;
+                    background-color: color-mix(in srgb, var(--wp--preset--color--vivid-red, #e53e3e) 12%, transparent);
+                    border: 1px solid color-mix(in srgb, var(--wp--preset--color--vivid-red, #e53e3e) 30%, transparent);
+                    font-size: .82rem;
+                    font-weight: 500;
+                    color: color-mix(in srgb, var(--wp--preset--color--contrast) 80%, transparent);
+                    transition: background-color .25s ease, transform .25s ease;
+
+                    &:hover {
+                        background-color: color-mix(in srgb, var(--wp--preset--color--vivid-red, #e53e3e) 20%, transparent);
+                        transform: translateY(-2px);
+                    }
+
+                    & .pain-pill__icon {
+                        font-size: .9rem;
+                    }
+                }
+            }
+
+            /* ── Separador ── */
+            & .funnel-proof__divider {
+                height: 1px;
+                margin-inline: 2rem;
+                background: color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
+            }
+
+            /* ── Fila de stats ── */
+            & .funnel-proof__stats {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0;
+                padding: 1.25rem 2rem 1.5rem;
+
+                & .funnel-stat {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: .25rem;
+                    text-align: center;
+                    padding-inline: .5rem;
+
+                    /* separador vertical entre stats */
+                    &:not(:last-child) {
+                        border-right: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
+                    }
+
+                    & .funnel-stat__number {
+                        font-size: clamp(1.8rem, 3vw, 2.5rem);
+                        font-weight: 800;
+                        color: var(--wp--preset--color--primary);
+                        line-height: 1;
+                        letter-spacing: -0.03em;
+                    }
+
+                    & .funnel-stat__label {
+                        font-size: .8rem;
+                        color: color-mix(in srgb, var(--wp--preset--color--contrast) 60%, transparent);
+                        font-weight: 500;
+                        line-height: 1.3;
+                    }
+                }
+            }
+        }
+
+        /* ── FUNNEL: Urgency banner (inside cert-panel) ────────────── */
+        & .cert-urgency-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .4rem 1rem;
+            border-radius: 999px;
+            background-color: color-mix(in srgb, var(--wp--preset--color--focus) 20%, transparent);
+            border: 1px solid color-mix(in srgb, var(--wp--preset--color--focus) 50%, transparent);
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--wp--preset--color--base);
+            margin-bottom: 1.5rem;
+            animation: cert-pulse 2.4s ease-in-out infinite;
+
+            & svg {
+                flex-shrink: 0;
+                color: var(--wp--preset--color--focus);
+            }
+        }
+
+        /* ── FUNNEL: Guarantee list (inside cert-panel) ────────────── */
+        & .cert-guarantee {
+            display: flex;
+            flex-direction: column;
+            gap: .55rem;
+            margin-bottom: 2rem;
+            text-align: left;
+
+            & .cert-guarantee__item {
+                display: flex;
+                align-items: center;
+                gap: .55rem;
+                font-size: .88rem;
+                font-weight: 500;
+                color: color-mix(in srgb, var(--wp--preset--color--base) 80%, transparent);
+
+                & svg {
+                    flex-shrink: 0;
+                    color: var(--wp--preset--color--focus);
+                }
+            }
+        }
+    }
+
+    @keyframes cert-pulse {
+
+        0%,
+        100% {
+            box-shadow: 0 0 0 0 color-mix(in srgb, var(--wp--preset--color--focus) 40%, transparent);
+        }
+
+        50% {
+            box-shadow: 0 0 0 6px transparent;
         }
     }
 
 }
 
-
-
-@media (width >=768px) {
+@media (max-width: 767px) {
     #certification {
         & .content {
-            & .grid-containers {
-                grid-template-columns: clamp(300px, 128px + 16.8vw, 450px) 1fr;
+            & .funnel-proof {
+                & .funnel-proof__stats {
+                    grid-template-columns: repeat(2, 1fr);
+                    padding: 1.25rem;
+
+                    & .funnel-stat:nth-child(2) {
+                        border-right: none;
+                    }
+                    & .funnel-stat:nth-child(3) {
+                        border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
+                    }
+                    & .funnel-stat:nth-child(4) {
+                        border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
+                    }
+                }
             }
         }
     }

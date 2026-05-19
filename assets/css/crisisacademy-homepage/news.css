@@ -1,5 +1,115 @@
 #news {
     background-color: var(--wp--preset--color--tertiary);
+    position: relative;
+    overflow: hidden;
 
-    & .content {}
+    /* Anillos de Sonar/Radar - Temática: Centro de Inteligencia */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -10%;
+        background-image: repeating-radial-gradient(
+            circle at 50% 15%,
+            transparent 0,
+            transparent 60px,
+            color-mix(in srgb, var(--wp--preset--color--primary) 12%, transparent) 60px,
+            color-mix(in srgb, var(--wp--preset--color--primary) 12%, transparent) 61px
+        );
+        mask-image: radial-gradient(circle at 50% 15%, black 0%, transparent 60%);
+        z-index: 0;
+        pointer-events: none;
+        animation: news-sonar-pulse 8s ease-in-out infinite;
+    }
+
+    /* Resplandor ambiental superior */
+    &::after {
+        content: '';
+        position: absolute;
+        top: -15%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1200px;
+        height: 600px;
+        background: radial-gradient(ellipse at top center, color-mix(in srgb, var(--wp--preset--color--focus) 14%, transparent) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    & .content {
+        position: relative;
+        z-index: 1;
+
+        /* Líneas de escaneo horizontales (scanlines) */
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                color-mix(in srgb, var(--wp--preset--color--primary) 4%, transparent) 3px,
+                color-mix(in srgb, var(--wp--preset--color--primary) 4%, transparent) 4px
+            );
+            z-index: -1;
+            pointer-events: none;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+        }
+        & header.section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+
+            & .description-section {
+                font-size: var(--wp--preset--font-size--large);
+                font-weight: 500;
+            }
+        }
+
+        & .news-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+
+            & .news-filter-btn {
+                background: transparent;
+                border: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 30%, transparent);
+                color: var(--wp--preset--color--contrast);
+                font-family: var(--wp--preset--font-family--manrope);
+                padding: 0.5rem 1.5rem;
+                border-radius: 999px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    border-color: var(--wp--preset--color--primary);
+                    color: var(--wp--preset--color--primary);
+                }
+
+                &.active {
+                    background-color: var(--wp--preset--color--primary);
+                    border-color: var(--wp--preset--color--primary);
+                    color: var(--wp--preset--color--base);
+                }
+            }
+        }
+
+        & .news-results-container {
+            transition: opacity 0.3s ease;
+        }
+    }
+}
+
+@keyframes news-sonar-pulse {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(1.02);
+    }
 }

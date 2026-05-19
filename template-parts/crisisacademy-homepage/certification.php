@@ -1,50 +1,119 @@
 <?php
 /**
- * Template part for displaying the certification section on the homepage.
+ * Template part for displaying the certification section as a Sales Funnel.
  *
- * This section features two trust-building subsections (audience & authority)
- * and a prominent call-to-action panel designed for maximum conversion.
+ * Funnel stages:
+ *  1. Hook    — Pain-point headline
+ *  2. Promise — The transformation / solution
+ *  3. Proof   — Social-proof stats
+ *  4. Offer   — What they get (modules overview)
+ *  5. CTA     — Urgency + enroll button
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package Avante
  * @subpackage Template-parts/crisisacademy-homepage
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.0.0
  */
 ?>
 <?php
-// Variables de campos ACF con fallbacks a contenido estático actual
-$cert_pretext       = get_field('cert_pretext') ?: 'Entrenamiento Especializado';
-$cert_title         = get_field('cert_title') ?: 'La ruta definitiva para convertirte en un experto en gestión de crisis';
+// ── ACF fields with static fallbacks ──────────────────────────────────────
 
-// Slider Titles
-$cert_slider1_title = get_field('cert_slider1_title') ?: 'Certificación Profesional';
-$cert_slider2_title = get_field('cert_slider2_title') ?: 'Módulos de certificación';
-$cert_slider3_title = get_field('cert_slider3_title') ?: 'Modalidades';
+// Funnel top
+$cert_pretext       = get_field('cert_pretext')       ?: 'Entrenamiento Especializado';
+$cert_title         = get_field('cert_title')         ?: 'La ruta definitiva para convertirte en un experto en gestión de crisis';
 
-// CTA Panel fields
+// Social proof numbers
+$stat1_number       = get_field('cert_stat1_number')  ?: '+500';
+$stat1_label        = get_field('cert_stat1_label')   ?: 'Profesionales certificados';
+$stat2_number       = get_field('cert_stat2_number')  ?: '97%';
+$stat2_label        = get_field('cert_stat2_label')   ?: 'Tasa de satisfacción';
+$stat3_number       = get_field('cert_stat3_number')  ?: '6';
+$stat3_label        = get_field('cert_stat3_label')   ?: 'Módulos especializados';
+$stat4_number       = get_field('cert_stat4_number')  ?: '#1';
+$stat4_label        = get_field('cert_stat4_label')   ?: 'Certificación en la región';
+
+// Offer cards
+$cert_slider1_title = get_field('cert_slider1_title') ?: 'Tu proceso de certificación';
+$cert_slider2_title = get_field('cert_slider2_title') ?: 'Lo que dominarás';
+
+// CTA Panel
 $cert_cta_bg        = get_field('cert_cta_background');
-$cert_cta_bg_url    = $cert_cta_bg ? (is_array($cert_cta_bg) ? $cert_cta_bg['url'] : $cert_cta_bg) : get_template_directory_uri() . '/assets/img/certificaciones-big.webp';
-$cert_cta_headline  = get_field('cert_cta_headline') ?: 'Obtén tu Certificación Oficial en Gestión de Crisis';
+$cert_cta_bg_url    = $cert_cta_bg
+    ? (is_array($cert_cta_bg) ? $cert_cta_bg['url'] : $cert_cta_bg)
+    : get_template_directory_uri() . '/assets/img/certificaciones-big.webp';
+$cert_cta_headline  = get_field('cert_cta_headline')    ?: 'Obtén tu Certificación Oficial en Gestión de Crisis';
 $cert_cta_subhead   = get_field('cert_cta_subheadline') ?: 'Avalamos tus conocimientos con la primera certificación especializada de la región. Únete a la próxima generación de expertos.';
-$cert_cta_btn1_text = get_field('cert_cta_btn1_text') ?: 'Inscribirme';
-$cert_cta_btn1_url  = get_field('cert_cta_btn1_url') ?: '/#cta';
-$cert_cta_btn2_text = get_field('cert_cta_btn2_text') ?: 'Descargar Temario';
-$cert_cta_btn2_url  = get_field('cert_cta_btn2_url') ?: '/temario.pdf'; 
-$cert_cta_microcopy = get_field('cert_cta_microcopy') ?: 'Avalado internacionalmente · Plazas limitadas';
-
-// Footer Panel field
-$cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden cursarse de manera individual. La Certificación se obtiene al cursar los 6 módulos, la simulación y demostrar el aprendizaje adquirido a través de una evaluación rigurosa.';
+$cert_cta_btn1_text = get_field('cert_cta_btn1_text')   ?: 'Inscribirme ahora';
+$cert_cta_btn1_url  = get_field('cert_cta_btn1_url')    ?: '/#cta';
+$cert_cta_btn2_text = get_field('cert_cta_btn2_text')   ?: 'Descargar Temario';
+$cert_cta_btn2_url  = get_field('cert_cta_btn2_url')    ?: '/temario.pdf';
+$cert_cta_microcopy = get_field('cert_cta_microcopy')   ?: 'Avalado internacionalmente · Plazas limitadas';
+$cert_urgency_text  = get_field('cert_urgency_text')    ?: 'Próxima cohorte: <strong>15 de junio</strong> — Últimos lugares disponibles';
+$cert_footer_text   = get_field('cert_footer_text')     ?: 'Los módulos pueden cursarse de manera individual. La Certificación se obtiene al cursar los 6 módulos, la simulación y demostrar el aprendizaje adquirido a través de una evaluación rigurosa.';
 ?>
-<section id="certification" class="block" style="background-image: linear-gradient(to bottom, var(--wp--preset--color--tertiary) 0%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 35%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 55%, var(--wp--preset--color--tertiary) 100%),
-        url('<?= $cert_cta_bg_url ?>')">
-    <!-- Entrenamiento y Módulos -->
+
+<section id="certification" class="block" style="background-image: linear-gradient(to bottom, var(--wp--preset--color--tertiary) 0%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 35%, color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent) 55%, var(--wp--preset--color--tertiary) 100%), url('<?= $cert_cta_bg_url ?>')">
+
     <div class="content">
-        <span class="span-pretext pretext-reveal"><?= esc_html($cert_pretext); ?></span>
-        <h2 class="title-section title-reveal"><?= esc_html($cert_title); ?></h2>
+
+        <!-- ══ STAGE 1 · HOOK ══════════════════════════════════════════════ -->
+        <div class="funnel-hook">
+            <span class="span-pretext pretext-reveal"><?= esc_html($cert_pretext); ?></span>
+            <h2 class="title-section title-reveal"><?= esc_html($cert_title); ?></h2>
+            <p class="funnel-hook__sub title-reveal">
+                <?= esc_html(get_field('cert_hook_sub') ?: 'Cada crisis sin protocolo cuesta reputación, clientes y tiempo que nunca recuperarás.'); ?>
+            </p>
+
+            <!-- ══ PROOF: Pain pills + Stats unidos ══════════════════════ -->
+            <div class="funnel-proof title-reveal" aria-label="Por qué certificarte">
+
+                <!-- Fila superior: pain-point pills -->
+                <div class="funnel-proof__pills">
+                    <?php
+                    $pain_points = get_field('cert_pain_points') ?: [
+                        ['icon' => '⚡', 'text' => 'Respuestas improvisadas'],
+                        ['icon' => '📉', 'text' => 'Daño reputacional'],
+                        ['icon' => '🔇', 'text' => 'Mensajes contradictorios'],
+                        ['icon' => '⏱️', 'text' => 'Pérdida de tiempo crítico'],
+                    ];
+                    foreach ($pain_points as $pp) : ?>
+                        <span class="pain-pill">
+                            <span class="pain-pill__icon"><?= esc_html($pp['icon']); ?></span>
+                            <span class="pain-pill__text"><?= esc_html($pp['text']); ?></span>
+                        </span>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Separador -->
+                <div class="funnel-proof__divider" aria-hidden="true"></div>
+
+                <!-- Fila inferior: estadísticas -->
+                <div class="funnel-proof__stats" aria-label="Estadísticas de la certificación">
+                    <?php
+                    $stats = [
+                        [$stat1_number, $stat1_label],
+                        [$stat2_number, $stat2_label],
+                        [$stat3_number, $stat3_label],
+                        [$stat4_number, $stat4_label],
+                    ];
+                    foreach ($stats as [$num, $label]) : ?>
+                        <div class="funnel-stat">
+                            <span class="funnel-stat__number pretext-reveal"><?= esc_html($num); ?></span>
+                            <span class="funnel-stat__label pretext-reveal"><?= esc_html($label); ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+            </div><!-- /.funnel-proof -->
+        </div>
+
+        <!-- ══ STAGE 3 · OFFER (cards grid + CTA panel) ════════════════════ -->
         <div class="grid-containers">
             <div class="containers">
+
+                <!-- Slider 1: Proceso de certificación -->
                 <div class="cert-container card-reveal">
                     <div class="span-pretext--wrapper">
                         <div class="span-pretext"><?= esc_html($cert_slider1_title); ?></div>
@@ -52,17 +121,15 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                     <div class="slideshow--wrapper">
                         <div class="slideshow">
                             <?php if ( have_rows('cert_slider1_cards') ) : ?>
-                                <?php $count = 1; while ( have_rows('cert_slider1_cards') ) : the_row(); 
-                                    $icon = get_sub_field('icon');
+                                <?php $count = 1; while ( have_rows('cert_slider1_cards') ) : the_row();
+                                    $icon  = get_sub_field('icon');
                                     $title = get_sub_field('title');
-                                    $desc = get_sub_field('description');
+                                    $desc  = get_sub_field('description');
                                 ?>
                                 <div class="module-card">
                                     <div class="module-card--content">
                                         <span class="module-number"><?= $count++; ?></span>
-                                        <div class="module-icon">
-                                            <?= $icon; ?>
-                                        </div>
+                                        <div class="module-icon"><?= $icon; ?></div>
                                         <div class="module-card--content-text">
                                             <h3 class="step-title"><?= esc_html($title); ?></h3>
                                             <p class="step-desc"><?= esc_html($desc); ?></p>
@@ -77,8 +144,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">1</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                <circle cx="12" cy="7" r="4" />
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
                                             </svg>
                                         </div>
                                         <div class="module-card--content-text">
@@ -93,8 +159,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">2</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                                             </svg>
                                         </div>
                                         <div class="module-card--content-text">
@@ -109,11 +174,8 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">3</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                                                <line x1="8" y1="21" x2="16" y2="21" />
-                                                <line x1="12" y1="17" x2="12" y2="21" />
-                                                <path d="M10 13a2 2 0 1 0 4 0" />
-                                                <path d="M8 15a4 4 0 0 1 8 0" />
+                                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
+                                                <path d="M10 13a2 2 0 1 0 4 0" /><path d="M8 15a4 4 0 0 1 8 0" />
                                             </svg>
                                         </div>
                                         <div class="module-card--content-text">
@@ -128,10 +190,8 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">4</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <line x1="18" y1="20" x2="18" y2="10" />
-                                                <line x1="12" y1="20" x2="12" y2="4" />
-                                                <line x1="6" y1="20" x2="6" y2="14" />
-                                                <path d="M3 3v18h18" />
+                                                <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" />
+                                                <line x1="6" y1="20" x2="6" y2="14" /><path d="M3 3v18h18" />
                                             </svg>
                                         </div>
                                         <div class="module-card--content-text">
@@ -146,8 +206,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">5</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="8" r="7" />
-                                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                                                <circle cx="12" cy="8" r="7" /><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
                                             </svg>
                                         </div>
                                         <div class="module-card--content-text">
@@ -169,6 +228,8 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </button>
                     </div>
                 </div>
+
+                <!-- Slider 2: Módulos de certificación -->
                 <div class="cert-container card-reveal">
                     <div class="span-pretext--wrapper">
                         <div class="span-pretext"><?= esc_html($cert_slider2_title); ?></div>
@@ -176,16 +237,14 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                     <div class="slideshow--wrapper">
                         <div class="slideshow">
                             <?php if ( have_rows('cert_slider2_cards') ) : ?>
-                                <?php $count = 1; while ( have_rows('cert_slider2_cards') ) : the_row(); 
+                                <?php $count = 1; while ( have_rows('cert_slider2_cards') ) : the_row();
                                     $icon = get_sub_field('icon');
                                     $desc = get_sub_field('description');
                                 ?>
                                 <div class="module-card">
                                     <div class="module-card--content">
                                         <span class="module-number"><?= $count++; ?></span>
-                                        <div class="module-icon">
-                                            <?= $icon; ?>
-                                        </div>
+                                        <div class="module-icon"><?= $icon; ?></div>
                                         <p><?= esc_html($desc); ?></p>
                                     </div>
                                 </div>
@@ -197,8 +256,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">1</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="11" cy="11" r="8" />
-                                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
                                             </svg>
                                         </div>
                                         <p>Investigación y estudios de crisis. Radar de riesgos: tendencias 2026 y casos actuales</p>
@@ -210,10 +268,8 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">2</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M2 18a10 10 0 0 1 20 0" />
-                                                <line x1="12" y1="18" x2="12" y2="14" />
-                                                <line x1="12" y1="18" x2="16" y2="11" />
-                                                <circle cx="12" cy="18" r="2" />
+                                                <path d="M2 18a10 10 0 0 1 20 0" /><line x1="12" y1="18" x2="12" y2="14" />
+                                                <line x1="12" y1="18" x2="16" y2="11" /><circle cx="12" cy="18" r="2" />
                                             </svg>
                                         </div>
                                         <p>Herramientas y parámetros de medición de una crisis y su respuesta</p>
@@ -250,10 +306,8 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">5</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <line x1="4" y1="9" x2="20" y2="9" />
-                                                <line x1="4" y1="15" x2="20" y2="15" />
-                                                <line x1="10" y1="3" x2="8" y2="21" />
-                                                <line x1="16" y1="3" x2="14" y2="21" />
+                                                <line x1="4" y1="9" x2="20" y2="9" /><line x1="4" y1="15" x2="20" y2="15" />
+                                                <line x1="10" y1="3" x2="8" y2="21" /><line x1="16" y1="3" x2="14" y2="21" />
                                             </svg>
                                         </div>
                                         <p>Procesos para un manejo ágil de crisis en redes sociales</p>
@@ -285,21 +339,20 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </button>
                     </div>
                 </div>
-                <div class="cert-container card-reveal">
 
+                <!-- Slider 3: Modalidades -->
+                <div class="cert-container card-reveal">
                     <div class="slideshow--wrapper">
                         <div class="slideshow">
                             <?php if ( have_rows('cert_info_bar') ) : ?>
-                                <?php $count = 1; while ( have_rows('cert_info_bar') ) : the_row(); 
-                                    $icon = get_sub_field('icon');
+                                <?php $count = 1; while ( have_rows('cert_info_bar') ) : the_row();
+                                    $icon  = get_sub_field('icon');
                                     $title = get_sub_field('title');
-                                    $desc = get_sub_field('description');
+                                    $desc  = get_sub_field('description');
                                 ?>
                                 <div class="module-card">
                                     <div class="module-card--content">
-                                        <div class="module-icon">
-                                            <?= $icon; ?>
-                                        </div>
+                                        <div class="module-icon"><?= $icon; ?></div>
                                         <div class="info-bar-text">
                                             <strong><?= esc_html($title); ?></strong>
                                             <span><?= esc_html($desc); ?></span>
@@ -314,10 +367,8 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <span class="module-number">1</span>
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                                <circle cx="9" cy="7" r="4" />
-                                                <circle cx="18" cy="18" r="3" />
-                                                <line x1="22" y1="22" x2="20" y2="20" />
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+                                                <circle cx="18" cy="18" r="3" /><line x1="22" y1="22" x2="20" y2="20" />
                                             </svg>
                                         </div>
                                         <div class="info-bar-text">
@@ -333,8 +384,7 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                                         <div class="module-icon">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                                                <line x1="8" y1="21" x2="16" y2="21" />
-                                                <line x1="12" y1="17" x2="12" y2="21" />
+                                                <line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
                                                 <polygon points="10 8 16 11 10 14 10 8" />
                                             </svg>
                                         </div>
@@ -372,12 +422,54 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </button>
                     </div>
                 </div>
+
+            </div><!-- /.containers -->
+
+            <div class="modules-footer-panel">
+                <p><?= wp_kses_post($cert_footer_text); ?></p>
             </div>
-            <div class="cert-panel card-reveal" style="background-image: url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+            <!-- ══ STAGE 4 · CTA PANEL ══════════════════════════════════════ -->
+            <div class="cert-panel card-reveal"
+                 style="background-image: url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
                 <div class="cert-panel-backdrop"></div>
+
                 <div class="cert-panel-content">
+
+                    <!-- Urgency banner -->
+                    <div class="cert-urgency-banner">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <?= wp_kses_post($cert_urgency_text); ?>
+                    </div>
+
                     <h2 class="cert-headline"><?= esc_html($cert_cta_headline); ?></h2>
                     <p class="cert-subheadline"><?= esc_html($cert_cta_subhead); ?></p>
+
+                    <!-- Guarantee strip -->
+                    <div class="cert-guarantee">
+                        <div class="cert-guarantee__item">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Avalado internacionalmente
+                        </div>
+                        <div class="cert-guarantee__item">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Instructores expertos en activo
+                        </div>
+                        <div class="cert-guarantee__item">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Grupos reducidos garantizados
+                        </div>
+                    </div>
+
                     <div class="cert-actions">
                         <?php if ($cert_cta_btn1_text && $cert_cta_btn1_url): ?>
                         <a href="<?= esc_url($cert_cta_btn1_url); ?>" class="btn primary cert-btn-primary" id="cert-main-button">
@@ -391,17 +483,19 @@ $cert_footer_text   = get_field('cert_footer_text') ?: 'Los módulos pueden curs
                         </a>
                         <?php endif; ?>
                     </div>
+
                     <p class="cert-microcopy">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
                         <?= esc_html($cert_cta_microcopy); ?>
                     </p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Modules Footer panel -->
-        <div class="modules-footer-panel">
-            <p><?= wp_kses_post($cert_footer_text); ?></p>
-        </div>
-    </div>
+                </div><!-- /.cert-panel-content -->
+            </div><!-- /.cert-panel -->
+
+        </div><!-- /.grid-containers -->
+        
+
+    </div><!-- /.content -->
 </section>

@@ -63,7 +63,7 @@
 .detras-del-espejo.glass-post,
 .property.glass-post,
 .participants.glass-post,
-.news.glass-post {
+.type-news.glass-post {
     border-radius: 1.7rem;
 
     &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-link, .format-property, .participants) {
@@ -368,7 +368,7 @@ select {
     & .detras-del-espejo.glass-post,
     & .property.glass-post,
     & .participants.glass-post,
-    & .news.glass-post {
+    & .type-news.glass-post {
 
         &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-link, .format-property, .participants) {
             border-radius: 3rem;

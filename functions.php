@@ -119,8 +119,27 @@ function avante_fetch_url_metadata($url) {
                 if ($ts) $meta['date'] = date_i18n('F j, Y', $ts);
             }
             
-            // Avatar fallback (logo or apple icon)
-            if (preg_match('/apple-touch-icon.*href=["\']([^"\']+)["\']/is', $html, $logo)) $meta['author_avatar'] = $logo[1];
+            // Avatar fallback (logo, icon or apple icon)
+            if (preg_match('/<link[^>]*rel=["\'](?:shortcut icon|icon|apple-touch-icon.*?)["\'][^>]*href=["\']([^"\']+)["\']/is', $html, $logo)) {
+                $icon_url = $logo[1];
+                if (strpos($icon_url, 'http') !== 0) {
+                    if (strpos($icon_url, '//') === 0) {
+                        $icon_url = 'https:' . $icon_url;
+                    } else {
+                        $parsed = parse_url($url);
+                        $icon_url = rtrim($parsed['scheme'] . '://' . $parsed['host'], '/') . '/' . ltrim($icon_url, '/');
+                    }
+                }
+                $meta['author_avatar'] = $icon_url;
+            } else {
+                // Manually check /favicon.ico if not found in HTML
+                $parsed = parse_url($url);
+                $favicon_url = $parsed['scheme'] . '://' . $parsed['host'] . '/favicon.ico';
+                $fav_response = wp_remote_head($favicon_url, ['timeout' => 3]);
+                if (!is_wp_error($fav_response) && wp_remote_retrieve_response_code($fav_response) === 200) {
+                    $meta['author_avatar'] = $favicon_url;
+                }
+            }
         }
     }
 
@@ -154,8 +173,9 @@ function avante_get_link_post_data($post) {
         if (!empty($meta['date'])) $data['date'] = $meta['date'];
         if (!empty($meta['site_name'])) $data['site_name'] = $meta['site_name'];
         
-        $data['author_name'] = !empty($meta['author']) ? $meta['author'] : (!empty($meta['site_name']) ? $meta['site_name'] : preg_replace('/^www\./', '', parse_url($url, PHP_URL_HOST)));
-        $data['author_avatar'] = !empty($meta['author_avatar']) ? $meta['author_avatar'] : '';
+        $domain = parse_url($url, PHP_URL_HOST);
+        $data['author_name'] = !empty($meta['author']) ? $meta['author'] : (!empty($meta['site_name']) ? $meta['site_name'] : preg_replace('/^www\./', '', $domain));
+        $data['author_avatar'] = !empty($meta['author_avatar']) ? $meta['author_avatar'] : 'https://ui-avatars.com/api/?name=' . urlencode($data['author_name']) . '&background=random&color=fff&size=128';
         $data['external_tags'] = $meta['tags'];
         $data['http_status'] = $meta['http_status'];
     }
@@ -165,4 +185,55 @@ function avante_get_link_post_data($post) {
     }
 
     return $data;
+}
+
+/**
+ * AJAX handler for filtering news posts by post format
+ */
+add_action('wp_ajax_filter_news_posts', 'avante_filter_news_posts');
+add_action('wp_ajax_nopriv_filter_news_posts', 'avante_filter_news_posts');
+
+function avante_filter_news_posts() {
+    $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : 'all';
+
+    $args = [
+        'post_type'      => 'news',
+        'posts_per_page' => 8,
+        'post_status'    => 'publish',
+        'no_found_rows'  => true,
+    ];
+
+    if ($format !== 'all') {
+        if ($format === 'standard') {
+            // Standard format means no specific post format term is assigned
+            $args['tax_query'] = [
+                [
+                    'taxonomy' => 'post_format',
+                    'field'    => 'slug',
+                    'terms'    => ['post-format-aside', 'post-format-image', 'post-format-video', 'post-format-quote', 'post-format-link', 'post-format-gallery', 'post-format-audio'],
+                    'operator' => 'NOT IN'
+                ]
+            ];
+        } else {
+            // Specific post format like 'video', 'link'
+            $args['tax_query'] = [
+                [
+                    'taxonomy' => 'post_format',
+                    'field'    => 'slug',
+                    'terms'    => 'post-format-' . $format,
+                ]
+            ];
+        }
+    }
+
+    global $wp_query;
+    $wp_query = new WP_Query($args);
+
+    ob_start();
+    get_template_part('templates/archive/wp', 'loop');
+    $html = ob_get_clean();
+
+    wp_reset_postdata();
+
+    wp_send_json_success(['html' => $html]);
 }
