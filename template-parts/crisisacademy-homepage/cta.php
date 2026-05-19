@@ -20,7 +20,7 @@ $cta_btn_url   = get_field('cta_final_btn_url')       ?: '/contacto';
 $cta_microcopy = get_field('cta_final_microcopy')     ?: 'Sin compromisos · Respuesta en menos de 24 h';
 
 // Número de WhatsApp configurable mediante código (o ACF en el futuro)
-$whatsapp_number = '529211243148';
+$whatsapp_number = '525543910088';
 
 // Trust signals
 $trust_items = [
