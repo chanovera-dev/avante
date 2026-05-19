@@ -45,7 +45,7 @@ $faq_subtitle = get_field('homepage_faq_subtitle') ?: 'FAQs';
 $cta_title = get_field('homepage_faq_cta_title') ?: 'Agenda una llamada de 15 min';
 $cta_desc = get_field('homepage_faq_cta_desc') ?: 'Si tienes dudas, agenda una videollamada gratuita de 15 minutos antes de suscribirte a un plan.';
 $cta_btn_text = get_field('homepage_faq_cta_btn_text') ?: 'Reservar Llamada Gratuita';
-$cta_url = get_field('homepage_faq_cta_url') ?: '#booking';
+$cta_url = get_field('homepage_faq_cta_url') ?: '#cta';
 $cta_avatar = get_field('homepage_faq_cta_avatar') ?: 'https://i.pravatar.cc/150?img=33';
 ?>
 
