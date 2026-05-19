@@ -11,7 +11,7 @@
         text-align: center;
 
         & .grid-containers {
-            margin-top: 3rem;
+            margin-top: 1rem;
             display: grid;
             gap: 2rem;
 
@@ -32,11 +32,6 @@
                     box-shadow: #1d224f09 0 -2px 0 inset, #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
                     border: 1px solid rgba(0, 0, 0, 0.06);
                     transform-origin: center center;
-
-                    &:has(.slideshow--wrapper .slideshow .module-card .module-card--content .info-bar-text) {
-                        background-color: color-mix(in srgb, var(--wp--preset--color--secondary) 50%, transparent);
-                        padding-top: 1rem;
-                    }
 
                     /* Resplandor interno dinámico */
                     &::before {
@@ -307,6 +302,173 @@
                         }
                     }
                 }
+
+                & .quotes-container {
+                    position: relative;
+                    z-index: 4;
+                    overflow: hidden;
+                    transform-origin: center center;
+                    display: grid;
+                    background: color-mix(in srgb, var(--wp--preset--color--secondary) 50%, transparent);
+                    backdrop-filter: blur(6px);
+                    border: 1px solid rgba(0, 0, 0, 0.06);
+                    box-shadow: #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
+
+                    /* Resplandor interno dinámico */
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--tertiary) 40%, transparent), transparent 50%);
+                        opacity: 0;
+                        transition: opacity 0.4s ease;
+                        pointer-events: none;
+                        z-index: -1;
+                        border-radius: inherit;
+                        corner-shape: inherit;
+                    }
+
+                    /* Borde dinámico que sigue al ratón */
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        inset: -1px;
+                        background: radial-gradient(300px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.8), transparent 50%);
+                        opacity: 0;
+                        transition: opacity 0.4s ease;
+                        pointer-events: none;
+                        z-index: 1;
+                        border-radius: inherit;
+                        corner-shape: inherit;
+                        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                        -webkit-mask-composite: xor;
+                        mask-composite: exclude;
+                        padding: 1px;
+                    }
+
+                    &:hover::before,
+                    &:hover::after {
+                        opacity: 1;
+                    }
+
+                    &:hover {
+                        border-color: rgba(0, 162, 255, 0.3);
+                        box-shadow: #1d224f12 0px 54px 55px, #1d224f08 0px -12px 30px, #1d224f08 0px 4px 6px, #1d224f08 0px 12px 13px, #1d224f08 0px -3px 5px;
+                    }
+
+                    & .slideshow--wrapper {
+                        width: 100%;
+                        position: relative;
+                        color: var(--wp--preset--color--contrast);
+                        z-index: 5;
+                        overflow: hidden;
+
+                        & .slideshow {
+                            position: relative;
+                            display: flex;
+                            height: 100%;
+
+                            & .module-card {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 1rem;
+                                padding: 1rem;
+                                box-sizing: border-box;
+                                height: 100%;
+                                opacity: 1;
+
+                                &.active {
+                                    opacity: 1;
+                                    pointer-events: auto;
+
+                                    & .module-card--content {
+                                        opacity: 1;
+                                        transform: translateY(0) scale(1);
+                                        filter: blur(0);
+                                        transition: opacity .5s ease-out, transform .5s ease-out, filter .5s ease-out;
+                                    }
+                                }
+
+                                & .module-card--content {
+                                    opacity: 0;
+                                    transform: translateY(20px) scale(0.95);
+                                    filter: blur(2px);
+                                    font-size: var(--wp--preset--font-size--large);
+                                    font-weight: 500;
+                                    transition: opacity .4s ease-in, transform .4s ease-in, filter .4s ease-in;
+
+                                    & .module-number {
+                                        display: none;
+                                    }
+
+                                    & .module-icon {
+                                        background-color: color-mix(in srgb, var(--wp--preset--color--tertiary) 35%, transparent);
+                                        color: var(--wp--preset--color--primary);
+                                        width: 50px;
+                                        height: 50px;
+                                        display: grid;
+                                        place-content: center;
+                                        margin-inline: auto;
+                                        transition: color .3s ease;
+                                        margin-bottom: 1rem;
+
+                                        & svg {
+                                            width: 18px;
+                                            height: 18px;
+                                        }
+                                    }
+
+                                    & .info-bar-text {
+                                        font-size: var(--wp--preset--font-size--medium);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    & .slideshow-bullets-wrapper {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        position: relative;
+                        z-index: 5;
+                        display: none;
+
+                        & .btn-pagination {
+                            background-color: transparent;
+                            color: var(--wp--preset--color--primary);
+                            opacity: .5;
+                            transition: opacity .3s ease, transform .3s ease;
+
+                            &:hover {
+                                background-color: transparent;
+                                opacity: 1;
+                            }
+                        }
+
+                        & .slideshow-bullets {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 20px;
+
+                            & .bullet {
+                                width: 13px;
+                                height: 13px;
+                                border-radius: 50%;
+                                background-color: transparent;
+                                border: 2px solid var(--wp--preset--color--primary);
+                                transition: background-color .3s ease;
+
+                                &.active {
+                                    background-color: var(--wp--preset--color--primary);
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             & .cert-panel {
@@ -497,26 +659,174 @@
 
         /* ── FUNNEL: Hook ──────────────────────────────────────────── */
         & .funnel-hook {
+            display: grid;
+            gap: 3rem;
+            align-items: baseline;
             text-align: center;
 
             & .funnel-hook__sub {
                 font-size: clamp(1rem, 1.4vw, 1.15rem);
                 color: color-mix(in srgb, var(--wp--preset--color--contrast) 65%, transparent);
-                max-width: 600px;
-                margin-inline: auto;
-                margin-bottom: 2rem;
+                margin-top: 2rem;
                 line-height: 1.6;
+                font-weight: 500;
             }
         }
 
         /* ── FUNNEL: Proof unificado (pills + stats) ───────────────── */
         & .funnel-proof {
-            margin-block: 2.5rem 0;
-            background: color-mix(in srgb, var(--wp--preset--color--secondary) 45%, transparent);
-            backdrop-filter: blur(6px);
-            border: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 25%, transparent);
-            border-radius: var(--wp--custom--border-radius, 4px);
             overflow: hidden;
+            padding: .5rem;
+            background: color-mix(in srgb, var(--wp--preset--color--secondary) 50%, transparent);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: #1d224f09 0px 54px 55px, #1d224f04 0px -12px 30px, #1d224f04 0px 4px 6px, #1d224f04 0px 12px 13px, #1d224f04 0px -3px 5px;
+
+            /* Resplandor interno dinámico */
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--tertiary) 40%, transparent), transparent 50%);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                pointer-events: none;
+                z-index: -1;
+                border-radius: inherit;
+                corner-shape: inherit;
+            }
+
+            /* Borde dinámico que sigue al ratón */
+            &::after {
+                content: "";
+                position: absolute;
+                inset: -1px;
+                background: radial-gradient(300px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.8), transparent 50%);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                pointer-events: none;
+                z-index: 1;
+                border-radius: inherit;
+                corner-shape: inherit;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+                padding: 1px;
+            }
+
+            &:hover::before,
+            &:hover::after {
+                opacity: 1;
+            }
+
+            &:hover {
+                border-color: rgba(0, 162, 255, 0.3);
+                box-shadow: #1d224f12 0px 54px 55px, #1d224f08 0px -12px 30px, #1d224f08 0px 4px 6px, #1d224f08 0px 12px 13px, #1d224f08 0px -3px 5px;
+            }
+
+            & .quotes-container {
+                position: relative;
+                z-index: 4;
+                background-color: color-mix(in srgb, var(--wp--preset--color--focus) 15%, transparent);
+                border: 1px solid color-mix(in srgb, var(--wp--preset--color--focus) 50%, transparent);
+                overflow: hidden;
+                transform-origin: center center;
+                display: grid;
+
+                & .slideshow--wrapper {
+                    width: 100%;
+                    position: relative;
+                    color: var(--wp--preset--color--contrast);
+                    z-index: 5;
+                    overflow: hidden;
+
+                    & .slideshow {
+                        position: relative;
+                        display: flex;
+                        height: 100%;
+
+                        & .pain-pill {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 1rem;
+                            padding: 1rem;
+                            box-sizing: border-box;
+                            height: 100%;
+                            opacity: 1;
+
+                            &.active {
+
+                                & .pain-pill__icon,
+                                & .pain-pill__text {
+                                    opacity: 1;
+                                    transform: translateY(0) scale(1);
+                                    filter: blur(0);
+                                    transition: opacity .5s ease-out, transform .5s ease-out, filter .5s ease-out;
+                                }
+                            }
+
+                            & .pain-pill__icon,
+                            & .pain-pill__text {
+                                opacity: 0;
+                                transform: translateY(20px) scale(0.95);
+                                filter: blur(2px);
+                                font-size: var(--wp--preset--font-size--large);
+                                font-weight: 500;
+                                transition: opacity .4s ease-in, transform .4s ease-in, filter .4s ease-in;
+                            }
+                        }
+                    }
+                }
+
+                & .slideshow-bullets-wrapper {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    position: relative;
+                    z-index: 5;
+                    display: none;
+
+                    & .btn-pagination {
+                        background-color: transparent;
+                        color: var(--wp--preset--color--focus);
+                        opacity: .25;
+                        transition: opacity .3s ease, transform .3s ease;
+
+                        &:hover {
+                            background-color: transparent;
+                            opacity: 1;
+                        }
+                    }
+
+                    & .slideshow-bullets {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 20px;
+                        opacity: .6;
+                        transition: opacity .3s ease;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+
+                        & .bullet {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50%;
+                            background-color: transparent;
+                            border: 2px solid var(--wp--preset--color--focus);
+                            transition: background-color .3s ease;
+
+                            &.active {
+                                background-color: var(--wp--preset--color--focus);
+                            }
+                        }
+                    }
+                }
+            }
 
             /* ── Fila de pills ── */
             & .funnel-proof__pills {
@@ -550,19 +860,10 @@
                 }
             }
 
-            /* ── Separador ── */
-            & .funnel-proof__divider {
-                height: 1px;
-                margin-inline: 2rem;
-                background: color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
-            }
-
             /* ── Fila de stats ── */
             & .funnel-proof__stats {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: 0;
-                padding: 1.25rem 2rem 1.5rem;
 
                 & .funnel-stat {
                     display: flex;
@@ -570,11 +871,11 @@
                     align-items: center;
                     gap: .25rem;
                     text-align: center;
-                    padding-inline: .5rem;
+                    padding: 1rem;
 
                     /* separador vertical entre stats */
                     &:not(:last-child) {
-                        border-right: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
+                        border-right: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 40%, transparent);
                     }
 
                     & .funnel-stat__number {
@@ -665,11 +966,13 @@
                     & .funnel-stat:nth-child(2) {
                         border-right: none;
                     }
+
                     & .funnel-stat:nth-child(3) {
-                        border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
+                        border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 40%, transparent);
                     }
+
                     & .funnel-stat:nth-child(4) {
-                        border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent);
+                        border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 40%, transparent);
                     }
                 }
             }
@@ -693,6 +996,14 @@
 @media (width > 1024px) {
     #certification {
         & .content {
+            & .funnel-hook {
+                grid-template-columns: 1fr 1fr;
+
+                & .heading {
+                    text-align: left;
+                }
+            }
+
             & .certifications-info-bar {
                 & .info-bar-item:nth-child(2) {
                     justify-content: center;

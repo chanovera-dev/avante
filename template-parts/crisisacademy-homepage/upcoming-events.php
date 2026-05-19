@@ -184,7 +184,7 @@ $testimonials = [
             </div>
             <footer class="events-footer">
                 <div class="events-footer--testimonials">
-                    <div class="container">
+                    <div class="quotes-container">
                         <div class="slideshow--wrapper">
                             <div class="slideshow">
                                 <?php foreach ($testimonials as $testimonial) : ?>

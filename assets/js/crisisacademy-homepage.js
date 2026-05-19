@@ -179,7 +179,7 @@ function initFaqAccordion() {
  * CSS variables --mouse-x and --mouse-y for responsive glow styling.
  */
 function initCardGlowEffect() {
-    const cards = document.querySelectorAll('#hero, .about-item, .signal-item, .how-it-works--card, .cta-container, .cert-container, .cert-panel, .how-works-modal-container');
+    const cards = document.querySelectorAll('#hero, .about-item, .signal-item, .how-it-works--card, .cta-container, .cert-container, .cert-panel, .how-works-modal-container, .funnel-proof, .containers .quotes-container');
 
     cards.forEach(card => {
         let rect;
@@ -313,10 +313,10 @@ function initPretextReveal() {
             return;
         }
         isProcessing = true;
-        
+
         const { el, originalText } = scrambleQueue.shift();
         scramble(el, originalText);
-        
+
         // Retardo escalonado para el siguiente elemento
         setTimeout(processQueue, 150);
     }
@@ -325,16 +325,16 @@ function initPretextReveal() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 io.unobserve(entry.target);
-                
+
                 scrambleQueue.push({
                     el: entry.target,
                     originalText: entry.target._originalText
                 });
-                
+
                 if (!isProcessing) processQueue();
             }
         });
-    }, { 
+    }, {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
@@ -390,10 +390,10 @@ function initTitleReveal() {
             return;
         }
         isTitleProcessing = true;
-        
+
         const el = titleQueue.shift();
         el.classList.add('is-visible');
-        
+
         // Retardo escalonado para el siguiente título
         setTimeout(processTitleQueue, 200);
     }
@@ -406,7 +406,7 @@ function initTitleReveal() {
                 if (!isTitleProcessing) processTitleQueue();
             }
         });
-    }, { 
+    }, {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
@@ -434,12 +434,12 @@ function initCardReveal() {
             return;
         }
         isCardProcessing = true;
-        
+
         // Procesar hasta 2 tarjetas al mismo tiempo para no hacerlo muy lento
         // si hay muchas (como en la grilla de próximos eventos)
         const batch = cardQueue.splice(0, 1);
         batch.forEach(el => el.classList.add('is-visible'));
-        
+
         // Retardo escalonado para el siguiente grupo
         setTimeout(processCardQueue, 150);
     }
@@ -448,9 +448,9 @@ function initCardReveal() {
         // Ordenar las entradas de izquierda a derecha y arriba a abajo
         // para que la cascada siempre se vea natural
         const visibleEntries = entries.filter(e => e.isIntersecting);
-        
+
         if (visibleEntries.length === 0) return;
-        
+
         visibleEntries.sort((a, b) => {
             const rectA = a.target.getBoundingClientRect();
             const rectB = b.target.getBoundingClientRect();
@@ -466,10 +466,10 @@ function initCardReveal() {
             io.unobserve(entry.target);
             cardQueue.push(entry.target);
         });
-        
+
         if (!isCardProcessing) processCardQueue();
-        
-    }, { 
+
+    }, {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
@@ -484,39 +484,39 @@ function initCardReveal() {
  */
 function initStickyAnchorLinks() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             const targetEl = document.querySelector(targetId);
             if (!targetEl) return;
-            
+
             // Verificar si el enlace apunta a un bloque o algo dentro de un bloque
             const targetBlock = targetEl.classList.contains('block') ? targetEl : targetEl.closest('.block');
-            
+
             if (targetBlock) {
                 e.preventDefault();
-                
+
                 const blocks = Array.from(document.querySelectorAll('.site-main > .block'));
                 const targetIndex = blocks.indexOf(targetBlock);
-                
+
                 if (targetIndex !== -1) {
                     let scrollPos = 0;
-                    
+
                     // Sumamos la posición inicial del contenedor general en la página
                     const siteMain = document.querySelector('.site-main');
                     if (siteMain) {
                         scrollPos += siteMain.getBoundingClientRect().top + window.scrollY;
                     }
-                    
+
                     // Sumamos la altura de todos los bloques que están antes que nuestro objetivo
                     for (let i = 0; i < targetIndex; i++) {
                         scrollPos += blocks[i].offsetHeight;
                     }
-                    
+
                     // Removemos .is-bottom preventivamente para asegurar que sea visible al llegar
                     targetBlock.classList.remove('is-bottom');
-                    
+
                     window.scrollTo({
                         top: scrollPos,
                         behavior: 'smooth'

@@ -183,11 +183,16 @@
     border-radius: .3rem;
 }
 
+.quotes-container {
+    border-radius: .5rem;
+}
+
 .how-works-modal-container,
 .event__date,
 .event__video video,
 .type-item,
 .signal-item,
+.funnel-proof,
 .certifications-info-bar,
 .step-icon,
 .module-icon,
@@ -198,6 +203,7 @@
 .audience-item,
 .authority-item,
 .cert-container,
+.containers .quotes-container,
 .cta-panel,
 .cert-panel,
 .cta-premium-wrapper,
@@ -497,11 +503,17 @@ select {
         corner-shape: squircle;
     }
 
+    .quotes-container {
+        border-radius: 1rem;
+        corner-shape: squircle;
+    }
+
     .how-works-modal-container,
     .event__date,
     .event__video video,
     .type-item,
     .signal-item,
+    .funnel-proof,
     .certifications-info-bar,
     .step-icon,
     .module-icon,
@@ -512,6 +524,7 @@ select {
     .audience-item,
     .authority-item,
     .cert-container,
+    .containers .quotes-container,
     .cta-panel,
     .cert-panel,
     .cta-premium-wrapper,

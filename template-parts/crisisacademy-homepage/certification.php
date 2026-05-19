@@ -60,34 +60,46 @@ $cert_footer_text   = get_field('cert_footer_text')     ?: 'Los módulos pueden 
 
         <!-- ══ STAGE 1 · HOOK ══════════════════════════════════════════════ -->
         <div class="funnel-hook">
-            <span class="span-pretext pretext-reveal"><?= esc_html($cert_pretext); ?></span>
-            <h2 class="title-section title-reveal"><?= esc_html($cert_title); ?></h2>
-            <p class="funnel-hook__sub title-reveal">
-                <?= esc_html(get_field('cert_hook_sub') ?: 'Cada crisis sin protocolo cuesta reputación, clientes y tiempo que nunca recuperarás.'); ?>
-            </p>
+            <div class="heading">
+                <span class="span-pretext pretext-reveal"><?= esc_html($cert_pretext); ?></span>
+                <h2 class="title-section title-reveal"><?= esc_html($cert_title); ?></h2>
+                <p class="funnel-hook__sub title-reveal">
+                    <?= esc_html(get_field('cert_hook_sub') ?: 'Cada crisis sin protocolo cuesta reputación, clientes y tiempo que nunca recuperarás.'); ?>
+                </p>
+            </div>
 
             <!-- ══ PROOF: Pain pills + Stats unidos ══════════════════════ -->
-            <div class="funnel-proof title-reveal" aria-label="Por qué certificarte">
+            <div class="funnel-proof card-reveal" aria-label="Por qué certificarte">
 
                 <!-- Fila superior: pain-point pills -->
-                <div class="funnel-proof__pills">
-                    <?php
-                    $pain_points = get_field('cert_pain_points') ?: [
-                        ['icon' => '⚡', 'text' => 'Respuestas improvisadas'],
-                        ['icon' => '📉', 'text' => 'Daño reputacional'],
-                        ['icon' => '🔇', 'text' => 'Mensajes contradictorios'],
-                        ['icon' => '⏱️', 'text' => 'Pérdida de tiempo crítico'],
-                    ];
-                    foreach ($pain_points as $pp) : ?>
-                        <span class="pain-pill">
-                            <span class="pain-pill__icon"><?= esc_html($pp['icon']); ?></span>
-                            <span class="pain-pill__text"><?= esc_html($pp['text']); ?></span>
-                        </span>
-                    <?php endforeach; ?>
+                <div class="quotes-container">
+                    <div class="slideshow--wrapper">
+                        <div class="slideshow">
+                            <?php
+                            $pain_points = get_field('cert_pain_points') ?: [
+                                ['icon' => '⚡', 'text' => 'Respuestas improvisadas'],
+                                ['icon' => '📉', 'text' => 'Daño reputacional'],
+                                ['icon' => '🔇', 'text' => 'Mensajes contradictorios'],
+                                ['icon' => '⏱️', 'text' => 'Pérdida de tiempo crítico'],
+                            ];
+                            foreach ($pain_points as $pp) : ?>
+                                <span class="pain-pill">
+                                    <span class="pain-pill__icon"><?= esc_html($pp['icon']); ?></span>
+                                    <span class="pain-pill__text"><?= esc_html($pp['text']); ?></span>
+                                </span>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="slideshow-bullets-wrapper">
+                        <button class="slideshow-prev btn-pagination small-pagination" aria-label="diapositiva anterior">
+                            <?= avante_get_icon('backward'); ?>
+                        </button>
+                        <div class="slideshow-bullets bullets"></div>
+                        <button class="slideshow-next btn-pagination small-pagination" aria-label="siguiente diapositiva">
+                            <?= avante_get_icon('forward'); ?>
+                        </button>
+                    </div>
                 </div>
-
-                <!-- Separador -->
-                <div class="funnel-proof__divider" aria-hidden="true"></div>
 
                 <!-- Fila inferior: estadísticas -->
                 <div class="funnel-proof__stats" aria-label="Estadísticas de la certificación">
@@ -341,7 +353,7 @@ $cert_footer_text   = get_field('cert_footer_text')     ?: 'Los módulos pueden 
                 </div>
 
                 <!-- Slider 3: Modalidades -->
-                <div class="cert-container card-reveal">
+                <div class="quotes-container card-reveal">
                     <div class="slideshow--wrapper">
                         <div class="slideshow">
                             <?php if ( have_rows('cert_info_bar') ) : ?>
@@ -426,7 +438,7 @@ $cert_footer_text   = get_field('cert_footer_text')     ?: 'Los módulos pueden 
             </div><!-- /.containers -->
 
             <div class="modules-footer-panel">
-                <p><?= wp_kses_post($cert_footer_text); ?></p>
+                <p class="title-reveal"><?= wp_kses_post($cert_footer_text); ?></p>
             </div>
 
             <!-- ══ STAGE 4 · CTA PANEL ══════════════════════════════════════ -->

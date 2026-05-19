@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const wrappers = document.querySelectorAll(".container")
+    const wrappers = document.querySelectorAll(".quotes-container")
 
     wrappers.forEach((wrapper) => {
         const slideshow = wrapper.querySelector(".slideshow")

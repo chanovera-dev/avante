@@ -219,7 +219,7 @@
                 & .events-footer--testimonials {
                     max-width: 960px;
 
-                    & .container {
+                    & .quotes-container {
                         position: relative;
                         z-index: 4;
                         background-color: var(--wp--preset--color--base);
