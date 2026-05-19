@@ -2,7 +2,7 @@
     background-color: var(--wp--preset--color--base);
     overflow: hidden;
     position: relative;
-    padding: 10rem 0;
+    padding: 2rem 0;
 
     &::before {
         content: '';
@@ -27,7 +27,7 @@
         &::after {
             content: '';
             position: absolute;
-            top: -10rem;
+            top: -5rem;
             left: -5rem;
             width: 15rem;
             height: 15rem;
@@ -39,7 +39,7 @@
 
         &::after {
             top: auto;
-            bottom: -10rem;
+            bottom: -5rem;
             left: auto;
             right: -5rem;
         }
