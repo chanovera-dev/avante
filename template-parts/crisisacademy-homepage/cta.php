@@ -98,38 +98,55 @@ $stats = [
 
                     <!-- Formulario WhatsApp -->
                     <form id="cta-whatsapp-form" class="cta-form" data-phone="<?= esc_attr($whatsapp_number); ?>">
-                        <div class="form-group">
-                            <label for="wa_name">Nombre completo</label>
-                            <input type="text" id="wa_name" required placeholder="Ej. Juan Pérez">
-                        </div>
-                        <div class="form-row">
+                        <div class="cta-form-fields">
                             <div class="form-group">
-                                <label for="wa_email">Correo electrónico</label>
-                                <input type="email" id="wa_email" required placeholder="juan@empresa.com">
+                                <label for="wa_name">Nombre completo</label>
+                                <input type="text" id="wa_name" required placeholder="Ej. Juan Pérez">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="wa_email">Correo electrónico</label>
+                                    <input type="email" id="wa_email" required placeholder="juan@empresa.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="wa_phone">Teléfono / WhatsApp</label>
+                                    <input type="tel" id="wa_phone" required placeholder="+52 ...">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="wa_phone">Teléfono / WhatsApp</label>
-                                <input type="tel" id="wa_phone" required placeholder="+52 ...">
+                                <label for="wa_interest">¿Qué quieres aprender específicamente?</label>
+                                <textarea id="wa_interest" rows="2" required placeholder="Ej. Gestión de crisis, vocería..."></textarea>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="wa_interest">¿Qué quieres aprender específicamente?</label>
-                            <textarea id="wa_interest" rows="2" required placeholder="Ej. Gestión de crisis, vocería..."></textarea>
-                        </div>
-                        
-                        <!-- Botón y microcopy -->
-                        <div class="cta-action-area" style="margin-top: 1rem;">
-                            <button type="submit" class="btn primary cta-pulse-btn" id="cta-main-btn" style="border:none; cursor:pointer; width:auto;">
-                                <?= avante_get_icon('forward'); ?>
-                                <?= esc_html($cta_btn_text); ?>
-                            </button>
+                            
+                            <!-- Botón y microcopy -->
+                            <div class="cta-action-area" style="margin-top: 1rem;">
+                                <button type="submit" class="btn primary cta-pulse-btn" id="cta-main-btn" style="border:none; cursor:pointer; width:auto;">
+                                    <?= avante_get_icon('forward'); ?>
+                                    <?= esc_html($cta_btn_text); ?>
+                                </button>
 
-                            <p class="cta-micro-copy">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <p class="cta-micro-copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    </svg>
+                                    <?= esc_html($cta_microcopy); ?>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje de Éxito (Oculto inicialmente) -->
+                        <div class="cta-success-message" style="display: none; text-align: center; padding: 2rem 0;">
+                            <div class="success-icon" style="color: var(--wp--preset--color--primary); margin-bottom: 1rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
                                 </svg>
-                                <?= esc_html($cta_microcopy); ?>
-                            </p>
+                            </div>
+                            <h3 style="color: var(--wp--preset--color--base); font-size: 1.5rem; margin-bottom: 0.5rem;">¡Preparado!</h3>
+                            <p style="color: rgba(255,255,255,0.7); font-size: 1rem; margin-bottom: 1.5rem;">Se ha abierto WhatsApp con tu mensaje pre-cargado.</p>
+                            <button type="button" class="btn secondary" id="cta-reset-btn" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 99px; cursor: pointer; transition: all 0.3s ease;">
+                                Llenar nuevo formulario
+                            </button>
                         </div>
                     </form>
 
@@ -183,7 +200,29 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
             window.open(waUrl, '_blank');
+
+            // Ocultar campos y mostrar éxito
+            const formFields = form.querySelector('.cta-form-fields');
+            const successMsg = form.querySelector('.cta-success-message');
+            if (formFields && successMsg) {
+                formFields.style.display = 'none';
+                successMsg.style.display = 'block';
+            }
         });
+        
+        // Lógica de botón reset
+        const resetBtn = document.getElementById('cta-reset-btn');
+        if(resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                form.reset();
+                const formFields = form.querySelector('.cta-form-fields');
+                const successMsg = form.querySelector('.cta-success-message');
+                if (formFields && successMsg) {
+                    formFields.style.display = 'block';
+                    successMsg.style.display = 'none';
+                }
+            });
+        }
     }
 });
 </script>
