@@ -3,18 +3,17 @@
     position: relative;
     overflow: hidden;
 
+
     /* Anillos de Sonar/Radar - Temática: Centro de Inteligencia */
     &::before {
         content: '';
         position: absolute;
         inset: -10%;
-        background-image: repeating-radial-gradient(
-            circle at 50% 15%,
-            transparent 0,
-            transparent 60px,
-            color-mix(in srgb, var(--wp--preset--color--primary) 12%, transparent) 60px,
-            color-mix(in srgb, var(--wp--preset--color--primary) 12%, transparent) 61px
-        );
+        background-image: repeating-radial-gradient(circle at 50% 15%,
+                transparent 0,
+                transparent 60px,
+                color-mix(in srgb, var(--wp--preset--color--primary) 22%, transparent) 60px,
+                color-mix(in srgb, var(--wp--preset--color--primary) 22%, transparent) 61px);
         mask-image: radial-gradient(circle at 50% 15%, black 0%, transparent 60%);
         z-index: 0;
         pointer-events: none;
@@ -44,17 +43,16 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: repeating-linear-gradient(
-                to bottom,
-                transparent 0px,
-                transparent 3px,
-                color-mix(in srgb, var(--wp--preset--color--primary) 4%, transparent) 3px,
-                color-mix(in srgb, var(--wp--preset--color--primary) 4%, transparent) 4px
-            );
+            background-image: repeating-linear-gradient(to bottom,
+                    transparent 0px,
+                    transparent 3px,
+                    color-mix(in srgb, var(--wp--preset--color--primary) 4%, transparent) 3px,
+                    color-mix(in srgb, var(--wp--preset--color--primary) 4%, transparent) 4px);
             z-index: -1;
             pointer-events: none;
             mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
         }
+
         & header.section-header {
             text-align: center;
             margin-bottom: 3rem;
@@ -104,10 +102,13 @@
 }
 
 @keyframes news-sonar-pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.8;
         transform: scale(1);
     }
+
     50% {
         opacity: 0.4;
         transform: scale(1.02);
