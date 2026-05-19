@@ -477,6 +477,56 @@ function initCardReveal() {
     document.querySelectorAll('.card-reveal').forEach(el => io.observe(el));
 }
 
+/**
+ * Smooth Scroll for Sticky Anchor Links
+ * Bypasses the native anchor jump bug where browsers won't scroll 
+ * to a sticky element if it's currently stuck at the top.
+ */
+function initStickyAnchorLinks() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetEl = document.querySelector(targetId);
+            if (!targetEl) return;
+            
+            // Verificar si el enlace apunta a un bloque o algo dentro de un bloque
+            const targetBlock = targetEl.classList.contains('block') ? targetEl : targetEl.closest('.block');
+            
+            if (targetBlock) {
+                e.preventDefault();
+                
+                const blocks = Array.from(document.querySelectorAll('.site-main > .block'));
+                const targetIndex = blocks.indexOf(targetBlock);
+                
+                if (targetIndex !== -1) {
+                    let scrollPos = 0;
+                    
+                    // Sumamos la posición inicial del contenedor general en la página
+                    const siteMain = document.querySelector('.site-main');
+                    if (siteMain) {
+                        scrollPos += siteMain.getBoundingClientRect().top + window.scrollY;
+                    }
+                    
+                    // Sumamos la altura de todos los bloques que están antes que nuestro objetivo
+                    for (let i = 0; i < targetIndex; i++) {
+                        scrollPos += blocks[i].offsetHeight;
+                    }
+                    
+                    // Removemos .is-bottom preventivamente para asegurar que sea visible al llegar
+                    targetBlock.classList.remove('is-bottom');
+                    
+                    window.scrollTo({
+                        top: scrollPos,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initUpcomingEventsClocks();
     initUpcomingEventsScroll();
@@ -487,4 +537,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initPretextReveal();
     initTitleReveal();
     initCardReveal();
+    initStickyAnchorLinks();
 });
