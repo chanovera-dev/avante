@@ -174,13 +174,15 @@ body {
 
                     /* Visible tras la animación de entrada */
                     &.is-visible {
-                        opacity: 1;
+                        opacity: 1 !important;
                     }
                 }
 
                 /* ── Efecto de entrada por palabras ─────────────── */
                 & .title-reveal {
-                    /* Las palabras individuales controlan su visibilidad */
+                    &.is-visible {
+                        opacity: 1 !important;
+                    }
                 }
 
                 & .title-reveal .title-word {

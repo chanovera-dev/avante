@@ -40,6 +40,7 @@
             color: var(--wp--preset--color--base);
             text-transform: inherit;
             margin-bottom: 1.5rem;
+            opacity: 0;
             animation: cert-pulse 2.4s ease-in-out infinite;
         }
 
@@ -52,6 +53,7 @@
             letter-spacing: -0.02em;
             max-width: 960px;
             margin-inline: auto;
+            opacity: 0;
         }
 
         & .page-subtitle {
@@ -62,6 +64,7 @@
             max-width: 560px;
             font-weight: 400;
             margin-inline: auto;
+            opacity: 0;
         }
 
         & .cta-container {
