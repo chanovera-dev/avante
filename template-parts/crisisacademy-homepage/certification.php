@@ -20,6 +20,8 @@
 <?php
 // ── ACF fields with static fallbacks ──────────────────────────────────────
 
+$intro = get_field('certification_intro');
+
 // Funnel top
 $cert_pretext       = get_field('cert_pretext')       ?: 'Entrenamiento Especializado';
 $cert_title         = get_field('cert_title')         ?: 'La ruta definitiva para convertirte en un experto en gestión de crisis';
@@ -61,11 +63,13 @@ $cert_footer_text   = get_field('cert_footer_text')     ?: 'Los módulos pueden 
         <!-- ══ STAGE 1 · HOOK ══════════════════════════════════════════════ -->
         <div class="funnel-hook">
             <div class="heading">
-                <span class="span-pretext pretext-reveal"><?= esc_html($cert_pretext); ?></span>
-                <h2 class="title-section title-reveal"><?= esc_html($cert_title); ?></h2>
-                <p class="funnel-hook__sub title-reveal">
-                    <?= esc_html(get_field('cert_hook_sub') ?: 'Cada crisis sin protocolo cuesta reputación, clientes y tiempo que nunca recuperarás.'); ?>
-                </p>
+                <div class="intro-content">
+                    <?php
+                    if ($intro):
+                        echo apply_filters('the_content', $intro);
+                    endif;
+                    ?>
+                </div>
             </div>
 
             <!-- ══ PROOF: Pain pills + Stats unidos ══════════════════════ -->
