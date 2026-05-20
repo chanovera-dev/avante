@@ -461,24 +461,66 @@ $cert_footer_text   = get_field('cert_footer_text')     ?: 'Los módulos pueden 
                     <p class="cert-subheadline"><?= esc_html($cert_cta_subhead); ?></p>
 
                     <!-- Guarantee strip -->
-                    <div class="cert-guarantee">
-                        <div class="cert-guarantee__item">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Avalado internacionalmente
+                    <div class="quotes-container">
+                        <div class="slideshow--wrapper">
+                            <div class="slideshow">
+                                <?php if ( have_rows('guarantee_strip') ) : ?>
+                                    <?php $count = 1; while ( have_rows('guarantee_strip') ) : the_row();
+                                        $icon  = get_sub_field('icon');
+                                        $text  = get_sub_field('text');
+                                    ?>
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon"><?= $icon; ?></div>
+                                            <p class="guarantee-text"><?= esc_html($text); ?></p>
+                                        </div>
+                                    </div>
+                                    <?php endwhile; ?>
+                                <?php else : ?>
+                                    <!-- Card 1 -->
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <polyline points="20 6 9 17 4 12"/>
+                                                </svg>
+                                            </div>
+                                            <p class="guarantee-text">Avalado internacionalmente</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 2 -->
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <polyline points="20 6 9 17 4 12"/>
+                                                </svg>
+                                            </div>
+                                            <p class="guarantee-text">Instructores expertos en activo</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 3 -->
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <polyline points="20 6 9 17 4 12"/>
+                                                </svg>
+                                            </div>
+                                            <p class="guarantee-text">Grupos reducidos garantizados</p>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                        <div class="cert-guarantee__item">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Instructores expertos en activo
-                        </div>
-                        <div class="cert-guarantee__item">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Grupos reducidos garantizados
+                        <div class="slideshow-bullets-wrapper">
+                            <button class="slideshow-prev btn-pagination small-pagination" aria-label="diapositiva anterior">
+                                <?= avante_get_icon('backward'); ?>
+                            </button>
+                            <div class="slideshow-bullets bullets"></div>
+                            <button class="slideshow-next btn-pagination small-pagination" aria-label="siguiente diapositiva">
+                                <?= avante_get_icon('forward'); ?>
+                            </button>
                         </div>
                     </div>
 

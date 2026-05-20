@@ -396,7 +396,9 @@
                                     transform: translateY(20px) scale(0.95);
                                     filter: blur(2px);
                                     font-size: var(--wp--preset--font-size--large);
+                                    color: var(--wp--preset--color--contrast);
                                     font-weight: 500;
+                                    display: grid;
                                     transition: opacity .4s ease-in, transform .4s ease-in, filter .4s ease-in;
 
                                     & .module-number {
@@ -490,7 +492,7 @@
                     content: "";
                     position: absolute;
                     inset: 0;
-                    background: radial-gradient(1000px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.2), transparent 40%);
+                    background: radial-gradient(1000px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--secondary), transparent 80%), transparent 40%);
                     opacity: 0;
                     transition: opacity 0.4s ease;
                     pointer-events: none;
@@ -535,6 +537,129 @@
                     z-index: 2;
                     max-width: 700px;
                     margin-inline: auto;
+
+                    /* ── FUNNEL: Guarantee list (inside cert-panel) ────────────── */
+                    & .quotes-container {
+                        position: relative;
+                        z-index: 4;
+                        overflow: hidden;
+                        transform-origin: center center;
+                        display: grid;
+
+                        & .slideshow--wrapper {
+                            width: 100%;
+                            position: relative;
+                            color: var(--wp--preset--color--contrast);
+                            z-index: 5;
+                            overflow: hidden;
+
+                            & .slideshow {
+                                position: relative;
+                                display: flex;
+                                height: 100%;
+
+                                & .module-card {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 1rem;
+
+                                    box-sizing: border-box;
+                                    height: 100%;
+                                    opacity: 1;
+
+                                    &.active {
+                                        opacity: 1;
+                                        pointer-events: auto;
+
+                                        & .module-card--content {
+                                            opacity: 1;
+                                            transform: translateY(0) scale(1);
+                                            filter: blur(0);
+                                            transition: opacity .5s ease-out, transform .5s ease-out, filter .5s ease-out;
+                                        }
+                                    }
+
+                                    & .module-card--content {
+                                        opacity: 0;
+                                        transform: translateY(20px) scale(0.95);
+                                        filter: blur(2px);
+                                        font-size: var(--wp--preset--font-size--medium);
+                                        color: var(--wp--preset--color--base);
+                                        font-weight: 500;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        gap: .5rem;
+                                        transition: opacity .4s ease-in, transform .4s ease-in, filter .4s ease-in;
+
+                                        & .module-icon {
+                                            width: 28px;
+                                            height: 28px;
+                                            border-radius: 50%;
+                                            corner-shape: round;
+                                            background: color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent);
+                                            border: 1px solid color-mix(in srgb, var(--wp--preset--color--primary) 30%, transparent);
+                                            display: grid;
+                                            place-content: center;
+                                            flex-shrink: 0;
+                                            color: var(--wp--preset--color--primary);
+
+                                            & svg {
+                                                width: 13px;
+                                                height: 13px;
+                                            }
+                                        }
+
+                                        & .guarantee-text {
+                                            font-size: var(--wp--preset--font-size--medium);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        & .slideshow-bullets-wrapper {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            position: relative;
+                            z-index: 5;
+                            display: none;
+
+                            & .btn-pagination {
+                                background-color: transparent;
+                                color: var(--wp--preset--color--primary);
+                                opacity: .5;
+                                transition: opacity .3s ease, transform .3s ease;
+
+                                &:hover {
+                                    background-color: transparent;
+                                    opacity: 1;
+                                }
+                            }
+
+                            & .slideshow-bullets {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 20px;
+
+                                & .bullet {
+                                    width: 13px;
+                                    height: 13px;
+                                    border-radius: 50%;
+                                    background-color: transparent;
+                                    border: 2px solid var(--wp--preset--color--primary);
+                                    transition: background-color .3s ease;
+
+                                    &.active {
+                                        background-color: var(--wp--preset--color--primary);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 & .cert-headline {
@@ -550,7 +675,7 @@
                     font-size: clamp(1rem, 1.5vw, 1.15rem);
                     color: var(--wp--preset--color--base);
                     line-height: 1.6;
-                    margin-bottom: 2.5rem;
+                    margin-bottom: 1rem;
                     max-width: 560px;
                     margin-inline: auto;
                 }
@@ -560,6 +685,7 @@
                     flex-wrap: wrap;
                     justify-content: center;
                     gap: 1rem;
+                    margin-top: 2rem;
                     margin-bottom: 2rem;
 
                     & .cert-btn-primary {
@@ -917,7 +1043,8 @@
             }
         }
 
-        /* ── FUNNEL: Guarantee list (inside cert-panel) ────────────── */
+
+
         & .cert-guarantee {
             display: flex;
             flex-direction: column;

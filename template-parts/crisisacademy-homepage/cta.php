@@ -83,18 +83,68 @@ $stats = [
                 <div class="cta-action-col">
 
                     <!-- Trust signals -->
-                    <ul class="cta-trust-list">
-                        <?php foreach ($trust_items as $item) : ?>
-                        <li>
-                            <span class="trust-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"/>
-                                </svg>
-                            </span>
-                            <?= esc_html($item); ?>
-                        </li>
-                        <?php endforeach; ?>
-                    </ul>
+                     <div class="quotes-container">
+                        <div class="slideshow--wrapper">
+                            <div class="slideshow">
+                                <?php if ( have_rows('trust_items') ) : ?>
+                                    <?php $count = 1; while ( have_rows('trust_items') ) : the_row();
+                                        $icon  = get_sub_field('trust_icon');
+                                        $text  = get_sub_field('trust_text');
+                                    ?>
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon"><?= $icon; ?></div>
+                                            <p class="guarantee-text"><?= esc_html($text); ?></p>
+                                        </div>
+                                    </div>
+                                    <?php endwhile; ?>
+                                <?php else : ?>
+                                    <!-- Card 1 -->
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <polyline points="20 6 9 17 4 12"/>
+                                                </svg>
+                                            </div>
+                                            <p class="guarantee-text">Más de 10 años de experiencia comprobada</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 2 -->
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <polyline points="20 6 9 17 4 12"/>
+                                                </svg>
+                                            </div>
+                                            <p class="guarantee-text">Metodología internacional certificada</p>
+                                        </div>
+                                    </div>
+                                    <!-- Card 3 -->
+                                    <div class="module-card">
+                                        <div class="module-card--content">
+                                            <div class="module-icon">
+                                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <polyline points="20 6 9 17 4 12"/>
+                                                </svg>
+                                            </div>
+                                            <p class="guarantee-text">Atención personalizada para cada empresa</p>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="slideshow-bullets-wrapper">
+                            <button class="slideshow-prev btn-pagination small-pagination" aria-label="diapositiva anterior">
+                                <?= avante_get_icon('backward'); ?>
+                            </button>
+                            <div class="slideshow-bullets bullets"></div>
+                            <button class="slideshow-next btn-pagination small-pagination" aria-label="siguiente diapositiva">
+                                <?= avante_get_icon('forward'); ?>
+                            </button>
+                        </div>
+                    </div>
 
                     <!-- Formulario WhatsApp -->
                     <form id="cta-whatsapp-form" class="cta-form" data-phone="<?= esc_attr($whatsapp_number); ?>">
