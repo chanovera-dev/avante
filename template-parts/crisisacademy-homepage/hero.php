@@ -36,7 +36,7 @@ if (empty($hero_span) && empty($hero_first_content) && empty($hero_action_button
         <?php endif; ?>
         <?php if ($hero_action_button && $hero_action_button_label): ?>
             <div class="cta-container">
-                <a href="<?= esc_url($hero_action_button); ?>" class="btn primary">
+                <a href="<?= esc_url($hero_action_button); ?>" class="btn primary object-reveal">
                     <?= avante_get_icon('forward'); ?>
                     <?= esc_html($hero_action_button_label); ?>
                 </a>

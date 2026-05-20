@@ -261,14 +261,17 @@ function initStickyOverlapEffect() {
 }
 
 /**
- * Pretext Scramble Reveal
- * Se activa una sola vez cuando el elemento entra en el viewport.
+ * Unified Entrance Animations
+ * Integrates .pretext-reveal, .title-reveal, .card-reveal, and .object-reveal
+ * into a single unified observer and a staggered orchestration queue.
+ * This guarantees elements reveal in strict logical/spatial order (top-to-bottom).
  */
-function initPretextReveal() {
+function initUnifiedAnimations() {
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
     const SETTLE_FRAMES = 3;
 
-    function scramble(el, originalText) {
+    // Helper: Scramble text effect for pretext
+    function scramble(el, originalText, callback) {
         if (el._scrambleId) cancelAnimationFrame(el._scrambleId);
 
         const len = originalText.length;
@@ -294,64 +297,15 @@ function initPretextReveal() {
             } else {
                 el.textContent = originalText;
                 el._scrambleId = null;
+                if (callback) callback();
             }
         }
 
-        setTimeout(() => {
-            el.classList.add('is-visible');
-            tick();
-        }, 200);
+        el.classList.add('is-visible');
+        tick();
     }
 
-    // Observer centralizado para escalar animaciones
-    let scrambleQueue = [];
-    let isProcessing = false;
-
-    function processQueue() {
-        if (scrambleQueue.length === 0) {
-            isProcessing = false;
-            return;
-        }
-        isProcessing = true;
-
-        const { el, originalText } = scrambleQueue.shift();
-        scramble(el, originalText);
-
-        // Retardo escalonado para el siguiente elemento
-        setTimeout(processQueue, 150);
-    }
-
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                io.unobserve(entry.target);
-
-                scrambleQueue.push({
-                    el: entry.target,
-                    originalText: entry.target._originalText
-                });
-
-                if (!isProcessing) processQueue();
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    document.querySelectorAll('.pretext-reveal').forEach(el => {
-        const originalText = el.textContent.trim();
-        el.setAttribute('aria-label', originalText);
-        el._originalText = originalText;
-        io.observe(el);
-    });
-}
-
-/**
- * Title Word-by-Word Reveal
- * Se activa una sola vez cuando el elemento entra en el viewport.
- */
-function initTitleReveal() {
+    // Helper: wrap words inside title for word-by-word fade-in
     function wrapWords(el) {
         const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
         const textNodes = [];
@@ -380,101 +334,85 @@ function initTitleReveal() {
         });
     }
 
-    // Observer centralizado para escalar animaciones
-    let titleQueue = [];
-    let isTitleProcessing = false;
-
-    function processTitleQueue() {
-        if (titleQueue.length === 0) {
-            isTitleProcessing = false;
-            return;
-        }
-        isTitleProcessing = true;
-
-        const el = titleQueue.shift();
-        el.classList.add('is-visible');
-
-        // Retardo escalonado para el siguiente título
-        setTimeout(processTitleQueue, 200);
-    }
-
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                io.unobserve(entry.target);
-                titleQueue.push(entry.target);
-                if (!isTitleProcessing) processTitleQueue();
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
+    // Prepare Title elements
     document.querySelectorAll('.title-reveal').forEach(el => {
         el.setAttribute('aria-label', el.textContent.trim());
         wrapWords(el);
-        io.observe(el);
     });
-}
 
-/**
- * Card Entrance Effect
- * Adds .is-visible to each .card-entrada when it enters the viewport.
- * Fires once per element, then disconnects the observer.
- */
-function initCardReveal() {
-    // Observer centralizado para escalar animaciones de tarjetas
-    let cardQueue = [];
-    let isCardProcessing = false;
+    // Prepare Pretext elements
+    document.querySelectorAll('.pretext-reveal').forEach(el => {
+        const originalText = el.textContent.trim();
+        el.setAttribute('aria-label', originalText);
+        el._originalText = originalText;
+    });
 
-    function processCardQueue() {
-        if (cardQueue.length === 0) {
-            isCardProcessing = false;
+    // Central master queue
+    let masterQueue = [];
+    let isProcessing = false;
+
+    function processQueue() {
+        if (masterQueue.length === 0) {
+            isProcessing = false;
             return;
         }
-        isCardProcessing = true;
+        isProcessing = true;
 
-        // Procesar hasta 2 tarjetas al mismo tiempo para no hacerlo muy lento
-        // si hay muchas (como en la grilla de próximos eventos)
-        const batch = cardQueue.splice(0, 1);
-        batch.forEach(el => el.classList.add('is-visible'));
+        const el = masterQueue.shift();
 
-        // Retardo escalonado para el siguiente grupo
-        setTimeout(processCardQueue, 150);
+        if (el.classList.contains('pretext-reveal')) {
+            scramble(el, el._originalText);
+            // Stagger next element after scramble starts (200ms)
+            setTimeout(processQueue, 200);
+        } else if (el.classList.contains('title-reveal')) {
+            el.classList.add('is-visible');
+            // Stagger next element slightly longer (350ms) to allow word fade-in to build up
+            setTimeout(processQueue, 350);
+        } else if (el.classList.contains('card-reveal')) {
+            el.classList.add('is-visible');
+            // Stagger cards by 150ms for smooth cascade
+            setTimeout(processQueue, 150);
+        } else if (el.classList.contains('object-reveal')) {
+            el.classList.add('is-visible');
+            // Stagger other objects by 150ms
+            setTimeout(processQueue, 150);
+        } else {
+            el.classList.add('is-visible');
+            setTimeout(processQueue, 100);
+        }
     }
 
     const io = new IntersectionObserver((entries) => {
-        // Ordenar las entradas de izquierda a derecha y arriba a abajo
-        // para que la cascada siempre se vea natural
         const visibleEntries = entries.filter(e => e.isIntersecting);
 
         if (visibleEntries.length === 0) return;
 
+        // Sort all intersecting elements relative to their scroll position
+        // Top-to-bottom, and left-to-right (horizontal sorting)
         visibleEntries.sort((a, b) => {
             const rectA = a.target.getBoundingClientRect();
             const rectB = b.target.getBoundingClientRect();
-            // Si están más o menos en la misma línea horizontal, ordenar por X
             if (Math.abs(rectA.top - rectB.top) < 50) {
                 return rectA.left - rectB.left;
             }
-            // Sino, ordenar por Y (arriba hacia abajo)
             return rectA.top - rectB.top;
         });
 
         visibleEntries.forEach(entry => {
             io.unobserve(entry.target);
-            cardQueue.push(entry.target);
+            masterQueue.push(entry.target);
         });
 
-        if (!isCardProcessing) processCardQueue();
+        if (!isProcessing) processQueue();
 
     }, {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
 
-    document.querySelectorAll('.card-reveal').forEach(el => io.observe(el));
+    // Observe all visual reveal targets
+    const selectors = '.pretext-reveal, .title-reveal, .card-reveal, .object-reveal';
+    document.querySelectorAll(selectors).forEach(el => io.observe(el));
 }
 
 /**
@@ -534,8 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initFaqAccordion();
     initCardGlowEffect();
     initStickyOverlapEffect();
-    initPretextReveal();
-    initTitleReveal();
-    initCardReveal();
+    initUnifiedAnimations();
     initStickyAnchorLinks();
 });
