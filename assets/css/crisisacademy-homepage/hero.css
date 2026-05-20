@@ -3,13 +3,15 @@
     color: #ffffff;
     position: relative;
     overflow: hidden;
-    /* clip-path: ellipse(100% 100% at 50% 0%); */
-    z-index: 1;
+    height: 100dvh;
+    max-height: 1080px;
+    display: grid;
+    place-content: center;
 
     & .hero-glow {
         position: absolute;
         inset: 0;
-        background: radial-gradient(800px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent), transparent 40%);
+        background: radial-gradient(800px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--primary) 15%, transparent), transparent 80%);
         opacity: 0;
         transition: opacity 0.4s ease;
         pointer-events: none;
@@ -36,10 +38,10 @@
 
         & .page-subtitle {
             margin-top: 3rem;
-            color: #00a2ff;
+            color: var(--wp--preset--color--base);
             font-family: var(--wp--preset--font-family--manrope);
-            font-size: clamp(1rem, 2.5vw, 2.5rem);
-            font-weight: 600;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 400;
             letter-spacing: 1.5px;
         }
 
@@ -127,23 +129,6 @@
     }
 }
 
-@media (width < 600px) {
-    #hero {
-        clip-path: ellipse(200% 100% at 50% 0%);
-    }
-}
-
-@media (width > 1024px) {
-    #hero {
-        & .content {
-            & .types-container {
-                grid-template-columns: repeat(4, 1fr);
-                max-width: 960px;
-            }
-        }
-    }
-}
-
 /* Animaciones para los elementos decorativos tecnológicos */
 @keyframes spinBackground {
     from {
@@ -162,5 +147,14 @@
 
     to {
         transform: rotate(-360deg);
+    }
+}
+
+/* Breakpoints */
+@media (width < 400px) {
+    #hero {
+        & .content {
+            transform: translateY(30px);
+        }
     }
 }
