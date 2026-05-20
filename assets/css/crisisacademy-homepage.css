@@ -114,6 +114,17 @@ body {
                         }
                     }
                 }
+
+                & .menu-mobile__button {
+                    & .bar {
+                        background-color: var(--wp--preset--color--base);
+
+                        &::before,
+                        &::after {
+                            background-color: var(--wp--preset--color--base);
+                        }
+                    }
+                }
             }
         }
     }
@@ -212,5 +223,30 @@ body {
     &.is-visible {
         opacity: 1;
         transform: perspective(1000px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(0);
+    }
+}
+
+@media (width < 1199px) {
+    #main-header {
+        & .block {
+            & .content {
+                & .avante-custom-searchform {
+                    background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 50%, transparent);
+                }
+
+                & .main-navigation {
+                    &.open {
+
+                        & .glass-backdrop {
+                            background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 50%, transparent);
+                        }
+                    }
+
+                    & .menu {
+                        border: 2px solid color-mix(in srgb, var(--wp--preset--color--primary) 10%, transparent);
+                    }
+                }
+            }
+        }
     }
 }
