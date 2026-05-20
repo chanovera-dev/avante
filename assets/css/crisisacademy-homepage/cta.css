@@ -49,11 +49,7 @@
             color-mix(in srgb, var(--wp--preset--color--contrast) 78%, var(--wp--preset--color--focus)) 100%);
 
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow:
-        0 2px 0 inset rgba(255, 255, 255, 0.04),
-        0 54px 55px rgba(0, 0, 0, 0.35),
-        0 -12px 30px rgba(0, 0, 0, 0.15),
-        0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--wp--preset--shadow--post-shadow-hover);
 }
 
 /* Cuadrícula de puntos futurista sobre el wrapper */
