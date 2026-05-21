@@ -179,11 +179,13 @@
 }
 
 /* CRISIS ACADEMY HOMEPAGE */
-.span-pretext {
+.span-pretext,
+.cert-urgency-banner {
     border-radius: .3rem;
 }
 
-.quotes-container {
+.quotes-container,
+.module-icon {
     border-radius: .5rem;
 }
 
@@ -195,7 +197,6 @@
 .funnel-proof,
 .certifications-info-bar,
 .step-icon,
-.module-icon,
 .module-card,
 .modules-footer-panel,
 .about-item,
@@ -516,12 +517,14 @@ select {
     }
 
     /* CRISIS ACADEMY HOMEPAGE */
-    .span-pretext {
+    .span-pretext,
+    .cert-urgency-banner {
         border-radius: .6rem;
         corner-shape: squircle;
     }
 
-    .quotes-container {
+    .quotes-container,
+    .module-icon {
         border-radius: 1rem;
         corner-shape: squircle;
     }
@@ -534,7 +537,6 @@ select {
     .funnel-proof,
     .certifications-info-bar,
     .step-icon,
-    .module-icon,
     .module-card,
     .modules-footer-panel,
     .about-item,

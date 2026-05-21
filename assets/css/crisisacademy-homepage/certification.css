@@ -1,13 +1,58 @@
 #certification {
-    background-color: var(--wp--preset--color--tertiary);
-    background-position: center top, center center;
-    background-repeat: no-repeat, no-repeat;
-    background-size: 100% 100%, cover;
-    background-attachment: scroll, fixed;
     position: relative;
+    background-color: var(--wp--preset--color--tertiary);
+    /* Keep original light tone */
     overflow: hidden;
 
+    /* Digital Dot Matrix Constellation */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background-image:
+            radial-gradient(circle, color-mix(in srgb, var(--wp--preset--color--primary) 20%, transparent) 1.5px, transparent 1.5px),
+            radial-gradient(circle, color-mix(in srgb, var(--wp--preset--color--secondary) 15%, transparent) 1.5px, transparent 1.5px);
+        background-size: 30px 30px;
+        background-position: 0 0, 15px 15px;
+        opacity: 0.95;
+        pointer-events: none;
+    }
+
+    /* Telemetry Instrument Scales & Calibration Margins */
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background-image:
+            /* Left vertical calibration rail */
+            linear-gradient(to bottom, color-mix(in srgb, var(--wp--preset--color--primary) 75%, transparent), transparent 70%),
+            /* Right vertical calibration rail */
+            linear-gradient(to bottom, color-mix(in srgb, var(--wp--preset--color--secondary) 75%, transparent), transparent 70%),
+            /* Telemetry ticks left */
+            repeating-linear-gradient(to bottom, color-mix(in srgb, var(--wp--preset--color--primary) 75%, transparent) 0px, color-mix(in srgb, var(--wp--preset--color--primary) 75%, transparent) 2px, transparent 2px, transparent 12px),
+            /* Telemetry ticks right */
+            repeating-linear-gradient(to bottom, color-mix(in srgb, var(--wp--preset--color--secondary) 75%, transparent) 0px, color-mix(in srgb, var(--wp--preset--color--secondary) 75%, transparent) 2px, transparent 2px, transparent 12px);
+
+        /* Positioning the rails and ticks on the side margins */
+        background-size:
+            1px 60%,
+            1px 60%,
+            6px 45%,
+            6px 45%;
+        background-position:
+            2% 10%,
+            98% 10%,
+            calc(2% + 6px) 10%,
+            calc(98% - 12px) 10%;
+        background-repeat: no-repeat;
+        pointer-events: none;
+    }
+
     & .content {
+        position: relative;
+        z-index: 2;
         text-align: center;
 
         & .grid-containers {
@@ -21,11 +66,26 @@
                 perspective: 1200px;
                 grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
 
+                /* Sibling hover fade: fade other columns when one is hovered */
+                &:hover>* {
+                    opacity: 0.45;
+                    filter: blur(0.5px);
+                    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+
+                /* Keep the hovered column fully active and focused */
+                &>*:hover {
+                    opacity: 1;
+                    filter: none;
+                    z-index: 5;
+                    box-shadow: var(--wp--preset--shadow--post-shadow-hover);
+                }
+
                 & .cert-container {
                     position: relative;
                     z-index: 4;
                     display: grid;
-                    grid-template-rows: 1fr auto;
+                    grid-template-rows: auto 1fr auto;
                     background-color: color-mix(in srgb, var(--wp--preset--color--base) 50%, transparent);
                     backdrop-filter: blur(5px);
                     overflow: hidden;
@@ -176,8 +236,8 @@
                                         transition: color .3s ease;
 
                                         & svg {
-                                            width: 18px;
-                                            height: 18px;
+                                            width: 1.75rem;
+                                            height: 1.75rem;
                                         }
                                     }
                                 }
@@ -374,7 +434,7 @@
                                 align-items: center;
                                 justify-content: center;
                                 gap: 1rem;
-                                padding: 1rem;
+                                padding: 2rem;
                                 box-sizing: border-box;
                                 height: 100%;
                                 opacity: 1;
@@ -395,36 +455,10 @@
                                     opacity: 0;
                                     transform: translateY(20px) scale(0.95);
                                     filter: blur(2px);
-                                    font-size: var(--wp--preset--font-size--large);
                                     color: var(--wp--preset--color--base);
-                                    font-weight: 500;
+                                    text-align: left;
                                     display: grid;
                                     transition: opacity .4s ease-in, transform .4s ease-in, filter .4s ease-in;
-
-                                    & .module-number {
-                                        display: none;
-                                    }
-
-                                    & .module-icon {
-                                        background-color: color-mix(in srgb, var(--wp--preset--color--tertiary) 35%, transparent);
-                                        color: var(--wp--preset--color--primary);
-                                        width: 50px;
-                                        height: 50px;
-                                        display: grid;
-                                        place-content: center;
-                                        margin-inline: auto;
-                                        transition: color .3s ease;
-                                        margin-bottom: 1rem;
-
-                                        & svg {
-                                            width: 18px;
-                                            height: 18px;
-                                        }
-                                    }
-
-                                    & .info-bar-text {
-                                        font-size: var(--wp--preset--font-size--medium);
-                                    }
                                 }
                             }
                         }
@@ -492,7 +526,7 @@
                     content: "";
                     position: absolute;
                     inset: 0;
-                    background: radial-gradient(1000px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--secondary), transparent 80%), transparent 40%);
+                    background: radial-gradient(1000px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--contrast), transparent 30%), transparent 80%);
                     opacity: 0;
                     transition: opacity 0.4s ease;
                     pointer-events: none;
@@ -606,8 +640,8 @@
                                             color: var(--wp--preset--color--primary);
 
                                             & svg {
-                                                width: 13px;
-                                                height: 13px;
+                                                width: 1.5rem;
+                                                height: 1.5rem;
                                             }
                                         }
 
@@ -708,13 +742,12 @@
                     align-items: center;
                     justify-content: center;
                     gap: 0.5rem;
-                    font-size: 0.85rem;
-                    color: color-mix(in srgb, var(--wp--preset--color--base) 50%, transparent);
+                    color: color-mix(in srgb, var(--wp--preset--color--base) 75%, transparent);
                     margin: 0;
 
                     & svg {
                         flex-shrink: 0;
-                        opacity: 0.6;
+                        opacity: 0.75;
                     }
                 }
             }
@@ -779,7 +812,6 @@
             & p {
                 margin: 0;
                 font-weight: 500;
-                font-size: var(--wp--preset--font-size--large);
             }
         }
 
@@ -813,7 +845,7 @@
                 content: "";
                 position: absolute;
                 inset: 0;
-                background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--tertiary) 40%, transparent), transparent 50%);
+                background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), color-mix(in srgb, var(--wp--preset--color--tertiary) 70%, transparent), transparent 50%);
                 opacity: 0;
                 transition: opacity 0.4s ease;
                 pointer-events: none;
@@ -855,10 +887,36 @@
                 position: relative;
                 z-index: 4;
                 background-color: color-mix(in srgb, var(--wp--preset--color--focus) 15%, transparent);
-                border: 1px solid color-mix(in srgb, var(--wp--preset--color--focus) 50%, transparent);
+                border: 1px solid color-mix(in srgb, var(--wp--preset--color--focus) 35%, transparent);
                 overflow: hidden;
                 transform-origin: center center;
                 display: grid;
+
+                /* Warning/Alert hazard diagonal stripes with fading mask-image */
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    z-index: 1;
+                    background-image: repeating-linear-gradient(-45deg,
+                            var(--wp--preset--color--focus) 0px,
+                            var(--wp--preset--color--focus) 15px,
+                            color-mix(in srgb, var(--wp--preset--color--focus) 12%, #0c0d19 88%) 15px,
+                            color-mix(in srgb, var(--wp--preset--color--focus) 12%, #0c0d19 88%) 30px);
+                    opacity: 0.22;
+                    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+                    pointer-events: none;
+                }
+
+                /* Soft inner vignette and highlight overlay */
+                &::after {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    z-index: 2;
+                    background: radial-gradient(circle at center, transparent 35%, color-mix(in srgb, var(--wp--preset--color--focus) 15%, transparent) 100%);
+                    pointer-events: none;
+                }
 
                 & .slideshow--wrapper {
                     width: 100%;
@@ -901,6 +959,18 @@
                                 font-size: var(--wp--preset--font-size--large);
                                 font-weight: 500;
                                 transition: opacity .4s ease-in, transform .4s ease-in, filter .4s ease-in;
+                            }
+
+                            & .pain-pill__icon {
+                                color: var(--wp--preset--color--focus);
+                                fill: var(--wp--preset--color--focus);
+
+                                & svg {
+                                    position: relative;
+                                    transform: translateY(2px);
+                                    width: 1.2rem;
+                                    height: 1.2rem;
+                                }
                             }
                         }
                     }
@@ -979,10 +1049,6 @@
                         background-color: color-mix(in srgb, var(--wp--preset--color--vivid-red, #e53e3e) 20%, transparent);
                         transform: translateY(-2px);
                     }
-
-                    & .pain-pill__icon {
-                        font-size: .9rem;
-                    }
                 }
             }
 
@@ -991,6 +1057,12 @@
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
 
+                /* Sibling hover fade: fade other stats when one is hovered */
+                &:hover>* {
+                    opacity: 0.45;
+                    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+
                 & .funnel-stat {
                     display: flex;
                     flex-direction: column;
@@ -998,6 +1070,12 @@
                     gap: .25rem;
                     text-align: center;
                     padding: 1rem;
+                    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+                    /* Keep the hovered stat focused */
+                    &:hover {
+                        opacity: 1;
+                    }
 
                     /* separador vertical entre stats */
                     &:not(:last-child) {
@@ -1028,7 +1106,6 @@
             align-items: center;
             gap: .5rem;
             padding: .4rem 1rem;
-            border-radius: 999px;
             background-color: color-mix(in srgb, var(--wp--preset--color--focus) 20%, transparent);
             border: 1px solid color-mix(in srgb, var(--wp--preset--color--focus) 50%, transparent);
             font-size: .8rem;

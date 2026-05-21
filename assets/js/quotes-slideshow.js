@@ -162,13 +162,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let autoSlide = setInterval(() => {
             goToSlide(currentSlide + 1)
-        }, 4000)
+        }, 6000)
 
         function resetAutoSlide() {
             clearInterval(autoSlide)
             autoSlide = setInterval(() => {
                 goToSlide(currentSlide + 1)
-            }, 4000)
+            }, 6000)
         }
 
         bulletsWrapper.addEventListener("click", function (e) {
