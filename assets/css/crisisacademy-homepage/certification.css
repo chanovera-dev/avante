@@ -1085,7 +1085,7 @@
                     & .funnel-stat__number {
                         font-size: clamp(1.8rem, 3vw, 2.5rem);
                         font-weight: 800;
-                        color: var(--wp--preset--color--primary);
+                        color: color-mix(in srgb, var(--wp--preset--color--contrast) 70%, transparent);
                         line-height: 1;
                         letter-spacing: -0.03em;
                     }
