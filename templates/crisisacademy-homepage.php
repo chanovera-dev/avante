@@ -3,6 +3,9 @@
  * Template Name: Crisis Academy Homepage
  * 
  */
+// Load globally required helper functions.
+require_once get_template_directory() . '/templates/helpers/acf-helpers.php';
+
 get_header(); ?>
 
 <main id="main" class="site-main" role="main">

@@ -1104,6 +1104,7 @@
         & .cert-urgency-banner {
             display: inline-flex;
             align-items: center;
+            flex-wrap: wrap;
             gap: .5rem;
             padding: .4rem 1rem;
             background-color: color-mix(in srgb, var(--wp--preset--color--focus) 20%, transparent);
@@ -1157,6 +1158,19 @@
         }
     }
 
+}
+
+@media (width < 600px) {
+
+    #certification {
+        & .content {
+            & .grid-containers {
+                & .cert-panel {
+                    padding: 1rem;
+                }
+            }
+        }
+    }
 }
 
 @media (max-width: 767px) {

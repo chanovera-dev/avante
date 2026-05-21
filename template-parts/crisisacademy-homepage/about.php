@@ -70,12 +70,13 @@ if (empty($about_content)) {
             <?php if (have_rows('about_items')) : ?>
                 <?php while (have_rows('about_items')) : the_row(); ?>
                     <div class="about-item card-reveal">
+                        <div class="about-item__circuits"></div>
                         <?php
                         $icon = get_sub_field('about_item_icon');
                         $label = get_sub_field('about_item_label');
                         if ($icon) :
                             ?>
-                            <img src="<?= $icon['url'] ?>" alt="<?= $icon['alt'] ?>" srcset="" width="64px" height="64px" loading="lazy">
+                            <div class="module-icon"><?= avante_render_acf_icon($icon); ?></div>
                         <?php endif; ?>
                         <span class="about-item-label"><?= $label ?></span>
                     </div>
