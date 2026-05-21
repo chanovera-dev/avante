@@ -189,9 +189,3 @@
         background-position-y: 200px;
     }
 }
-
-@media (width < 600px) {
-    #signals {
-        clip-path: ellipse(200% 100% at 30% 0%);
-    }
-}
