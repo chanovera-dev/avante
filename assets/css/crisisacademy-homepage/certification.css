@@ -227,7 +227,7 @@
 
                                     & .module-icon {
                                         transform: translateY(.3rem);
-                                        background-color: color-mix(in srgb, var(--wp--preset--color--tertiary) 35%, transparent);
+                                        background-color: color-mix(in srgb, var(--wp--preset--color--tertiary) 90%, transparent);
                                         color: var(--wp--preset--color--primary);
                                         width: 50px;
                                         height: 50px;
