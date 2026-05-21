@@ -254,12 +254,12 @@
                     z-index: 2;
                 }
 
-                /* Resplandor interno dinámico (Mouse tracking) */
+                /* Resplandor interno dinámico */
                 &::before {
                     content: "";
                     position: absolute;
                     inset: 0;
-                    background: radial-gradient(600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.15), transparent 50%);
+                    background: radial-gradient(600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.12), transparent 50%);
                     opacity: 0;
                     transition: opacity 0.4s ease;
                     pointer-events: none;
@@ -268,12 +268,12 @@
                     corner-shape: inherit;
                 }
 
-                /* Borde dinámico animado que sigue al ratón */
+                /* Borde dinámico que sigue al ratón */
                 &::after {
                     content: "";
                     position: absolute;
                     inset: -1px;
-                    background: radial-gradient(400px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(255, 255, 255, 0.85), transparent 50%);
+                    background: radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(0, 162, 255, 0.8), transparent 50%);
                     opacity: 0;
                     transition: opacity 0.4s ease;
                     pointer-events: none;
@@ -287,14 +287,13 @@
                     padding: 1px;
                 }
 
-                &:hover {
-                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
-                    border-color: rgba(255, 255, 255, 0.3);
-                }
-
                 &:hover::before,
                 &:hover::after {
                     opacity: 1;
+                }
+
+                &:hover {
+                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
                 }
 
                 & .how-it-works--card-content {

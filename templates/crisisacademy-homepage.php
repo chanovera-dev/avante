@@ -11,11 +11,12 @@ get_header(); ?>
 <main id="main" class="site-main" role="main">
     <?php
     $directory = get_template_directory() . '/template-parts/crisisacademy-homepage';
+    $certification_intro = get_field('certification_intro');
 
     $sections = [
         'hero',
-        'certification',
         'about',
+        'certification' => !empty($certification_intro) ? true : false,
         'signals',
         'how-works',
         'crisis-simulator',

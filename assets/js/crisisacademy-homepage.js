@@ -179,7 +179,7 @@ function initFaqAccordion() {
  * CSS variables --mouse-x and --mouse-y for responsive glow styling.
  */
 function initCardGlowEffect() {
-    const cards = document.querySelectorAll('#hero, .about-item, .signal-item, .how-it-works--card, .cta-container, .cert-container, .cert-panel, .how-works-modal-container, .funnel-proof, .containers .quotes-container');
+    const cards = document.querySelectorAll('#hero, .about-item, .signal-item, .how-it-works--card, .cta-container, .cert-container, .cert-panel, .how-works-modal-container, .intro-funnel, .sliders .quotes-container');
 
     cards.forEach(card => {
         let rect;

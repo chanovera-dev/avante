@@ -198,7 +198,7 @@ function avante_filter_news_posts() {
 
     $args = [
         'post_type'      => 'news',
-        'posts_per_page' => 8,
+        'posts_per_page' => 4,
         'post_status'    => 'publish',
         'no_found_rows'  => true,
     ];

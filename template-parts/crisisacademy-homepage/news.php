@@ -10,7 +10,7 @@ $original_query = $wp_query;
 // Crear una nueva WP_Query para obtener los últimos 6 CPTs 'news'
 $args = [
     'post_type'      => 'news',
-    'posts_per_page' => 8,
+    'posts_per_page' => 4,
     'post_status'    => 'publish',
     'no_found_rows'  => true, // Evita la paginación para optimizar la consulta
 ];

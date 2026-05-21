@@ -156,7 +156,7 @@ body {
         /* Estilos de contenido de los bloques */
         & .block {
             & .content {
-                padding: clamp(2rem, 5vw, 10rem) 0 !important;
+                padding: clamp(3rem, 5vw, 10rem) 0 !important;
 
                 & .span-pretext {
                     color: #285386;
