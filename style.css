@@ -211,6 +211,7 @@ html {
             align-items: start;
             justify-content: space-between;
             flex-wrap: wrap;
+            flex-direction: row-reverse;
 
             & .about {
                 max-width: 400px;
