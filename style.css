@@ -1283,4 +1283,20 @@ html {
     .tagline {
         font-size: calc(var(--wp--preset--font-size--small) * .5);
     }
+
+    #main-footer {
+        & .block.middle-footer {
+            & .content {
+                & .about {
+                    & .logo {
+                        & .text-group {
+                            & .tagline {
+                                calc(var(--wp--preset--font-size--small) * .5);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
