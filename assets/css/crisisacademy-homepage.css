@@ -230,12 +230,25 @@ body {
 
 .card-reveal {
     opacity: 0;
-    transform: perspective(1000px) scale(0.2) rotateX(-60deg) rotateY(-30deg) rotateZ(0deg) translateY(2rem);
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease, opacity .3s ease;
+    transform: translateY(6rem);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 
     &.is-visible {
-        opacity: 1;
-        transform: perspective(1000px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(0);
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+}
+
+@media (width >=1024px) {
+    .card-reveal {
+        opacity: 0;
+        transform: perspective(1000px) scale(0.2) rotateX(-60deg) rotateY(-30deg) rotateZ(0deg) translateY(2rem);
+        transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease, opacity .3s ease;
+
+        &.is-visible {
+            opacity: 1;
+            transform: perspective(1000px) scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(0);
+        }
     }
 }
 
