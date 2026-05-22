@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 420" width="500" height="420">
+<defs>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;900&amp;display=swap');
+
+    /* ── Glow ring ── */
+    @keyframes glowAnim {
+      0%,100% { opacity:0.5; }
+      50%      { opacity:1;   }
+    }
+    .glow-ring { animation: glowAnim 3s ease-in-out infinite; }
+
+    /* ── Pupila roja ── */
+    @keyframes pulseAnim {
+      0%,100% { r:9; opacity:1;   }
+      50%      { r:6; opacity:0.6; }
+    }
+    .eye-pupil { animation: pulseAnim 2s ease-in-out infinite; }
+
+    /* ── Nodos parpadeo ── */
+    @keyframes blinkAnim { 0%,100%{opacity:.7} 50%{opacity:.15} }
+    .n1{animation:blinkAnim 3.0s ease-in-out 0.0s infinite;}
+    .n2{animation:blinkAnim 3.0s ease-in-out 0.8s infinite;}
+    .n3{animation:blinkAnim 3.0s ease-in-out 1.4s infinite;}
+    .n4{animation:blinkAnim 3.0s ease-in-out 2.1s infinite;}
+  </style>
+
+  <!-- Filtro brillo rojo pupila -->
+  <filter id="rf" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="4" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+
+  <!-- Filtro brillo anillo -->
+  <filter id="gf" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="6" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<!-- FONDO -->
+<rect width="500" height="420" fill="#0a1929"/>
+
+<!-- ANILLO GLOW (centrado en cubo) -->
+<circle class="glow-ring" cx="250" cy="155"
+  r="104" fill="none"
+  stroke="rgba(180,200,220,0.25)" stroke-width="1"
+  filter="url(#gf)"/>
+
+<!-- CUBO: canvas donde JS dibuja las caras proyectadas -->
+<g id="cube" transform="translate(250,155)"></g>
+
+<!-- OJO IA: se posiciona dinámicamente con JS -->
+<g id="eye">
+  <circle id="eye-ring" r="24" fill="none" stroke="#8ba3b8" stroke-width="2"/>
+  <circle class="eye-pupil" r="9" fill="#e53e3e" filter="url(#rf)"/>
+  <!-- Nodos posicionados relativos al ojo -->
+  <!-- node-1: top:15% left:20% de 48px -> x=-24+9.6=-14.4, y=-24+7.2=-16.8 -->
+  <circle class="n1" r="3" cx="-15" cy="-17" fill="#8ba3b8"/>
+  <!-- node-2: top:25% right:18% -> x=24-8.6=15.4, y=-24+12=-12 -->
+  <circle class="n2" r="3" cx="15"  cy="-12" fill="#8ba3b8"/>
+  <!-- node-3: bottom:20% left:25% -> x=-24+12=-12, y=24-9.6=14.4 -->
+  <circle class="n3" r="3" cx="-12" cy="14"  fill="#8ba3b8"/>
+  <!-- node-4: bottom:30% right:22% -> x=24-10.6=13.4, y=24-14.4=9.6 -->
+  <circle class="n4" r="3" cx="13"  cy="10"  fill="#8ba3b8"/>
+</g>
+
+<!-- TIPOGRAFÍA -->
+<text x="250" y="300" text-anchor="middle"
+  font-family="'Raleway','Arial Black',sans-serif"
+  font-weight="900" font-size="26" letter-spacing="4"
+  fill="#ffffff">THE CRISIS ACADEMY</text>
+
+<line x1="190" y1="314" x2="310" y2="314"
+  stroke="#8ba3b8" stroke-width="1.5"/>
+
+<text x="250" y="336" text-anchor="middle"
+  font-family="'Raleway','Arial',sans-serif"
+  font-weight="300" font-size="10.5" letter-spacing="3"
+  fill="#8ba3b8">LIDERAZGO EN TIEMPOS DE CRISIS</text>
+
+<script type="text/javascript"><![CDATA[
+(function(){
+  var NS  = 'http://www.w3.org/2000/svg';
+  var cubeG = document.getElementById('cube');
+  var eyeG  = document.getElementById('eye');
+
+  // ── Cubo: half-size = 80px (160x160 como en el CSS) ──
+  var H = 80;
+  // 8 vértices
+  var V = [
+    [-H,-H,-H], // 0 back-top-left
+    [ H,-H,-H], // 1 back-top-right
+    [ H, H,-H], // 2 back-bottom-right
+    [-H, H,-H], // 3 back-bottom-left
+    [-H,-H, H], // 4 front-top-left
+    [ H,-H, H], // 5 front-top-right
+    [ H, H, H], // 6 front-bottom-right
+    [-H, H, H], // 7 front-bottom-left
+  ];
+
+  // 6 caras: [índices v0..v3, normalX, normalY, normalZ, esFrontal]
+  var FACES = [
+    { i:[4,5,6,7], nx:0,  ny:0,  nz:1,  front:true  },
+    { i:[1,0,3,2], nx:0,  ny:0,  nz:-1, front:false },
+    { i:[0,4,7,3], nx:-1, ny:0,  nz:0,  front:false },
+    { i:[5,1,2,6], nx:1,  ny:0,  nz:0,  front:false },
+    { i:[0,1,5,4], nx:0,  ny:-1, nz:0,  front:false },
+    { i:[7,6,2,3], nx:0,  ny:1,  nz:0,  front:false },
+  ];
+
+  var PERSP = 600; // igual que CSS perspective:600px
+  var DUR   = 12000;
+
+  // Rotaciones de la animación CSS:
+  // 0%:   rotateY(-25deg) rotateX( 15deg)
+  // 50%:  rotateY( 25deg) rotateX( -5deg)
+  // 100%: igual que 0%
+  var AY0 = -25*Math.PI/180, AY1 = 25*Math.PI/180;
+  var AX0 =  15*Math.PI/180, AX1 = -5*Math.PI/180;
+
+  function rotY(v, a){
+    var c=Math.cos(a), s=Math.sin(a);
+    return [v[0]*c+v[2]*s, v[1], -v[0]*s+v[2]*c];
+  }
+  function rotX(v, a){
+    var c=Math.cos(a), s=Math.sin(a);
+    return [v[0], v[1]*c-v[2]*s, v[1]*s+v[2]*c];
+  }
+  // Proyección perspectiva simple
+  function proj(v){
+    var z = v[2] + PERSP;
+    var s = PERSP / z;
+    return [v[0]*s, v[1]*s, v[2]];
+  }
+  function transform(v, ay, ax){
+    return proj(rotX(rotY(v, ay), ax));
+  }
+  function transformNorm(n, ay, ax){
+    return rotX(rotY(n, ay), ax);
+  }
+
+  function el(tag, attrs){
+    var e = document.createElementNS(NS, tag);
+    for(var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  // Dibuja líneas de cuadrícula interpolando en el espacio de la cara
+  // pts: [[x,y],[x,y],[x,y],[x,y]] → orden: topLeft, topRight, bottomRight, bottomLeft
+  function drawGrid(g, pts, steps){
+    steps = steps || 8;
+    var p0=pts[0], p1=pts[1], p2=pts[2], p3=pts[3];
+    var col='rgba(180,200,220,0.15)';
+    // Horizontales
+    for(var i=1;i<steps;i++){
+      var t=i/steps;
+      var x1=p0[0]+(p3[0]-p0[0])*t, y1=p0[1]+(p3[1]-p0[1])*t;
+      var x2=p1[0]+(p2[0]-p1[0])*t, y2=p1[1]+(p2[1]-p1[1])*t;
+      g.appendChild(el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:col,'stroke-width':'0.8'}));
+    }
+    // Verticales
+    for(var i=1;i<steps;i++){
+      var t=i/steps;
+      var x1=p0[0]+(p1[0]-p0[0])*t, y1=p0[1]+(p1[1]-p0[1])*t;
+      var x2=p3[0]+(p2[0]-p3[0])*t, y2=p3[1]+(p2[1]-p3[1])*t;
+      g.appendChild(el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:col,'stroke-width':'0.8'}));
+    }
+  }
+
+  // Pre-crear elementos SVG por cara
+  var faceEls = FACES.map(function(){
+    var g    = el('g',{});
+    var poly = el('polygon',{
+      fill:'rgba(180,200,220,0.04)',
+      stroke:'rgba(180,200,220,0.5)',
+      'stroke-width':'1.5'
+    });
+    var gridG = el('g',{});
+    g.appendChild(poly);
+    g.appendChild(gridG);
+    return {g:g, poly:poly, gridG:gridG};
+  });
+
+  var t0 = null;
+
+  function frame(ts){
+    if(!t0) t0=ts;
+    var phase = ((ts-t0) % DUR) / DUR; // 0..1
+    // Lineal: 0→0.5 va de 0% a 50%, 0.5→1 vuelve
+    var tt = phase<0.5 ? phase*2 : (1-phase)*2;
+    var ay = AY0 + (AY1-AY0)*tt;
+    var ax = AX0 + (AX1-AX0)*tt;
+
+    // Proyectar todos los vértices
+    var pv = V.map(function(v){ return transform(v, ay, ax); });
+
+    // Calcular datos por cara
+    var data = FACES.map(function(f, fi){
+      var pts2 = f.i.map(function(vi){ return pv[vi]; });
+      var avgZ = pts2.reduce(function(s,p){return s+p[2];},0)/4;
+      // Visibilidad: normal transformada con z > 0
+      var tn = transformNorm([f.nx,f.ny,f.nz], ay, ax);
+      var visible = tn[2] > -0.05; // pequeña tolerancia
+      return {fi:fi, pts2:pts2, avgZ:avgZ, visible:visible, front:f.front};
+    });
+
+    // Ordenar por Z (painter: atrás primero)
+    data.sort(function(a,b){ return a.avgZ-b.avgZ; });
+
+    // Limpiar canvas
+    while(cubeG.firstChild) cubeG.removeChild(cubeG.firstChild);
+
+    var frontCx=0, frontCy=0;
+
+    data.forEach(function(d){
+      if(!d.visible) return;
+      var fe = faceEls[d.fi];
+
+      // Puntos del polígono (x,y)
+      var ptStr = d.pts2.map(function(p){ return p[0].toFixed(2)+','+p[1].toFixed(2); }).join(' ');
+      fe.poly.setAttribute('points', ptStr);
+
+      // Limpiar y redibujar grid
+      while(fe.gridG.firstChild) fe.gridG.removeChild(fe.gridG.firstChild);
+      // pts2 en orden: topLeft, topRight, bottomRight, bottomLeft
+      var pts2d = d.pts2.map(function(p){ return [p[0],p[1]]; });
+      drawGrid(fe.gridG, pts2d, 8);
+
+      cubeG.appendChild(fe.g);
+
+      // Centro de la cara frontal → posición del ojo
+      if(d.front){
+        frontCx = pts2d.reduce(function(s,p){return s+p[0];},0)/4;
+        frontCy = pts2d.reduce(function(s,p){return s+p[1];},0)/4;
+      }
+    });
+
+    // Posicionar ojo en el centro de la cara frontal
+    eyeG.setAttribute('transform','translate('+(250+frontCx).toFixed(1)+','+(155+frontCy).toFixed(1)+')');    
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+]]></script>
+</svg>

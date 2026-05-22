@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crisis Academy Logo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;900&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* ══════════════════════════════════════════
+           ÚNICA VARIABLE DE ESCALA
+           Cambia --s para escalar todo el logo.
+           Todas las medidas son proporcionales a --s.
+           ══════════════════════════════════════════ */
+        .logo {
+            --s: 30px;
+            /* ← ÚNICA MEDIDA A CAMBIAR */
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: calc(var(--s) * 0.55);
+        }
+
+        /* ─── GLOW RING ─────────────────────────── */
+        .ring-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glow-ring {
+            position: absolute;
+            width: calc(var(--s) * 1.2);
+            height: calc(var(--s) * 1.2);
+            border-radius: 50%;
+            border: 1px solid color-mix(in srgb, #1d224f, transparent 65%);
+            pointer-events: none;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 12px rgba(180, 200, 220, 0.08);
+            }
+
+            50% {
+                box-shadow: 0 0 32px rgba(180, 200, 220, 0.28);
+            }
+        }
+
+        /* ─── 3D SCENE ──────────────────────────── */
+        .scene {
+            width: var(--s);
+            height: var(--s);
+            perspective: calc(var(--s) * 3.75);
+            /* = 600 / 160 * s */
+        }
+
+        /* ─── CUBE ──────────────────────────────── */
+        .cube {
+            width: var(--s);
+            height: var(--s);
+            position: relative;
+            transform-style: preserve-3d;
+            color: color-mix(in srgb, #1d224f, transparent 60%);
+            /* currentColor heredado */
+            animation: spin 12s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateY(-25deg) rotateX(15deg);
+            }
+
+            50% {
+                transform: rotateY(25deg) rotateX(-5deg);
+            }
+
+            100% {
+                transform: rotateY(-25deg) rotateX(15deg);
+            }
+        }
+
+        /* ─── CARAS ─────────────────────────────── */
+        .face {
+            position: absolute;
+            width: var(--s);
+            height: var(--s);
+            border: 1px solid currentColor;
+            background: rgba(180, 200, 220, 0.03);
+        }
+
+        /* translateZ = --s / 2  (mitad del lado del cubo) */
+        .face.front {
+            transform: translateZ(calc(var(--s) * 0.5));
+        }
+
+        .face.back {
+            transform: rotateY(180deg) translateZ(calc(var(--s) * 0.5));
+        }
+
+        .face.left {
+            transform: rotateY(-90deg) translateZ(calc(var(--s) * 0.5));
+        }
+
+        .face.right {
+            transform: rotateY(90deg) translateZ(calc(var(--s) * 0.5));
+        }
+
+        .face.top {
+            transform: rotateX(90deg) translateZ(calc(var(--s) * 0.5));
+        }
+
+        .face.bottom {
+            transform: rotateX(-90deg) translateZ(calc(var(--s) * 0.5));
+        }
+
+        /* ─── REJILLA: 16 cuadrados por cara (4×4) ── */
+        /* Un solo div usa background-image para dibujar
+           3 líneas H + 3 líneas V con opacidad 0.5       */
+        .grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(color-mix(in srgb, #1d224f, transparent 85%) 1px, transparent 1px),
+                linear-gradient(90deg, color-mix(in srgb, #1d224f, transparent 85%) 1px, transparent 1px);
+            background-size: 25% 25%;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* ─── OJO IA (cara frontal) ─────────────── */
+        .face.front {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ojo = 30% del tamaño del cubo */
+        .ai-eye {
+            position: relative;
+            width: calc(var(--s) * 0.7);
+            height: calc(var(--s) * 0.7);
+            border: 1px solid #1d224f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        /* pupila = 37.5% del ojo = 11.25% de --s */
+        .pupil {
+            width: calc(var(--s) * 0.3);
+            height: calc(var(--s) * 0.3);
+            border-radius: 50%;
+            background: #e53e3e;
+            box-shadow:
+                0 0 calc(var(--s) * 0.07) #e53e3e,
+                0 0 calc(var(--s) * 0.13) rgba(229, 62, 62, 0.4);
+            animation: eyePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes eyePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(0.7);
+                opacity: 0.6;
+            }
+        }
+
+        /* ─── NODOS ─────────────────────────────── */
+        /* nodo = ~3.3% de --s */
+        .node {
+            position: absolute;
+            width: calc(var(--s) * 0.033);
+            height: calc(var(--s) * 0.033);
+            background: #8ba3b8;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .node-1 {
+            top: 15%;
+            left: 20%;
+        }
+
+        .node-2 {
+            top: 25%;
+            right: 18%;
+        }
+
+        .node-3 {
+            bottom: 20%;
+            left: 25%;
+        }
+
+        .node-4 {
+            bottom: 30%;
+            right: 22%;
+        }
+
+        /* ─── TIPOGRAFÍA ─────────────────────────── */
+        /* El bloque de texto ocupa exactamente --s de alto */
+        .text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            height: calc(var(--s) * 1.25);
+        }
+
+        /* brand-name = 25% de --s */
+        .brand-name {
+            color: #1d224f;
+            font-weight: 900;
+            font-size: calc(var(--s) * 0.55);
+            letter-spacing: 0.12rem;
+            text-transform: uppercase;
+            text-align: left;
+            line-height: 1;
+        }
+
+        .divider {
+            width: 50%;
+            height: 1px;
+            background: color-mix(in srgb, #1d224f, transparent 50%);
+            align-self: stretch;
+        }
+
+        /* tagline = 13.3% de --s */
+        .tagline {
+            color: color-mix(in srgb, #1d224f, transparent 50%);
+            font-weight: 600;
+            font-size: calc(var(--s) * 0.44);
+            letter-spacing: 0.18rem;
+            text-transform: uppercase;
+            text-align: left;
+            line-height: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="logo">
+
+        <!-- CUBO 3D -->
+        <div class="ring-wrap">
+            <div class="glow-ring"></div>
+
+            <div class="scene">
+                <div class="cube">
+
+                    <!-- CARA FRONTAL: ojo + rejilla -->
+                    <div class="face front">
+                        <div class="grid"></div>
+                        <div class="ai-eye">
+                            <div class="pupil"></div>
+                            <span class="node node-1"></span>
+                            <span class="node node-2"></span>
+                            <span class="node node-3"></span>
+                            <span class="node node-4"></span>
+                        </div>
+                    </div>
+
+                    <div class="face back">
+                        <div class="grid"></div>
+                    </div>
+
+                    <div class="face left">
+                        <div class="grid"></div>
+                    </div>
+
+                    <div class="face right">
+                        <div class="grid"></div>
+                    </div>
+
+                    <div class="face top">
+                        <div class="grid"></div>
+                    </div>
+
+                    <div class="face bottom">
+                        <div class="grid"></div>
+                    </div>
+
+                </div><!-- /cube -->
+            </div><!-- /scene -->
+        </div><!-- /ring-wrap -->
+
+        <!-- TEXTO -->
+        <div class="text-group">
+            <h1 class="brand-name">The Crisis Academy</h1>
+            <div class="divider"></div>
+            <p class="tagline">Liderazgo en tiempos de crisis</p>
+        </div>
+
+    </main>
+</body>
+
+</html>
