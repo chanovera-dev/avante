@@ -13,11 +13,11 @@ $cta = get_field('how_it_works_cta');
         <div class="radar-circle radar-circle-3"></div>
         <div class="radar-circle radar-circle-4"></div>
         <div class="radar-beam"></div>
-        <div class="radar-blip blip-1"></div>
+        <!-- <div class="radar-blip blip-1"></div>
         <div class="radar-blip blip-2"></div>
         <div class="radar-blip blip-3"></div>
         <div class="radar-blip blip-4"></div>
-        <div class="radar-blip blip-5"></div>
+        <div class="radar-blip blip-5"></div> -->
     </div>
 
     <div class="content">

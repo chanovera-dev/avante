@@ -42,12 +42,10 @@
 
     & .content {
         display: grid;
-        gap: 3rem;
+        gap: 1rem;
 
         & .data {
-            & .title-section {
-                margin-bottom: clamp(2rem, 3vw, 3rem);
-            }
+            text-align: center;
         }
 
         & .container {
@@ -170,7 +168,12 @@
 @media (width >=768px) {
     #crisis-simulator {
         & .content {
+            gap: 3rem;
             grid-template-columns: clamp(300px, 128px + 16.8vw, 450px) 1fr;
+
+            & .data {
+                text-align: left;
+            }
         }
     }
 }

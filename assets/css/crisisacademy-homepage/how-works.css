@@ -665,7 +665,7 @@
                 }
             }
 
-            & .radar-blip {
+            /* & .radar-blip {
                 position: absolute;
                 width: 8px;
                 height: 8px;
@@ -727,7 +727,7 @@
                 border-color: #00aaff;
                 box-shadow: 0 0 10px #00aaff;
                 animation: blip-move-5 32s ease-in-out infinite alternate;
-            }
+            } */
         }
 
         & .radar-bg {
