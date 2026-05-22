@@ -218,6 +218,8 @@
                     box-shadow: var(--wp--preset--shadow--post-shadow-light);
                     border: 1px solid rgba(0, 0, 0, 0.06);
                     transform-origin: center center;
+                    transform-style: preserve-3d;
+                    backface-visibility: hidden;
 
                     &::before {
                         content: "";
@@ -801,6 +803,8 @@
     & .cert-container {
         position: relative;
         display: grid;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
 
         & .slideshow--wrapper {
             width: 100%;

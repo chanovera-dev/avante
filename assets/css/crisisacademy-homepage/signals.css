@@ -50,7 +50,7 @@
                 grid-template-columns: auto 1fr;
                 grid-template-rows: auto 1fr;
                 position: relative;
-                background-color: #1e2e49;
+                background-color: var(--wp--preset--color--contrast);
                 padding: 2rem;
                 box-shadow: #0e102620 0px 54px 55px, #0e10260f 0px -12px 30px, #0e10260f 0px 4px 6px, #0e102616 0px 12px 13px, #0e10260b 0px -3px 5px;
                 border: 1px solid rgba(0, 217, 255, 0.15);
@@ -143,7 +143,7 @@
         & .content {
             & .signals-container {
                 & .signal-item {
-                    background-color: #1e2e4999;
+                    background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 50%, transparent);
                     backdrop-filter: blur(10px);
 
                     &::before {

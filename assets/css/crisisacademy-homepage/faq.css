@@ -35,8 +35,7 @@
 }
 
 .faq-cta-card {
-    background: #ffffff80;
-    backdrop-filter: blur(2px);
+    background: var(--wp--preset--color--base);
     padding: 2rem;
     box-shadow: var(--wp--preset--shadow--post-shadow-light);
     position: relative;
@@ -82,8 +81,7 @@
 }
 
 .accordion-item {
-    background: #ffffff80;
-    backdrop-filter: blur(2px);
+    background: var(--wp--preset--color--tertiary);
     border: 1px solid rgba(0, 0, 0, 0.02);
     overflow: hidden;
     transition: var(--faq-transition);
@@ -92,13 +90,12 @@
 }
 
 .accordion-item:hover {
-    background: #ffffffcd;
+    background: var(--wp--preset--color--base);
     box-shadow: var(--wp--preset--shadow--post-shadow-light-hover);
 }
 
 .accordion-item.active {
-    background: #ffffffcd;
-    backdrop-filter: blur(2px);
+    background: var(--wp--preset--color--base);
     box-shadow: var(--wp--preset--shadow--post-shadow-light-hover);
     border-color: transparent;
 }

@@ -268,8 +268,7 @@
                 width: calc(100% - 2rem);
                 padding: 1rem;
                 z-index: 3;
-                background-color: #ffffff80;
-                backdrop-filter: blur(.5rem);
+                background-color: var(--wp--preset--color--base);
                 box-shadow: var(--wp--preset--shadow--post-shadow-light);
                 transition: opacity .3s ease, transform .3s ease;
 
@@ -851,5 +850,25 @@
         max-height: calc(100% - 2px);
         mask-image: linear-gradient(135deg, light-dark(hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0)) 76%, light-dark(hsla(0, 0%, 100%, 0.644), hsla(0, 0%, 100%, 0.644)));
         transition: max-height .3s ease .3s;
+    }
+}
+
+@media (width >=1024px) {
+
+    .post.glass-post,
+    .nsfw.glass-post,
+    .detras-del-espejo.glass-post,
+    .property.glass-post,
+    .participants.glass-post,
+    .type-news.glass-post,
+    .type-page.glass-post {
+        &:is(.format-image, .format-gallery, .format-standard, .format-video, .format-link, .format-property, .participants) {
+            & .post_body {
+                & .post--content {
+                    background-color: color-mix(in srgb, var(--wp--preset--color--base) 80%, transparent);
+                    backdrop-filter: blur(.5rem);
+                }
+            }
+        }
     }
 }
