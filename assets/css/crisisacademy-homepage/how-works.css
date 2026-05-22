@@ -113,7 +113,7 @@
             margin-left: -250px;
             border-radius: 50%;
             background: conic-gradient(from 0deg, rgba(30, 144, 255, 0) 0deg, rgba(30, 144, 255, 0) 300deg, rgba(30, 144, 255, 0.4) 360deg);
-            animation: radar-sweep 5s linear infinite;
+
             opacity: .3;
             z-index: 2;
 
@@ -160,7 +160,6 @@
             background: #ff3333;
             border-color: #ff3333;
             box-shadow: 0 0 10px #ff3333;
-            animation: blip-move-1 25s ease-in-out infinite alternate;
         }
 
         & .blip-2 {
@@ -169,7 +168,6 @@
             background: #ff8800;
             border-color: #ff8800;
             box-shadow: 0 0 10px #ff8800;
-            animation: blip-move-2 30s ease-in-out infinite alternate;
         }
 
         & .blip-3 {
@@ -178,7 +176,6 @@
             background: #00ff00;
             border-color: #00ff00;
             box-shadow: 0 0 10px #00ff00;
-            animation: blip-move-3 28s ease-in-out infinite alternate;
         }
 
         & .blip-4 {
@@ -187,7 +184,6 @@
             background: #ffcc00;
             border-color: #ffcc00;
             box-shadow: 0 0 10px #ffcc00;
-            animation: blip-move-4 35s ease-in-out infinite alternate;
         }
 
         & .blip-5 {
@@ -226,26 +222,25 @@
                 display: grid;
                 grid-template-rows: auto 1fr;
                 gap: 2rem;
-                backdrop-filter: blur(7px);
                 transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease, box-shadow 0.3s ease;
                 border: 1px solid rgba(255, 255, 255, 0.06);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
                 /* Asignación de colores únicos ciberpunk por tarjeta */
                 &:nth-of-type(4n+1) {
-                    background: color-mix(in srgb, var(--wp--preset--color--footer-background) 50%, transparent);
+                    background: var(--wp--preset--color--footer-background);
                 }
 
                 &:nth-of-type(4n+2) {
-                    background: color-mix(in srgb, var(--wp--preset--color--contrast) 50%, transparent);
+                    background: var(--wp--preset--color--contrast);
                 }
 
                 &:nth-of-type(4n+3) {
-                    background: color-mix(in srgb, var(--wp--preset--color--primary) 50%, transparent);
+                    background: var(--wp--preset--color--primary);
                 }
 
                 &:nth-of-type(4n+4) {
-                    background: color-mix(in srgb, var(--wp--preset--color--base) 40%, transparent);
+                    background: var(--wp--preset--color--base);
                 }
 
                 /* Elevar contenido sobre los brillos base */
@@ -725,5 +720,55 @@
 
     100% {
         transform: translate(-25px, 15px);
+    }
+}
+
+@media (width >=1024px) {
+    #how-works {
+        & .radar-bg {
+            & .radar-beam {
+                animation: radar-sweep 5s linear infinite;
+            }
+
+            & .blip-1 {
+                animation: blip-move-1 25s ease-in-out infinite alternate;
+            }
+
+            & .blip-2 {
+                animation: blip-move-2 30s ease-in-out infinite alternate;
+            }
+
+            & .blip-3 {
+                animation: blip-move-3 28s ease-in-out infinite alternate;
+            }
+
+            & .blip-4 {
+                animation: blip-move-4 35s ease-in-out infinite alternate;
+            }
+        }
+
+        & .content {
+            & .how-works--cards-container {
+                & .how-it-works--card {
+                    backdrop-filter: blur(10px);
+
+                    &:nth-of-type(4n+1) {
+                        background: color-mix(in srgb, var(--wp--preset--color--footer-background) 50%, transparent);
+                    }
+
+                    &:nth-of-type(4n+2) {
+                        background: color-mix(in srgb, var(--wp--preset--color--contrast) 50%, transparent);
+                    }
+
+                    &:nth-of-type(4n+3) {
+                        background: color-mix(in srgb, var(--wp--preset--color--primary) 50%, transparent);
+                    }
+
+                    &:nth-of-type(4n+4) {
+                        background: color-mix(in srgb, var(--wp--preset--color--base) 40%, transparent);
+                    }
+                }
+            }
+        }
     }
 }
