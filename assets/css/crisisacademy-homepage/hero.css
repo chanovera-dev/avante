@@ -8,6 +8,36 @@
     display: grid;
     place-content: center;
 
+    &::before {
+        content: '';
+        position: absolute;
+        width: clamp(400px, 65vw, 800px);
+        height: clamp(400px, 65vw, 800px);
+        top: -15%;
+        left: -15%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='245' fill='none' stroke='rgba(0, 217, 255, 0.08)' stroke-width='1' stroke-dasharray='2 6'/%3E%3Ccircle cx='250' cy='250' r='220' fill='none' stroke='rgba(0, 217, 255, 0.2)' stroke-width='1.5'/%3E%3Ccircle cx='250' cy='250' r='200' fill='none' stroke='rgba(0, 217, 255, 0.04)' stroke-width='20' stroke-dasharray='60 40'/%3E%3Cpath d='M250 5 L245 15 L255 15 Z M250 495 L245 485 L255 485 Z M5 250 L15 245 L15 255 Z M495 250 L485 245 L485 255 Z' fill='rgba(0, 217, 255, 0.3)'/%3E%3Ccircle cx='250' cy='250' r='180' fill='none' stroke='rgba(0, 217, 255, 0.1)' stroke-width='1'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(0.5px);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: clamp(300px, 55vw, 650px);
+        height: clamp(300px, 55vw, 650px);
+        bottom: 0%;
+        right: -10%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='240' fill='none' stroke='rgba(0, 217, 255, 0.12)' stroke-width='1'/%3E%3Ccircle cx='250' cy='250' r='230' fill='none' stroke='rgba(0, 217, 255, 0.06)' stroke-width='12' stroke-dasharray='40 100'/%3E%3Cpath d='M250 20 L250 5 M250 480 L250 495 M20 250 L5 250 M480 250 L495 250' stroke='rgba(0, 217, 255, 0.4)' stroke-width='2'/%3E%3Ccircle cx='250' cy='250' r='190' fill='none' stroke='rgba(0, 217, 255, 0.2)' stroke-width='0.5' stroke-dasharray='2 2'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(1px);
+    }
+
     & .hero-glow {
         position: absolute;
         inset: 0;
@@ -41,7 +71,6 @@
             text-transform: inherit;
             margin-bottom: 1.5rem;
             opacity: 0;
-            animation: cert-pulse 2.4s ease-in-out infinite;
         }
 
         & .page-title {
@@ -70,40 +99,6 @@
         & .cta-container {
             margin-top: 4rem;
         }
-    }
-
-    /* Elemento decorativo HUD circular - Izquierda Superior */
-    &::before {
-        content: '';
-        position: absolute;
-        width: clamp(400px, 65vw, 800px);
-        height: clamp(400px, 65vw, 800px);
-        top: -15%;
-        left: -15%;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='245' fill='none' stroke='rgba(0, 217, 255, 0.08)' stroke-width='1' stroke-dasharray='2 6'/%3E%3Ccircle cx='250' cy='250' r='220' fill='none' stroke='rgba(0, 217, 255, 0.2)' stroke-width='1.5'/%3E%3Ccircle cx='250' cy='250' r='200' fill='none' stroke='rgba(0, 217, 255, 0.04)' stroke-width='20' stroke-dasharray='60 40'/%3E%3Cpath d='M250 5 L245 15 L255 15 Z M250 495 L245 485 L255 485 Z M5 250 L15 245 L15 255 Z M495 250 L485 245 L485 255 Z' fill='rgba(0, 217, 255, 0.3)'/%3E%3Ccircle cx='250' cy='250' r='180' fill='none' stroke='rgba(0, 217, 255, 0.1)' stroke-width='1'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: contain;
-        z-index: 1;
-        pointer-events: none;
-        filter: blur(0.5px);
-        animation: spinBackground 180s linear infinite;
-    }
-
-    /* Elemento decorativo HUD circular - Derecha Inferior */
-    &::after {
-        content: '';
-        position: absolute;
-        width: clamp(300px, 55vw, 650px);
-        height: clamp(300px, 55vw, 650px);
-        bottom: 0%;
-        right: -10%;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Ccircle cx='250' cy='250' r='240' fill='none' stroke='rgba(0, 217, 255, 0.12)' stroke-width='1'/%3E%3Ccircle cx='250' cy='250' r='230' fill='none' stroke='rgba(0, 217, 255, 0.06)' stroke-width='12' stroke-dasharray='40 100'/%3E%3Cpath d='M250 20 L250 5 M250 480 L250 495 M20 250 L5 250 M480 250 L495 250' stroke='rgba(0, 217, 255, 0.4)' stroke-width='2'/%3E%3Ccircle cx='250' cy='250' r='190' fill='none' stroke='rgba(0, 217, 255, 0.2)' stroke-width='0.5' stroke-dasharray='2 2'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: contain;
-        z-index: 1;
-        pointer-events: none;
-        filter: blur(1px);
-        animation: spinBackgroundReverse 150s linear infinite;
     }
 
     /* Estilo de subrayado estilo trazo de lápiz moderno para <u> */
@@ -173,6 +168,18 @@
     #hero {
         & .content {
             transform: translateY(30px);
+        }
+    }
+}
+
+@media (width >=1024px) {
+    #hero {
+        &::before {
+            animation: spinBackground 180s linear infinite;
+        }
+
+        &::after {
+            animation: spinBackgroundReverse 150s linear infinite;
         }
     }
 }
