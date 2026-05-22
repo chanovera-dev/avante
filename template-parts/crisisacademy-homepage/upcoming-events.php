@@ -97,55 +97,6 @@ $events = [
         'url'      => '/taller-de-especializacion',
     ],
 ];
-
-$world_clocks = [
-    [ 'city' => 'CDMX',   'tz' => 'America/Mexico_City' ],
-    [ 'city' => 'BOG',    'tz' => 'America/Bogota' ],
-    [ 'city' => 'MIA',    'tz' => 'America/New_York' ],
-    [ 'city' => 'MAD',    'tz' => 'Europe/Madrid' ],
-];
-$testimonials = [
-    [
-        'avatar' => 'https://i.pravatar.cc/150?img=11',
-        'username' => '@steven',
-        'time' => 'hace 10 min',
-        'channel' => '#celebraciones',
-        'message' => 'Muchas gracias a @cristian por organizar el simulacro increíble sobre el plan de respuesta rápida. Los beneficios para el equipo y la empresa fueron inmediatos 📈👏 ¡Tendremos la grabación para los que no pudieron estar!',
-        'reactions' => ['👏', '1']
-    ],
-    [
-        'avatar' => 'https://i.pravatar.cc/150?img=12',
-        'username' => '@andrea',
-        'time' => 'hace 45 min',
-        'channel' => '#general',
-        'message' => 'Increíble la sesión de hoy con @equipo. Me llevo muchos aprendizajes sobre manejo de crisis en medios digitales. 🔥',
-        'reactions' => ['💯', '4']
-    ],
-    [
-        'avatar' => 'https://i.pravatar.cc/150?img=13',
-        'username' => '@manuel',
-        'time' => 'hace 2 horas',
-        'channel' => '#marketing',
-        'message' => 'El taller nos dio las herramientas exactas que necesitábamos para actualizar nuestros protocolos de RRPP. Totalmente recomendado.',
-        'reactions' => ['💡', '7']
-    ],
-    [
-        'avatar' => 'https://i.pravatar.cc/150?img=14',
-        'username' => '@daniela',
-        'time' => 'hace 5 horas',
-        'channel' => '#formacion',
-        'message' => 'Gran trabajo hoy en la certificación intensiva! Aprendí más en un día que en meses de teoría auto-estudiada.',
-        'reactions' => ['🎉', '12']
-    ],
-    [
-        'avatar' => 'https://i.pravatar.cc/150?img=15',
-        'username' => '@roberto',
-        'time' => 'ayer',
-        'channel' => '#casos-exito',
-        'message' => 'Ayer pusimos en práctica los frameworks vistos el mes pasado ante un pequeño incidente y todo funcionó perfecto. ¡Gracias crisis academy!',
-        'reactions' => ['🙌', '9']
-    ],
-];
 ?>
 
 <section id="upcoming-events" class="block">
@@ -182,53 +133,6 @@ $testimonials = [
                     <?php endforeach; ?>
                 </div>
             </div>
-            <footer class="events-footer">
-                <div class="events-footer--testimonials">
-                    <div class="quotes-container">
-                        <div class="slideshow--wrapper">
-                            <div class="slideshow">
-                                <?php foreach ($testimonials as $testimonial) : ?>
-                                <div class="testimonials-item">
-                                    <div class="slack-msg">
-                                        <div class="slack-avatar">
-                                            <!-- <img src="<?= esc_url($testimonial['avatar']); ?>" alt="<?= esc_attr($testimonial['username']); ?>"> -->
-                                        </div>
-                                        <div class="slack-content">
-                                            <div class="slack-header">
-                                                <span class="slack-username"><?= esc_html($testimonial['username']); ?></span>
-                                                <span class="slack-meta">
-                                                    <?= esc_html($testimonial['time']); ?> ago in <span class="slack-channel"><?= esc_html($testimonial['channel']); ?></span>
-                                                </span>
-                                            </div>
-                                            <div class="slack-body">
-                                                <?= wp_kses_post(preg_replace('/(@\w+)/', '<span class="slack-mention">$1</span>', $testimonial['message'])); ?>
-                                            </div>
-                                            <?php if (!empty($testimonial['reactions'])) : ?>
-                                            <div class="slack-reactions">
-                                                <div class="slack-reaction-badge">
-                                                    <span class="emoji"><?= esc_html($testimonial['reactions'][0]); ?></span>
-                                                    <span class="count"><?= esc_html($testimonial['reactions'][1]); ?></span>
-                                                </div>
-                                            </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                        <div class="slideshow-bullets-wrapper">
-                            <button class="slideshow-prev btn-pagination small-pagination" aria-label="diapositiva anterior">
-                                <?= avante_get_icon('backward'); ?>
-                            </button>
-                            <div class="slideshow-bullets bullets"></div>
-                            <button class="slideshow-next btn-pagination small-pagination" aria-label="siguiente diapositiva">
-                                <?= avante_get_icon('forward'); ?>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
 </section>

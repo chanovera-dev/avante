@@ -45,7 +45,8 @@
         }
 
         & .events-container {
-            background-color: #edf5ff;
+            background-color: #edf5ff8f;
+            backdrop-filter: blur(4px);
             box-shadow: #1d224f12 0px 54px 55px, #1d224f08 0px -12px 30px, #1d224f08 0px 4px 6px, #1d224f08 0px 12px 13px, #1d224f08 0px -3px 5px;
             z-index: 1;
             position: relative;
@@ -104,8 +105,6 @@
                     scrollbar-width: none;
                     gap: 1rem;
                     padding: .1rem 2rem;
-                    touch-action: pan-x;
-                    overscroll-behavior-x: contain;
 
                     &::-webkit-scrollbar {
                         display: none;
@@ -184,15 +183,15 @@
                         }
 
                         & .event-card__time {
-                            font-size: 1rem;
+                            font-size: 0.8rem;
                             font-weight: 500;
-                            color: #285386;
+                            color: var(--wp--preset--color--primary);
                             margin: 0;
                         }
 
                         & .event-card__location {
-                            font-size: 1rem;
-                            color: #285386;
+                            font-size: 0.78rem;
+                            color: var(--wp--preset--color--primary);
                             margin: 0;
                         }
 
@@ -212,17 +211,6 @@
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
-@media (width > 1024px) {
-    #upcoming-events {
-        & .content {
-            & .events-container {
-                background-color: #edf5ff8f;
-                backdrop-filter: blur(4px);
             }
         }
     }
