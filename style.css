@@ -1278,3 +1278,15 @@ html {
     text-align: left;
     line-height: 1;
 }
+
+@media (width < 430px) {
+    .tagline {
+        font-size: calc(var(--wp--preset--font-size--small) * .5);
+    }
+}
+
+@media (width < 500px) {
+    .tagline {
+        font-size: calc(var(--wp--preset--font-size--small) * .8);
+    }
+}
