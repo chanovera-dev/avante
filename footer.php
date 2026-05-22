@@ -12,14 +12,68 @@
         <div class="content">
             <div class="about">
                 <?php
-                $footer_logo = get_option('avante_footer_logo');
-                $footer_title = get_option('avante_footer_title', __('Sobre ', 'avante') . get_bloginfo('name'));
+                // $footer_logo = get_option('avante_footer_logo');
+                // $footer_title = get_option('avante_footer_title', __('Sobre ', 'avante') . get_bloginfo('name'));
 
-                if ($footer_logo): ?>
-                    <img class="footer-logo" src="<?php echo esc_url($footer_logo); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
-                <?php else: ?>
-                    <h3 class="title-section"><?php echo esc_html($footer_title); ?></h3>
-                <?php endif; ?>
+                // if ($footer_logo): ?>
+                    <!-- <img class="footer-logo" src="<?php // echo esc_url($footer_logo); ?>" alt="<?php // echo esc_attr(get_bloginfo('name')); ?>"> -->
+                <?php // else: ?>
+                    <!-- <h3 class="title-section"><?php //echo esc_html($footer_title); ?></h3> -->
+                <?php // endif; ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr__('Home', 'avante'); ?>">
+                    <div class="logo">
+                        <!-- CUBO 3D -->
+                        <div class="ring-wrap">
+                            <div class="glow-ring"></div>
+
+                            <div class="scene">
+                                <div class="cube">
+
+                                    <!-- CARA FRONTAL: ojo + rejilla -->
+                                    <div class="face front">
+                                        <div class="grid"></div>
+                                        <div class="ai-eye">
+                                            <div class="pupil"></div>
+                                            <span class="node node-1"></span>
+                                            <span class="node node-2"></span>
+                                            <span class="node node-3"></span>
+                                            <span class="node node-4"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="face back">
+                                        <div class="grid"></div>
+                                    </div>
+
+                                    <div class="face left">
+                                        <div class="grid"></div>
+                                    </div>
+
+                                    <div class="face right">
+                                        <div class="grid"></div>
+                                    </div>
+
+                                    <div class="face top">
+                                        <div class="grid"></div>
+                                    </div>
+
+                                    <div class="face bottom">
+                                        <div class="grid"></div>
+                                    </div>
+
+                                </div><!-- /cube -->
+                            </div><!-- /scene -->
+                        </div><!-- /ring-wrap -->
+
+                        <!-- TEXTO -->
+                        <div class="text-group">
+                            <h1 class="brand-name">The Crisis Academy</h1>
+                            <div class="divider"></div>
+                            <p class="tagline">Liderazgo en tiempos de crisis</p>
+                        </div>
+
+                </div>
+            </a>
                 <p class="site-bio">
                     <?php
                     $bio_default = __('Relatos y Cartas es un espacio dedicado a la creatividad y la expresión a través de las palabras. Aquí encontrarás cuentos, microcuentos, poemas e historias que buscan inspirar, emocionar y conectar con los lectores.', 'avante');

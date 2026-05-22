@@ -225,6 +225,19 @@ html {
                     display: block;
                 }
 
+                & .logo {
+                    margin-bottom: 2rem;
+                    --s: 40px;
+                    --color--logo: var(--wp--preset--color--base);
+
+                    & .text-group {
+                        & .tagline {
+                            font-size: var(--wp--preset--font-size--small);
+                        }
+                    }
+
+                }
+
                 & .site-bio {
                     font-size: var(--wp--preset--font-size--small);
                 }
@@ -1021,8 +1034,14 @@ html {
     }
 }
 
+.page-template-crisisacademy-homepage {
+    .logo {
+        --color--logo: var(--wp--preset--color--base) !important;
+    }
+}
+
 .logo {
-    --color--logo: #fff;
+    --color--logo: var(--wp--preset--color--contrast);
     --s: 30px;
     /* ← ÚNICA MEDIDA A CAMBIAR */
 
