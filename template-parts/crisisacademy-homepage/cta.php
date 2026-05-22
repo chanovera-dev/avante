@@ -29,7 +29,7 @@ $whatsapp_number = '525543910088';
         <div class="circle circle-3"></div>
         <div class="circle circle-4"></div>
     </div>
-    <div class="content">
+    <div class="content card-reveal">
         <div class="content-backdrop-glow">
             <div class="circle circle-1"></div>
             <div class="circle circle-2"></div>

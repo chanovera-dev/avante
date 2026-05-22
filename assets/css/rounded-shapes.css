@@ -180,7 +180,8 @@
 
 /* CRISIS ACADEMY HOMEPAGE */
 .span-pretext,
-.cert-urgency-banner {
+.cert-urgency-banner,
+.news-filter-btn {
     border-radius: .3rem;
 }
 
@@ -540,7 +541,8 @@ select {
 
     /* CRISIS ACADEMY HOMEPAGE */
     .span-pretext,
-    .cert-urgency-banner {
+    .cert-urgency-banner,
+    .news-filter-btn {
         border-radius: .6rem;
         corner-shape: squircle;
     }

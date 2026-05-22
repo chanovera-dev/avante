@@ -76,7 +76,6 @@
                 color: var(--wp--preset--color--contrast);
                 font-family: var(--wp--preset--font-family--manrope);
                 padding: 0.5rem 1.5rem;
-                border-radius: 999px;
                 font-size: 0.9rem;
                 font-weight: 500;
                 cursor: pointer;

@@ -83,7 +83,7 @@
                     left: 0;
                     width: 200px;
                     height: 3px;
-                    background-color: var(--wp--preset--color--primary);
+                    background-color: var(--wp--preset--color--focus);
                     ;
                     pointer-events: none;
                     z-index: 0;
