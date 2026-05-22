@@ -1285,8 +1285,8 @@ html {
     }
 }
 
-@media (width < 500px) {
+@media (width < 600px) {
     .tagline {
-        font-size: calc(var(--wp--preset--font-size--small) * .8);
+        font-size: calc(var(--wp--preset--font-size--small) * .7);
     }
 }
