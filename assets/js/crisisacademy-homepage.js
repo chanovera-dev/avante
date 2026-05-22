@@ -212,18 +212,24 @@ function initStickyOverlapEffect() {
     const blocks = Array.from(document.querySelectorAll('.site-main > .block'));
     if (blocks.length < 2) return;
 
-    // Force sticky + ascending z-index (overrides ID-level specificity)
-    blocks.forEach((block, index) => {
-        block.style.position = 'sticky';
-        block.style.zIndex = index + 1;
-    });
-
     // Recalculate `top` for each block based on its full content height.
     // scrollHeight is used (not offsetHeight) to get the real height including
     // any content that may not yet have rendered at DOMContentLoaded.
     function applyStickyTops() {
+        if (window.innerWidth < 1024) {
+            blocks.forEach(block => {
+                block.style.position = '';
+                block.style.zIndex = '';
+                block.style.top = '';
+                block.classList.remove('is-bottom');
+            });
+            return;
+        }
+
         const vh = window.innerHeight;
-        blocks.forEach(block => {
+        blocks.forEach((block, index) => {
+            block.style.position = 'sticky';
+            block.style.zIndex = index + 1;
             const bh = block.scrollHeight;
             // Negative top: section scrolls until its bottom hits the viewport bottom,
             // then sticks — ensuring the user sees ALL content before overlap.
@@ -244,6 +250,13 @@ function initStickyOverlapEffect() {
     }
 
     function updateOverlap() {
+        if (window.innerWidth < 1024) {
+            blocks.forEach(block => {
+                block.classList.remove('is-bottom');
+            });
+            return;
+        }
+
         blocks.forEach((block, index) => {
             if (index === blocks.length - 1) {
                 block.classList.remove('is-bottom');
