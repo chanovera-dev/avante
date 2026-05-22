@@ -1291,7 +1291,7 @@ html {
                     & .logo {
                         & .text-group {
                             & .tagline {
-                                calc(var(--wp--preset--font-size--small) * .5);
+                                font-size: calc(var(--wp--preset--font-size--small) * .5);
                             }
                         }
                     }
