@@ -346,6 +346,7 @@ function avante_get_assets()
             'crisisacademy-homepage-script' => "$assets_path/js/crisisacademy-homepage.js",
             'crisisacademy-how-works-script' => "$assets_path/js/crisisacademy-homepage/how-works.js",
             'cert-slideshow-script' => "$assets_path/js/crisisacademy-homepage/cert-slideshow.js",
+            'ws-script' => "$assets_path/js/crisisacademy-homepage/ws-script.js",
         ]
     ];
 }
@@ -1673,6 +1674,7 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_script('animate-in', $a['js']['animate-in']);
         avante_enqueue_script('posts-scripts', $a['js']['posts-scripts']);
         avante_enqueue_script('counter', $a['js']['counter']);
+        avante_enqueue_script('ws-script', $a['js']['ws-script']);
     }
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );

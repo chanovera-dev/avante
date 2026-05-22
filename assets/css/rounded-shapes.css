@@ -281,6 +281,26 @@
     }
 }
 
+@media (width >=1920px) {
+    .site-main #cta .content {
+        border-radius: 1rem;
+
+        & .content-backdrop-glow {
+            border-radius: inherit;
+        }
+    }
+
+    .is-chromium .site-main #cta .content {
+        border-radius: 2rem;
+        corner-shape: squircle;
+
+        & .content-backdrop-glow {
+            border-radius: inherit;
+            corner-shape: inherit;
+        }
+    }
+}
+
 /* FORMS */
 input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
 textarea,
