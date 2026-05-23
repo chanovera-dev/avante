@@ -24,7 +24,7 @@ $has_liked = avante_user_has_liked($post_id);
         </div>
         <div class="post_footer">
             <div class="format-type">
-                <?php echo '<a href="' . esc_url(get_post_format_link('aside')) . '" class="format-post-tag">' . avante_get_icon('aside') . esc_html(__('Minientrada', 'avante')) . '</a>'; ?>
+                <?php echo '<a href="' . esc_url(get_post_format_link('aside')) . '" class="format-post-tag" aria-label="' . esc_attr__('Ver todas las noticias en formato minientrada', 'avante') . '">' . avante_get_icon('aside') . esc_html(__('Minientrada', 'avante')) . '</a>'; ?>
             </div>
             <div class="post--tags__wrapper">
                 <div class="post--tags">

@@ -16,7 +16,7 @@
             $post_id = get_the_ID();
             $likes_count = avante_get_likes_count($post_id);
             $has_liked = avante_user_has_liked($post_id);
-            echo '<a href="' . esc_url(get_post_format_link('standard')) . '" class="format-post-tag">' . avante_get_icon('category') . esc_html(__('Estándar', 'avante')) . '</a>';
+            echo '<a href="' . esc_url(get_post_format_link('standard')) . '" class="format-post-tag" aria-label="' . esc_attr__('Ver todas las noticias en formato estándar', 'avante') . '">' . avante_get_icon('category') . esc_html(__('Estándar', 'avante')) . '</a>';
             ?>
             <?php echo avante_render_like_button(); ?>
         </div>

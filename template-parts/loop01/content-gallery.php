@@ -21,7 +21,7 @@ avante_enqueue_script('loop-gallery', $a['js']['loop-gallery'], ['three', 'gsap'
             $post_id = get_the_ID();
             $likes_count = avante_get_likes_count($post_id);
             $has_liked = avante_user_has_liked($post_id);
-            echo '<a href="' . esc_url(get_post_format_link('gallery')) . '" class="format-post-tag">' . avante_get_icon('gallery') . esc_html(__('Galería', 'core')) . '</a>';
+            echo '<a href="' . esc_url(get_post_format_link('gallery')) . '" class="format-post-tag" aria-label="' . esc_attr__('Ver todas las noticias en formato galería', 'avante') . '">' . avante_get_icon('gallery') . esc_html(__('Galería', 'core')) . '</a>';
             ?>
             <button class="toggle-post-content" aria-label="Mostrar información">
                 <span class="icon-info"><?= avante_get_icon('info-circle'); ?></span>

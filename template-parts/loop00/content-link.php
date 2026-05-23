@@ -155,7 +155,7 @@ if (empty($date)) {
     <div class="post-body">
         <header class="post-body__header">
             <div class="category post--tags">
-                <?= '<a href="' . esc_url(get_post_format_link('link')) . '" class="post-tag small">' . avante_get_icon('link') . esc_html(__('Enlace', 'avante')) . '</a>'; ?>
+                <?= '<a href="' . esc_url(get_post_format_link('link')) . '" class="post-tag small" aria-label="' . esc_attr__('Ver todas las noticias en formato enlace', 'avante') . '">' . avante_get_icon('link') . esc_html(__('Enlace', 'avante')) . '</a>'; ?>
             </div>
             <?php if ($image): ?>
                 <img class="wp-post-image" src="<?= esc_url($image); ?>" alt="<?= esc_attr($title); ?>" />
