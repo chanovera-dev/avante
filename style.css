@@ -1062,8 +1062,8 @@ html {
 
 .glow-ring {
     position: absolute;
-    width: calc(var(--s) * 1.2);
-    height: calc(var(--s) * 1.2);
+    width: calc(var(--s) * 1);
+    height: calc(var(--s) * 1);
     border-radius: 50%;
     border: 1px solid color-mix(in srgb, var(--color--logo), transparent 65%);
     pointer-events: none;
