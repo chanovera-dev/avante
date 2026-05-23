@@ -295,6 +295,7 @@ function avante_get_assets()
             // crisisacademy homepage
             'crisisacademy-homepage' => "$assets_path/css/crisisacademy-homepage.css",
             'crisisacademy-hero' => "$assets_path/css/crisisacademy-homepage/hero.css",
+            'crisisacademy-trust-bar' => "$assets_path/css/crisisacademy-homepage/trust-bar.css",
             'crisisacademy-signals' => "$assets_path/css/crisisacademy-homepage/signals.css",
             'crisisacademy-about' => "$assets_path/css/crisisacademy-homepage/about.css",
             'crisisacademy-how-works' => "$assets_path/css/crisisacademy-homepage/how-works.css",
@@ -1652,6 +1653,7 @@ function crisisacademy_homepage_templates() {
 
         avante_enqueue_style('crisisacademy-homepage', $a['css']['crisisacademy-homepage']);
         avante_enqueue_style('crisisacademy-hero', $a['css']['crisisacademy-hero']);
+        avante_enqueue_style('crisisacademy-trust-bar', $a['css']['crisisacademy-trust-bar']);
         avante_enqueue_style('crisisacademy-about', $a['css']['crisisacademy-about']);
         avante_enqueue_style('crisisacademy-signals', $a['css']['crisisacademy-signals']);
         avante_enqueue_style('crisisacademy-how-works', $a['css']['crisisacademy-how-works']);
@@ -1696,7 +1698,7 @@ add_action( 'wp_enqueue_scripts', 'contact_templates' );
 
 /*
  * =========================================================================
- * CUSTOM POST TYPE ARCHIVE 'NSFW' Y 'DETRÁS DEL ESPEJO' Y 'PARTICIPANTS'
+ * CUSTOM POST TYPE ARCHIVE 'NSFW' Y 'DETRÁS DEL ESPEJO' Y 'PARTICIPANTS' AND 'NEWS'
  * =========================================================================
  */
 
@@ -1783,6 +1785,34 @@ function avante_participant_archive_query($query)
     }
 }
 add_action('pre_get_posts', 'avante_participant_archive_query');
+
+/**
+ * Filter to ensure the 'news' custom post type has an archive enabled.
+ * This makes archive-news.php work automatically.
+ */
+add_filter('register_post_type_args', function ($args, $post_type) {
+    if ($post_type === 'news') {
+        $args['has_archive'] = 'news'; // Enable archive at /news/
+        $args['rewrite'] = array('slug' => 'news');
+    }
+    return $args;
+}, 10, 2);
+
+/**
+ * Configure the main query for the 'news' archive.
+ * This ensures pagination works correctly and filters the main loop.
+ */
+function avante_news_archive_query($query)
+{
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('news')) {
+        $query->set('post_type', 'news');
+        $query->set('post_status', 'publish');
+        // El número de posts por página se toma de Ajustes > Lectura por defecto,
+        // pero puedes forzarlo aquí si lo deseas:
+        // $query->set('posts_per_page', 10);
+    }
+}
+add_action('pre_get_posts', 'avante_news_archive_query');
 
 /*
  * =========================================================================

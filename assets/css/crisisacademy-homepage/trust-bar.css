@@ -1,0 +1,121 @@
+/* =========================================================================
+   Trust Bar — Authority signals below the hero (Revisión §1)
+   ========================================================================= */
+
+#trust-bar {
+    position: relative;
+    z-index: 3;
+    background-color: var(--wp--preset--color--secondary);
+    padding: 2rem 0;
+
+    & .content {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 1.5rem;
+    }
+}
+
+/* —— Logo strip —— */
+.trust-bar__logos {
+    & .logos {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: .5rem;
+    }
+}
+
+.trust-bar__logos-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.trust-bar__logo {
+    height: 22px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1) brightness(1.6);
+    transition: filter 0.4s ease, opacity 0.4s ease;
+
+    &:hover {
+        filter: grayscale(0) brightness(1);
+        opacity: 1;
+    }
+}
+
+/* —— Metrics strip —— */
+.trust-bar__metrics {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    top: 3px;
+}
+
+.trust-bar__divider {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(to bottom,
+            transparent,
+            color-mix(in srgb, var(--wp--preset--color--primary) 30%, transparent) 50%,
+            transparent);
+}
+
+.trust-bar__metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trust-bar__metric-number {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: .5rem;
+}
+
+.trust-bar__metric-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* —— Responsive —— */
+@media (width >=768px) {
+    #trust-bar {
+        padding: 1.5rem 0;
+
+        & .content {
+            flex-direction: row;
+            justify-content: center;
+            gap: 3rem;
+        }
+    }
+
+    .trust-bar__logos {
+        gap: 1.5rem;
+    }
+
+    .trust-bar__logo {
+        height: 26px;
+    }
+}
+
+@media (width >=1024px) {
+    .trust-bar__logo {
+        height: 30px;
+    }
+
+    .trust-bar__metrics {
+        gap: 2rem;
+    }
+}

@@ -98,6 +98,20 @@
 
         & .cta-container {
             margin-top: 4rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            & .btn.hollow {
+                color: var(--wp--preset--color--base);
+                border: 1px solid color-mix(in srgb, var(--wp--preset--color--base) 30%, transparent);
+                transition: border-color 0.3s ease;
+
+                &:hover {
+                    border-color: color-mix(in srgb, var(--wp--preset--color--base) 60%, transparent);
+                }
+            }
         }
     }
 
