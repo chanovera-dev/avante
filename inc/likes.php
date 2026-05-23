@@ -69,3 +69,41 @@ function avante_get_likes_count($post_id) {
 function avante_user_has_liked($post_id) {
     return isset($_COOKIE['avante_liked_' . $post_id]);
 }
+
+/**
+ * Renders the HTML for the post like button with full accessibility (ARIA, roles, type).
+ *
+ * @param int $post_id Optional. Post ID. Defaults to current post.
+ * @return string Like button HTML.
+ */
+function avante_render_like_button($post_id = 0) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    if (!$post_id) {
+        return '';
+    }
+
+    $likes_count = avante_get_likes_count($post_id);
+    $has_liked = avante_user_has_liked($post_id);
+
+    $is_active = ($has_liked || $likes_count > 0);
+    $class = 'button__like' . ($is_active ? ' liked' : '');
+    $icon = avante_get_icon($is_active ? 'heart-fill' : 'heart');
+    
+    $aria_label = $has_liked 
+        ? __('Quitar me gusta a esta publicación', 'avante') 
+        : __('Dar me gusta a esta publicación', 'avante');
+
+    ob_start();
+    ?>
+    <button type="button" 
+            class="<?php echo esc_attr($class); ?>" 
+            aria-label="<?php echo esc_attr($aria_label); ?>" 
+            aria-pressed="<?php echo $has_liked ? 'true' : 'false'; ?>">
+        <?php echo $icon; ?>
+        <span class="like-count"><?php echo $likes_count > 0 ? esc_html($likes_count) : ''; ?></span>
+    </button>
+    <?php
+    return ob_get_clean();
+}

@@ -38,10 +38,7 @@ $has_liked = avante_user_has_liked($post_id);
                     ?>
                 </div>
             </div>
-            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
-                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
-                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
-            </button>
+            <?php echo avante_render_like_button(); ?>
         </div>
     </div>
 </article>

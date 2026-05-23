@@ -27,10 +27,7 @@ avante_enqueue_script('loop-gallery', $a['js']['loop-gallery'], ['three', 'gsap'
                 <span class="icon-info"><?= avante_get_icon('info-circle'); ?></span>
                 <span class="icon-close" style="display:none;"><?= avante_get_icon('close'); ?></span>
             </button>
-            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
-                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
-                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
-            </button>
+            <?php echo avante_render_like_button(); ?>
         </div>
         <div class="post--content">
             <?php get_template_part('templates/single/tags'); ?>

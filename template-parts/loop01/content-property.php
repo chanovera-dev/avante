@@ -29,10 +29,7 @@ $gallery   = $property_data['gallery'];
             echo '</span>';
             ?>
             
-            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
-                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
-                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
-            </button>
+            <?php echo avante_render_like_button(); ?>
         </div>
         <div class="post--content">
             <a href="<?= get_the_permalink(); ?>" class="post__permalink">

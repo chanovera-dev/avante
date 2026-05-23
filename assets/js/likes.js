@@ -48,6 +48,14 @@ document.addEventListener('click', function (e) {
                 } else {
                     button.classList.remove('liked');
                 }
+
+                // Dynamic accessibility updates
+                const isLikedNow = response.data.action === 'liked';
+                button.setAttribute('aria-pressed', isLikedNow ? 'true' : 'false');
+                button.setAttribute('aria-label', isLikedNow 
+                    ? 'Quitar me gusta a esta publicación' 
+                    : 'Dar me gusta a esta publicación'
+                );
             }
         })
         .catch(error => {

@@ -31,10 +31,7 @@ $http_status   = $link_data['http_status'];
             $has_liked = avante_user_has_liked($post_id);
             echo '<a href="' . esc_url(get_post_format_link('link')) . '" class="format-post-tag">' . avante_get_icon('link') . esc_html(__('Enlace', 'avante')) . '</a>';
             ?>
-            <button class="button__like <?= ($has_liked || $likes_count > 0) ? 'liked' : ''; ?>">
-                <?= avante_get_icon(($has_liked || $likes_count > 0) ? 'heart-fill' : 'heart'); ?>
-                <span class="like-count"><?= $likes_count > 0 ? $likes_count : ''; ?></span>
-            </button>
+            <?php echo avante_render_like_button(); ?>
         </div>
         <div class="post--content">
             <div class="post--tags">
