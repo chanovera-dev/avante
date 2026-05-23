@@ -1677,6 +1677,26 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_script('posts-scripts', $a['js']['posts-scripts']);
         avante_enqueue_script('counter', $a['js']['counter']);
         avante_enqueue_script('ws-script', $a['js']['ws-script']);
+
+        // Añadir atributo defer a scripts pesados y secundarios para evitar bloqueo de renderizado
+        add_filter('script_loader_tag', function($tag, $handle, $src) {
+            $defer_scripts = [
+                'three',
+                'webgl-slideshow-script',
+                'quotes-slideshow-script',
+                'cert-slideshow-script',
+                'counter',
+                'crisisacademy-how-works-script',
+                'posts-scripts',
+                'ws-script'
+            ];
+            if (in_array($handle, $defer_scripts)) {
+                if (false === strpos($tag, 'defer')) {
+                    $tag = str_replace(' src=', ' defer src=', $tag);
+                }
+            }
+            return $tag;
+        }, 10, 3);
     }
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );
@@ -1933,3 +1953,14 @@ function avante_filter_posts_handler() {
 }
 add_action('wp_ajax_avante_filter_posts', 'avante_filter_posts_handler');
 add_action('wp_ajax_nopriv_avante_filter_posts', 'avante_filter_posts_handler');
+
+/**
+ * Invalida la cache de transitorios de las noticias de crisis academy cuando se guarda o actualiza un post de tipo 'news'.
+ */
+function crisisacademy_clear_news_transients($post_id) {
+    if (get_post_type($post_id) === 'news') {
+        delete_transient('crisisacademy_used_formats_slugs');
+        delete_transient('crisisacademy_has_standard_news');
+    }
+}
+add_action('save_post', 'crisisacademy_clear_news_transients');

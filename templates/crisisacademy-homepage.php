@@ -23,7 +23,7 @@ get_header(); ?>
         'crisis-simulator',
         'cta',
         'upcoming-events',
-        'news' => !empty(get_posts(['post_type' => 'news', 'posts_per_page' => 1])),
+        'news' => (int) wp_count_posts('news')->publish > 0,
         'faq',
     ];
 

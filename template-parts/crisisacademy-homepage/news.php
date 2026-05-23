@@ -30,28 +30,36 @@ $wp_query = new WP_Query($args);
         <?php
         global $wpdb;
         
-        // Find which post formats are currently used by published 'news' posts
-        $used_formats_slugs = $wpdb->get_col("
-            SELECT DISTINCT t.slug 
-            FROM {$wpdb->terms} t 
-            INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id 
-            INNER JOIN {$wpdb->term_relationships} tr ON tt.term_taxonomy_id = tr.term_taxonomy_id 
-            INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID 
-            WHERE p.post_type = 'news' AND p.post_status = 'publish' AND tt.taxonomy = 'post_format'
-        ");
+        // Find which post formats are currently used by published 'news' posts (cached using transients)
+        $used_formats_slugs = get_transient('crisisacademy_used_formats_slugs');
+        if ( false === $used_formats_slugs ) {
+            $used_formats_slugs = $wpdb->get_col("
+                SELECT DISTINCT t.slug 
+                FROM {$wpdb->terms} t 
+                INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id 
+                INNER JOIN {$wpdb->term_relationships} tr ON tt.term_taxonomy_id = tr.term_taxonomy_id 
+                INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID 
+                WHERE p.post_type = 'news' AND p.post_status = 'publish' AND tt.taxonomy = 'post_format'
+            ");
+            set_transient('crisisacademy_used_formats_slugs', $used_formats_slugs, HOUR_IN_SECONDS);
+        }
         
-        // Check if there are standard 'news' posts without any specific post_format term
-        $has_standard = $wpdb->get_var("
-            SELECT p.ID 
-            FROM {$wpdb->posts} p 
-            WHERE p.post_type = 'news' AND p.post_status = 'publish'
-            AND NOT EXISTS (
-                SELECT 1 FROM {$wpdb->term_relationships} tr
-                INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-                WHERE tr.object_id = p.ID AND tt.taxonomy = 'post_format'
-            )
-            LIMIT 1
-        ");
+        // Check if there are standard 'news' posts without any specific post_format term (cached using transients)
+        $has_standard = get_transient('crisisacademy_has_standard_news');
+        if ( false === $has_standard ) {
+            $has_standard = $wpdb->get_var("
+                SELECT p.ID 
+                FROM {$wpdb->posts} p 
+                WHERE p.post_type = 'news' AND p.post_status = 'publish'
+                AND NOT EXISTS (
+                    SELECT 1 FROM {$wpdb->term_relationships} tr
+                    INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+                    WHERE tr.object_id = p.ID AND tt.taxonomy = 'post_format'
+                )
+                LIMIT 1
+            ");
+            set_transient('crisisacademy_has_standard_news', $has_standard, HOUR_IN_SECONDS);
+        }
         
         $format_strings = get_post_format_strings();
         ?>
