@@ -18,6 +18,20 @@ $cta_avatar = get_field('homepage_faq_cta_avatar')['url'] ?? 'https://i.pravatar
 ?>
 
 <section id="faq-section" class="block">
+
+    <!-- Background decorative elements -->
+    <div class="faq-bg" aria-hidden="true">
+        <div class="faq-bg__scanline"></div>
+        <div class="faq-bg__glow faq-bg__glow--tl"></div>
+        <div class="faq-bg__glow faq-bg__glow--br"></div>
+        <div class="faq-bg__dots faq-bg__dots--left"></div>
+        <div class="faq-bg__dots faq-bg__dots--right"></div>
+        <div class="faq-bg__corner faq-bg__corner--tl"></div>
+        <div class="faq-bg__corner faq-bg__corner--tr"></div>
+        <div class="faq-bg__corner faq-bg__corner--bl"></div>
+        <div class="faq-bg__corner faq-bg__corner--br"></div>
+    </div>
+
     <div class="content">
         <div class="faq-grid">
             <!-- Left Column -->
