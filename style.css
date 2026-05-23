@@ -304,9 +304,10 @@ html {
                         padding-left: 0;
                         padding: .4rem;
 
-                        & li.red {
+                        &>li.red {
                             &>a {
-                                color: var(--wp--preset--color--focus);
+                                background-color: var(--wp--preset--color--focus);
+                                color: var(--wp--preset--color--base);
                                 font-weight: 600;
                             }
                         }
@@ -832,6 +833,7 @@ html {
                                     font-weight: 600;
                                     transition: filter .3s ease, background-color .3s ease;
                                     font-size: 1.15rem;
+                                    color: var(--wp--preset--color--base);
 
                                     &:hover {
                                         filter: brightness(1.1);
