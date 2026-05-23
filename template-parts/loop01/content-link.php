@@ -29,7 +29,7 @@ $http_status   = $link_data['http_status'];
             $post_id = get_the_ID();
             $likes_count = avante_get_likes_count($post_id);
             $has_liked = avante_user_has_liked($post_id);
-            echo '<a href="' . esc_url(get_post_format_link('link')) . '" class="format-post-tag" aria-label="' . esc_attr__('Ver todas las noticias en formato enlace', 'avante') . '">' . avante_get_icon('link') . esc_html(__('Enlace', 'avante')) . '</a>';
+            echo '<a href="' . esc_url(get_post_format_link('link')) . '" class="format-post-tag">' . avante_get_icon('link') . esc_html(__('Enlace', 'avante')) . '</a>';
             ?>
             <?php echo avante_render_like_button(); ?>
         </div>

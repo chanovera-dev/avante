@@ -19,7 +19,7 @@ $tags = get_the_tags();
                 $post_id = get_the_ID();
                 $likes_count = avante_get_likes_count($post_id);
                 $has_liked = avante_user_has_liked($post_id);
-                echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag" aria-label="' . esc_attr__('Ver todas las noticias en formato audio', 'avante') . '">' . avante_get_icon('audio') . esc_html(__('Audio', 'avante')) . '</a>';
+                echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . esc_html(__('Audio', 'avante')) . '</a>';
                 ?>
                 <?php echo avante_render_like_button(); ?>
             </div>
@@ -84,7 +84,7 @@ $tags = get_the_tags();
             ?>
             <div class="post_footer">
             <div class="format-type">
-                <?php echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag" aria-label="' . esc_attr__('Ver todas las noticias en formato audio', 'avante') . '">' . avante_get_icon('audio') . esc_html__('Audio', 'avante') . '</a>'; ?>
+                <?php echo '<a href="' . esc_url(get_post_format_link('audio')) . '" class="format-post-tag">' . avante_get_icon('audio') . esc_html__('Audio', 'avante') . '</a>'; ?>
             </div>
             <div class="post--tags__wrapper">
                 <div class="post--tags">
