@@ -51,10 +51,11 @@ document.addEventListener('click', function (e) {
 
                 // Dynamic accessibility updates
                 const isLikedNow = response.data.action === 'liked';
+                const postTitle = button.getAttribute('data-post-title') || 'esta publicación';
                 button.setAttribute('aria-pressed', isLikedNow ? 'true' : 'false');
                 button.setAttribute('aria-label', isLikedNow 
-                    ? 'Quitar me gusta a esta publicación' 
-                    : 'Dar me gusta a esta publicación'
+                    ? `Quitar me gusta a "${postTitle}"` 
+                    : `Dar me gusta a "${postTitle}"`
                 );
             }
         })
