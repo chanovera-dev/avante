@@ -793,6 +793,16 @@ function wp_breadcrumbs()
         }
     }
 
+    // 2. ARCHIVO CPT NEWS
+    elseif (is_post_type_archive('news')) {
+        if ($paged === 1) {
+            echo '<span>' . esc_html__('Últimos artículos de', 'avante') . '</span>';
+            echo '<h1 class="page-title">' . esc_html__('Noticias', 'avante') . '</h1>';
+        } else {
+            echo '<span>' . esc_html__('Página ', 'avante') . $paged . esc_html__(' de ', 'avante') . '</span>' . '<h1 class="page-title">' . esc_html__('todas las noticias', 'avante') . '</h1>';
+        }
+    }
+
     // 3. CATEGORÍA
     elseif (is_category()) {
         if ($paged === 1) {
