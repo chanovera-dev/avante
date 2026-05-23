@@ -124,7 +124,7 @@
                                 <button type="submit" id="searchsubmit" value="Search" aria-label="Activate the search">
                                     <?= avante_get_icon('search'); ?>
                                 </button>
-                                <div class="close-mobile-searchform" onclick="closeMobileCustomSearchform()" aria-label="Close mobile search"></div>
+                                <button type="button" class="close-mobile-searchform" onclick="closeCustomSearchform()" aria-label="Close mobile search" style="background: transparent; border: none; padding: 0; cursor: pointer;"></button>
                             </div>
                         </div>
                     </form>
