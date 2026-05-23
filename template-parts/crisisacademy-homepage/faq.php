@@ -6,38 +6,6 @@
  * @subpackage Template-parts/crisisacademy-homepage
  */
 
-// Fetch from ACF, fallback to hardcoded array for immediate display
-$faqs = get_field('homepage_faqs');
-
-if (empty($faqs)) {
-    $faqs = [
-        [
-            'question' => '¿En qué se especializa The Crisis Academy?',
-            'answer'   => 'Nos especializamos en ayudar a organizaciones y líderes a diseñar, construir y escalar protocolos de respuesta ante crisis. Nuestra experiencia incluye estrategia de reputación, entrenamiento de voceros, simulacros en tiempo real y auditorías de riesgo para empresas de todos los sectores.'
-        ],
-        [
-            'question' => '¿Trabajan con startups y empresas en etapas iniciales?',
-            'answer'   => 'Sí, adaptamos nuestros marcos de trabajo para equipos ágiles. Creemos que es vital tener una estructura de respuesta rápida desde el día uno para proteger la reputación conforme el negocio escala.'
-        ],
-        [
-            'question' => '¿Cuánto tiempo toma un proceso de consultoría típico?',
-            'answer'   => 'El tiempo varía según la complejidad de la organización, pero un diagnóstico y plan de respuesta inicial suelen establecerse en un periodo de 4 a 6 semanas, con seguimiento continuo.'
-        ],
-        [
-            'question' => '¿Pueden integrar Inteligencia Artificial en nuestra gestión de crisis?',
-            'answer'   => 'Absolutamente. Implementamos herramientas de monitoreo impulsadas por IA para detección temprana de sentimientos y tendencias negativas, automatizando alertas para que tu equipo gane tiempo valioso.'
-        ],
-        [
-            'question' => '¿Qué información necesitan de mi parte para empezar?',
-            'answer'   => 'Únicamente acceso a tus canales de comunicación actuales, organigrama clave y un recuento de incidentes previos (si existen). A partir de ahí, realizamos un kick-off de inmersión profunda.'
-        ],
-        [
-            'question' => '¿Cómo aseguran la calidad del entrenamiento de voceros?',
-            'answer'   => 'Nuestros entrenadores son periodistas y expertos en RRPP en activo. Utilizamos simulaciones realistas en video y métricas de desempeño para medir la claridad, calma y efectividad del mensaje.'
-        ],
-    ];
-}
-
 // Layout text configuration for easy editing via ACF later
 $faq_title = get_field('homepage_faq_title') ?: 'Preguntas más frecuentes';
 $faq_subtitle = get_field('homepage_faq_subtitle') ?: 'FAQs';
@@ -75,24 +43,29 @@ $cta_avatar = get_field('homepage_faq_cta_avatar') ?: 'https://i.pravatar.cc/150
             <!-- Right Column (Accordion) -->
             <div class="faq-column-accordion">
                 <div class="accordion-container">
-                    <?php foreach ($faqs as $index => $faq): 
-                        // Open the first one by default as in the design reference
-                        $is_active = ($index === 0); 
-                    ?>
-                        <div class="accordion-item <?= $is_active ? 'active' : ''; ?>">
+                    <?php if (have_rows('homepage_faqs')) : ?>
+                        <?php while (have_rows('homepage_faqs')) : the_row();
+                            $is_active = ($index === 0);
+                            $question = get_sub_field('question');
+                            $answer = get_sub_field('answer');
+                            ?>
+                            <div class="accordion-item <?= $is_active ? 'active' : ''; ?>">
                             <button class="accordion-header" aria-expanded="<?= $is_active ? 'true' : 'false'; ?>">
-                                <span class="accordion-question"><?= esc_html($faq['question']); ?></span>
+                                <span class="accordion-question"><?= esc_html($question); ?></span>
                                 <span class="accordion-icon">
                                     <?= $is_active ? '&times;' : '+'; ?>
                                 </span>
                             </button>
                             <div class="accordion-body" style="<?= $is_active ? 'max-height: 500px; opacity: 1;' : ''; ?>">
                                 <div class="accordion-inner">
-                                    <?= wp_kses_post($faq['answer']); ?>
+                                    <?= wp_kses_post($answer); ?>
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
+                        <?php endwhile; ?>
+                    <?php else : ?>
+                        <p>Agrega preguntas frecuentes</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
