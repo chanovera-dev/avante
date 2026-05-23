@@ -304,6 +304,13 @@ html {
                         padding-left: 0;
                         padding: .4rem;
 
+                        & li.red {
+                            &>a {
+                                color: var(--wp--preset--color--focus);
+                                font-weight: 600;
+                            }
+                        }
+
                         & li {
                             &>a {
                                 font-size: var(--wp--preset--font-size--small);
@@ -818,6 +825,20 @@ html {
                             list-style: none;
                             display: flex;
                             align-items: center;
+
+                            &>li.red {
+                                &>a {
+                                    background-color: var(--wp--preset--color--focus);
+                                    font-weight: 600;
+                                    transition: filter .3s ease, background-color .3s ease;
+                                    font-size: 1.15rem;
+
+                                    &:hover {
+                                        filter: brightness(1.1);
+                                        background-color: var(--wp--preset--color--focus);
+                                    }
+                                }
+                            }
 
                             & li {
                                 position: relative;
