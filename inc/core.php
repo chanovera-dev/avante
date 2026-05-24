@@ -342,7 +342,8 @@ function avante_get_assets()
 
             // crisisacademy scripts
             'three' => "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
-            'gsap' => "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js",
+            'gsap' => "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js",
+            'scrolltrigger' => "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js",
             'crisisacademy-hero-script' => "$assets_path/js/crisisacademy-homepage/hero.js",
             'crisisacademy-homepage-script' => "$assets_path/js/crisisacademy-homepage.js",
             'crisisacademy-how-works-script' => "$assets_path/js/crisisacademy-homepage/how-works.js",
@@ -1473,7 +1474,8 @@ function posts_styles()
         if (is_home() && !is_paged()) {
             avante_enqueue_style('quotes-slideshow-styles', $a['css']['quotes-slideshow-styles']);
             avante_enqueue_script('quotes-slideshow-script', $a['js']['quotes-slideshow-script']);
-            avante_enqueue_script('moving-clouds-script', $a['js']['moving-clouds-script']);
+            avante_enqueue_script('gsap', $a['js']['gsap']);
+            avante_enqueue_script('moving-clouds-script', $a['js']['moving-clouds-script'], ['gsap']);
         }
 
         if (is_active_sidebar('sidebar-1')) {
@@ -1721,7 +1723,9 @@ function contact_templates() {
         add_action( 'wp_enqueue_scripts', 'unload_parts_header', 100 );
 
         avante_enqueue_style('contact', $a['css']['contact']);
-        avante_enqueue_script('parallax-script', $a['js']['parallax-script']);
+        avante_enqueue_script('gsap', $a['js']['gsap']);
+        avante_enqueue_script('scrolltrigger', $a['js']['scrolltrigger'], ['gsap']);
+        avante_enqueue_script('parallax-script', $a['js']['parallax-script'], ['gsap', 'scrolltrigger']);
     }
 }
 add_action( 'wp_enqueue_scripts', 'contact_templates' );
