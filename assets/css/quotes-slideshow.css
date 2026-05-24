@@ -7,7 +7,7 @@
         animation: animate-in--post .3s ease-in-out forwards;
     }
 
-    & .container {
+    & .quotes-container {
         position: relative;
         z-index: 4;
         display: grid;

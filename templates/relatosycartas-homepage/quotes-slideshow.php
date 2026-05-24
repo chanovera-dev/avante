@@ -11,7 +11,7 @@ $quotes_query = new WP_Query($args);
 
 if ($quotes_query->have_posts()): ?>
 <div class="content quotes-heading">
-    <div class="container glass-border-bright">
+    <div class="quotes-container glass-border-bright">
         <div class="post__overlay"></div>
         <div class="clouds--wrapper">
             <div class="clouds">
