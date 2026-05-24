@@ -178,6 +178,11 @@
     border-radius: 1.7rem;
 }
 
+/* Relatos y Cartas Homepage */
+.quotes-heading .quotes-container:has(.slideshow--wrapper) {
+    border-radius: 1.7rem;
+}
+
 /* CRISIS ACADEMY HOMEPAGE */
 .span-pretext,
 .cert-urgency-banner,
@@ -535,6 +540,12 @@ select {
 
     /* CA HOMEPAGE */
     .container:has(.slideshow--wrapper) {
+        border-radius: 3rem;
+        corner-shape: squircle;
+    }
+
+    /* Relatos y Cartas Homepage */
+    .quotes-heading .quotes-container:has(.slideshow--wrapper) {
         border-radius: 3rem;
         corner-shape: squircle;
     }
