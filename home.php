@@ -16,7 +16,7 @@ get_header(); ?>
     <section class="block posts--body">
         <?php
         if (!is_paged()) :
-            get_template_part('templates/relatosycartas-homepage/quotes-slideshow');
+            get_template_part('template-parts/relatosycartas-homepage/quotes-slideshow');
         endif;
         ?>
 
