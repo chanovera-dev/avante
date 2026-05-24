@@ -292,7 +292,7 @@
 @media (width < 600px) {
 
     .content.quotes-heading {
-        & .container {
+        & .quotes-container {
             & .tree--wrapper {
                 right: 50%;
                 transform: translateX(50%);
@@ -302,8 +302,8 @@
 }
 
 @media (width >=600px) {
-    .content:has(> .container) {
-        & .container {
+    .content:has(> .quotes-container) {
+        & .quotes-container {
             min-height: 450px;
 
             & .tree--wrapper {
