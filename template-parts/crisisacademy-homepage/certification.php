@@ -162,12 +162,18 @@ $cert_cta_microcopy = get_field('certification_cta_microcopy');
             </div>
         </div>
         <div class="cert-panel card-reveal" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('<?= esc_url($cert_cta_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <?php if ($cert_urgency_text): ?>
             <div class="cert-urgency-banner">
                 <?= avante_get_icon('clock-history');?>
                 <?= wp_kses_post($cert_urgency_text); ?>
             </div>
+            <?php endif; ?>
+            <?php if ($cert_cta_headline): ?>
             <h2 class="cert-headline"><?= esc_html($cert_cta_headline); ?></h2>
+            <?php endif; ?>
+            <?php if ($cert_cta_subhead): ?>
             <p class="cert-subheadline"><?= esc_html($cert_cta_subhead); ?></p>
+            <?php endif; ?>
 
             <div class="quotes-container">
                 <div class="slideshow--wrapper">
