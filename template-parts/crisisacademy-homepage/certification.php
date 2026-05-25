@@ -156,7 +156,7 @@ $cert_cta_microcopy = get_field('certification_cta_microcopy');
                         </button>
                     </div>
                 </div>
-                <div class="final-message card-reveal" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('<?= esc_url($fm_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                <div class="final-message card-reveal" style="background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('<?= esc_url($fm_bg_url); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                     <p class="title-reveal"><?= wp_kses_post($fm_text); ?></p>
                 </div>
             </div>
