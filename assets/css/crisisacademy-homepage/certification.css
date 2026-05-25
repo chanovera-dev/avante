@@ -31,6 +31,42 @@
 
                 & .title-section {
                     opacity: 0;
+
+                    &.is-visible {
+
+                        /* Estilo de subrayado estilo trazo de lápiz moderno para <u> */
+                        & u {
+                            text-decoration: none;
+                            position: relative;
+                            display: inline-block;
+                            color: inherit;
+
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                left: 0;
+                                bottom: -1rem;
+                                width: 100%;
+                                height: 12px;
+
+                                /* Degradado cilíndrico 3D para darle volumen al cuerpo físico del trazo */
+                                background: linear-gradient(to bottom,
+                                        color-mix(in srgb, var(--wp--preset--color--focus) 85%, white) 0%,
+                                        var(--wp--preset--color--focus) 45%,
+                                        color-mix(in srgb, var(--wp--preset--color--focus) 70%, black) 100%);
+
+                                /* Máscara con doble trazo de lápiz esbozado (Dual sketchy stroke) para un aspecto no plano y realista */
+                                mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpath d='M2,4 Q25,1 50,5 T98,4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M5,8 Q32,5 65,8 T95,6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' opacity='0.75'/%3E%3C/svg%3E");
+                                mask-size: 100% 100%;
+                                mask-repeat: no-repeat;
+
+                                /* Animación de entrada de izquierda a derecha */
+                                transform-origin: left center;
+                                transform: scaleX(0);
+                                animation: drawUnderline 1.2s cubic-bezier(0.4, 0, 0.2, 1) 3.5s forwards;
+                            }
+                        }
+                    }
                 }
 
                 & .subtitle-section {
