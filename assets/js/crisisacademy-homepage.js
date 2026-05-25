@@ -1,40 +1,4 @@
 /**
- * Upcoming Events — World Clock
- *
- * Reads [data-tz] from each .world-clock element and
- * updates .world-clock__time every second with the local
- * time for that timezone.
- */
-function initUpcomingEventsClocks() {
-    const clocks = document.querySelectorAll('#upcoming-events-clocks .world-clock');
-    if (clocks.length === 0) return;
-
-    function tick() {
-        clocks.forEach(clock => {
-            const tz = clock.dataset.tz;
-            const timeEl = clock.querySelector('.world-clock__time');
-            if (!timeEl || !tz) return;
-
-            try {
-                const now = new Date();
-                const formatted = now.toLocaleTimeString('es-MX', {
-                    timeZone: tz,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true,
-                });
-                timeEl.textContent = formatted;
-            } catch (e) {
-                timeEl.textContent = '--:--';
-            }
-        });
-    }
-
-    tick();
-    setInterval(tick, 1000);
-}
-
-/**
  * Upcoming Events — Scroll fade edges
  *
  * Toggles .at-start / .at-end classes on the track wrapper
@@ -124,155 +88,6 @@ function initUpcomingEventsOpacityCascade() {
 
     // Run once after layout is ready
     requestAnimationFrame(update);
-}
-
-/**
- * FAQ Section — Accordion Toggle
- */
-function initFaqAccordion() {
-    const accordionItems = document.querySelectorAll('.accordion-item');
-
-    accordionItems.forEach(item => {
-        const header = item.querySelector('.accordion-header');
-        const body = item.querySelector('.accordion-body');
-        const icon = item.querySelector('.accordion-icon');
-
-        header.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-
-            // Close all other items
-            accordionItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                    const otherBody = otherItem.querySelector('.accordion-body');
-                    const otherBtn = otherItem.querySelector('.accordion-header');
-                    const otherIcon = otherItem.querySelector('.accordion-icon');
-
-                    otherBody.style.maxHeight = null;
-                    otherBody.style.opacity = '0';
-                    otherBtn.setAttribute('aria-expanded', 'false');
-                    otherIcon.innerHTML = '+';
-                }
-            });
-
-            // Toggle current item
-            if (isActive) {
-                item.classList.remove('active');
-                body.style.maxHeight = null;
-                body.style.opacity = '0';
-                header.setAttribute('aria-expanded', 'false');
-                icon.innerHTML = '+';
-            } else {
-                item.classList.add('active');
-                body.style.maxHeight = body.scrollHeight + 'px';
-                body.style.opacity = '1';
-                header.setAttribute('aria-expanded', 'true');
-                icon.innerHTML = '&times;'; // Multiply symbol used as "X"
-            }
-        });
-    });
-}
-
-/**
- * Dynamic Card Glow Effect (Mouse Tracking)
- * Reads current mouse coordinates inside the card and updates
- * CSS variables --mouse-x and --mouse-y for responsive glow styling.
- */
-function initCardGlowEffect() {
-    const cards = document.querySelectorAll('#hero, .about-item, .signal-item, .how-it-works--card, #cta .content, .cert-container, .cert-panel, .how-works-modal-container, .intro-funnel, .sliders .quotes-container');
-
-    cards.forEach(card => {
-        let rect;
-
-        // Capture boundary ONCE when mouse enters to avoid recursive render loops
-        card.addEventListener('mouseenter', () => {
-            if (window.innerWidth < 1366) return;
-            rect = card.getBoundingClientRect();
-        });
-
-        card.addEventListener('mousemove', e => {
-            if (window.innerWidth < 1366) return;
-            if (!rect) rect = card.getBoundingClientRect(); // Safety fallback
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
-}
-
-/**
- * Sticky Overlap Effect
- * Sections stack on top of each other as the user scrolls down.
- * For sections taller than the viewport, a negative `top` is used so the
- * section only sticks once the user has scrolled to its bottom.
- */
-function initStickyOverlapEffect() {
-    const blocks = Array.from(document.querySelectorAll('.site-main > .block'));
-    if (blocks.length < 2) return;
-
-    // Recalculate `top` for each block based on its full content height.
-    // scrollHeight is used (not offsetHeight) to get the real height including
-    // any content that may not yet have rendered at DOMContentLoaded.
-    function applyStickyTops() {
-        if (window.innerWidth < 1024) {
-            blocks.forEach(block => {
-                block.style.position = '';
-                block.style.zIndex = '';
-                block.style.top = '';
-                block.classList.remove('is-bottom');
-            });
-            return;
-        }
-
-        const vh = window.innerHeight;
-        blocks.forEach((block, index) => {
-            block.style.position = 'sticky';
-            block.style.zIndex = index + 1;
-            const bh = block.scrollHeight;
-            // Negative top: section scrolls until its bottom hits the viewport bottom,
-            // then sticks — ensuring the user sees ALL content before overlap.
-            block.style.top = bh > vh ? `${vh - bh}px` : '0px';
-        });
-    }
-
-    applyStickyTops(); // Initial estimate (pre-images)
-
-    // Re-run after all resources (images, fonts) are loaded
-    window.addEventListener('load', applyStickyTops);
-    window.addEventListener('resize', applyStickyTops, { passive: true });
-
-    // Re-run if any section changes its rendered size (dynamic content, accordions, etc.)
-    if (window.ResizeObserver) {
-        const ro = new ResizeObserver(applyStickyTops);
-        blocks.forEach(block => ro.observe(block));
-    }
-
-    function updateOverlap() {
-        if (window.innerWidth < 1024) {
-            blocks.forEach(block => {
-                block.classList.remove('is-bottom');
-            });
-            return;
-        }
-
-        blocks.forEach((block, index) => {
-            if (index === blocks.length - 1) {
-                block.classList.remove('is-bottom');
-                return;
-            }
-
-            const nextBlock = blocks[index + 1];
-            const nextTop = nextBlock.getBoundingClientRect().top;
-
-            // Start dimming when the next block is within 50% of the viewport
-            block.classList.toggle('is-bottom', nextTop <= window.innerHeight * 0.5);
-        });
-    }
-
-    window.addEventListener('scroll', updateOverlap, { passive: true });
-    updateOverlap();
 }
 
 /**
@@ -481,12 +296,20 @@ function initStickyAnchorLinks() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    initUpcomingEventsClocks();
     initUpcomingEventsScroll();
     initUpcomingEventsOpacityCascade();
-    initFaqAccordion();
-    initCardGlowEffect();
-    initStickyOverlapEffect();
+    
+    // External scripts with safety checks
+    if (typeof initFaqAccordion === 'function') {
+        initFaqAccordion();
+    }
+    if (typeof initCardGlowEffect === 'function') {
+        initCardGlowEffect();
+    }
+    if (typeof initStickyOverlapEffect === 'function') {
+        initStickyOverlapEffect();
+    }
+
     initUnifiedAnimations();
     initStickyAnchorLinks();
 });

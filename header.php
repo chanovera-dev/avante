@@ -31,13 +31,13 @@
             <div class="content">
                 <div class="site-brand">
                     <?php
-                    if (!has_custom_logo()) {
-                        printf('<a href="%s" aria-label="%s">%s</a>', esc_url(home_url('/')), esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
-                    } else {
-                        the_custom_logo();
-                    }
+                    // if (!has_custom_logo()) {
+                    //     printf('<a href="%s" aria-label="%s">%s</a>', esc_url(home_url('/')), esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
+                    // } else {
+                    //     the_custom_logo();
+                    // }
                     ?>
-                    <!-- <a href="<?php // echo esc_url(home_url('/')); ?>" aria-label="<?php // echo esc_attr__('Home', 'avante'); ?>">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr__('Home', 'avante'); ?>">
                         <div class="logo">
                             <div class="ring-wrap">
                                 <div class="glow-ring"></div>
@@ -77,7 +77,7 @@
                                 <p class="tagline">Liderazgo en tiempos de crisis</p>
                             </div>
                         </div>
-                    </a> -->
+                    </a>
                 </div>
                 <div class="avante-navigation">
                         <?php

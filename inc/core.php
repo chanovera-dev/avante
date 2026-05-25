@@ -329,6 +329,9 @@ function avante_get_assets()
             'moving-clouds-script' => "$assets_path/js/moving-clouds.js",
             'parallax-script' => "$assets_path/js/parallax.js",
             'counter' => "$assets_path/js/counter.js",
+            'sticky-overlap-efect-script' => "$assets_path/js/sticky-overlap-efect.js",
+            'card-glow-efect-script' => "$assets_path/js/card-glow-efect.js",
+            'faq-accordion-toggle-script' => "$assets_path/js/faq-accordion-toggle.js",
 
             // gallery homepage
             'gallery-homepage-script' => "$assets_path/js/gallery-homepage.js",
@@ -1679,6 +1682,9 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_style('crisisacademy-faq', $a['css']['crisisacademy-faq']);
 
         // Crisis academy scripts
+        avante_enqueue_script('sticky-overlap-efect-script', $a['js']['sticky-overlap-efect-script']);
+        avante_enqueue_script('card-glow-efect-script', $a['js']['card-glow-efect-script']);
+        avante_enqueue_script('faq-accordion-toggle-script', $a['js']['faq-accordion-toggle-script']);
         avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
         avante_enqueue_script('three', $a['js']['three']);
         avante_enqueue_script('webgl-slideshow-script', $a['js']['webgl-slideshow-script']);
