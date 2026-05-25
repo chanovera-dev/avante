@@ -212,10 +212,10 @@ $cert_cta_microcopy = get_field('certification_cta_microcopy');
                 </a>
                 <?php endif; ?>
             </div>
-            <p class="cert-microcopy">
-                <?= avante_get_icon('shield-check'); ?>
-                <?= esc_html($cert_cta_microcopy); ?>
-            </p>
+            <!-- <p class="cert-microcopy"> -->
+                <?php // echo avante_get_icon('shield-check'); ?>
+                <?php // echo esc_html($cert_cta_microcopy); ?>
+            <!-- </p> -->
         </div>
     </div>
 </section>
