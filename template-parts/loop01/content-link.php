@@ -34,22 +34,22 @@ $http_status   = $link_data['http_status'];
             <?php echo avante_render_like_button(); ?>
         </div>
         <div class="post--content">
-            <div class="post--tags">
+            <!--<div class="post--tags">
                 <?php
-                if (!empty($external_tags)) {
-                    foreach ($external_tags as $tag_name) {
-                        echo '<span class="post-tag">' . avante_get_icon('tag') . esc_html($tag_name) . '</span>';
-                    }
-                } else {
-                    $tags = get_the_tags();
-                    if ($tags) {
-                        foreach ($tags as $tag) {
-                            echo '<a class="post-tag" href="' . esc_url(get_tag_link($tag->term_id)) . '">' . avante_get_icon('tag') . esc_html($tag->name) . '</a>';
-                        }
-                    }
-                }
+                // if (!empty($external_tags)) {
+                //     foreach ($external_tags as $tag_name) {
+                //         echo '<span class="post-tag">' . avante_get_icon('tag') . esc_html($tag_name) . '</span>';
+                //     }
+                // } else {
+                //     $tags = get_the_tags();
+                //     if ($tags) {
+                //         foreach ($tags as $tag) {
+                //             echo '<a class="post-tag" href="' . esc_url(get_tag_link($tag->term_id)) . '">' . avante_get_icon('tag') . esc_html($tag->name) . '</a>';
+                //         }
+                //     }
+                // }
                 ?>
-            </div>
+            </div>-->
             <div class="post--date" style="display: flex; align-items: center; gap: 0.5rem;">
                 <?= avante_get_icon('date'); ?>
                 <p><?= esc_html($date); ?></p>
