@@ -71,6 +71,10 @@
             text-transform: inherit;
             margin-bottom: 1.5rem;
             opacity: 0;
+
+            & p {
+                margin: 0;
+            }
         }
 
         & .page-title {

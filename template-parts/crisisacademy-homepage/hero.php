@@ -79,7 +79,7 @@ if (!empty($hero_action_button_secondary)) {
     <div class="hero-glow"></div>
     <div class="content">
         <?php if ($hero_span): ?>
-            <span class="span-pretext"><?php echo esc_html($hero_span); ?></span>
+            <div class="span-pretext object-reveal"><?php echo apply_filters( 'the_content', $hero_span ); ?></div>
         <?php endif; ?>
 
         <?php if ($hero_first_content): ?>
