@@ -119,7 +119,7 @@
             }
 
             & .slideshow-bullets-wrapper {
-                display: flex;
+                display: none;
                 align-items: center;
                 justify-content: space-between;
                 padding: .5rem;
