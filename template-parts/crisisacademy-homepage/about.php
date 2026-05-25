@@ -21,7 +21,48 @@ if (empty($about_content)) {
 ?>
 <section id="about" class="block">
     <div class="content">
-        <img class="about-image card-reveal" src="<?= $about_image['url'] ?>" alt="<?= $about_image['alt'] ?>">   
+        <div class="container app card-reveal">
+            <div class="slideshow--wrapper">
+                <div class="slideshow">
+                    <?php
+                    if (have_rows('about_showreel')):
+                        $count = 0;
+                        while (have_rows('about_showreel')):
+                            the_row(); 
+                            $image = get_sub_field('about_showreel_image');
+                            $count++;
+                            ?>
+
+                            <article id="about-item-<?= $count; ?>" class="about-item post">
+                                <div class="about-content">
+                                    <?php
+                                    if ($image) {
+                                        $img_id = is_array($image) ? $image['ID'] : $image;
+                                        echo wp_get_attachment_image($img_id, 'full', false, ['loading' => 'lazy']);
+                                    }
+                                    ?>
+                                </div>
+                            </article>
+
+                        <?php endwhile;
+                    else:
+                        echo '<p>No se encontraron guías.</p>';
+                    endif;
+                    ?>
+                </div>
+            </div>
+            <?php if (have_rows('about_showreel')): ?>
+            <div class="slideshow-bullets-wrapper">
+                <button class="slideshow-prev btn-pagination small-pagination" aria-label="siguiente diapositiva">
+                    <?= avante_get_icon('backward'); ?>
+                </button>
+                <div class="slideshow-bullets bullets"></div>
+                <button class="slideshow-next btn-pagination small-pagination" aria-label="anterior diapositiva">
+                    <?= avante_get_icon('forward'); ?>
+                </button>
+            </div>
+            <?php endif; ?>
+        </div>
         <div class="data">
             <?php if ($about_content) : ?>
                 <?php echo apply_filters( 'the_content', $about_content )?>

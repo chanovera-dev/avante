@@ -191,7 +191,8 @@
 }
 
 .quotes-container,
-.module-icon {
+.module-icon,
+.title-modules {
     border-radius: .5rem;
 }
 
@@ -559,7 +560,8 @@ select {
     }
 
     .quotes-container,
-    .module-icon {
+    .module-icon,
+    .title-modules {
         border-radius: 1rem;
         corner-shape: squircle;
     }

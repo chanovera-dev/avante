@@ -798,8 +798,15 @@ html {
         & .block {
             & .content {
                 display: grid;
-                grid-template-columns: 1fr auto 1fr;
+                grid-template-columns: 1fr auto auto;
+                gap: 1rem;
                 align-items: center;
+
+                & .site-brand {
+                    & a .logo {
+                        --s: 40px;
+                    }
+                }
 
                 & .avante-navigation {
                     max-height: 62.44px;
