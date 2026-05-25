@@ -118,6 +118,13 @@ function avante_fetch_url_metadata($url) {
                 $ts = strtotime($matches[1]);
                 if ($ts) $meta['date'] = date_i18n('F j, Y', $ts);
             }
+
+            // Tags — from article:tag (Open Graph) or meta keywords
+            if (preg_match_all('/<meta[^>]*property=["\']article:tag["\'][^>]*content=["\']([^"\']+)["\'][^>]*>/i', $html, $tag_matches)) {
+                $meta['tags'] = array_map('trim', $tag_matches[1]);
+            } elseif (preg_match('/<meta[^>]*name=["\']keywords["\'][^>]*content=["\']([^"\']+)["\'][^>]*>/i', $html, $kw_match)) {
+                $meta['tags'] = array_map('trim', explode(',', $kw_match[1]));
+            }
             
             // Avatar fallback (logo, icon or apple icon)
             if (preg_match('/<link[^>]*rel=["\'](?:shortcut icon|icon|apple-touch-icon.*?)["\'][^>]*href=["\']([^"\']+)["\']/is', $html, $logo)) {
