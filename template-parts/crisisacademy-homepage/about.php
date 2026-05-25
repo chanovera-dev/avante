@@ -27,6 +27,7 @@ if (empty($about_content)) {
                 <?php echo apply_filters( 'the_content', $about_content )?>
             <?php endif; ?>    
             <div class="about-container">
+            <?php $counter = 1; ?>
             <?php if (have_rows('about_items')) : ?>
                 <?php while (have_rows('about_items')) : the_row(); ?>
                     <div class="about-item card-reveal">
@@ -34,11 +35,10 @@ if (empty($about_content)) {
                         <?php
                         $icon = get_sub_field('about_item_icon');
                         $label = get_sub_field('about_item_label');
-                        if ($icon) :
-                            ?>
-                            <div class="module-icon"><?= avante_render_acf_icon($icon); ?></div>
-                        <?php endif; ?>
-                        <span class="about-item-label"><?= $label ?></span>
+                        ?>
+                            <div class="module-icon module-level"><?= $counter ?></div>
+                        <?php $counter++; ?>
+                        <h3 class="about-item-label"><?= $label ?></h3>
                     </div>
                 <?php endwhile; ?>
                 <?php else : ?>

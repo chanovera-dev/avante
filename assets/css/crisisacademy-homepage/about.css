@@ -169,6 +169,11 @@
                         }
                     }
 
+                    & .module-level {
+                        font-weight: 700;
+                        font-size: var(--wp--preset--font-size--x-large);
+                    }
+
                     & .about-item-label {
                         position: relative;
                         z-index: 2;
@@ -185,5 +190,6 @@
     #about .content {
         grid-template-columns: clamp(300px, 14.3px + 27.9vw, 550px) 1fr;
         align-items: start;
+        padding-bottom: 20rem !important;
     }
 }

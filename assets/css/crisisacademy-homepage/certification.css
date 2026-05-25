@@ -828,3 +828,11 @@
         }
     }
 }
+
+@media (width >=1024px) {
+    #certification {
+        & .content {
+            padding-bottom: 20rem !important;
+        }
+    }
+}

@@ -15,7 +15,7 @@ get_header(); ?>
 
     $sections = [
         'hero',
-        'trust-bar',
+        // 'trust-bar',
         'about',
         'certification' => !empty($certification_intro) ? true : false,
         'signals',
