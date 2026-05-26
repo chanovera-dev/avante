@@ -292,7 +292,7 @@ body {
                 &::before {
                     content: '';
                     position: absolute;
-                    top: 94.43px;
+                    top: 82px;
                     height: 1px;
                     width: 100%;
                     background-color: color-mix(in srgb, var(--wp--preset--color--footer-background) 50%, transparent);
@@ -303,7 +303,7 @@ body {
                 &::after {
                     content: '';
                     position: absolute;
-                    top: 95.43px;
+                    top: 85px;
                     height: 1px;
                     width: 100%;
                     background-color: color-mix(in srgb, var(--wp--preset--color--base) 5%, transparent);
