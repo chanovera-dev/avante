@@ -307,8 +307,8 @@ function avante_get_assets()
             'crisisacademy-news' => "$assets_path/css/crisisacademy-homepage/news.css",
             'crisisacademy-faq' => "$assets_path/css/crisisacademy-homepage/faq.css",
 
-            // contact
-            'contact' => "$assets_path/css/contact.css",
+            // crisis academy contact
+            'crisis-academy-contact' => "$assets_path/css/crisis-academy-contact.css",
             
         ],
         'js' => [
@@ -1719,8 +1719,8 @@ function crisisacademy_homepage_templates() {
 }
 add_action( 'wp_enqueue_scripts', 'crisisacademy_homepage_templates' );
 
-function contact_templates() {
-    if (is_page_template('templates/contact.php')) {
+function crisis_academy_contact_templates() {
+    if (is_page_template('templates/crisis-academy-contact.php')) {
         $a = avante_get_assets();
 
         function unload_parts_header() {
@@ -1728,13 +1728,13 @@ function contact_templates() {
         }
         add_action( 'wp_enqueue_scripts', 'unload_parts_header', 100 );
 
-        avante_enqueue_style('contact', $a['css']['contact']);
+        avante_enqueue_style('crisis-academy-contact', $a['css']['crisis-academy-contact']);
         avante_enqueue_script('gsap', $a['js']['gsap']);
         avante_enqueue_script('scrolltrigger', $a['js']['scrolltrigger'], ['gsap']);
         avante_enqueue_script('parallax-script', $a['js']['parallax-script'], ['gsap', 'scrolltrigger']);
     }
 }
-add_action( 'wp_enqueue_scripts', 'contact_templates' );
+add_action( 'wp_enqueue_scripts', 'crisis_academy_contact_templates' );
 
 /*
  * =========================================================================

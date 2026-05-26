@@ -13,8 +13,8 @@
  */
 
 $cta_pretext   = get_field('cta_final_pretext')      ?: 'Tu reputación en las mejores manos';
-$cta_title     = get_field('cta_final_title')         ?: 'Anticípate, prepárate y domina cualquier crisis';
-$cta_desc      = get_field('cta_final_description')   ?: 'No dejes el futuro de tu empresa al azar. Agenda una llamada con nuestros expertos y descubre cómo podemos fortalecer tu resiliencia corporativa.';
+$cta_title     = get_field('cta_final_title')         ?: 'Anticípate, prepárate y GESTIONA PROFESIONALMENTE cualquier crisis.';
+$cta_desc      = get_field('cta_final_description')   ?: 'No dejes el futuro de tu ORGANIZACIÓN al azar. Agenda una llamada con nuestros expertos y descubre cómo podemos fortalecer tu resiliencia corporativa.';
 $cta_btn_text  = get_field('cta_final_btn_text')      ?: 'Enviar mensaje';
 $cta_btn_url   = get_field('cta_final_btn_url')       ?: '/contacto';
 $cta_microcopy = get_field('cta_final_microcopy')     ?: 'Sin compromisos · Respuesta en menos de 24 h';
@@ -37,7 +37,7 @@ $whatsapp_number = '525543910088';
             <div class="circle circle-4"></div>
         </div>
         <div class="cta-intro">
-            <span class="span-pretext pretext-reveal"><?= esc_html($cta_pretext); ?></span>
+            <!-- <span class="span-pretext pretext-reveal"><?= esc_html($cta_pretext); ?></span> -->
             <h2 class="title-section title-reveal"><?= esc_html($cta_title); ?></h2>
             <p class="cta-description object-reveal"><?= esc_html($cta_desc); ?></p>
         </div>
