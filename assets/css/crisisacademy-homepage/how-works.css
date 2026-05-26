@@ -339,6 +339,11 @@
     color: #fff;
 }
 
+.how-works-modal-content .modal-wysiwyg ol,
+.how-works-modal-content .modal-wysiwyg ul {
+    margin-bottom: 1.5rem;
+}
+
 /* Animación Cyberpunk de Procesamiento de Soluciones */
 @keyframes circuitDrift {
     from {
