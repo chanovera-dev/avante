@@ -24,7 +24,7 @@ $wp_query = new WP_Query($args);
         <header class="section-header">
             <span class="span-pretext pretext-reveal">Centro de Inteligencia</span>
             <h2 class="title-section title-reveal">Actualidad Global y Análisis</h2>
-            <p class="description-section">Mantente informado DE los últimos eventos, análisis e impacto de CRISIS  Y ESCÁNDALOS.</p>
+            <p class="description-section object-reveal">Mantente informado DE los últimos eventos, análisis e impacto de CRISIS  Y ESCÁNDALOS.</p>
         </header>
 
         <?php
