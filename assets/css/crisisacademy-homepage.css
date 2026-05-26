@@ -276,3 +276,39 @@ body {
         }
     }
 }
+
+@media (width >=1200px) {
+    body {
+        #main-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+
+            & .block {
+                background-color: transparent;
+                border-bottom: none;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 94.43px;
+                    height: 1px;
+                    width: 100%;
+                    background-color: color-mix(in srgb, var(--wp--preset--color--footer-background) 50%, transparent);
+
+                }
+
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 95.43px;
+                    height: 1px;
+                    width: 100%;
+                    background-color: color-mix(in srgb, var(--wp--preset--color--base) 5%, transparent);
+                }
+            }
+        }
+    }
+}

@@ -801,6 +801,7 @@ html {
                 grid-template-columns: 1fr auto auto;
                 gap: 1rem;
                 align-items: center;
+                padding: 1rem 0;
 
                 & .site-brand {
                     & a .logo {
