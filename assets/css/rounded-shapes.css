@@ -288,6 +288,26 @@
     }
 }
 
+@media (width >=1200px) {
+    #main-header {
+        & .block {
+            & .content {
+                & .avante-navigation {
+                    & .main-navigation {
+                        &>ul {
+                            &>li {
+                                &>a {
+                                    border-radius: .5rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (width >=1920px) {
     .site-main #cta .content {
         border-radius: 1rem;
@@ -661,6 +681,27 @@ select {
                         &.open {
                             border-radius: 2rem;
                             corner-shape: squircle;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (width >=1200px) {
+        #main-header {
+            & .block {
+                & .content {
+                    & .avante-navigation {
+                        & .main-navigation {
+                            &>ul {
+                                &>li.red {
+                                    &>a {
+                                        border-radius: .8rem;
+                                        corner-shape: squircle;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

@@ -834,6 +834,7 @@ html {
                             list-style: none;
                             display: flex;
                             align-items: center;
+                            gap: .5rem;
 
                             &>li.red {
                                 &>a {
@@ -900,7 +901,8 @@ html {
                                 }
 
                                 &>a {
-                                    padding: 1rem;
+                                    padding: 0 1rem;
+                                    height: 37px;
                                     display: flex;
                                     align-items: center;
                                     transition: background-color .3s ease;
