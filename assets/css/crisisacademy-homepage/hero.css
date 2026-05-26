@@ -56,7 +56,7 @@
         position: relative;
         z-index: 2;
         text-align: center;
-        padding-top: calc(clamp(2rem, 5vw, 10rem) + 93.43px);
+        padding-top: calc(clamp(2rem, 5vw, 10rem) + 82px);
 
         & .span-pretext {
             display: inline-flex;
