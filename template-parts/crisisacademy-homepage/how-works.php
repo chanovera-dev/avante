@@ -27,16 +27,18 @@ $cta = get_field('how_it_works_cta');
             <?php
                 if (have_rows('how_it_works_cards')) : 
                     while (have_rows('how_it_works_cards')) : the_row();
-                        // $logo = get_sub_field('how_it_works_logo');
+                        $card_num = get_row_index();
                         $title = get_sub_field('how_it_works_title');
                         $description = get_sub_field('how_it_works_description');
                         $content = get_sub_field('how_it_works_content');
                         $buttonLabel = get_sub_field('how_it_works_button_label');
                         ?>
                         <article class="how-it-works--card card-reveal">
-                            <div class="how-it-works--card-content"><!-- <img src="<?php // echo esc_url($logo['url']); ?>" alt="<?php // echo esc_attr($logo['alt']); ?>" width="64px" height="64px" loading="lazy"> -->
-                            <h3><?php echo esc_html($title); ?></h3>
-                            <?php echo apply_filters('the_content', $description); ?></div>
+                            <div class="how-it-works--card-content">
+                                <div class="card-number"><?php echo esc_html($card_num); ?></div>
+                                    <h3><?php echo esc_html($title); ?></h3>
+                                <?php echo apply_filters('the_content', $description); ?>
+                            </div>
                             <?php if ($content && $buttonLabel): ?>
                                 <button class="btn-more-info" data-title="<?php echo esc_attr($title); ?>">
                                     <?= avante_get_icon('info-circle'); ?>

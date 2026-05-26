@@ -20,19 +20,6 @@
         pointer-events: none;
         z-index: 0;
     }
-
-    /* Franja diagonal muy sutil — aporta movimiento sin ruido */
-    &::after {
-        content: '';
-        position: absolute;
-        inset: -20% -10%;
-        background: linear-gradient(125deg,
-                transparent 40%,
-                color-mix(in srgb, var(--wp--preset--color--primary) 4%, transparent) 50%,
-                transparent 60%);
-        pointer-events: none;
-        z-index: 0;
-    }
 }
 
 .faq-grid {
