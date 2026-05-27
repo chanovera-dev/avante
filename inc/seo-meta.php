@@ -49,6 +49,8 @@ function avante_seo_document_title_parts($title_parts) {
     if (avante_is_crisis_homepage()) {
         $title_parts['title'] = 'Manejo de Crisis y Comunicación de Crisis en México';
         $title_parts['site']  = 'The Crisis Academy';
+        // Remove tagline to keep title concise for SEO.
+        unset($title_parts['tagline']);
     }
     return $title_parts;
 }
