@@ -40,6 +40,7 @@ $inc_files = array(
     'core' => 'inc/core.php',
     'options-page' => 'inc/options-page.php',
     'likes' => 'inc/likes.php',
+    'seo' => 'inc/seo-meta.php',
 );
 
 foreach ($inc_files as $key => $relative_path) {

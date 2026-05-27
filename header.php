@@ -15,7 +15,9 @@
 
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
+    <?php if (!function_exists('avante_seo_should_skip_generic_meta_description') || !avante_seo_should_skip_generic_meta_description()) : ?>
     <meta name="description" content="<?php echo esc_attr(get_bloginfo('description', 'display')); ?>">
+    <?php endif; ?>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
@@ -72,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="text-group">
-                                <h1 class="brand-name">The Crisis Academy</h1>
+                                <span class="brand-name">The Crisis Academy</span>
                                 <div class="divider"></div>
                                 <p class="tagline">Liderazgo en tiempos de crisis</p>
                             </div>

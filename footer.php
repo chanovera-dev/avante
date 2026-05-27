@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="text-group">
-                            <h1 class="brand-name">The Crisis Academy</h1>
+                            <span class="brand-name">The Crisis Academy</span>
                             <div class="divider"></div>
                             <p class="tagline">Liderazgo en tiempos de crisis</p>
                         </div>
