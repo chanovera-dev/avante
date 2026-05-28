@@ -40,27 +40,27 @@ function initHeroCrisisGrid() {
        CONFIGURACIÓN — Ajusta estos valores para cambiar el ritmo
        ════════════════════════════════════════════════════════════ */
 
-    const CLUSTER_COUNT     = 3;         // Núcleos de agrupación simultáneos
-    const GRAVITY           = 0.12;      // Fuerza de atracción (↑ = se juntan más rápido)
-    const CRITICAL_DENSITY  = 110;       // Dist. promedio para empezar a ponerse rojo
+    const CLUSTER_COUNT = 3;         // Núcleos de agrupación simultáneos
+    const GRAVITY = 0.03;      // Fuerza de atracción (↑ = se juntan más rápido)
+    const CRITICAL_DENSITY = 110;       // Dist. promedio para empezar a ponerse rojo
     const EXPLOSION_DENSITY = 50;        // Dist. promedio para explotar (↑ = explota antes)
-    const MOUSE_RADIUS      = 200;      // Radio de influencia del cursor (px)
-    const MOUSE_PUSH        = 1.4;       // Fuerza de repulsión del cursor
-    const SPAWN_MS          = 60;        // ms entre cada tag nuevo (↓ = más rápido)
-    const MAX_TAGS          = 65;        // Máximo de tags activos
-    const EXPLOSION_SPAWN   = 14;        // Tags nuevos que nacen de cada explosión
-    const SHOCKWAVE_COUNT   = 4;         // Ondas expansivas por explosión
-    const SHOCKWAVE_MAX_R   = 400;       // Radio máximo de las ondas expansivas
-    const DEBRIS_COUNT      = 50;        // Partículas de debris por explosión
+    const MOUSE_RADIUS = 200;      // Radio de influencia del cursor (px)
+    const MOUSE_PUSH = 1.4;       // Fuerza de repulsión del cursor
+    const SPAWN_MS = 60;        // ms entre cada tag nuevo (↓ = más rápido)
+    const MAX_TAGS = 65;        // Máximo de tags activos
+    const EXPLOSION_SPAWN = 14;        // Tags nuevos que nacen de cada explosión
+    const SHOCKWAVE_COUNT = 4;         // Ondas expansivas por explosión
+    const SHOCKWAVE_MAX_R = 100;       // Radio máximo de las ondas expansivas
+    const DEBRIS_COUNT = 50;        // Partículas de debris por explosión
 
     /* ── Colores (RGB) ─────────────────────────────────────────
        Azul base:    r=0,   g=180, b=255  (estado normal)
        Rojo alerta:  r=255, g=45,  b=45   (estado crítico)
        Explosión:    r=255, g=80,  b=30   (debris/ondas)
        ──────────────────────────────────────────────────────── */
-    const COLOR_NORMAL  = { r: 0,   g: 180, b: 255 };
-    const COLOR_ALERT   = { r: 255, g: 45,  b: 45  };
-    const COLOR_EXPLODE = { r: 255, g: 80,  b: 30  };
+    const COLOR_NORMAL = { r: 131, g: 166, b: 208 };
+    const COLOR_ALERT = { r: 255, g: 45, b: 45 };
+    const COLOR_EXPLODE = { r: 201, g: 10, b: 33 };
 
     /* ── State ───────────────────────────────────────────────── */
     let W, H, dpr;
@@ -157,9 +157,9 @@ function initHeroCrisisGrid() {
         W = rect.width;
         H = rect.height;
         isMobile = W < 768; // Toggles mobile mode optimizing rendering metrics
-        canvas.width  = W * dpr;
+        canvas.width = W * dpr;
         canvas.height = H * dpr;
-        canvas.style.width  = W + 'px';
+        canvas.style.width = W + 'px';
         canvas.style.height = H + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
