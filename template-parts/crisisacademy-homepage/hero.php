@@ -76,6 +76,7 @@ if (!empty($hero_action_button_secondary)) {
 }
 ?>
 <section id="hero" class="block">
+    <!-- .hero-grid is generated dynamically by hero.js -->
     <div class="hero-glow"></div>
     <div class="content">
         <?php if ($hero_span): ?>

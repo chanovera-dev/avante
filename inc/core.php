@@ -1686,6 +1686,7 @@ function crisisacademy_homepage_templates() {
         avante_enqueue_script('card-glow-efect-script', $a['js']['card-glow-efect-script']);
         avante_enqueue_script('faq-accordion-toggle-script', $a['js']['faq-accordion-toggle-script']);
         avante_enqueue_script('crisisacademy-homepage-script', $a['js']['crisisacademy-homepage-script']);
+        avante_enqueue_script('crisisacademy-hero-script', $a['js']['crisisacademy-hero-script']);
         avante_enqueue_script('three', $a['js']['three']);
         avante_enqueue_script('webgl-slideshow-script', $a['js']['webgl-slideshow-script']);
         avante_enqueue_script('crisisacademy-how-works-script', $a['js']['crisisacademy-how-works-script']);

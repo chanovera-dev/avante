@@ -306,6 +306,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof initCardGlowEffect === 'function') {
         initCardGlowEffect();
     }
+    if (typeof initHeroCrisisGrid === 'function') {
+        initHeroCrisisGrid();
+    }
     if (typeof initStickyOverlapEffect === 'function') {
         initStickyOverlapEffect();
     }
