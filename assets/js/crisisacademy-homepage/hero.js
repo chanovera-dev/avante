@@ -201,7 +201,10 @@ function initHeroCrisisGrid() {
 
     /* ── Main loop ───────────────────────────────────────────── */
     function draw(timestamp) {
-        if (!isVisible) { rafId = null; return; }
+        if (!isVisible || hero.classList.contains('is-bottom')) {
+            rafId = null;
+            return;
+        }
         ctx.clearRect(0, 0, W, H);
 
         /* ── Spawn ─────────────────────────────────────────────── */
@@ -434,12 +437,27 @@ function initHeroCrisisGrid() {
     });
     hero.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
 
-    /* ── Visibility ──────────────────────────────────────────── */
+    /* ── Visibility & Class Observer ─────────────────────────── */
     const io = new IntersectionObserver(([entry]) => {
         isVisible = entry.isIntersecting;
-        if (isVisible && !rafId) rafId = requestAnimationFrame(draw);
+        if (isVisible && !hero.classList.contains('is-bottom') && !rafId) {
+            rafId = requestAnimationFrame(draw);
+        }
     }, { threshold: 0.05 });
     io.observe(hero);
+
+    // MutationObserver to watch class changes and resume loop if 'is-bottom' is removed
+    const classObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                const isBottom = hero.classList.contains('is-bottom');
+                if (isVisible && !isBottom && !rafId) {
+                    rafId = requestAnimationFrame(draw);
+                }
+            }
+        });
+    });
+    classObserver.observe(hero, { attributes: true, attributeFilter: ['class'] });
 
     /* ── Resize ──────────────────────────────────────────────── */
     let rt;

@@ -145,6 +145,11 @@ body {
             &.is-bottom {
                 filter: saturate(0.1) contrast(.7);
                 pointer-events: none;
+
+                /* Desactiva automáticamente todas las animaciones CSS en esta sección para ahorrar recursos */
+                & * {
+                    animation-play-state: paused !important;
+                }
             }
 
             /* El último bloque no necesita margen inferior */
