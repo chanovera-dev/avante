@@ -161,12 +161,20 @@ document.addEventListener("DOMContentLoaded", function () {
         updateActiveClasses()
 
         let autoSlide = setInterval(() => {
+            const block = wrapper.closest('.block');
+            if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+                return;
+            }
             goToSlide(currentSlide + 1)
         }, 6000)
 
         function resetAutoSlide() {
             clearInterval(autoSlide)
             autoSlide = setInterval(() => {
+                const block = wrapper.closest('.block');
+                if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+                    return;
+                }
                 goToSlide(currentSlide + 1)
             }, 6000)
         }

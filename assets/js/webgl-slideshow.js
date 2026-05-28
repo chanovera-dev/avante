@@ -144,6 +144,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function startAutoplay() {
             autoplayInterval = setInterval(() => {
+                const block = wrapper.closest('.block');
+                if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+                    return;
+                }
                 goToSlide((currentSlide + 1) % textures.length);
             }, 6000);
         }
@@ -190,6 +194,11 @@ document.addEventListener("DOMContentLoaded", function () {
         window.addEventListener("resize", updateSize);
 
         function render() {
+            const block = wrapper.closest('.block');
+            if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+                requestAnimationFrame(render);
+                return;
+            }
             renderer.render(scene, camera);
             requestAnimationFrame(render);
         }

@@ -79,11 +79,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         /* ── Auto-slide ───────────────────────────────────────────────── */
-        let autoSlide = setInterval(() => goToSlide(current + 1), 14000)
+        let autoSlide = setInterval(() => {
+            const block = wrapper.closest('.block');
+            if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+                return;
+            }
+            goToSlide(current + 1);
+        }, 14000)
 
         function resetAutoSlide() {
             clearInterval(autoSlide)
-            autoSlide = setInterval(() => goToSlide(current + 1), 14000)
+            autoSlide = setInterval(() => {
+                const block = wrapper.closest('.block');
+                if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+                    return;
+                }
+                goToSlide(current + 1);
+            }, 14000)
         }
 
         /* ── Navigation buttons ───────────────────────────────────────── */
