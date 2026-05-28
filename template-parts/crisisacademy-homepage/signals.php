@@ -167,7 +167,7 @@ if (empty($title)) {
                 <?php else : ?>
                     <p>No se encontraron señales.</p>
             <?php endif; ?>
-            <p class="source pretext-reveal">Fuente: Institute for Crisis Management (ICM)</p>
+            <p class="source object-reveal">Fuente: <a href="https://crisisconsultant.com/icm-annual-crisis-report/" target="_blank">Institute for Crisis Management (ICM)</a></p>
         </div>
         <?php if ($subtitle): ?>
             <?php echo apply_filters( 'the_content', $subtitle ); ?>
