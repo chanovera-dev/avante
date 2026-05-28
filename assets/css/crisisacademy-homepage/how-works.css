@@ -12,6 +12,12 @@
         position: relative;
         z-index: 1;
 
+        & .logo {
+            --s: 72px;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
         & .span-pretext {
             color: var(--wp--preset--color--secondary);
         }

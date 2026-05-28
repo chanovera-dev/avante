@@ -21,6 +21,40 @@ $cta = get_field('how_it_works_cta');
     </div>
 
     <div class="content">
+        <div class="logo object-reveal">
+            <div class="ring-wrap">
+                <div class="glow-ring"></div>
+                <div class="scene">
+                    <div class="cube">
+                        <div class="face front">
+                            <div class="grid"></div>
+                            <div class="ai-eye">
+                                <div class="pupil"></div>
+                                <span class="node node-1"></span>
+                                <span class="node node-2"></span>
+                                <span class="node node-3"></span>
+                                <span class="node node-4"></span>
+                            </div>
+                        </div>
+                        <div class="face back">
+                            <div class="grid"></div>
+                        </div>
+                        <div class="face left">
+                            <div class="grid"></div>
+                        </div>
+                        <div class="face right">
+                            <div class="grid"></div>
+                        </div>
+                        <div class="face top">
+                            <div class="grid"></div>
+                        </div>
+                        <div class="face bottom">
+                            <div class="grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <span class="span-pretext pretext-reveal"><?php echo esc_html($sectionTitle); ?></span>
         <h2 class="title-section title-reveal">Tres soluciones para fortalecer tu preparación ante una crisis</h2>
         <div class="how-works--cards-container">
