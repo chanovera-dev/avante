@@ -295,7 +295,28 @@ function initStickyAnchorLinks() {
     });
 }
 
+/**
+ * Block Viewport Observer
+ * Tracks when any .block section is actively visible on the screen,
+ * toggling the .in-view class. Used for pausing animations off-screen.
+ */
+function initBlockViewportObserver() {
+    const blocks = document.querySelectorAll('.site-main > .block');
+    if (blocks.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            entry.target.classList.toggle('in-view', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0.01 // Trigger as soon as 1% of the section enters the screen
+    });
+
+    blocks.forEach(block => observer.observe(block));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    initBlockViewportObserver();
     initUpcomingEventsScroll();
     initUpcomingEventsOpacityCascade();
     

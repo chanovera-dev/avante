@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let autoSlide = setInterval(() => {
             const block = wrapper.closest('.block');
-            if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+            if (block && (!block.classList.contains('in-view') || block.classList.contains('is-bottom'))) {
                 return;
             }
             goToSlide(currentSlide + 1)
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
             clearInterval(autoSlide)
             autoSlide = setInterval(() => {
                 const block = wrapper.closest('.block');
-                if (block && (block.classList.contains('is-bottom') || block.getBoundingClientRect().bottom < 0)) {
+                if (block && (!block.classList.contains('in-view') || block.classList.contains('is-bottom'))) {
                     return;
                 }
                 goToSlide(currentSlide + 1)
