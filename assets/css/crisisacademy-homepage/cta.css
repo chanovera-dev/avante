@@ -73,6 +73,11 @@
             position: relative;
             z-index: 2;
 
+            & .logo {
+                --s: 72px;
+                margin-bottom: 2rem;
+            }
+
             & .span-pretext {
                 color: var(--wp--preset--color--base);
             }

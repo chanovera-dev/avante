@@ -37,6 +37,40 @@ $whatsapp_number = '525543910088';
             <div class="circle circle-4"></div>
         </div>
         <div class="cta-intro">
+            <div class="logo object-reveal">
+                <div class="ring-wrap">
+                    <div class="glow-ring"></div>
+                    <div class="scene">
+                        <div class="cube">
+                            <div class="face front">
+                                <div class="grid"></div>
+                                <div class="ai-eye">
+                                    <div class="pupil"></div>
+                                    <span class="node node-1"></span>
+                                    <span class="node node-2"></span>
+                                    <span class="node node-3"></span>
+                                    <span class="node node-4"></span>
+                                </div>
+                            </div>
+                            <div class="face back">
+                                <div class="grid"></div>
+                            </div>
+                            <div class="face left">
+                                <div class="grid"></div>
+                            </div>
+                            <div class="face right">
+                                <div class="grid"></div>
+                            </div>
+                            <div class="face top">
+                                <div class="grid"></div>
+                            </div>
+                            <div class="face bottom">
+                                <div class="grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- <span class="span-pretext pretext-reveal"><?= esc_html($cta_pretext); ?></span> -->
             <h2 class="title-section title-reveal"><?= esc_html($cta_title); ?></h2>
             <p class="cta-description object-reveal"><?= esc_html($cta_desc); ?></p>
