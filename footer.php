@@ -115,6 +115,9 @@
             <p>© <?php bloginfo('name');
             echo ' ' . date("Y"); ?> • <?= __('Todos los Derechos Reservados', 'avante') ?>
             </p>
+            <div class="credit">
+                <p>Diseñado y desarrollado por <a href="https://chano.dev/" target="_blank" rel="noopener noreferrer">@ChanoDEV</a></p>
+            </div>
         </div>
     </section>
 </footer>

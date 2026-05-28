@@ -257,6 +257,12 @@ html {
             text-align: center;
             padding: 1rem 0;
             border-top: 1px dashed #ffffff21;
+
+            & .credit {
+                & a {
+                    color: var(--wp--preset--color--primary);
+                }
+            }
         }
     }
 }
@@ -1329,6 +1335,19 @@ html {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@media (width >=1024px) {
+
+    #main-footer {
+        & .block.end-footer {
+            & .content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
             }
         }
     }
