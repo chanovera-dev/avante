@@ -50,7 +50,7 @@ function initHeroCrisisGrid() {
     const MAX_TAGS = 65;        // Máximo de tags activos
     const EXPLOSION_SPAWN = 14;        // Tags nuevos que nacen de cada explosión
     const SHOCKWAVE_COUNT = 4;         // Ondas expansivas por explosión
-    const SHOCKWAVE_MAX_R = 100;       // Radio máximo de las ondas expansivas
+    const SHOCKWAVE_MAX_R = 160;       // Radio máximo de las ondas expansivas
     const DEBRIS_COUNT = 50;        // Partículas de debris por explosión
 
     /* ── Colores (RGB) ─────────────────────────────────────────
@@ -73,6 +73,9 @@ function initHeroCrisisGrid() {
     let isVisible = true;
     let rafId = null;
     let lastSpawn = 0;
+    let canvasStartTime = null;
+    let initialExplosionTriggered = [false, false, false];
+    let positionsInitialized = false;
 
     /* ── Tag ──────────────────────────────────────────────────── */
     function createTag(x, y, clusterIdx) {
@@ -120,17 +123,30 @@ function initHeroCrisisGrid() {
     /* ── Múltiples ondas expansivas escalonadas ─────────────── */
     function spawnShockwaves(cx, cy) {
         const count = isMobile ? 2 : SHOCKWAVE_COUNT;
+        const maxRadius = isMobile ? SHOCKWAVE_MAX_R * 0.7 : SHOCKWAVE_MAX_R;
         for (let i = 0; i < count; i++) {
             // Cada onda arranca con un radio distinto para efecto escalonado
             const delay = i * 8;  // frames de retraso simulado via radio inicial
             shockwaves.push({
                 x: cx, y: cy,
                 r: -delay,          // radio negativo = espera antes de aparecer
-                maxR: (isMobile ? SHOCKWAVE_MAX_R * 0.7 : SHOCKWAVE_MAX_R) - i * 40,
-                alpha: 0.55 - i * 0.08,
-                lineWidth: 3 - i * 0.4,
+                maxR: maxRadius * (1 - i * 0.16),
+                alpha: 0.65 - i * 0.1,
+                lineWidth: 3.5 - i * 0.5,
             });
         }
+    }
+
+    /* ── Ondas de advertencia (pre-explosión) ───────────────── */
+    function spawnWarningWave(cx, cy) {
+        shockwaves.push({
+            x: cx, y: cy,
+            r: 0,
+            maxR: 95,
+            alpha: 0.38,
+            lineWidth: 1.0,
+            isWarning: true
+        });
     }
 
     /* ── Debris de explosión ──────────────────────────────────── */
@@ -162,6 +178,11 @@ function initHeroCrisisGrid() {
         canvas.style.width = W + 'px';
         canvas.style.height = H + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        // If dimensions are valid and we haven't initialized positions yet, do it now
+        if (W > 0 && H > 0 && !positionsInitialized) {
+            initPositions();
+        }
     }
 
     function init() {
@@ -170,11 +191,58 @@ function initHeroCrisisGrid() {
         clusters = [];
         shockwaves = [];
         explosionParticles = [];
-        for (let i = 0; i < CLUSTER_COUNT; i++) clusters.push(createCluster());
-        for (let i = 0; i < 8; i++) {
-            const t = createTag(Math.random() * W, Math.random() * H);
-            t.alpha = t.targetAlpha;
-            tags.push(t);
+        canvasStartTime = null;
+        initialExplosionTriggered = [false, false, false];
+        positionsInitialized = false;
+
+        // Try initializing positions if width and height are already valid
+        if (W > 0 && H > 0) {
+            initPositions();
+        }
+    }
+
+    function initPositions() {
+        if (positionsInitialized) return;
+        positionsInitialized = true;
+
+        clusters = [];
+        for (let i = 0; i < CLUSTER_COUNT; i++) {
+            clusters.push(createCluster());
+        }
+
+        // Spawn multiple tags grouped around each cluster center.
+        // We stagger their initial starting distances so they have enough time
+        // to drift toward the center, build up visual tension (turn red),
+        // and trigger at exactly the designated delayed times (3s and 6s).
+        for (let ci = 0; ci < CLUSTER_COUNT; ci++) {
+            const cluster = clusters[ci];
+            // Spawn 5 to 7 tags per cluster
+            const numTags = 5 + Math.floor(Math.random() * 3);
+            for (let j = 0; j < numTags; j++) {
+                const angle = Math.random() * Math.PI * 2;
+                
+                // Stagger starting radius per cluster to allow visual buildup:
+                // - Cluster 0: Starts moderately close (60-68px) -> will reach center and explode at 3s
+                // - Cluster 1: Starts further (75-85px) -> will reach center and explode at 6s
+                // - Cluster 2: Starts far (90-102px) -> will drift and explode normally/later
+                let r;
+                if (ci === 0) {
+                    r = 60 + Math.random() * 8;
+                } else if (ci === 1) {
+                    r = 75 + Math.random() * 10;
+                } else {
+                    r = 90 + Math.random() * 12;
+                }
+
+                const x = cluster.x + Math.cos(angle) * r;
+                const y = cluster.y + Math.sin(angle) * r;
+
+                const t = createTag(x, y, ci);
+                t.alpha = t.targetAlpha;
+                // Start with some alert level so they look slightly orange/red and build up to full red
+                t.alertLevel = 0.4 + Math.random() * 0.2;
+                tags.push(t);
+            }
         }
     }
 
@@ -207,6 +275,27 @@ function initHeroCrisisGrid() {
         }
         ctx.clearRect(0, 0, W, H);
 
+        if (!canvasStartTime) canvasStartTime = timestamp;
+        const elapsedSeconds = (timestamp - canvasStartTime) / 1000;
+
+        /* ── Pulse warning waves during buildup ────────────────── */
+        if (W > 0 && H > 0 && clusters.length > 0) {
+            // Pulse a warning wave every 900ms for Cúmulo 0 until it explodes at 3s
+            if (elapsedSeconds < 3.0 && !initialExplosionTriggered[0]) {
+                if (!clusters[0]._lastWavePulse || timestamp - clusters[0]._lastWavePulse > 900) {
+                    clusters[0]._lastWavePulse = timestamp;
+                    spawnWarningWave(clusters[0].x, clusters[0].y);
+                }
+            }
+            // Pulse a warning wave every 900ms for Cúmulo 1 until it explodes at 6s
+            if (elapsedSeconds < 6.0 && !initialExplosionTriggered[1]) {
+                if (!clusters[1]._lastWavePulse || timestamp - clusters[1]._lastWavePulse > 900) {
+                    clusters[1]._lastWavePulse = timestamp;
+                    spawnWarningWave(clusters[1].x, clusters[1].y);
+                }
+            }
+        }
+
         /* ── Spawn ─────────────────────────────────────────────── */
         const activeCount = tags.filter(t => !t.dead && !t.exploding).length;
         const currentMaxTags = isMobile ? 22 : MAX_TAGS;
@@ -231,10 +320,35 @@ function initHeroCrisisGrid() {
         for (let ci = 0; ci < clusters.length; ci++) {
             const stats = getClusterStats(ci);
 
-            if (stats.count >= 4 && stats.avgDist < EXPLOSION_DENSITY) {
+            let shouldExplode = (stats.count >= 4 && stats.avgDist < EXPLOSION_DENSITY);
+
+            // Force artificial sequence for the first two explosions at exactly 3s and 6s
+            if (ci === 0 && !initialExplosionTriggered[0] && elapsedSeconds >= 3.0) {
+                shouldExplode = true;
+            } else if (ci === 1 && !initialExplosionTriggered[1] && elapsedSeconds >= 6.0) {
+                shouldExplode = true;
+            }
+
+            if (shouldExplode) {
+                // Block explosion if we haven't reached the exact designated time yet
+                if (ci === 0 && !initialExplosionTriggered[0] && elapsedSeconds < 3.0) {
+                    continue;
+                }
+                if (ci === 1 && !initialExplosionTriggered[1] && elapsedSeconds < 6.0) {
+                    continue;
+                }
+
+                // Mark the initial explosion as triggered so subsequent ones can explode normally
+                if (ci === 0 || ci === 1) {
+                    initialExplosionTriggered[ci] = true;
+                }
+
                 // ¡BOOM! — La crisis explota
-                spawnShockwaves(stats.cx, stats.cy);
-                spawnDebris(stats.cx, stats.cy);
+                // Use the exact cluster coordinates to ensure the shockwaves are perfectly centered on the gravity node
+                const explodeX = (ci === 0 || ci === 1) ? clusters[ci].x : stats.cx;
+                const explodeY = (ci === 0 || ci === 1) ? clusters[ci].y : stats.cy;
+                spawnShockwaves(explodeX, explodeY);
+                spawnDebris(explodeX, explodeY);
 
                 // Todos los tags del cluster explotan hacia afuera
                 for (const t of tags) {
@@ -375,8 +489,14 @@ function initHeroCrisisGrid() {
         /* ── Draw shockwaves ───────────────────────────────────── */
         for (let i = shockwaves.length - 1; i >= 0; i--) {
             const sw = shockwaves[i];
-            sw.r += 7;  // Velocidad de expansión de la onda
-            sw.alpha -= 0.012;
+            
+            if (sw.isWarning) {
+                sw.r += 1.8;       // Slower warning wave expansion
+                sw.alpha -= 0.009;  // Gradual fade
+            } else {
+                sw.r += 7;          // Velocidad de expansión de la onda de explosión
+                sw.alpha -= 0.012;
+            }
 
             // Onda aún no visible (retraso escalonado)
             if (sw.r < 0) continue;
@@ -388,21 +508,30 @@ function initHeroCrisisGrid() {
 
             const progress = sw.r / sw.maxR;
 
-            // Anillo exterior
-            ctx.beginPath();
-            ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
-            ctx.strokeStyle = `rgba(${COLOR_EXPLODE.r},${COLOR_EXPLODE.g},${COLOR_EXPLODE.b},${sw.alpha.toFixed(3)})`;
-            ctx.lineWidth = (sw.lineWidth || 2.5) + (1 - progress) * 4;
-            ctx.stroke();
+            if (sw.isWarning) {
+                // Elegant thin warning pulse
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(${COLOR_ALERT.r},${COLOR_ALERT.g},${COLOR_ALERT.b},${sw.alpha.toFixed(3)})`;
+                ctx.lineWidth = sw.lineWidth || 1.0;
+                ctx.stroke();
+            } else {
+                // Anillo exterior de explosión
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(${COLOR_EXPLODE.r},${COLOR_EXPLODE.g},${COLOR_EXPLODE.b},${sw.alpha.toFixed(3)})`;
+                ctx.lineWidth = (sw.lineWidth || 2.5) + (1 - progress) * 4;
+                ctx.stroke();
 
-            // Resplandor interior difuso
-            const grad = ctx.createRadialGradient(sw.x, sw.y, sw.r * 0.8, sw.x, sw.y, sw.r);
-            grad.addColorStop(0, `rgba(255,120,40,0)`);
-            grad.addColorStop(1, `rgba(${COLOR_EXPLODE.r},${COLOR_EXPLODE.g},${COLOR_EXPLODE.b},${(sw.alpha * 0.12).toFixed(3)})`);
-            ctx.beginPath();
-            ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
-            ctx.fillStyle = grad;
-            ctx.fill();
+                // Resplandor interior difuso
+                const grad = ctx.createRadialGradient(sw.x, sw.y, sw.r * 0.8, sw.x, sw.y, sw.r);
+                grad.addColorStop(0, `rgba(255,120,40,0)`);
+                grad.addColorStop(1, `rgba(${COLOR_EXPLODE.r},${COLOR_EXPLODE.g},${COLOR_EXPLODE.b},${(sw.alpha * 0.12).toFixed(3)})`);
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
+                ctx.fill();
+            }
         }
 
         /* ── Draw debris particles ─────────────────────────────── */
