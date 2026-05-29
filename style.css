@@ -20,7 +20,6 @@ html {
 
 #main-header {
     z-index: 99;
-    height: 63.44px;
 
     & .block {
         border-bottom: 1px solid var(--wp--preset--color--line);
