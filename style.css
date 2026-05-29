@@ -177,10 +177,25 @@ html {
 
         & li {
             & a {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                justify-content: start;
+                gap: .5rem;
                 transition: color .3s ease;
 
-                &::before {
-                    transition: background-color .3s ease;
+                &:is([href^="mailto"], [href^="tel"], [href^="maps"], [href^="goo.gl/maps"], [href^="google.com/maps"]) {
+                    &::before {
+                        position: relative;
+                        content: '';
+                        display: block;
+                        width: 16px;
+                        height: 16px;
+                        top: 0;
+                        left: 0;
+                        background-color: var(--wp--preset--color--base);
+                        transition: background-color .3s ease;
+                    }
                 }
 
                 &:hover {
@@ -251,52 +266,6 @@ html {
 
                 & .group-links {
                     max-width: 400px;
-
-                    & nav a {
-                        position: relative;
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        line-height: 1.4;
-
-                        &[href^="tel:"]::before,
-                        &[href^="mailto:"]::before,
-                        &[href*="maps"]::before,
-                        &[href*="goo.gl/maps"]::before,
-                        &[href*="google.com/maps"]::before {
-                            content: "";
-                            display: inline-block;
-                            width: 1rem;
-                            height: 1rem;
-                            background-repeat: no-repeat;
-                            background-position: center;
-                            background-size: contain;
-                            background-color: transparent !important;
-                            flex-shrink: 0;
-                            filter: brightness(0) invert(1) opacity(0.75);
-                            transition: filter 0.3s ease, opacity 0.3s ease;
-                        }
-
-                        &[href^="tel:"]::before {
-                            background-image: url('assets/icons/support-phone.svg');
-                        }
-
-                        &[href^="mailto:"]::before {
-                            background-image: url('assets/icons/mailto.svg');
-                        }
-
-                        &[href*="maps"]::before,
-                        &[href*="goo.gl/maps"]::before,
-                        &[href*="google.com/maps"]::before {
-                            background-image: url('assets/icons/map.svg');
-                        }
-
-                        &:hover::before {
-                            background-color: transparent !important;
-                            filter: brightness(0) invert(1) opacity(1);
-                            opacity: 1;
-                        }
-                    }
                 }
             }
         }
