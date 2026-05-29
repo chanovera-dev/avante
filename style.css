@@ -177,14 +177,15 @@ html {
 
         & li {
             & a {
-                position: relative;
-                display: inline-flex;
-                align-items: center;
-                justify-content: start;
-                gap: .5rem;
                 transition: color .3s ease;
 
                 &:is([href^="mailto"], [href^="tel"], [href*="maps"]) {
+                    position: relative;
+                    display: grid;
+                    grid-template-columns: 16px 1fr;
+                    align-items: baseline;
+                    gap: .5rem;
+
                     &::before {
                         position: relative;
                         content: '';
@@ -196,14 +197,16 @@ html {
                         background-color: var(--wp--preset--color--base);
                         transition: background-color .3s ease;
                     }
+
+                    &:hover {
+                        &::before {
+                            background-color: var(--wp--preset--color--primary);
+                        }
+                    }
                 }
 
                 &:hover {
                     color: var(--wp--preset--color--primary);
-
-                    &::before {
-                        background-color: var(--wp--preset--color--primary);
-                    }
                 }
 
                 &:focus-visible {
