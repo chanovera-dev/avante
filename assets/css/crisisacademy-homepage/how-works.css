@@ -54,7 +54,7 @@
                 }
 
                 &:nth-of-type(4n+3) {
-                    background: var(--wp--preset--color--primary);
+                    background: #5e7899;
                 }
 
                 &:nth-of-type(4n+4) {
