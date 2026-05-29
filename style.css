@@ -184,7 +184,7 @@ html {
                 gap: .5rem;
                 transition: color .3s ease;
 
-                &:is([href^="mailto"], [href^="tel"], [href^="maps"], [href^="goo.gl/maps"], [href^="google.com/maps"]) {
+                &:is([href^="mailto"], [href^="tel"], [href*="maps"]) {
                     &::before {
                         position: relative;
                         content: '';
