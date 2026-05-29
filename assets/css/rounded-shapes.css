@@ -289,15 +289,17 @@
 }
 
 @media (width >=1200px) {
-    #main-header {
-        & .block {
-            & .content {
-                & .avante-navigation {
-                    & .main-navigation {
-                        &>ul {
-                            &>li {
-                                &>a {
-                                    border-radius: .5rem;
+    .wp-child-theme-thecrisisacademy {
+        #main-header {
+            & .block {
+                & .content {
+                    & .avante-navigation {
+                        & .main-navigation {
+                            &>ul {
+                                &>li {
+                                    &>a {
+                                        border-radius: .5rem;
+                                    }
                                 }
                             }
                         }
@@ -407,21 +409,23 @@ select {
 /* HEADER DESKTOP */
 @media (width > 1200px) {
     & .is-chromium {
-        #main-header {
-            & .block {
-                & .content {
-                    & .avante-navigation {
-                        & .main-navigation {
-                            &>ul {
-                                & li {
-                                    &.menu-item-has-children .sub-menu {
-                                        border-bottom-left-radius: 1rem;
-                                        border-bottom-right-radius: 1rem;
-                                        corner-shape: squircle;
-
-                                        & li a {
-                                            border-radius: .5rem;
+        & .wp-child-theme-thecrisisacademy {
+            #main-header {
+                & .block {
+                    & .content {
+                        & .avante-navigation {
+                            & .main-navigation {
+                                &>ul {
+                                    & li {
+                                        &.menu-item-has-children .sub-menu {
+                                            border-bottom-left-radius: 1rem;
+                                            border-bottom-right-radius: 1rem;
                                             corner-shape: squircle;
+
+                                            & li a {
+                                                border-radius: .5rem;
+                                                corner-shape: squircle;
+                                            }
                                         }
                                     }
                                 }

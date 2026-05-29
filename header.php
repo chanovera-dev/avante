@@ -33,53 +33,12 @@
             <div class="content">
                 <div class="site-brand">
                     <?php
-                    // if (!has_custom_logo()) {
-                    //     printf('<a href="%s" aria-label="%s">%s</a>', esc_url(home_url('/')), esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
-                    // } else {
-                    //     the_custom_logo();
-                    // }
+                    if (!has_custom_logo()) {
+                        printf('<a href="%s" aria-label="%s">%s</a>', esc_url(home_url('/')), esc_attr__('Home', 'avante'), esc_html(get_bloginfo('name')));
+                    } else {
+                        the_custom_logo();
+                    }
                     ?>
-                    <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr__('Home', 'avante'); ?>">
-                        <div class="logo">
-                            <div class="ring-wrap">
-                                <div class="glow-ring"></div>
-                                <div class="scene">
-                                    <div class="cube">
-                                        <div class="face front">
-                                            <div class="grid"></div>
-                                            <div class="ai-eye">
-                                                <div class="pupil"></div>
-                                                <span class="node node-1"></span>
-                                                <span class="node node-2"></span>
-                                                <span class="node node-3"></span>
-                                                <span class="node node-4"></span>
-                                            </div>
-                                        </div>
-                                        <div class="face back">
-                                            <div class="grid"></div>
-                                        </div>
-                                        <div class="face left">
-                                            <div class="grid"></div>
-                                        </div>
-                                        <div class="face right">
-                                            <div class="grid"></div>
-                                        </div>
-                                        <div class="face top">
-                                            <div class="grid"></div>
-                                        </div>
-                                        <div class="face bottom">
-                                            <div class="grid"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-group">
-                                <span class="brand-name">The Crisis Academy</span>
-                                <div class="divider"></div>
-                                <p class="tagline">Liderazgo en tiempos de crisis</p>
-                            </div>
-                        </div>
-                    </a>
                 </div>
                 <div class="avante-navigation">
                         <?php
