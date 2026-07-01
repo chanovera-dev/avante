@@ -3,8 +3,9 @@
  * Reads current mouse coordinates inside the card and updates
  * CSS variables --mouse-x and --mouse-y for responsive glow styling.
  */
-function initCardGlowEffect() {
-    const cards = document.querySelectorAll('#hero, .about-item, .signal-item, .how-it-works--card, #cta .content, .cert-container, .cert-panel, .how-works-modal-container, .intro-funnel, .sliders .quotes-container');
+function initCardGlowEffect(selector) {
+    if (!selector) return;
+    const cards = document.querySelectorAll(selector);
 
     cards.forEach(card => {
         let rect;

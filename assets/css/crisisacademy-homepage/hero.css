@@ -53,11 +53,9 @@
     & .hero-glow {
         position: absolute;
         inset: 0;
-        background: radial-gradient(
-            600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
-            color-mix(in srgb, var(--wp--preset--color--primary) 12%, transparent),
-            transparent 70%
-        );
+        background: radial-gradient(600px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+                color-mix(in srgb, var(--wp--preset--color--primary) 12%, transparent),
+                transparent 70%);
         opacity: 0;
         transition: opacity 0.4s ease;
         pointer-events: none;
@@ -76,10 +74,8 @@
         padding-top: calc(clamp(2rem, 5vw, 10rem) + 82px);
 
         & .span-pretext {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            padding: .4rem 1rem;
+            display: inline;
+            padding: .2rem .6rem;
             background-color: color-mix(in srgb, var(--wp--preset--color--focus) 20%, transparent);
             border: 1px solid color-mix(in srgb, var(--wp--preset--color--focus) 50%, transparent);
             font-size: .8rem;
@@ -88,8 +84,12 @@
             text-transform: inherit;
             margin-bottom: 1.5rem;
             opacity: 0;
+            line-height: 1.15;
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
 
             & p {
+                display: inline;
                 margin: 0;
             }
         }

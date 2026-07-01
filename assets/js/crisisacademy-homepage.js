@@ -319,13 +319,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initBlockViewportObserver();
     initUpcomingEventsScroll();
     initUpcomingEventsOpacityCascade();
-    
+
     // External scripts with safety checks
     if (typeof initFaqAccordion === 'function') {
         initFaqAccordion();
     }
     if (typeof initCardGlowEffect === 'function') {
-        initCardGlowEffect();
+        initCardGlowEffect('#hero, .about-item, .signal-item, .how-it-works--card, #cta .content, .cert-container, .cert-panel, .how-works-modal-container, .intro-funnel, .sliders .quotes-container');
     }
     if (typeof initHeroCrisisGrid === 'function') {
         initHeroCrisisGrid();

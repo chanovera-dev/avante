@@ -76,6 +76,8 @@ function initHeroCrisisGrid() {
     let canvasStartTime = null;
     let initialExplosionTriggered = [false, false, false];
     let positionsInitialized = false;
+    let lastInteractionTime = performance.now();
+    let isPaused = false;
 
     /* ── Tag ──────────────────────────────────────────────────── */
     function createTag(x, y, clusterIdx) {
@@ -194,6 +196,8 @@ function initHeroCrisisGrid() {
         canvasStartTime = null;
         initialExplosionTriggered = [false, false, false];
         positionsInitialized = false;
+        lastInteractionTime = performance.now();
+        isPaused = false;
 
         // Try initializing positions if width and height are already valid
         if (W > 0 && H > 0) {
@@ -220,7 +224,7 @@ function initHeroCrisisGrid() {
             const numTags = 5 + Math.floor(Math.random() * 3);
             for (let j = 0; j < numTags; j++) {
                 const angle = Math.random() * Math.PI * 2;
-                
+
                 // Stagger starting radius per cluster to allow visual buildup:
                 // - Cluster 0: Starts moderately close (60-68px) -> will reach center and explode at 3s
                 // - Cluster 1: Starts further (75-85px) -> will reach center and explode at 6s
@@ -267,12 +271,32 @@ function initHeroCrisisGrid() {
         };
     }
 
+    function resumeLoop() {
+        lastInteractionTime = performance.now();
+        if (isPaused) {
+            isPaused = false;
+            if (!rafId && isVisible && !hero.classList.contains('is-bottom')) {
+                rafId = requestAnimationFrame(draw);
+            }
+        }
+    }
+
     /* ── Main loop ───────────────────────────────────────────── */
     function draw(timestamp) {
         if (!isVisible || hero.classList.contains('is-bottom')) {
             rafId = null;
             return;
         }
+
+        const isIdle = (timestamp - lastInteractionTime > 10000);
+
+        // Si está inactivo y ya no queda nada en pantalla, pausamos el bucle
+        if (isIdle && tags.length === 0 && shockwaves.length === 0 && explosionParticles.length === 0) {
+            rafId = null;
+            isPaused = true;
+            return;
+        }
+
         ctx.clearRect(0, 0, W, H);
 
         if (!canvasStartTime) canvasStartTime = timestamp;
@@ -301,7 +325,8 @@ function initHeroCrisisGrid() {
         const currentMaxTags = isMobile ? 22 : MAX_TAGS;
         const currentSpawnMs = isMobile ? 180 : SPAWN_MS;
 
-        if (timestamp - lastSpawn > currentSpawnMs && activeCount < currentMaxTags) {
+        // Solo crea nuevas palabras si no está inactivo
+        if (!isIdle && timestamp - lastSpawn > currentSpawnMs && activeCount < currentMaxTags) {
             tags.push(createTag());
             lastSpawn = timestamp;
         }
@@ -361,17 +386,19 @@ function initHeroCrisisGrid() {
                     t.explodeAlpha = 1;
                 }
 
-                // La crisis se multiplica: nacen tags nuevos del epicentro
-                const spawnCount = isMobile ? 4 : EXPLOSION_SPAWN;
-                for (let s = 0; s < spawnCount; s++) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const dist = 15 + Math.random() * (isMobile ? 40 : 70);
-                    const nt = createTag(
-                        stats.cx + Math.cos(angle) * dist,
-                        stats.cy + Math.sin(angle) * dist
-                    );
-                    nt.alpha = 0;
-                    tags.push(nt);
+                // La crisis se multiplica: nacen tags nuevos del epicentro (solo si no está inactivo)
+                if (!isIdle) {
+                    const spawnCount = isMobile ? 4 : EXPLOSION_SPAWN;
+                    for (let s = 0; s < spawnCount; s++) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const dist = 15 + Math.random() * (isMobile ? 40 : 70);
+                        const nt = createTag(
+                            stats.cx + Math.cos(angle) * dist,
+                            stats.cy + Math.sin(angle) * dist
+                        );
+                        nt.alpha = 0;
+                        tags.push(nt);
+                    }
                 }
 
                 // Reset cluster position
@@ -489,7 +516,7 @@ function initHeroCrisisGrid() {
         /* ── Draw shockwaves ───────────────────────────────────── */
         for (let i = shockwaves.length - 1; i >= 0; i--) {
             const sw = shockwaves[i];
-            
+
             if (sw.isWarning) {
                 sw.r += 1.8;       // Slower warning wave expansion
                 sw.alpha -= 0.009;  // Gradual fade
@@ -558,13 +585,42 @@ function initHeroCrisisGrid() {
 
     /* ── Events ──────────────────────────────────────────────── */
     let heroRect;
-    hero.addEventListener('mouseenter', () => { heroRect = hero.getBoundingClientRect(); });
+
+    function handleTouch(e) {
+        if (e.touches && e.touches[0]) {
+            if (!heroRect) heroRect = hero.getBoundingClientRect();
+            mouseX = e.touches[0].clientX - heroRect.left;
+            mouseY = e.touches[0].clientY - heroRect.top;
+            resumeLoop();
+        }
+    }
+
+    function handleTouchEnd() {
+        mouseX = -9999;
+        mouseY = -9999;
+    }
+
+    hero.addEventListener('mouseenter', () => {
+        heroRect = hero.getBoundingClientRect();
+        resumeLoop();
+    });
     hero.addEventListener('mousemove', (e) => {
         if (!heroRect) heroRect = hero.getBoundingClientRect();
         mouseX = e.clientX - heroRect.left;
         mouseY = e.clientY - heroRect.top;
+        resumeLoop();
     });
     hero.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+
+    hero.addEventListener('touchstart', (e) => {
+        heroRect = hero.getBoundingClientRect();
+        handleTouch(e);
+    }, { passive: true });
+    hero.addEventListener('touchmove', (e) => {
+        handleTouch(e);
+    }, { passive: true });
+    hero.addEventListener('touchend', handleTouchEnd, { passive: true });
+    hero.addEventListener('touchcancel', handleTouchEnd, { passive: true });
 
     /* ── Visibility & Class Observer ─────────────────────────── */
     const io = new IntersectionObserver(([entry]) => {

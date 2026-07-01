@@ -234,6 +234,10 @@ body {
     }
 }
 
+.logo {
+    --color--logo: var(--wp--preset--color--base) !important;
+}
+
 .card-reveal {
     opacity: 0;
     transform: translateY(6rem);
