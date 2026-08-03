@@ -79,6 +79,12 @@ textarea {
  * =========================================================================
  */
 
+button {
+    font-family: var(--wp--preset--font-family--manrope);
+    font-size: var(--wp--preset--font-size--medium);
+    font-weight: 500;
+}
+
 .btn,
 #submit,
 .wpcf7-submit,
